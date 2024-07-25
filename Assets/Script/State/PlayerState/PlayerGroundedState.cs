@@ -1,0 +1,54 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class PlayerGroundedState : PlayerState
+{
+    public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, string animationBoolName) : base(player, stateMachine, animationBoolName)
+    {
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Execute()
+    {
+        base.Execute();
+
+        //Kích hoạt sword skill
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            _stateMachine.changeState(_player._animSwordState);
+        }
+
+        // Kích hoạt đòn đánh gây choáng
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            _stateMachine.changeState(_player._counterAttackState);
+        }
+
+        // Kích hoạt tấn công thường
+        if (Input.GetMouseButtonDown(0))
+        {
+            _stateMachine.changeState(_player._attackState);
+        }
+
+        if (!_player.groundCheck()) //Kiểm tra nếu không có Player ở trên mặt đất sẽ chuyển sang trạng thái _airState
+        {
+            _stateMachine.changeState(_player._airState);
+        }
+
+        if (Input.GetButtonDown("Jump") && _player.groundCheck()) // Jumpping
+        {
+            _stateMachine.changeState(_player._jumpState);
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+}
