@@ -19,7 +19,7 @@ public class PlayerGroundedState : PlayerState
         base.Execute();
 
         //Kích hoạt sword skill
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && hasNoSword())
         {
             _stateMachine.changeState(_player._animSwordState);
         }
@@ -50,5 +50,22 @@ public class PlayerGroundedState : PlayerState
     public override void Exit()
     {
         base.Exit();
+    }
+
+
+    bool hasNoSword()
+    {
+        if (!_player.sword)
+        {
+            Debug.Log("Không tồn tại sword");
+            return true;
+        }
+        Debug.Log("tồn tại sword");
+        Sword_Skill_Controller scl = _player.sword.GetComponent<Sword_Skill_Controller>();
+        if (scl != null)
+        {
+            scl.ReturSword();
+        }
+        return false;
     }
 }

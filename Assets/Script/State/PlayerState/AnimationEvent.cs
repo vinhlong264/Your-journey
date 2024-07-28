@@ -29,5 +29,10 @@ public class AnimationEvent : MonoBehaviour
             }
         }
     }
+
+    private void ThrowSword()
+    {
+        SkillManager.instance.sword_Skill.createSword();
+    }
     
 }

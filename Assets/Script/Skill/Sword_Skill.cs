@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Sword_Skill : Skill
 {
@@ -8,4 +6,82 @@ public class Sword_Skill : Skill
     [SerializeField] private GameObject swordPrefabs; // sword clone
     [SerializeField] private Vector2 laughDirection; // Hướng ném của cây kiếm
     [SerializeField] private float swordGravity; // trọng lực
+
+    private Vector2 FinalDir; // Hướng ném của cây kiếm sau khi tính toán
+
+    [Header("Animation Dots infor")]
+    [SerializeField] private int amountDots; // số lượng dots
+    [SerializeField] private float BetweenSpaceDots; // khoảng cách giữa các dots
+    [SerializeField] private GameObject dotsPrefabs;
+    [SerializeField] private Transform dotsParent; // vị trí chứa các dots khi được khởi tạo
+
+   [SerializeField] private GameObject[] dots;
+
+    protected override void Update()
+    {
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            FinalDir = new Vector2(AnimDir().normalized.x * laughDirection.x, AnimDir().normalized.y * laughDirection.y);
+
+            for (int i = 0; i < dots.Length; i++)
+            {
+                dots[i].transform.position = DotsPostion(i * BetweenSpaceDots);
+            }
+        }        
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        InitializeDots();
+    }
+
+    public void createSword() // khởi tạo sword
+    {
+        GameObject newSword = Instantiate(swordPrefabs , player.transform.position , transform.rotation);
+        Sword_Skill_Controller sw = newSword.GetComponent<Sword_Skill_Controller>();
+        if(sw != null)
+        {
+            sw.setupSword(FinalDir, swordGravity , player);
+        }
+
+        player.AsignNewSword(newSword);
+
+        DotsActive(false);
+    }
+
+
+    private Vector2 AnimDir()
+    {
+        Vector2 playerPos = player.transform.position; // lấy vị trí của Player
+        Vector2 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Lấy vị trí của con trỏ chuột
+        Vector2 dir = MousePos - playerPos; // Lấy hướng từ Player đến con trỏ chuột
+
+        return dir;
+    }
+
+    public void DotsActive(bool _isActive) // hàm tắt bật các dots
+    {
+        for(int i = 0; i < dots.Length; i++)
+        {
+            dots[i].gameObject.SetActive(_isActive);
+        }
+    }
+
+    private void InitializeDots() // khởi tạo các Dots
+    {
+        dots = new GameObject[amountDots];
+        for(int i = 0; i < amountDots; i++)
+        {
+            dots[i] = Instantiate(dotsPrefabs , player.transform.position , Quaternion.identity , dotsParent.transform);
+            dots[i].gameObject.SetActive(false);
+        }
+    }
+
+    private Vector2 DotsPostion(float t) // hàm tính toán vị trí của các dots
+    {
+        Vector2 dir = new Vector2(AnimDir().normalized.x * laughDirection.x , AnimDir().normalized.y * laughDirection.y);
+        Vector2 postion = (Vector2)player.transform.position + dir * t + 0.5f * (Physics2D.gravity * swordGravity) * Mathf.Pow(t , 2);
+        return postion;
+    }
 }

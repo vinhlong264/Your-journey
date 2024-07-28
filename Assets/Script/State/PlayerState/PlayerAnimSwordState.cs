@@ -11,6 +11,7 @@ public class PlayerAnimSwordState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        SkillManager.instance.sword_Skill.DotsActive(true);       
     }
 
     public override void Execute()

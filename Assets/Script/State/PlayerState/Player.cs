@@ -22,6 +22,8 @@ public class Player : Entity
     public float dashTimer { get; set; }
     [SerializeField] float dashCooldown;
 
+    public GameObject sword;
+
     #region Component
     private EntityFx entityFx;
 
@@ -81,6 +83,18 @@ public class Player : Entity
     {
         _stateMachine.currentState.Execute(); //Thực hiện việc chạy các state
         checkForDashInput();
+    }
+
+
+    public void AsignNewSword(GameObject newSword)
+    {
+        sword = newSword;
+    }
+
+
+    public void ClearSword()
+    {
+        Destroy(sword);
     }
 
     public IEnumerator isAttack(float second) // Croutine check Player có đang tấn công không. Khi kích hoạt mới log
