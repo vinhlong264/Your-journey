@@ -3,7 +3,7 @@
 public class Sword_Skill : Skill
 {
     [SerializeField] private SwordType swordType = SwordType.REGULAR;
-    
+
     [Header("Bounce info")]
     [SerializeField] private int amoutOfBounce;
     [SerializeField] private float bounceGravity;
@@ -12,6 +12,11 @@ public class Sword_Skill : Skill
     [SerializeField] private int amountPierce;
     [SerializeField] private float pierceGravity;
 
+    [Header("Spin info")]
+    [SerializeField] private float hitCooldown;
+    [SerializeField] private float maxTravelDistance = 7f;
+    [SerializeField] private float spinDuration = 2f;
+    [SerializeField] private float spinGravity = 1f;
 
 
     [Header("Skill Infor")]
@@ -27,7 +32,7 @@ public class Sword_Skill : Skill
     [SerializeField] private GameObject dotsPrefabs;
     [SerializeField] private Transform dotsParent; // vị trí chứa các dots khi được khởi tạo
 
-   [SerializeField] private GameObject[] dots;
+    [SerializeField] private GameObject[] dots;
 
     protected override void Update()
     {
@@ -59,11 +64,19 @@ public class Sword_Skill : Skill
             {
                 swordGravity = bounceGravity;
                 sw.isBounce(true, amoutOfBounce);
+                Debug.Log("Đang ở bounce");
             }
-            else if(swordType == SwordType.PIERCE)
+            else if (swordType == SwordType.PIERCE)
             {
                 swordGravity = pierceGravity;
                 sw.isPierce(amountPierce);
+                Debug.Log("Đang ở PIERCE ");
+            }
+            else if (swordType == SwordType.SPIN)
+            {
+                swordGravity = spinGravity;
+                sw.isSpin(true, maxTravelDistance, spinDuration, hitCooldown);
+                Debug.Log("Đang ở SPIN");
             }
 
 
