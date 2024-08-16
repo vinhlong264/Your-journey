@@ -10,7 +10,7 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        stateTimer = _player.counterAttackDurarion;
+        stateTimer = _player.counterAttackDurarion; // Cooldown của CounterSate
         _player.animator.SetBool("SuccesfullCounterAttack", false);
     }
 

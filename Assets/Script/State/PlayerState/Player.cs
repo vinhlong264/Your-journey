@@ -13,7 +13,7 @@ public class Player : Entity
     public Transform AttackCheck;
     public float attackRadius;
     public float counterAttackDurarion;
-    public bool isAttacked { get; private set; }
+    public bool isBusy { get; private set; }
 
     [Header("Dash Info")]
     public float dashSpeed;
@@ -92,18 +92,19 @@ public class Player : Entity
     }
 
 
-    public void ClearSword()
+    public void CatchTheSword()
     {
+        _stateMachine.changeState(_catchSwordState);
         Destroy(sword);
     }
 
-    public IEnumerator isAttack(float second) // Croutine check Player có đang tấn công không. Khi kích hoạt mới log
+    public IEnumerator isBusyFor(float second) // Croutine check Player có đang tấn công không. Khi kích hoạt mới log
     {
-        isAttacked = true;
+        isBusy = true;
         Debug.Log("I is attack");
         yield return new WaitForSeconds(second);
         Debug.Log("I not attack");
-        isAttacked = false;
+        isBusy = false;
     }
 
     public void AnimationEventTrigger()

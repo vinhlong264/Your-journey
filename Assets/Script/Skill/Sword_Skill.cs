@@ -2,6 +2,18 @@
 
 public class Sword_Skill : Skill
 {
+    [SerializeField] private SwordType swordType = SwordType.REGULAR;
+    
+    [Header("Bounce info")]
+    [SerializeField] private int amoutOfBounce;
+    [SerializeField] private float bounceGravity;
+
+    [Header("Pierce infor")]
+    [SerializeField] private int amountPierce;
+    [SerializeField] private float pierceGravity;
+
+
+
     [Header("Skill Infor")]
     [SerializeField] private GameObject swordPrefabs; // sword clone
     [SerializeField] private Vector2 laughDirection; // Hướng ném của cây kiếm
@@ -36,22 +48,35 @@ public class Sword_Skill : Skill
         InitializeDots();
     }
 
+
     public void createSword() // khởi tạo sword
     {
         GameObject newSword = Instantiate(swordPrefabs , player.transform.position , transform.rotation);
         Sword_Skill_Controller sw = newSword.GetComponent<Sword_Skill_Controller>();
         if(sw != null)
         {
+            if(swordType == SwordType.BOUNCE)
+            {
+                swordGravity = bounceGravity;
+                sw.isBounce(true, amoutOfBounce);
+            }
+            else if(swordType == SwordType.PIERCE)
+            {
+                swordGravity = pierceGravity;
+                sw.isPierce(amountPierce);
+            }
+
+
             sw.setupSword(FinalDir, swordGravity , player);
         }
 
-        player.AsignNewSword(newSword);
+        player.AsignNewSword(newSword); // gán sword hiện tại được ném ra cho Player
 
         DotsActive(false);
     }
 
-
-    private Vector2 AnimDir()
+    #region Anim Dot
+    private Vector2 AnimDir() // hàm tính hướng của người chơi với con chuột trên màn hình
     {
         Vector2 playerPos = player.transform.position; // lấy vị trí của Player
         Vector2 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Lấy vị trí của con trỏ chuột
@@ -78,10 +103,20 @@ public class Sword_Skill : Skill
         }
     }
 
-    private Vector2 DotsPostion(float t) // hàm tính toán vị trí của các dots
+    private Vector2 DotsPostion(float t) // hàm tính toán vị trí của các dots, hay nói đây là chuyển động cong đều
     {
         Vector2 dir = new Vector2(AnimDir().normalized.x * laughDirection.x , AnimDir().normalized.y * laughDirection.y);
         Vector2 postion = (Vector2)player.transform.position + dir * t + 0.5f * (Physics2D.gravity * swordGravity) * Mathf.Pow(t , 2);
         return postion;
     }
+    #endregion
+}
+
+
+public enum SwordType // Các kiểu sword
+{
+    REGULAR,
+    BOUNCE,
+    PIERCE,
+    SPIN
 }

@@ -110,6 +110,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
+  canRotation: 1
+  isReturning: 0
+  speedBouce: 20
+  EnemyTarget: []
+  indexTarget: 0
 --- !u!1 &8448030583154104664
 GameObject:
   m_ObjectHideFlags: 0

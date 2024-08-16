@@ -9,7 +9,7 @@ public class AnimationEvent : MonoBehaviour
         player = GetComponentInParent<Player>();
     }
 
-    public void AnimationTrigger()
+    public void AnimationTrigger() // hàm dùng để kết thúc animation của 1 state thông qua triggercall
     {
         if(player != null)
         {
@@ -18,7 +18,7 @@ public class AnimationEvent : MonoBehaviour
     }
 
 
-    public void attackTrigger()
+    public void attackTrigger() // Hàm tấn công
     {
         Collider2D[] col = Physics2D.OverlapCircleAll(player.AttackCheck.position, player.attackRadius);
         foreach(Collider2D hit in col)
@@ -30,7 +30,7 @@ public class AnimationEvent : MonoBehaviour
         }
     }
 
-    private void ThrowSword()
+    private void ThrowSword() // skill ném kiếm
     {
         SkillManager.instance.sword_Skill.createSword();
     }

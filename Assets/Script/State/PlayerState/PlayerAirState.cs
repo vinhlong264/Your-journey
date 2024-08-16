@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAirState : PlayerState
+public class PlayerAirState : PlayerState // state chuyển giao giữa các state trên không và state mặt đất
 {
     public PlayerAirState(Player player, PlayerStateMachine stateMachine, string animationBoolName) : base(player, stateMachine, animationBoolName)
     {
@@ -16,7 +16,7 @@ public class PlayerAirState : PlayerState
     public override void Execute()
     {
         base.Execute();
-        if (_player.wallCheck() && !_player.groundCheck())
+        if (_player.wallCheck() && !_player.groundCheck()) // điều kiện wallSlide
         {
             _stateMachine.changeState(_player._wallSlideState);
         }

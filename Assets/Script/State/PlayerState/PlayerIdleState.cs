@@ -22,7 +22,7 @@ public class PlayerIdleState : PlayerGroundedState
         if (InputX == _player.isFacingDir && _player.wallCheck()) return; // Input bằng với hướng nhìn của player và wallCheck == true
                                                                           // sẽ thoát luôn khỏi hàm này
 
-        if(InputX != 0 && !_player.isAttacked)
+        if(InputX != 0 && !_player.isBusy)
         {
             _player._stateMachine.changeState(_player._runState);
         }

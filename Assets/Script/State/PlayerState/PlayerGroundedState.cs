@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerGroundedState : PlayerState
 {
@@ -53,11 +50,10 @@ public class PlayerGroundedState : PlayerState
     }
 
 
-    bool hasNoSword()
+    bool hasNoSword() // hàm kiểm tra hiện tại Player có Sword không
     {
         if (!_player.sword)
         {
-            Debug.Log("Không tồn tại sword");
             return true;
         }
         Debug.Log("tồn tại sword");
