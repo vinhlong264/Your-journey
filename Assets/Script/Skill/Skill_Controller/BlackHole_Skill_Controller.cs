@@ -13,7 +13,7 @@ public class BlackHole_Skill_Controller : MonoBehaviour
     public Vector2 DefaultLocal;
 
 
-    public List<Transform> target;
+    public List<Transform> target = new List<Transform>();
 
     private void Start()
     {
@@ -36,17 +36,30 @@ public class BlackHole_Skill_Controller : MonoBehaviour
 
             collision.GetComponent<Enemy>().FreezeToTimer(true);
 
-
-            GameObject newHotKey = Instantiate(hotKeyPrefabs, collision.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
-            KeyCode chooseKey = ListHotKey[Random.Range(0 , ListHotKey.Count)];
-
-            ListHotKey.Remove(chooseKey);
-
-            BlackHole_HotKey_Controller hotKetScript = newHotKey.GetComponent<BlackHole_HotKey_Controller>();
-            if(hotKetScript != null)
-            {
-                hotKetScript.setUpKeyCode(chooseKey);
-            }
+            CreateHotKey(collision);
         }
     }
+
+    private void CreateHotKey(Collider2D collision)
+    {
+        if(ListHotKey.Count <= 0)
+        {
+            return;
+        }
+
+
+        GameObject newHotKey = Instantiate(hotKeyPrefabs, collision.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+        KeyCode chooseKey = ListHotKey[Random.Range(0, ListHotKey.Count)];
+
+        ListHotKey.Remove(chooseKey);
+
+        BlackHole_HotKey_Controller hotKetScript = newHotKey.GetComponent<BlackHole_HotKey_Controller>();
+        if (hotKetScript != null)
+        {
+            hotKetScript.setUpKeyCode(chooseKey, collision.transform, this);
+        }
+    }
+
+
+    public void addEnemy(Transform _enemyTransform) => target.Add(_enemyTransform);
 }
