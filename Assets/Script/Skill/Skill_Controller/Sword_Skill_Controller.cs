@@ -11,7 +11,8 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private Player player;
     [SerializeField] private bool isReturning;
-    private float speedReturning = 12;
+    private float speedReturning;
+    private float FrezeeTimer;
 
     [Header("Bounce info")]
     private float speedBouce = 15f;
@@ -42,11 +43,13 @@ public class Sword_Skill_Controller : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
-    public void setupSword(Vector2 _dir, float _gravityScale , Player _player) // hàm quản lý chuyển động của sword
+    public void setupSword(Vector2 _dir, float _gravityScale , float _speedReturning , float _FrezeeTimer , Player _player) // hàm quản lý chuyển động của sword
     {
         player = _player;
         rb.velocity = _dir;
         rb.gravityScale = _gravityScale;
+        speedReturning = _speedReturning;
+        FrezeeTimer = _FrezeeTimer;
 
         if(amountPierce <= 0)
         {
@@ -192,13 +195,15 @@ public class Sword_Skill_Controller : MonoBehaviour
     {
         if (isReturning) return;
 
-
-
-        collision.GetComponent<Enemy>()?.takeDame(1);
+        if(collision.GetComponent<Enemy>() != null)
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            SworDameController(enemy);
+        }        
 
         if (collision.GetComponent<Enemy>() != null )
         {
-            if(isBouncing && EnemyTarget.Count <= 0) // hàm kiểm tra để đủ điều kiện kích hoạt việc tấn công qua lại sword
+            if(isBouncing && EnemyTarget.Count <= 0) // hàm kiểm tra để đủ điều kiện kích hoạt việc nảy qua lại sword
             {
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10);
                 //Kiểm tra trong phạm vị của vòng tròn là có bao nhiêu Enenmy thì sẽ gán chúng vào list
@@ -214,6 +219,12 @@ public class Sword_Skill_Controller : MonoBehaviour
         }
 
         StuckInto(collision);
+    }
+
+    private void SworDameController(Enemy enemy)
+    {
+        enemy.takeDame(1);
+        enemy.StartCoroutine("FreezeForTimer", FrezeeTimer);
     }
 
     void StuckInto(Collider2D collision)

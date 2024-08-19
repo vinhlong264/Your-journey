@@ -3,6 +3,8 @@
 public class Sword_Skill : Skill
 {
     [SerializeField] private SwordType swordType = SwordType.REGULAR;
+    [SerializeField] private float FrezeeTimer;
+    [SerializeField] private float speedReturning;
 
     [Header("Bounce info")]
     [SerializeField] private int amoutOfBounce;
@@ -80,7 +82,7 @@ public class Sword_Skill : Skill
             }
 
 
-            sw.setupSword(FinalDir, swordGravity , player);
+            sw.setupSword(FinalDir, swordGravity , speedReturning , FrezeeTimer , player);
         }
 
         player.AsignNewSword(newSword); // gán sword hiện tại được ném ra cho Player

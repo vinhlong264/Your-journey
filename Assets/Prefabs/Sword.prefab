@@ -67,9 +67,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.027214408, y: -0.12440848}
+  m_Offset: {x: 0.17437643, y: -0.12440848}
   serializedVersion: 2
-  m_Radius: 0.713827
+  m_Radius: 0.32139528
 --- !u!50 &8971847262639791406
 Rigidbody2D:
   serializedVersion: 4
@@ -112,9 +112,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   canRotation: 1
   isReturning: 0
-  speedBouce: 20
-  EnemyTarget: []
-  indexTarget: 0
 --- !u!1 &8448030583154104664
 GameObject:
   m_ObjectHideFlags: 0

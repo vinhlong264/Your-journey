@@ -21,7 +21,7 @@ public class SkeletonRunState : SkeletonGroundState
     public override void Update()
     {
         base.Update();
-        enemy.rb.velocity = new Vector2(enemy.isFacingDir , enemy.rb.velocity.y);
+        enemy.rb.velocity = new Vector2(enemy.isFacingDir * enemy.moveSpeed , enemy.rb.velocity.y);
 
         if(enemy.wallCheck() || !enemy.groundCheck())
         {

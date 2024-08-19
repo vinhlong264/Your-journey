@@ -45,7 +45,7 @@ public class Entity : MonoBehaviour
         
     }
 
-    public bool groundCheck() => Physics2D.Raycast(ground.position, Vector2.down, groundCheckDis, whatIsLayerMask); // check mặt đất
+    public bool groundCheck() => Physics2D.OverlapCircle(ground.position, groundCheckDis, whatIsLayerMask); // check mặt đất
     public bool wallCheck() => Physics2D.Raycast(wall.position, Vector2.right * isFacingDir, wallCheckDis, whatIsLayerMask);// check tường
 
     public void setZeroVelocity()
@@ -91,7 +91,7 @@ public class Entity : MonoBehaviour
 
     protected virtual void OnDrawGizmos()
     {
-        Gizmos.DrawLine(ground.position, new Vector3(ground.position.x, ground.position.y - groundCheckDis));
+        Gizmos.DrawWireSphere(ground.position, groundCheckDis);
         Gizmos.color = Color.red;
         Gizmos.DrawLine(wall.position, new Vector3(wall.position.x + wallCheckDis * isFacingDir, wall.position.y));
     }

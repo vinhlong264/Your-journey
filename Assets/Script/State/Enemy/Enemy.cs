@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : Entity , IDamage
@@ -17,6 +16,10 @@ public class Enemy : Entity , IDamage
     public Vector2 stunDirection;
     [SerializeField] protected bool isCanStun;
     [SerializeField] GameObject CounterImage;
+
+
+    public float DefaultSpeed;
+
     public EnemyStateMachine StateMachine {  get; private set; }
     public override void Awake()
     {
@@ -27,6 +30,7 @@ public class Enemy : Entity , IDamage
     public override void Start()
     {
         base.Start();
+        DefaultSpeed = moveSpeed;
     }
     public override void Update()
     {
@@ -34,7 +38,7 @@ public class Enemy : Entity , IDamage
         StateMachine.currentState.Update();
     }
 
-
+    #region Conuter attack
     public virtual bool checkStunned()
     {
         if (isCanStun) // isCanStun == true thì sẽ gọi hàm closeCounterAttack() để tắt phát hiện tấn công đi rồi trả hàm này về true
@@ -46,7 +50,6 @@ public class Enemy : Entity , IDamage
         return false;
     }
 
-
     public void OpenCounterAttack()
     {
         isCanStun = true;
@@ -57,6 +60,31 @@ public class Enemy : Entity , IDamage
     {
         isCanStun = false;
         CounterImage.SetActive(false);
+    }
+
+    #endregion
+
+    public virtual void FreezeToTimer(bool _timeFrozen) // Đóng băng hoạt động của Enemy lại khi bị tấn công bởi các skill của Player
+    {
+        if (_timeFrozen)
+        {
+            moveSpeed = 0;
+            animator.speed = 0;
+        }
+        else
+        {
+            moveSpeed = DefaultSpeed;
+            animator.speed = 1;
+        }
+    }
+
+    protected virtual IEnumerator FreezeForTimer(float _second)
+    {
+        FreezeToTimer(true);
+        Debug.Log("Đang bị đóng băng");
+        yield return new WaitForSeconds(_second);
+        FreezeToTimer(false);
+        Debug.Log("Kết thúc đóng băng");
     }
 
     public void animationTriggerFinish() => StateMachine.currentState.AnimationTriggerCalled();
