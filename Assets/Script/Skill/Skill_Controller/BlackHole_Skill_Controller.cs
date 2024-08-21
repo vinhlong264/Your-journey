@@ -1,37 +1,120 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlackHole_Skill_Controller : MonoBehaviour
 {
+    [Header("HotKey info")]
     [SerializeField] private GameObject hotKeyPrefabs;
     [SerializeField] private List<KeyCode> ListHotKey;
+    private bool canCreateHotKey = true;
 
-    public float maxSize; // kích thước
-    public float growSpeed; // tốc độ phát triển
-    public bool canGrow; // kiểm tra xem có thể phát triển không
-    public Vector2 DefaultLocal;
+    [Header("Blackhole info")]
+    private float maxSize; // kích thước
+    private float growSpeed; // tốc độ phát triển
+    private float shrinkSpeed; // tốc độ thu lại
 
+    private bool canGrow = true; // kiểm tra xem có thể phát triển không
+    public bool canShrink; // Kiểm tra xem có thể thu lại không
 
-    public List<Transform> target = new List<Transform>();
+    [Header("List object")]
+    [SerializeField] private List<Transform> target = new List<Transform>(); // Dùng để lưu trữ Enemy khi ấn các nút
+    private List<GameObject> createHotKey = new List<GameObject>(); //Lưu trữ các GameObject HotKey sau khi được khởi tạo 
 
-    private void Start()
+    [Header("Clone info")]
+    public int amountOfCloneAttack; // số lượng clone
+    private bool cloneAttackReleased; // biến kiểm tra clone
+    private float cloneAttackTimer; // cool down
+    public float cloneAttackCooldown = 0.3f;
+
+    public void setUpBlackHole(float _maxSize , float _growSpeed, float _shrinkSpeed, int _amountOfCloneAttack , float _cloneAttackCoolDown)
     {
-        DefaultLocal = transform.localScale;
+        maxSize = _maxSize;
+        growSpeed = _growSpeed;
+        shrinkSpeed = _shrinkSpeed;
+        amountOfCloneAttack = _amountOfCloneAttack;
+        cloneAttackCooldown = _cloneAttackCoolDown;
     }
 
-    // Update is called once per frame
+
+    
     void Update()
     {
-        if (canGrow)
+        cloneAttackTimer -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            transform.localScale = Vector2.Lerp(transform.localScale , new Vector2(maxSize, maxSize), growSpeed * Time.deltaTime);
+            DestroyHotKey();
+            cloneAttackReleased = true;
+            canCreateHotKey = false;
+
+            PlayerManager.instance.player.makeTransprent(true);
+        }
+
+        CloneAttackLogic();
+
+        if (canGrow && !canShrink)
+        {
+            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(maxSize, maxSize), growSpeed * Time.deltaTime);
+        }
+
+        if (canShrink)
+        {
+            transform.localScale = Vector2.Lerp(transform.localScale, new Vector3(-1, -1, 0), shrinkSpeed * Time.deltaTime);
+            if (transform.localScale.x < 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    private void CloneAttackLogic()
+    {
+        if (cloneAttackTimer < 0 && cloneAttackReleased)
+        {
+            cloneAttackTimer = cloneAttackCooldown;
+            int indexTarget = Random.Range(0, target.Count);
+
+            int xOffSet; // tạo ra khoảng cách khi tạo ra các clone ở bên trái phải phải enemy
+
+            if (Random.Range(0, 10) > 5)
+            {
+                xOffSet = 2;
+            }
+            else
+            {
+                xOffSet = -2;
+            }
+
+            SkillManager.instance.clone_skill.CreateClone(target[indexTarget], new Vector3(xOffSet, 0, 0));
+            amountOfCloneAttack--;
+            if (amountOfCloneAttack <= 0)
+            {
+                Invoke("blackHoleFinish", 1f); // Delay khoảng 1s
+            }
+        }
+    }
+
+    private void blackHoleFinish()
+    {
+        PlayerManager.instance.player.ExitStateBlackHole(); // Thoát trạng thái Black Hole
+        canShrink = true;
+        cloneAttackReleased = false;
+    }
+
+    private void DestroyHotKey()
+    {
+        if (createHotKey.Count <= 0) return;
+
+        foreach(GameObject i  in createHotKey)
+        {
+            Destroy(i);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.GetComponent<Enemy>() != null)
+        if (collision.GetComponent<Enemy>() != null)
         {
 
             collision.GetComponent<Enemy>().FreezeToTimer(true);
@@ -40,18 +123,32 @@ public class BlackHole_Skill_Controller : MonoBehaviour
         }
     }
 
-    private void CreateHotKey(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if(ListHotKey.Count <= 0)
+        if(collision.GetComponent<Enemy>() != null)
+        {
+            collision.GetComponent<Enemy>().FreezeToTimer(false);
+        }
+    }
+
+    private void CreateHotKey(Collider2D collision) // Quản lý việc tạo ra các HotKey
+    {
+        if (ListHotKey.Count <= 0) // ngăn việc List rỗng nhưng hàm này vẫn được chạy
         {
             return;
         }
 
+        if (!canCreateHotKey)
+        {
+            return;
+        }
 
         GameObject newHotKey = Instantiate(hotKeyPrefabs, collision.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
-        KeyCode chooseKey = ListHotKey[Random.Range(0, ListHotKey.Count)];
+        createHotKey.Add(newHotKey);
 
-        ListHotKey.Remove(chooseKey);
+        KeyCode chooseKey = ListHotKey[Random.Range(0, ListHotKey.Count)]; //Lấy ra ngẫu nhiên HotKey
+
+        ListHotKey.Remove(chooseKey); // Xóa đi những KeyCode trong List khi chúng đc lấy ra
 
         BlackHole_HotKey_Controller hotKetScript = newHotKey.GetComponent<BlackHole_HotKey_Controller>();
         if (hotKetScript != null)
@@ -61,5 +158,5 @@ public class BlackHole_Skill_Controller : MonoBehaviour
     }
 
 
-    public void addEnemy(Transform _enemyTransform) => target.Add(_enemyTransform);
+    public void addEnemy(Transform _enemyTransform) => target.Add(_enemyTransform); // Lưu vị trí của các Enemy vào trong target
 }

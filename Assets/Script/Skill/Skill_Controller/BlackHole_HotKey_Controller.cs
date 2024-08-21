@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class BlackHole_HotKey_Controller : MonoBehaviour
@@ -6,12 +6,14 @@ public class BlackHole_HotKey_Controller : MonoBehaviour
     private SpriteRenderer sr;
 
 
-    private KeyCode myHotKey;
-    private TextMeshProUGUI myHotKeyText;
-    private Transform enemiesTransform;
+    private KeyCode myHotKey; // KeyCode
+    private TextMeshProUGUI myHotKeyText; // text 
+    private Transform enemiesTransform; // vị trí enemy
     private BlackHole_Skill_Controller myBlackHole;
 
-    public void setUpKeyCode(KeyCode _myNewHotKey , Transform _enemiesTransform , BlackHole_Skill_Controller _blackHole)
+
+    //Hàm cài đặt các KeyCode
+    public void setUpKeyCode(KeyCode _myNewHotKey , Transform _enemiesTransform , BlackHole_Skill_Controller _blackHole) 
     {
         sr = GetComponent<SpriteRenderer>();
         myHotKeyText = GetComponentInChildren<TextMeshProUGUI>();
@@ -26,7 +28,7 @@ public class BlackHole_HotKey_Controller : MonoBehaviour
     {
         if(Input.GetKeyDown(myHotKey))
         {
-            myBlackHole.addEnemy(enemiesTransform);
+            myBlackHole.addEnemy(enemiesTransform);// gán vị trí của Enemy khi mỗi lần ấn nút
 
             myHotKeyText.color = Color.clear;
             sr.color = Color.clear;

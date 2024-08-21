@@ -27,6 +27,8 @@ public class Entity : MonoBehaviour
     #region Component
     public Animator animator { get; private set; }
     public Rigidbody2D rb { get; private set; }
+
+    private SpriteRenderer sr;
     #endregion
 
     public virtual void Awake()
@@ -36,6 +38,7 @@ public class Entity : MonoBehaviour
 
     public virtual void Start()
     {
+        sr = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -79,6 +82,18 @@ public class Entity : MonoBehaviour
         isFacingDir *= -1;
         isFacingRight = !isFacingRight;
         transform.Rotate(0, 180, 0);
+    }
+
+    public void makeTransprent(bool _transprent)
+    {
+        if(_transprent)
+        {
+            sr.color = Color.clear;
+        }
+        else
+        {
+            sr.color = new Color(1, 1, 1, 1);
+        }
     }
 
     protected IEnumerator isKnockBack() // Coroutine tạo hiệu ứng knockBack

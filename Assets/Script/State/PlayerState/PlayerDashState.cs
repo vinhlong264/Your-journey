@@ -11,7 +11,7 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        SkillManager.instance.clone_skill.CreateClone(_player.transform);
+        SkillManager.instance.clone_skill.CreateClone(_player.transform , Vector3.zero);
         /* Hàm được gọi từ SkillManager thông qua singleton
        Hàm CreateClone có tham số truyền vào là transform nhằm lấy được vị trí của Player hiện tại để khi bắt đầu kích hoạt
        Dash sẽ tạo ra Clone ở thời điểm ấy*/

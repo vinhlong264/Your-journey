@@ -15,6 +15,12 @@ public class PlayerGroundedState : PlayerState
     {
         base.Execute();
 
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _stateMachine.changeState(_player._blackHoleState);
+        }
+
         //Kích hoạt sword skill
         if (Input.GetKeyDown(KeyCode.Mouse1) && hasNoSword())
         {

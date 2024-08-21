@@ -5,10 +5,10 @@ using UnityEngine;
 public class Clone_Skill : Skill
 {
     [SerializeField] private GameObject Clone_Pre;
-    public void CreateClone(Transform _clonePos)
+    public void CreateClone(Transform _clonePos , Vector3 _ofSet)
     {
         GameObject newClone = Instantiate(Clone_Pre);
-        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos , coolDown);
+        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos , coolDown , _ofSet);
     }
    
 }

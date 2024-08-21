@@ -39,7 +39,7 @@ public class Clone_Controller : MonoBehaviour
         
     }
 
-    public void setUpClone(Transform _cloneTrasform , float coolDownTimer)
+    public void setUpClone(Transform _cloneTrasform , float coolDownTimer , Vector3 _offset)
     {
         if (canAttack)
         {
@@ -47,7 +47,7 @@ public class Clone_Controller : MonoBehaviour
         }
 
 
-        transform.position = _cloneTrasform.position;
+        transform.position = _cloneTrasform.position + _offset;
         CoolDown = coolDownTimer;
 
         FacingClone();
@@ -62,12 +62,12 @@ public class Clone_Controller : MonoBehaviour
             if(hit.GetComponent<Enemy>() != null)
             {
                 float distaceToEnenmy = Vector2.Distance(transform.position, hit.transform.position); // lấy ra khoảng cách của Player và Enemy
-                Debug.Log(distaceToEnenmy);
+                //Debug.Log(distaceToEnenmy);
                 if(distaceToEnenmy < closesDistance) // nếu khoảng cách lấy ra nhỏ hơn khoảng cách đã lưu
                 {
                     closesDistance = distaceToEnenmy; // gán lại giá trị closesDistance
                     closestEnemy = hit.transform; // lấy ra vị trí của Enemy
-                    Debug.Log("closestEnemy: " + closestEnemy);
+                    //Debug.Log("closestEnemy: " + closestEnemy);
 
                 }
             }

@@ -42,6 +42,7 @@ public class Player : Entity
     public PlayerCounterAttackState _counterAttackState { get; private set; }
     public PlayerAnimSwordState _animSwordState { get; private set; }
     public PlayerCatchSwordState _catchSwordState { get; private set; }
+    public PlayerBlackHoleState _blackHoleState { get; private set; }
 
     #endregion
 
@@ -65,6 +66,7 @@ public class Player : Entity
         _counterAttackState = new PlayerCounterAttackState(this, _stateMachine, "CounterAttack");
         _animSwordState = new PlayerAnimSwordState(this, _stateMachine, "animSword");
         _catchSwordState = new PlayerCatchSwordState(this, _stateMachine, "catchSword");
+        _blackHoleState = new PlayerBlackHoleState(this, _stateMachine, "Jump");
 
     }
 
@@ -85,7 +87,7 @@ public class Player : Entity
         checkForDashInput();
     }
 
-
+    #region Skill
     public void AsignNewSword(GameObject newSword)
     {
         sword = newSword;
@@ -97,6 +99,14 @@ public class Player : Entity
         _stateMachine.changeState(_catchSwordState);
         Destroy(sword);
     }
+
+
+    public void ExitStateBlackHole()
+    {
+        Debug.Log("Thoát khỏi trạng thái Black Hole");
+        _stateMachine.changeState(_airState);
+    }
+    #endregion
 
     public IEnumerator isBusyFor(float second) // Croutine check Player có đang tấn công không. Khi kích hoạt mới log
     {
