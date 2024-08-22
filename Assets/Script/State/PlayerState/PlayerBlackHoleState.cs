@@ -43,7 +43,10 @@ public class PlayerBlackHoleState : PlayerState
 
         }
 
-        //Thoát khỏi trạng thái này sau khi tất cả đợt tấn công của clone kết thúc
+        if (SkillManager.instance.blackHole_skill.skillCompelete())
+        {
+            _stateMachine.changeState(_player._airState);
+        }
     }
 
     public override void Exit()

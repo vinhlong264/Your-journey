@@ -2587,6 +2587,7 @@ GameObject:
   - component: {fileID: 1344034098}
   - component: {fileID: 1344034099}
   - component: {fileID: 1344034100}
+  - component: {fileID: 1344034101}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -2695,10 +2696,30 @@ MonoBehaviour:
   coolDown: 0
   amountOfCloneAttack: 5
   cloneAttackCooldown: 0.35
+  blackHoleDuration: 3
   blackHolePrefabs: {fileID: 7999831627890343807, guid: b44cd4435c5fa8245ae6e37a094ede3a, type: 3}
   maxSize: 15
   growSpeed: 3
   shrinkSpeed: 6
+--- !u!114 &1344034101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344034094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8d555fd2fb23944bdc7cb45b7b4398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDown: 0
+  newCrystal: {fileID: 1885430222551567074, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+  currenrCrystal: {fileID: 0}
+  crystalDuration: 3
+  canExplore: 0
+  canMoveEnemies: 0
+  moveSpeed: 0
 --- !u!1 &1492686999
 GameObject:
   m_ObjectHideFlags: 0
@@ -5012,6 +5033,63 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!1001 &1662298172
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1885430222551567074, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_Name
+      value: Crystal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254882473800788133, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -22.277613
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254882473800788133, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.8220189
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254882473800788133, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254882473800788133, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254882473800788133, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254882473800788133, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254882473800788133, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254882473800788133, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254882473800788133, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5254882473800788133, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
 --- !u!1 &1722752604
 GameObject:
   m_ObjectHideFlags: 0
@@ -5836,3 +5914,4 @@ SceneRoots:
   - {fileID: 456154705}
   - {fileID: 1344034097}
   - {fileID: 339840840}
+  - {fileID: 1662298172}

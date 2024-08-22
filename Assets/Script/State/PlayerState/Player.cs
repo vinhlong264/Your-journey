@@ -85,6 +85,11 @@ public class Player : Entity
     {
         _stateMachine.currentState.Execute(); //Thực hiện việc chạy các state
         checkForDashInput();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            SkillManager.instance.crystal_skill.UseSkill();
+        }
     }
 
     #region Skill
