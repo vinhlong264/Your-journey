@@ -22,8 +22,13 @@ public class Crystal_Skill : Skill
         }
         else
         {
+            Vector2 PlayerPos = player.transform.position;
+
             player.transform.position = currenrCrystal.transform.position;
-            Destroy(currenrCrystal);
+
+            currenrCrystal.transform.position = PlayerPos;
+
+            currenrCrystal.GetComponent<Crystal_Skill_Controller>().FinishCrystal();
         }
     }
 }
