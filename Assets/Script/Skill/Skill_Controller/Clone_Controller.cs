@@ -39,7 +39,7 @@ public class Clone_Controller : MonoBehaviour
         
     }
 
-    public void setUpClone(Transform _cloneTrasform , float coolDownTimer , Vector3 _offset)
+    public void setUpClone(Transform _cloneTrasform , float coolDownTimer , Vector3 _offset , Transform _closestEnemy)
     {
         if (canAttack)
         {
@@ -50,28 +50,30 @@ public class Clone_Controller : MonoBehaviour
         transform.position = _cloneTrasform.position + _offset;
         CoolDown = coolDownTimer;
 
+        closestEnemy = _closestEnemy;
+
         FacingClone();
     }
 
     private void FacingClone()
     {
-        Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 25);
-        float closesDistance = Mathf.Infinity; // đại diện 1 giá trị dương vô cùng
-        foreach(Collider2D hit in col)
-        {
-            if(hit.GetComponent<Enemy>() != null)
-            {
-                float distaceToEnenmy = Vector2.Distance(transform.position, hit.transform.position); // lấy ra khoảng cách của Player và Enemy
-                //Debug.Log(distaceToEnenmy);
-                if(distaceToEnenmy < closesDistance) // nếu khoảng cách lấy ra nhỏ hơn khoảng cách đã lưu
-                {
-                    closesDistance = distaceToEnenmy; // gán lại giá trị closesDistance
-                    closestEnemy = hit.transform; // lấy ra vị trí của Enemy
-                    //Debug.Log("closestEnemy: " + closestEnemy);
+        //Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 25);
+        //float closesDistance = Mathf.Infinity; // đại diện 1 giá trị dương vô cùng
+        //foreach(Collider2D hit in col)
+        //{
+        //    if(hit.GetComponent<Enemy>() != null)
+        //    {
+        //        float distaceToEnenmy = Vector2.Distance(transform.position, hit.transform.position); // lấy ra khoảng cách của Player và Enemy
+        //        //Debug.Log(distaceToEnenmy);
+        //        if(distaceToEnenmy < closesDistance) // nếu khoảng cách lấy ra nhỏ hơn khoảng cách đã lưu
+        //        {
+        //            closesDistance = distaceToEnenmy; // gán lại giá trị closesDistance
+        //            closestEnemy = hit.transform; // lấy ra vị trí của Enemy
+        //            //Debug.Log("closestEnemy: " + closestEnemy);
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
         if(closestEnemy != null)
         {

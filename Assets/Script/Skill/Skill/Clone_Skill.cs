@@ -8,7 +8,7 @@ public class Clone_Skill : Skill
     public void CreateClone(Transform _clonePos , Vector3 _ofSet)
     {
         GameObject newClone = Instantiate(Clone_Pre);
-        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos , coolDown , _ofSet);
+        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos , coolDown , _ofSet , findToClosestEnemy(newClone.transform));
     }
    
 }

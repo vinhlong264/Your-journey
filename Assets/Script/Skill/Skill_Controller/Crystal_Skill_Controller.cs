@@ -5,10 +5,15 @@ public class Crystal_Skill_Controller : MonoBehaviour
     private float CrystalExitTime;
 
     [SerializeField] private bool canExplore;
-    private bool canMoveEnemies;
-    private float moveSpeed;
     private bool canGrow;
     [SerializeField] private float growSpeed;
+    
+    
+    private float moveSpeed;
+    private bool canMoveEnemies;
+    private Transform closestTarget;
+
+
 
     private Animator animator;
     private CircleCollider2D cd;
@@ -18,12 +23,13 @@ public class Crystal_Skill_Controller : MonoBehaviour
         cd = GetComponent<CircleCollider2D>();
     }
 
-    public void setUpCrystal(float _crystalDuration, float _moveSpeed, bool _canExplore, bool _canMoveEnemies)
+    public void setUpCrystal(float _crystalDuration, float _moveSpeed, bool _canExplore, bool _canMoveEnemies , Transform _closestTarget)
     {
         CrystalExitTime = _crystalDuration;
         moveSpeed = _moveSpeed;
         canExplore = _canExplore;
         canMoveEnemies = _canMoveEnemies;
+        closestTarget = _closestTarget;
     }
 
     // Update is called once per frame
@@ -38,6 +44,17 @@ public class Crystal_Skill_Controller : MonoBehaviour
         if (canGrow)
         {
             transform.localScale = Vector2.Lerp(transform.localScale , new Vector2(3,3) , growSpeed * Time.deltaTime);  
+        }
+
+
+        if (canMoveEnemies)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, closestTarget.position, moveSpeed * Time.deltaTime);
+            if (Vector2.Distance(transform.position, closestTarget.position) < 0.5f)
+            {
+                FinishCrystal();
+                canMoveEnemies = false;
+            }
         }
     }
 
