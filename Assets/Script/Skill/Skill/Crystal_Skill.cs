@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Crystal_Skill : Skill
@@ -14,15 +14,16 @@ public class Crystal_Skill : Skill
 
     [Header("Multi info")]
     [SerializeField] private bool canMultiCrystal;
+    [SerializeField] private float multiCooldown;
     [SerializeField] private int amountOfMulti;
     [SerializeField] private List<GameObject> listCrystal = new List<GameObject>();
     public override void UseSkill()
     {
         base.UseSkill();
 
-        for(int i = 0; i < amountOfMulti; i++)
+        if (CanUseMutilCystal())
         {
-            listCrystal.Add(newCrystal);
+            return;
         }
 
 
@@ -52,13 +53,26 @@ public class Crystal_Skill : Skill
     {
         if (canMultiCrystal)
         {
-            GameObject CrystalSpawn = listCrystal[listCrystal.Count - 1];
+            if (listCrystal.Count > 0)
+            {
+                //coolDown = 0;
 
-            GameObject newCrystal = Instantiate(CrystalSpawn , player.transform.position , Quaternion.identity);
 
-            Crystal_Skill_Controller crystalScript = newCrystal.GetComponent<Crystal_Skill_Controller>();
+                GameObject CrystalSpawn = listCrystal[listCrystal.Count - 1];
+                GameObject newCrystal = Instantiate(CrystalSpawn, player.transform.position, Quaternion.identity);
+                listCrystal.Remove(CrystalSpawn);
+                newCrystal.GetComponent<Crystal_Skill_Controller>()
+                    .setUpCrystal(crystalDuration, moveSpeed, canExplore, canMoveEnemies, findToClosestEnemy(newCrystal.transform));
 
-            return true;
+                if(listCrystal.Count <= 0f)
+                {
+                    Debug.Log("Dừng sử dụng Skill");
+                    coolDown = multiCooldown;
+                    refillCrystal();
+                }
+
+                return true;
+            }
         }
 
         return false;

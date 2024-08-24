@@ -30,18 +30,6 @@ public class BlackHole_Skill : Skill
             currentBlackHole.setUpBlackHole(maxSize, growSpeed, shrinkSpeed, amountOfCloneAttack, cloneAttackCooldown,blackHoleDuration);
         }
     }
-
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-    }
-
-
     public bool skillCompelete()
     {
         if(!currentBlackHole) return false;

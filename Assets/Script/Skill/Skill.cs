@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 public class Skill : MonoBehaviour
 {
-    protected float coolDownTimer;
+    [SerializeField] protected float coolDownTimer;
     [SerializeField] protected float coolDown;
     protected Player player;
 
@@ -17,19 +17,20 @@ public class Skill : MonoBehaviour
 
     public virtual bool CanUseSkill()
     {
-        if(coolDownTimer < 0f)
+        if(coolDownTimer <= 0f)
         {
             //Sử dụng skill
             UseSkill();
             coolDownTimer = coolDown;
             return true;
         }
+        Debug.Log("Đang hồi chiêu");
         return false;
     }
 
     public virtual void UseSkill()
     {
-
+        // sử dụng những skill được chỉ định
     }
 
     // Hàm dùng để tìm ra vị trí gần nhất của Enemy vs các Skill cần lấy vị trí
