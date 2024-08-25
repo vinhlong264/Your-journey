@@ -6,17 +6,21 @@ public class Crystal_Skill : Skill
     [SerializeField] private GameObject newCrystal; // Object prefabs
     [SerializeField] private GameObject currenrCrystal; // Object container
 
+    [Header("Crystal Mirage")]
+    [SerializeField] private bool canCreateCloneToPos; // có thể sinh ra clone tại vị trí Pos
+
+
     [Header("Crystal info")]
-    [SerializeField] private float crystalDuration;
-    [SerializeField] private bool canExplore;
-    [SerializeField] private bool canMoveEnemies;
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float crystalDuration; // coolDown
+    [SerializeField] private bool canExplore; // có thể phát nổ
+    [SerializeField] private bool canMoveEnemies;  // có thể di chuyển tới Enemis
+    [SerializeField] private float moveSpeed; // tốc độ di chuyển
 
     [Header("Multi info")]
     [SerializeField] private bool canMultiCrystal;
-    [SerializeField] private float multiCooldown;
-    [SerializeField] private int amountOfMulti;
-    [SerializeField] private List<GameObject> listCrystal = new List<GameObject>();
+    [SerializeField] private float multiCooldown; // coolDown của Multi
+    [SerializeField] private int amountOfMulti; // số lượng multi
+    [SerializeField] private List<GameObject> listCrystal = new List<GameObject>();// List chứa crystal
     public override void UseSkill()
     {
         base.UseSkill();
@@ -28,7 +32,7 @@ public class Crystal_Skill : Skill
 
 
 
-        if (currenrCrystal == null)
+        if (currenrCrystal == null) // Khởi tạo Crystal
         {
             currenrCrystal = Instantiate(newCrystal , player.transform.position , Quaternion.identity);
             Crystal_Skill_Controller curentCrystalScript = currenrCrystal.GetComponent<Crystal_Skill_Controller>();
@@ -38,13 +42,21 @@ public class Crystal_Skill : Skill
         {
             if (canMoveEnemies) return;
 
-            Vector2 PlayerPos = player.transform.position;
+            Vector2 PlayerPos = player.transform.position; // Lấy ra vị trí của Player
 
-            player.transform.position = currenrCrystal.transform.position; 
+            player.transform.position = currenrCrystal.transform.position; //Hóa đổi vị trí Player và Crystal 
 
             currenrCrystal.transform.position = PlayerPos; // đổi chỗ cho Player
 
-            currenrCrystal.GetComponent<Crystal_Skill_Controller>().FinishCrystal();
+            if (canCreateCloneToPos) // cho phép sinh ra clone tại vị trí của Crystal ngay khi đổi chỗ
+            {
+                SkillManager.instance.clone_skill.CreateClone(currenrCrystal.transform, Vector3.zero);
+                Destroy(currenrCrystal);
+            }
+            else
+            {
+                currenrCrystal.GetComponent<Crystal_Skill_Controller>().FinishCrystal();
+            }
         }
     }
 

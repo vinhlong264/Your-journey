@@ -99,7 +99,7 @@ public class Player : Entity
     }
 
 
-    public void CatchTheSword()
+    public void CatchTheSword() // chuyển về State Catch sword
     {
         _stateMachine.changeState(_catchSwordState);
         Destroy(sword);

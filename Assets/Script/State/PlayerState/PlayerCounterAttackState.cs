@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerCounterAttackState : PlayerState
 {
+    private bool canCreateClone;
     public PlayerCounterAttackState(Player player, PlayerStateMachine stateMachine, string animationBoolName) : base(player, stateMachine, animationBoolName)
     {
     }
@@ -10,6 +11,7 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        canCreateClone = true;
         stateTimer = _player.counterAttackDurarion; // Cooldown của CounterSate
         _player.animator.SetBool("SuccesfullCounterAttack", false);
     }
@@ -28,7 +30,11 @@ public class PlayerCounterAttackState : PlayerState
                     Debug.Log("Đang ở SuccesfullCounterAttack");
                     stateTimer = 10;
                     _player.animator.SetBool("SuccesfullCounterAttack", true);
-                    SkillManager.instance.clone_skill.CreateCloneCounterAttack(hit.transform);
+                    if (canCreateClone)
+                    {
+                        canCreateClone = false;
+                        SkillManager.instance.clone_skill.CreateCloneCounterAttack(hit.transform);
+                    }                    
                 }
             }
         }

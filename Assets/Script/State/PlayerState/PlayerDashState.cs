@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PlayerDashState : PlayerState
+﻿public class PlayerDashState : PlayerState
 {
     public PlayerDashState(Player player, PlayerStateMachine stateMachine, string animationBoolName) : base(player, stateMachine, animationBoolName)
     {
@@ -15,7 +11,7 @@ public class PlayerDashState : PlayerState
         /* Hàm được gọi từ SkillManager thông qua singleton
        Hàm CreateClone có tham số truyền vào là transform nhằm lấy được vị trí của Player hiện tại để khi bắt đầu kích hoạt
        Dash sẽ tạo ra Clone ở thời điểm ấy*/
-        stateTimer = _player.dashDuration; 
+        stateTimer = _player.dashDuration;
     }
 
     public override void Execute()

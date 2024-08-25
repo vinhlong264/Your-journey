@@ -1,33 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Clone_Skill : Skill
 {
-    [Header("Clon info")]
+    [Header("Clone info")]
     [SerializeField] private GameObject Clone_Pre;
     [SerializeField] private float cloneDuration;
 
+    [Header("Skills of clone")]
     [SerializeField] private bool createDashCloneOnStart;
-    [SerializeField] private bool createDashCloneOnOver;
-    [SerializeField] private bool CreateCloneCouterAttack;
+    [SerializeField] private bool createDashCloneOnOver;  
+    [SerializeField] private bool CreateCloneCouterAttack; 
+    [SerializeField] private bool canDuplicateClone; 
 
-    public void CreateClone(Transform _clonePos , Vector3 _ofSet)
+    public void CreateClone(Transform _clonePos, Vector3 _ofSet) // Hàm khởi tạo clone
     {
         GameObject newClone = Instantiate(Clone_Pre);
-        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos , coolDown , _ofSet , findToClosestEnemy(newClone.transform));
+        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos, coolDown, _ofSet, findToClosestEnemy(newClone.transform), canDuplicateClone);
     }
 
-    public void CreateDashOnStart()
+    #region Method Skills of Clone
+    public void CreateDashOnStart()  // tạo ra clone khi Player bắt đầu 1 state nào đó
     {
-        if(createDashCloneOnStart)
+        if (createDashCloneOnStart)
         {
             CreateClone(player.transform, Vector3.zero);
         }
     }
 
 
-    public void CreateDashCloneOnOver()
+    public void CreateDashCloneOnOver() // tạo ra clone khi Player kết thúc 1 state nào đó
     {
         if (createDashCloneOnOver)
         {
@@ -35,7 +37,7 @@ public class Clone_Skill : Skill
         }
     }
 
-    public void CreateCloneCounterAttack(Transform _enemes)
+    public void CreateCloneCounterAttack(Transform _enemes) // tạo ra clone khi Player Counter
     {
         if (CreateCloneCouterAttack)
         {
@@ -43,10 +45,11 @@ public class Clone_Skill : Skill
         }
     }
 
-    IEnumerator DelayCounterCloneAttack(Transform _transform , Vector3 offSet)
+    IEnumerator DelayCounterCloneAttack(Transform _transform, Vector3 offSet) // Delay
     {
         yield return new WaitForSeconds(0.4f);
-        CreateClone(_transform , offSet);
+        CreateClone(_transform, offSet);
     }
-   
+    #endregion
+
 }

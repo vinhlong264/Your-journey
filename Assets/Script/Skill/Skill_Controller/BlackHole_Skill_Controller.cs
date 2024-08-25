@@ -30,7 +30,7 @@ public class BlackHole_Skill_Controller : MonoBehaviour
 
     private bool playerCanDispear = true;
 
-    public bool playerCanExitState { get; private set; }    // biến kết nối để kiểm soát việc thỏa khỏi trạng thái này
+    public bool playerCanExitState { get; private set; }    // biến kết nối để kiểm soát việc thoát khỏi trạng thái này
 
     //Hàm setUp thuộc tính cho skill này
     public void setUpBlackHole(float _maxSize , float _growSpeed, float _shrinkSpeed, int _amountOfCloneAttack , float _cloneAttackCoolDown , float _blackHoleDuration)

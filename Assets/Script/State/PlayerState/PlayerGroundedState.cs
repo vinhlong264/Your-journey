@@ -66,7 +66,7 @@ public class PlayerGroundedState : PlayerState
         Sword_Skill_Controller scl = _player.sword.GetComponent<Sword_Skill_Controller>();
         if (scl != null)
         {
-            scl.ReturSword();
+            scl.ReturnSword();
         }
         return false;
     }

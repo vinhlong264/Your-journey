@@ -4,14 +4,18 @@ public class Clone_Controller : MonoBehaviour
 {
     private Animator anim;
     private SpriteRenderer sr;
-    private Transform closestEnemy;
-    [SerializeField] private float CoolDown;
-    [SerializeField] private float colorLosingSpeed;
+    private Transform closestEnemy; // vị trí của Enemy 
+    [SerializeField] private float CoolDown; // kiểm soát thời gian hồi chiêu
+    [SerializeField] private float colorLosingSpeed; // Tốc độ giảm alpha
 
     [Header("Attack Infor")]
-    [SerializeField] private Transform AttackCheck;
-    [SerializeField] private float AttackRadius;
-    [SerializeField] private bool canAttack;
+    [SerializeField] private Transform AttackCheck; // vị trí tấn công
+    [SerializeField] private float AttackRadius; // phạm vi tấn công
+    [SerializeField] private bool canAttack; // kiểm tra xem clone có được tấn công không
+
+    [Header("Clone Mirage")]
+    private bool canDuplicateClone; // kiểm tra xem có thể ra nhiều clone không
+    private int isFacing = 1;
 
     private void Awake()
     {
@@ -39,7 +43,8 @@ public class Clone_Controller : MonoBehaviour
         
     }
 
-    public void setUpClone(Transform _cloneTrasform , float coolDownTimer , Vector3 _offset , Transform _closestEnemy)
+    //Hàm setup thuộc tính của Clone
+    public void setUpClone(Transform _cloneTrasform , float _coolDown , Vector3 _offset , Transform _closestEnemy , bool _canDuplicateClone)
     {
         if (canAttack)
         {
@@ -47,60 +52,49 @@ public class Clone_Controller : MonoBehaviour
         }
 
 
-        transform.position = _cloneTrasform.position + _offset;
-        CoolDown = coolDownTimer;
+        transform.position = _cloneTrasform.position + _offset; // vị trí được khởi tạo
+        CoolDown = _coolDown;
 
         closestEnemy = _closestEnemy;
 
+        canDuplicateClone = _canDuplicateClone;
+
         FacingClone();
     }
-
-    private void FacingClone()
-    {
-        //Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 25);
-        //float closesDistance = Mathf.Infinity; // đại diện 1 giá trị dương vô cùng
-        //foreach(Collider2D hit in col)
-        //{
-        //    if(hit.GetComponent<Enemy>() != null)
-        //    {
-        //        float distaceToEnenmy = Vector2.Distance(transform.position, hit.transform.position); // lấy ra khoảng cách của Player và Enemy
-        //        //Debug.Log(distaceToEnenmy);
-        //        if(distaceToEnenmy < closesDistance) // nếu khoảng cách lấy ra nhỏ hơn khoảng cách đã lưu
-        //        {
-        //            closesDistance = distaceToEnenmy; // gán lại giá trị closesDistance
-        //            closestEnemy = hit.transform; // lấy ra vị trí của Enemy
-        //            //Debug.Log("closestEnemy: " + closestEnemy);
-
-        //        }
-        //    }
-        //}
-
-        if(closestEnemy != null)
-        {
-            if(transform.position.x > closestEnemy.position.x) // nếu clone ở hiện tại ở bên phải Enemy thì xoay sang trái
-            {
-                transform.Rotate(0, 180, 0);
-            }
-        }
-    }
-
     public void AnimationTrigger()
     {
         CoolDown = -.1f;
     }
 
 
-    public void attackTrigger()
+    public void attackTrigger() 
     {
         Collider2D[] col = Physics2D.OverlapCircleAll(AttackCheck.position, AttackRadius);
         
         foreach (Collider2D hit in col)
         {
-            if (hit.GetComponent<IDamage>() != null)
+            if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<IDamage>().takeDame(5);
-                Debug.Log(hit.gameObject);
-                
+                hit.GetComponent<Enemy>().takeDame(5);
+                if (canDuplicateClone)
+                {
+                    if(Random.Range(0,100) < 99)
+                    {
+                        SkillManager.instance.clone_skill.CreateClone(hit.transform, new Vector3(0.5f * isFacing, 0, 0));
+                    }
+                }
+            }
+        }
+    }
+
+    private void FacingClone() // Hàm thay đổi hướng nhìn của Clone
+    {
+        if (closestEnemy != null)
+        {
+            if (transform.position.x > closestEnemy.position.x) // nếu clone ở hiện tại ở bên phải Enemy thì xoay sang trái
+            {
+                isFacing = -1;
+                transform.Rotate(0, 180, 0);
             }
         }
     }

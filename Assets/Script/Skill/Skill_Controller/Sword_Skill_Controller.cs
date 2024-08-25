@@ -33,7 +33,6 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private float hitTimer;
     private float hitCoolDown;
-    private float spinDirection;
 
 
     void Awake()
@@ -55,8 +54,6 @@ public class Sword_Skill_Controller : MonoBehaviour
         {
             anim.SetBool("Rotation", true);
         }
-
-        spinDirection = Mathf.Clamp(rb.velocity.x, -1, 1);
     }
 
     public void isBounce(bool _isBouncing , int _amountOfBouce)
@@ -113,20 +110,19 @@ public class Sword_Skill_Controller : MonoBehaviour
         if (isBouncing && EnemyTarget.Count > 0)
         {
             transform.position = Vector2.MoveTowards(transform.position, EnemyTarget[indexTarget].position, speedBouce * Time.deltaTime);
-            if (Vector2.Distance(transform.position, EnemyTarget[indexTarget].position) < .1f)
+            if (Vector2.Distance(transform.position, EnemyTarget[indexTarget].position) < .1f) // so sánh khoảng cách giữa sword và enemy
             {
-                Debug.Log(Vector2.Distance(transform.position, EnemyTarget[indexTarget].position));
                 EnemyTarget[indexTarget].GetComponent<Enemy>().takeDame(1);
                 indexTarget++;
                 amountBouncing--;
-                Debug.Log(indexTarget);
+
                 if (amountBouncing <= 0) // sau khi nảy hết số lượt quy định thì sẽ isBouncing = false, isReturning = true
                 {
                     isBouncing = false; // dừng kĩ năng nảy của sword
                     isReturning = true; // Sword quay lại với Plater
                 }
 
-                if (indexTarget >= EnemyTarget.Count)
+                if (indexTarget >= EnemyTarget.Count)// Reset lại Indextarget
                 {
                     indexTarget = 0;
                 }
@@ -142,7 +138,7 @@ public class Sword_Skill_Controller : MonoBehaviour
 
             if(wasStop)
             {
-                Vector2 posTarget = new Vector2(transform.position.x + spinDirection, transform.position.y);
+                Vector2 posTarget = new Vector2(transform.position.x + 1, transform.position.y);
                 transform.position = Vector2.MoveTowards(transform.position, posTarget, 1.5f * Time.deltaTime);
 
 
@@ -171,9 +167,10 @@ public class Sword_Skill_Controller : MonoBehaviour
         }
     }
 
-    void stopWhenSpining()
+    void stopWhenSpining() // Kiểm soát việc dừng lại khi đi xa Player
     {
-        if (Vector2.Distance(player.transform.position, transform.position) > maxTravelDistace)
+        Debug.Log(Vector2.Distance(player.transform.position, transform.position));
+        if (Vector2.Distance(player.transform.position, transform.position) > maxTravelDistace && !wasStop)
         {
             wasStop = true;
             rb.constraints = RigidbodyConstraints2D.FreezePosition;
@@ -183,7 +180,7 @@ public class Sword_Skill_Controller : MonoBehaviour
     #endregion
 
 
-    public void ReturSword()
+    public void ReturnSword()
     {
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         //rb.isKinematic = false;
@@ -193,7 +190,7 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isReturning) return;
+        if (isReturning) return; // khi isReturning == true sẽ thoát luôn khỏi hàm này để đảm bảo k thực hiện logic bên dưới
 
         if(collision.GetComponent<Enemy>() != null)
         {
@@ -221,7 +218,7 @@ public class Sword_Skill_Controller : MonoBehaviour
         StuckInto(collision);
     }
 
-    private void SworDameController(Enemy enemy)
+    private void SworDameController(Enemy enemy) // Method attack
     {
         enemy.takeDame(1);
         enemy.StartCoroutine("FreezeForTimer", FrezeeTimer);
@@ -232,6 +229,7 @@ public class Sword_Skill_Controller : MonoBehaviour
         if(amountPierce > 0 && collision.GetComponent<Enemy>() != null) // Logic để tạo skill Pierce của sword
         {
             amountPierce--;
+            Debug.Log(amountPierce);
             return;
         }
 
