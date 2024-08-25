@@ -2651,6 +2651,10 @@ MonoBehaviour:
   coolDownTimer: 0
   coolDown: 2
   Clone_Pre: {fileID: 5208422648343834587, guid: 20eccc584ae61b944a904efbdcced7d8, type: 3}
+  cloneDuration: 0
+  createDashCloneOnStart: 0
+  createDashCloneOnOver: 0
+  CreateCloneCouterAttack: 0
 --- !u!114 &1344034099
 MonoBehaviour:
   m_ObjectHideFlags: 0

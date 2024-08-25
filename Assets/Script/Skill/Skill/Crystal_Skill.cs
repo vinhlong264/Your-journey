@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Crystal_Skill : Skill
 {
-    [SerializeField] GameObject newCrystal;
-    [SerializeField] GameObject currenrCrystal;
+    [SerializeField] private GameObject newCrystal; // Object prefabs
+    [SerializeField] private GameObject currenrCrystal; // Object container
 
     [Header("Crystal info")]
     [SerializeField] private float crystalDuration;
@@ -21,7 +21,7 @@ public class Crystal_Skill : Skill
     {
         base.UseSkill();
 
-        if (CanUseMutilCystal())
+        if (CanUseMutilCystal()) // sử dụng skill multil-Cystal
         {
             return;
         }
@@ -40,9 +40,9 @@ public class Crystal_Skill : Skill
 
             Vector2 PlayerPos = player.transform.position;
 
-            player.transform.position = currenrCrystal.transform.position;
+            player.transform.position = currenrCrystal.transform.position; 
 
-            currenrCrystal.transform.position = PlayerPos;
+            currenrCrystal.transform.position = PlayerPos; // đổi chỗ cho Player
 
             currenrCrystal.GetComponent<Crystal_Skill_Controller>().FinishCrystal();
         }
@@ -58,13 +58,15 @@ public class Crystal_Skill : Skill
                 //coolDown = 0;
 
 
-                GameObject CrystalSpawn = listCrystal[listCrystal.Count - 1];
+                GameObject CrystalSpawn = listCrystal[listCrystal.Count - 1]; 
                 GameObject newCrystal = Instantiate(CrystalSpawn, player.transform.position, Quaternion.identity);
-                listCrystal.Remove(CrystalSpawn);
+
+                listCrystal.Remove(CrystalSpawn); // xóa khỏi list khi nó đc lấy ra
+
                 newCrystal.GetComponent<Crystal_Skill_Controller>()
                     .setUpCrystal(crystalDuration, moveSpeed, canExplore, canMoveEnemies, findToClosestEnemy(newCrystal.transform));
 
-                if(listCrystal.Count <= 0f)
+                if(listCrystal.Count <= 0f) // khi list rỗng sẽ tự động thêm và phải chờ một thời gian ms đc sử dụng
                 {
                     Debug.Log("Dừng sử dụng Skill");
                     coolDown = multiCooldown;
@@ -79,7 +81,7 @@ public class Crystal_Skill : Skill
     }
 
 
-    private void refillCrystal()
+    private void refillCrystal() // Thêm 3 Crystal vào listCrystal
     {
         for(int i = 0; i < amountOfMulti; i++)
         {

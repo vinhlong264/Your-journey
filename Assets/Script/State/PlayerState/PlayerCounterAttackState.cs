@@ -28,6 +28,7 @@ public class PlayerCounterAttackState : PlayerState
                     Debug.Log("Đang ở SuccesfullCounterAttack");
                     stateTimer = 10;
                     _player.animator.SetBool("SuccesfullCounterAttack", true);
+                    SkillManager.instance.clone_skill.CreateCloneCounterAttack(hit.transform);
                 }
             }
         }
