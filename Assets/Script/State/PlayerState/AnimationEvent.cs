@@ -23,9 +23,10 @@ public class AnimationEvent : MonoBehaviour
         Collider2D[] col = Physics2D.OverlapCircleAll(player.AttackCheck.position, player.attackRadius);
         foreach(Collider2D hit in col)
         {
-            if(hit.GetComponent<IDamage>() != null)
+            if(hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<IDamage>().takeDame(5);
+                hit.GetComponent<Enemy>().Dame();
+                hit.GetComponent<CharacterStatus>().takeDame(player.status.dame.getValue());
             }
         }
     }

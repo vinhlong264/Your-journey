@@ -44,19 +44,11 @@ public class Skeleton : Enemy
         isFacingRight = true;
     }
 
-    public override void takeDame(float dame)
+    public override void Dame()
     {
         //Debug.Log("Receive dame");
         fx.StartCoroutine("FlashFx");
         StartCoroutine("isKnockBack");
-        currentHp -= dame;
-        if (currentHp <= 0)
-        {
-            animator.SetTrigger("isDead");
-            GetComponent<Skeleton>().enabled = false;
-            GetComponent<Collider2D>().enabled = false;
-            rb.bodyType = RigidbodyType2D.Static;
-        }
     }
 
     public override void Update()

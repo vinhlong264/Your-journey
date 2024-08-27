@@ -29,6 +29,7 @@ public class Entity : MonoBehaviour
     public Rigidbody2D rb { get; private set; }
 
     private SpriteRenderer sr;
+    public CharacterStatus status { get; private set; } 
     #endregion
 
     public virtual void Awake()
@@ -41,6 +42,7 @@ public class Entity : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        status = GetComponent<CharacterStatus>();
     }
 
     public virtual void Update()

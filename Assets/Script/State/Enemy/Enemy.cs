@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Enemy : Entity , IDamage
+public class Enemy : Entity
 {
     [Header("Attack info")]
     public float battleTime;
@@ -87,6 +87,12 @@ public class Enemy : Entity , IDamage
         Debug.Log("Kết thúc đóng băng");
     }
 
+
+    public virtual void Dame()
+    {
+
+    }
+
     public void animationTriggerFinish() => StateMachine.currentState.AnimationTriggerCalled();
 
     public RaycastHit2D isPlayerDetected() => Physics2D.Raycast(transform.position, Vector2.right * isFacingDir, attackCheckDis, isPlayer);
@@ -97,10 +103,5 @@ public class Enemy : Entity , IDamage
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackCheckDis * isFacingDir, transform.position.y));
         Gizmos.DrawWireSphere(AttackCheck.position, attackRadius);
-    }
-
-    public virtual void takeDame(float dame)
-    {
-        
     }
 }

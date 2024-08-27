@@ -75,7 +75,7 @@ public class Clone_Controller : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().takeDame(5);
+                hit.GetComponent<Enemy>().Dame();
                 if (canDuplicateClone)
                 {
                     if(Random.Range(0,100) < 99)

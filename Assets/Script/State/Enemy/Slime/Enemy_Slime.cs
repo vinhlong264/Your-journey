@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum SlimeType
@@ -26,15 +24,15 @@ public class Enemy_Slime : Enemy
 
 
     private EntityFx fx;
-    public SlimeIdleState idleState {  get; private set; }
+    public SlimeIdleState idleState { get; private set; }
     public SlimeRunState runState { get; private set; }
     public SlimeBatteState battleState { get; private set; }
     public SlimeAttackState attackState { get; private set; }
     public override void Awake()
     {
         base.Awake();
-        idleState = new SlimeIdleState(this , StateMachine , "Idle" , this);
-        runState = new SlimeRunState(this , StateMachine, "Run" , this);
+        idleState = new SlimeIdleState(this, StateMachine, "Idle", this);
+        runState = new SlimeRunState(this, StateMachine, "Run", this);
         battleState = new SlimeBatteState(this, StateMachine, "Run", this);
         attackState = new SlimeAttackState(this, StateMachine, "Attack", this);
     }
@@ -49,39 +47,37 @@ public class Enemy_Slime : Enemy
         hpCurrent = hpMax;
     }
 
-    public override void takeDame(float dame)
+    public override void Dame()
     {
         fx.StartCoroutine("FlashFx");
         StartCoroutine("isKnockBack");
-        hpCurrent -= dame;
-        Die();
     }
 
 
-    void Die()
-    {
-        if (hpCurrent <= 0)
-        {
-            animator.SetTrigger("Death");
-            GetComponent<Collider2D>().enabled = false;
-            //GetComponent<Enemy_Slime>().enabled = false;
-            rb.bodyType = RigidbodyType2D.Static;
-            if(slimeType == SlimeType.slimeSmall)
-            {
-                return;
-            }
+    //void Die()
+    //{
+    //    if (hpCurrent <= 0)
+    //    {
+    //        animator.SetTrigger("Death");
+    //        GetComponent<Collider2D>().enabled = false;
+    //        //GetComponent<Enemy_Slime>().enabled = false;
+    //        rb.bodyType = RigidbodyType2D.Static;
+    //        if(slimeType == SlimeType.slimeSmall)
+    //        {
+    //            return;
+    //        }
 
-            createSlime(amountSline , Slime);
-        }
-    }
+    //        createSlime(amountSline , Slime);
+    //    }
+    //}
 
 
-    void createSlime(int slimeAmount , GameObject slime)
+    void createSlime(int slimeAmount, GameObject slime)
     {
         int r = Random.Range(0, 7);
-        for(int i = 0; i < slimeAmount; i++)
+        for (int i = 0; i < slimeAmount; i++)
         {
-            GameObject mySlime = Instantiate(slime , new Vector3(r , transform.position.y , 0) , Quaternion.identity);
+            GameObject mySlime = Instantiate(slime, new Vector3(r, transform.position.y, 0), Quaternion.identity);
         }
     }
 
