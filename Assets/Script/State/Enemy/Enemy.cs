@@ -88,7 +88,7 @@ public class Enemy : Entity
     }
 
 
-    public virtual void Dame()
+    public virtual void DameEffect()
     {
 
     }

@@ -47,7 +47,7 @@ public class Enemy_Slime : Enemy
         hpCurrent = hpMax;
     }
 
-    public override void Dame()
+    public override void DameEffect()
     {
         fx.StartCoroutine("FlashFx");
         StartCoroutine("isKnockBack");

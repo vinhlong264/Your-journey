@@ -5343,11 +5343,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3737669862981169958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90413b27d78863543adc352626ca9be2, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b73a63407ce40c4b8678dd906e59d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strength:
+    baseValue: 0
+    modifiers: 
   dame:
-    baseValue: 10
+    baseValue: 0
     modifiers: 
   maxHealth:
     baseValue: 100
@@ -5382,16 +5385,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 5936361188960262455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90413b27d78863543adc352626ca9be2, type: 3}
+  m_Script: {fileID: 11500000, guid: d10e89b9d431e9e469a651e70e0761b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strength:
+    baseValue: 0
+    modifiers: 
   dame:
     baseValue: 10
     modifiers: 
   maxHealth:
     baseValue: 100
     modifiers: 
-  currentHealth: 0
+  currentHealth: 100
 --- !u!212 &8676138580416028583
 SpriteRenderer:
   m_ObjectHideFlags: 0

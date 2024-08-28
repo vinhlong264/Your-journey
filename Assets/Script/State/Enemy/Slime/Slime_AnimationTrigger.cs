@@ -20,7 +20,8 @@ public class Slime_AnimationTrigger : MonoBehaviour
         {
             if(col.GetComponent<Player>() != null)
             {
-                col.GetComponent<Player>().takeDame(2);
+                PlayerStatus playerStatus = col.GetComponent<PlayerStatus>();
+                playerStatus.DoDame(playerStatus); 
             }
         }
     }

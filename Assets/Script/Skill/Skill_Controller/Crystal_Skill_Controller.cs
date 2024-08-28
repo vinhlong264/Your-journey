@@ -80,7 +80,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.Dame();
+                enemy.DameEffect();
             }
         }
     }

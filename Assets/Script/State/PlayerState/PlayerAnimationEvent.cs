@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class AnimationEvent : MonoBehaviour
+public class PlayerAnimationEvent : MonoBehaviour
 {
     private Player player;
     void Start()
@@ -25,8 +25,8 @@ public class AnimationEvent : MonoBehaviour
         {
             if(hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().Dame();
-                hit.GetComponent<CharacterStatus>().takeDame(player.status.dame.getValue());
+                EnemyStatus enemyStatus = hit.GetComponent<EnemyStatus>();
+                player.status.DoDame(enemyStatus);
             }
         }
     }

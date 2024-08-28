@@ -44,7 +44,7 @@ public class Skeleton : Enemy
         isFacingRight = true;
     }
 
-    public override void Dame()
+    public override void DameEffect()
     {
         //Debug.Log("Receive dame");
         fx.StartCoroutine("FlashFx");

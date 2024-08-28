@@ -112,7 +112,7 @@ public class Sword_Skill_Controller : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, EnemyTarget[indexTarget].position, speedBouce * Time.deltaTime);
             if (Vector2.Distance(transform.position, EnemyTarget[indexTarget].position) < .1f) // so sánh khoảng cách giữa sword và enemy
             {
-                EnemyTarget[indexTarget].GetComponent<Enemy>().Dame();
+                EnemyTarget[indexTarget].GetComponent<Enemy>().DameEffect();
                 indexTarget++;
                 amountBouncing--;
 
@@ -160,7 +160,7 @@ public class Sword_Skill_Controller : MonoBehaviour
                 {
                     if (hit.GetComponent<Enemy>() != null)
                     {
-                        hit.GetComponent<Enemy>().Dame();
+                        hit.GetComponent<Enemy>().DameEffect();
                     }
                 }
             }
@@ -220,7 +220,7 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private void SworDameController(Enemy enemy) // Method attack
     {
-        enemy.Dame();
+        enemy.DameEffect();
         enemy.StartCoroutine("FreezeForTimer", FrezeeTimer);
     }
 

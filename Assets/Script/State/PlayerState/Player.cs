@@ -149,11 +149,10 @@ public class Player : Entity
         }
     }
 
-    public void takeDame(float dame)
+    public void DameEffect()
     {
         entityFx.StartCoroutine("FlashFx");
         //Debug.Log("Attack: " + gameObject.name);
-        currentHp -= dame;
         Die();
     }
 
