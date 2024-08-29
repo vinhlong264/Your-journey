@@ -93,6 +93,11 @@ public class Enemy : Entity
 
     }
 
+    public override void Die()
+    {
+        base.Die();
+    }
+
     public void animationTriggerFinish() => StateMachine.currentState.AnimationTriggerCalled();
 
     public RaycastHit2D isPlayerDetected() => Physics2D.Raycast(transform.position, Vector2.right * isFacingDir, attackCheckDis, isPlayer);

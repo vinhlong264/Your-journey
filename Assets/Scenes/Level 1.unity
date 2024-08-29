@@ -5349,11 +5349,26 @@ MonoBehaviour:
   strength:
     baseValue: 0
     modifiers: 
-  dame:
-    baseValue: 10
+  ability:
+    baseValue: 0
+    modifiers: 
+  inteligent:
+    baseValue: 0
+    modifiers: 
+  vitality:
+    baseValue: 0
     modifiers: 
   maxHealth:
     baseValue: 10
+    modifiers: 
+  armor:
+    baseValue: 0
+    modifiers: 
+  evasion:
+    baseValue: 0
+    modifiers: 
+  dame:
+    baseValue: 5
     modifiers: 
   currentHealth: 0
 --- !u!4 &8490461294325930215
@@ -5391,13 +5406,28 @@ MonoBehaviour:
   strength:
     baseValue: 0
     modifiers: 
+  ability:
+    baseValue: 0
+    modifiers: 
+  inteligent:
+    baseValue: 0
+    modifiers: 
+  vitality:
+    baseValue: 0
+    modifiers: 
+  maxHealth:
+    baseValue: 100
+    modifiers: 
+  armor:
+    baseValue: 200
+    modifiers: 
+  evasion:
+    baseValue: 0
+    modifiers: 
   dame:
     baseValue: 10
     modifiers: 
-  maxHealth:
-    baseValue: 5
-    modifiers: 
-  currentHealth: 100
+  currentHealth: 0
 --- !u!212 &8676138580416028583
 SpriteRenderer:
   m_ObjectHideFlags: 0

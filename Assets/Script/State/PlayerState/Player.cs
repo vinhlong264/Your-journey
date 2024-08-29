@@ -155,7 +155,6 @@ public class Player : Entity
     {
         entityFx.StartCoroutine("FlashFx");
         //Debug.Log("Attack: " + gameObject.name);
-        Die();
     }
 
     public override void Die()
