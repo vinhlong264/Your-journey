@@ -43,6 +43,7 @@ public class Player : Entity
     public PlayerAnimSwordState _animSwordState { get; private set; }
     public PlayerCatchSwordState _catchSwordState { get; private set; }
     public PlayerBlackHoleState _blackHoleState { get; private set; }
+    public PlayerDeathState _deathState { get; private set; }
 
     #endregion
 
@@ -67,6 +68,7 @@ public class Player : Entity
         _animSwordState = new PlayerAnimSwordState(this, _stateMachine, "animSword");
         _catchSwordState = new PlayerCatchSwordState(this, _stateMachine, "catchSword");
         _blackHoleState = new PlayerBlackHoleState(this, _stateMachine, "Jump");
+        _deathState = new PlayerDeathState(this, _stateMachine, "Death");
 
     }
 
@@ -156,15 +158,9 @@ public class Player : Entity
         Die();
     }
 
-    public void Die()
+    public override void Die()
     {
-        if (currentHp <= 0)
-        {
-            animator.SetTrigger("DEATH");
-            GetComponent<Collider2D>().enabled = false;
-            GetComponent<Player>().enabled = false;
-            rb.bodyType = RigidbodyType2D.Static;
-        }
+        _stateMachine.changeState(_deathState);
     }
 
 

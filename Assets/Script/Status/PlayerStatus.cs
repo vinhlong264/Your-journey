@@ -15,5 +15,11 @@ public class PlayerStatus : CharacterStatus
         base.takeDame(_dame);
         player.DameEffect();
     }
+
+    protected override void Die()
+    {
+        base.Die();
+        player.Die();
+    }
 }
 

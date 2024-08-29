@@ -28,15 +28,15 @@ public class CharacterStatus : MonoBehaviour
     {
         Debug.Log("Dame receive");
         currentHealth -= _dame;
-        Die();
+        if(currentHealth <= 0 )
+        {
+            Die();
+        }
     }
 
     protected virtual void Die()
     {
-        if (currentHealth <= 0)
-        {
-            Debug.Log("Die");
-        }
+        
     }
 
 

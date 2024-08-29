@@ -29,6 +29,7 @@ public class Entity : MonoBehaviour
     public Rigidbody2D rb { get; private set; }
 
     private SpriteRenderer sr;
+    public Collider2D cd { get; private set; }
     public CharacterStatus status { get; private set; } 
     #endregion
 
@@ -42,6 +43,7 @@ public class Entity : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        cd = GetComponent<Collider2D>();
         status = GetComponent<CharacterStatus>();
     }
 
@@ -96,6 +98,12 @@ public class Entity : MonoBehaviour
         {
             sr.color = new Color(1, 1, 1, 1);
         }
+    }
+
+
+    public virtual void Die()
+    {
+
     }
 
     protected IEnumerator isKnockBack() // Coroutine tạo hiệu ứng knockBack

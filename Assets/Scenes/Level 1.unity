@@ -4816,8 +4816,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.04096204, y: -0.29576874}
-  m_Size: {x: 0.5819241, y: 1.5915375}
+  m_Offset: {x: -0.04096204, y: -0.24049509}
+  m_Size: {x: 0.5819241, y: 1.4809902}
   m_Direction: 0
 --- !u!4 &2253078722211585978
 Transform:
@@ -5350,10 +5350,10 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   dame:
-    baseValue: 0
+    baseValue: 10
     modifiers: 
   maxHealth:
-    baseValue: 100
+    baseValue: 10
     modifiers: 
   currentHealth: 0
 --- !u!4 &8490461294325930215
@@ -5395,7 +5395,7 @@ MonoBehaviour:
     baseValue: 10
     modifiers: 
   maxHealth:
-    baseValue: 100
+    baseValue: 5
     modifiers: 
   currentHealth: 100
 --- !u!212 &8676138580416028583
