@@ -69,7 +69,6 @@ public class Player : Entity
         _catchSwordState = new PlayerCatchSwordState(this, _stateMachine, "catchSword");
         _blackHoleState = new PlayerBlackHoleState(this, _stateMachine, "Jump");
         _deathState = new PlayerDeathState(this, _stateMachine, "Death");
-
     }
 
     public override void Start()

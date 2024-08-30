@@ -5358,6 +5358,15 @@ MonoBehaviour:
   vitality:
     baseValue: 0
     modifiers: 
+  dame:
+    baseValue: 5
+    modifiers: 
+  critChance:
+    baseValue: 0
+    modifiers: 
+  critPower:
+    baseValue: 0
+    modifiers: 
   maxHealth:
     baseValue: 10
     modifiers: 
@@ -5366,9 +5375,6 @@ MonoBehaviour:
     modifiers: 
   evasion:
     baseValue: 0
-    modifiers: 
-  dame:
-    baseValue: 5
     modifiers: 
   currentHealth: 0
 --- !u!4 &8490461294325930215
@@ -5415,6 +5421,15 @@ MonoBehaviour:
   vitality:
     baseValue: 0
     modifiers: 
+  dame:
+    baseValue: 10
+    modifiers: 
+  critChance:
+    baseValue: 99
+    modifiers: 
+  critPower:
+    baseValue: 200
+    modifiers: 
   maxHealth:
     baseValue: 100
     modifiers: 
@@ -5423,9 +5438,6 @@ MonoBehaviour:
     modifiers: 
   evasion:
     baseValue: 0
-    modifiers: 
-  dame:
-    baseValue: 10
     modifiers: 
   currentHealth: 0
 --- !u!212 &8676138580416028583
