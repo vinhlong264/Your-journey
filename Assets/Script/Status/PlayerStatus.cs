@@ -19,7 +19,7 @@ public class PlayerStatus : CharacterStatus
     protected override void Die()
     {
         base.Die();
-        //player.Die();
+        player.Die();
     }
 }
 

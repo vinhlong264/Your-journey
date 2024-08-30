@@ -5359,7 +5359,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   dame:
-    baseValue: 5
+    baseValue: 0
     modifiers: 
   critChance:
     baseValue: 0
@@ -5376,7 +5376,22 @@ MonoBehaviour:
   evasion:
     baseValue: 0
     modifiers: 
+  magicResistance:
+    baseValue: 0
+    modifiers: 
   currentHealth: 0
+  fireDame:
+    baseValue: 10
+    modifiers: 
+  iceDame:
+    baseValue: 10
+    modifiers: 
+  lightingDame:
+    baseValue: 10
+    modifiers: 
+  isIngnite: 0
+  isChill: 0
+  isShocked: 0
 --- !u!4 &8490461294325930215
 Transform:
   m_ObjectHideFlags: 0
@@ -5416,10 +5431,10 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   inteligent:
-    baseValue: 0
+    baseValue: 1
     modifiers: 
   vitality:
-    baseValue: 0
+    baseValue: 1
     modifiers: 
   dame:
     baseValue: 10
@@ -5439,7 +5454,22 @@ MonoBehaviour:
   evasion:
     baseValue: 0
     modifiers: 
+  magicResistance:
+    baseValue: 1
+    modifiers: 
   currentHealth: 0
+  fireDame:
+    baseValue: 0
+    modifiers: 
+  iceDame:
+    baseValue: 0
+    modifiers: 
+  lightingDame:
+    baseValue: 0
+    modifiers: 
+  isIngnite: 0
+  isChill: 0
+  isShocked: 0
 --- !u!212 &8676138580416028583
 SpriteRenderer:
   m_ObjectHideFlags: 0
