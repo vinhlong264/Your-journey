@@ -26,19 +26,66 @@ public class CharacterStatus : MonoBehaviour
     public Status iceDame;
     public Status lightingDame;
 
-   
-    [SerializeField] private bool isIngnite;
-    [SerializeField] private bool isChill;
-    [SerializeField] private bool isShocked;
+
+    [SerializeField] private bool isIngnite; // Gây dame cháy liên tục trong 1 khoảng thời gian
+    [SerializeField] private bool isChill; // Giảm giáp đi 20%
+    [SerializeField] private bool isShocked; // Giảm khả năng đánh chính xác đi 20%
+
+    private float ingniteTimer; // thời gian hiệu ứng 
+    private float chillTimer;
+    private float shockTimer;
+
+    //Dame effect burn
+    private float ingniteDame;
+    private float ingniteDameTimer;
+    private float ingniteDameCoolDown = 1f;
 
 
-   
 
-    
+
+
     protected virtual void Start()
     {
         critPower.setDfaultValue(150);
         currentHealth = maxHealth.getValue();
+    }
+
+
+    protected virtual void Update()
+    {
+        ingniteTimer -= Time.deltaTime;
+        chillTimer -= Time.deltaTime;
+        shockTimer -= Time.deltaTime;
+
+        ingniteDameTimer -= Time.deltaTime;
+
+        if(chillTimer < 0)
+        {
+            isChill = false;
+        }
+
+        if (shockTimer < 0)
+        {
+            isShocked = false;
+        }
+
+        if (ingniteTimer < 0)
+        {
+            isIngnite = false;
+        }
+
+        if (ingniteDameTimer < 0 && isIngnite)
+        { 
+            Debug.Log("Take burn dame: " +ingniteDame);
+            currentHealth -= ingniteDame;
+           
+            if(currentHealth <= 0)
+            {
+                Die();
+            }
+
+            ingniteDameTimer = ingniteDameCoolDown;
+        }
     }
 
 
@@ -69,7 +116,7 @@ public class CharacterStatus : MonoBehaviour
     {
         currentHealth -= _dame;
         Debug.Log(_dame);
-        if(currentHealth < 0 )
+        if (currentHealth < 0)
         {
             Die();
         }
@@ -77,7 +124,7 @@ public class CharacterStatus : MonoBehaviour
 
     protected virtual void Die()
     {
-        
+
     }
 
 
@@ -97,9 +144,9 @@ public class CharacterStatus : MonoBehaviour
         bool canAplyChill = _iceDame > _fireDame && _iceDame > _lightingDame;
         bool canAplyShock = _lightingDame > _iceDame && _lightingDame > _fireDame;
 
-        while(!canAplyIngnite && !canAplyChill && !canAplyShock)
+        while (!canAplyIngnite && !canAplyChill && !canAplyShock)
         {
-            if(Random.value < 0.5f && _fireDame > 0)
+            if (Random.value < 0.5f && _fireDame > 0)
             {
                 canAplyIngnite = true;
                 _targetStatus.aplyAilment(canAplyIngnite, canAplyChill, canAplyShock);
@@ -121,20 +168,39 @@ public class CharacterStatus : MonoBehaviour
             }
         }
 
-
+        if(canAplyIngnite)
+        {
+            _targetStatus.setUpIngnite(Mathf.RoundToInt(_fireDame * 0.2f));
+        }
 
         _targetStatus.aplyAilment(canAplyIngnite, canAplyChill, canAplyShock);
 
     }
+
+    public void setUpIngnite(int _dame) => ingniteDame = _dame;
 
 
     public void aplyAilment(bool _ingnite, bool _chill, bool _shocked) // nhận các hiệu ứng gây hại
     {
         if (isIngnite || isChill || isShocked) return;
 
-        isIngnite = _ingnite;
-        isChill = _chill;
-        isShocked = _shocked;
+        if (_ingnite)
+        {
+            isIngnite = _ingnite;
+            ingniteTimer = 4f;
+        }
+
+        if (_chill)
+        {
+            isChill = _chill;
+            chillTimer = 3;
+        }
+
+        if (_shocked)
+        {
+            isShocked = _shocked;
+            shockTimer = 3f;
+        }
     }
 
     //Hàm tính toán dame phép gây ra
@@ -147,10 +213,18 @@ public class CharacterStatus : MonoBehaviour
         return magicDame;
     }
 
-    private int CheckTargetArmor(int dame , CharacterStatus _target) // hàm tính toán dame vật lý gây ra
+    private int CheckTargetArmor(int dame, CharacterStatus _target) // hàm tính toán dame vật lý gây ra
     {
-        dame -= _target.armor.getValue();
-        dame  = Mathf.Clamp(dame , 0 , int.MaxValue);
+        if (_target.isChill)
+        {
+            dame -= Mathf.RoundToInt(_target.armor.getValue() * 0.8f);
+        }
+        else
+        {
+            dame -= _target.armor.getValue();
+        }
+
+        dame = Mathf.Clamp(dame, 0, int.MaxValue);
 
         return dame;
     }
@@ -158,9 +232,15 @@ public class CharacterStatus : MonoBehaviour
     private bool AvoidAttack(CharacterStatus _target) // Tính toán tỉ lệ né đòn
     {
         int toltalEvasion = _target.evasion.getValue() + _target.ability.getValue();
+
+        if (isShocked)
+        {
+            toltalEvasion += 20;
+        }
+
         return sytemRate(toltalEvasion);
     }
-    
+
     private bool CanCrit() // tính toán tỉ lệ chí mạng
     {
         int criticalRate = critChance.getValue() + ability.getValue();
@@ -201,7 +281,7 @@ public class Status // Class để chứa các thay đổi về chỉ số
     public int getValue() // lấy giá trị
     {
         int finalValue = baseValue;
-        foreach(var modifier in modifiers)
+        foreach (var modifier in modifiers)
         {
             finalValue += modifier;
         }
@@ -210,7 +290,7 @@ public class Status // Class để chứa các thay đổi về chỉ số
     }
 
 
-    public void setDfaultValue(int _value)
+    public void setDfaultValue(int _value) // đặt giá trị mặc định
     {
         baseValue = _value;
     }
@@ -218,11 +298,11 @@ public class Status // Class để chứa các thay đổi về chỉ số
 
     public void addModifiers(int _modifier) // thêm sự thay đổi
     {
-        modifiers.Add( _modifier);
+        modifiers.Add(_modifier);
     }
 
     public void removeModifiers(int _modifier) // xóa sự thay đổi
     {
-        modifiers.Remove( _modifier);
+        modifiers.Remove(_modifier);
     }
 }
