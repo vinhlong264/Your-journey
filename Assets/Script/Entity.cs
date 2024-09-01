@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ public class Entity : MonoBehaviour
     [Header("Flip infor")]
     public bool isFacingRight;
     public float isFacingDir;
+
+    public Action onFliped;
 
     #region Component
     public Animator animator { get; private set; }
@@ -86,6 +89,11 @@ public class Entity : MonoBehaviour
         isFacingDir *= -1;
         isFacingRight = !isFacingRight;
         transform.Rotate(0, 180, 0);
+
+        if(onFliped != null)
+        {
+            onFliped();
+        }
     }
 
     public void makeTransprent(bool _transprent)

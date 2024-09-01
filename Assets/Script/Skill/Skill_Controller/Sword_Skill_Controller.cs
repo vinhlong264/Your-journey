@@ -10,8 +10,8 @@ public class Sword_Skill_Controller : MonoBehaviour
     [SerializeField] private bool canRotation = true;
 
     private Player player;
-    [SerializeField] private bool isReturning;
-    private float speedReturning;
+    [SerializeField] private bool isReturning; // biến kiểm tra có thể quay lại không
+    private float speedReturning; // biến kiểm soát tốc độ quay về
     private float FrezeeTimer;
 
     [Header("Bounce info")]
@@ -22,10 +22,10 @@ public class Sword_Skill_Controller : MonoBehaviour
     private int indexTarget; // Biến để chuyển giao index giữa các vị trí ở list
 
     [Header("Pierce info")]
-    private int amountPierce;
+    private int amountPierce; //kiểm soát việc số lần xuyên qua của Skill Pierce của sword
 
     [Header("Spin info")]
-    private float maxTravelDistace;
+    private float maxTravelDistace; // khoảng cách xa nhât để sword quay về trong skill này
     private float spinTimer;
     private float spinDuration;
     private bool wasStop;
