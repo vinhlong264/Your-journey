@@ -5436,7 +5436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb9b649419c4ddb449b0ed9d2e050ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 7
   knockBackDir: {x: 0, y: 0}
   knockBackDuration: 0
   isKnock: 0
@@ -5762,7 +5762,7 @@ MonoBehaviour:
     baseValue: 100
     modifiers: 
   armor:
-    baseValue: 0
+    baseValue: 100
     modifiers: 
   evasion:
     baseValue: 0
@@ -5831,7 +5831,7 @@ MonoBehaviour:
     baseValue: 10
     modifiers: 
   critChance:
-    baseValue: 99
+    baseValue: 0
     modifiers: 
   critPower:
     baseValue: 200
@@ -5853,10 +5853,10 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   iceDame:
-    baseValue: 0
+    baseValue: 20
     modifiers: 
   lightingDame:
-    baseValue: 20
+    baseValue: 0
     modifiers: 
   isIngnite: 0
   isChill: 0

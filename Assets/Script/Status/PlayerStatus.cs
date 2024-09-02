@@ -10,7 +10,7 @@ public class PlayerStatus : CharacterStatus
     }
 
 
-    public override void takeDame(float _dame)
+    public override void takeDame(int _dame)
     {
         base.takeDame(_dame);
         player.DameEffect();

@@ -11,7 +11,7 @@ public class EnemyStatus : CharacterStatus
         enemy = GetComponent<Enemy>();
     }
 
-    public override void takeDame(float _dame)
+    public override void takeDame(int _dame)
     {
         base.takeDame(_dame);
         enemy.DameEffect();

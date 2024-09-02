@@ -19,7 +19,7 @@ public class CharacterStatus : MonoBehaviour
     public Status armor; // chỉ số giáp
     public Status evasion; // chỉ số né chiêu
     public Status magicResistance;
-    [SerializeField] private float currentHealth;
+    public int currentHealth;
 
     [Header("Magic status info")]
     public Status fireDame;
@@ -36,10 +36,12 @@ public class CharacterStatus : MonoBehaviour
     private float shockTimer;
 
     //Dame effect burn
-    private float ingniteDame;
+    private int ingniteDame;
     private float ingniteDameTimer;
     private float ingniteDameCoolDown = 1f;
 
+
+    public System.Action onUiHealth;
 
 
 
@@ -47,7 +49,7 @@ public class CharacterStatus : MonoBehaviour
     protected virtual void Start()
     {
         critPower.setDfaultValue(150);
-        currentHealth = maxHealth.getValue();
+        currentHealth = getMaxHealth();
     }
 
 
@@ -75,9 +77,8 @@ public class CharacterStatus : MonoBehaviour
         }
 
         if (ingniteDameTimer < 0 && isIngnite)
-        { 
-            Debug.Log("Take burn dame: " +ingniteDame);
-            currentHealth -= ingniteDame;
+        {
+            decreaseHealthBy(ingniteDame);
            
             if(currentHealth <= 0)
             {
@@ -101,24 +102,32 @@ public class CharacterStatus : MonoBehaviour
         if (CanCrit())
         {
             totalDame = calculateCritalDame(totalDame);
-            Debug.Log("Attack Crit: " + totalDame);
         }
 
         totalDame = CheckTargetArmor(totalDame, _targetStatus);
 
-        //_targetStatus.takeDame(totalDame);
+        _targetStatus.takeDame(totalDame);
 
         doDameMagical(_targetStatus);
     }
 
 
-    public virtual void takeDame(float _dame) // Attack
+    public virtual void takeDame(int _dame) // Attack
     {
-        currentHealth -= _dame;
-        Debug.Log(_dame);
+        decreaseHealthBy(_dame);
         if (currentHealth < 0)
         {
             Die();
+        }
+    }
+
+
+    private void decreaseHealthBy(int _dame)
+    {
+        currentHealth -= _dame;
+        if(onUiHealth != null)
+        {
+            onUiHealth();
         }
     }
 
@@ -218,6 +227,7 @@ public class CharacterStatus : MonoBehaviour
         if (_target.isChill)
         {
             dame -= Mathf.RoundToInt(_target.armor.getValue() * 0.8f);
+            Debug.Log("Dame after chill: " +dame);
         }
         else
         {
@@ -250,9 +260,7 @@ public class CharacterStatus : MonoBehaviour
     private int calculateCritalDame(int _dame) // Tính toán sát thương chí mạng
     {
         float totalCriticalPower = (critPower.getValue() + strength.getValue()) * 0.01f;
-        Debug.Log($"Critical rate: {totalCriticalPower}%");
         float finalDame = _dame * totalCriticalPower;
-        Debug.Log("Final dame: " + finalDame);
 
         return Mathf.RoundToInt(finalDame);
     }
@@ -266,6 +274,12 @@ public class CharacterStatus : MonoBehaviour
         }
 
         return false;
+    }
+
+
+    public int getMaxHealth()
+    {
+        return maxHealth.getValue() + vitality.getValue();
     }
 }
 
