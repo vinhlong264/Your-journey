@@ -18,6 +18,10 @@ public class UI_healthBar : MonoBehaviour
 
         entity.onFliped += onFliped;
         myCharacter.onUiHealth += updateUiHealth;
+
+        updateUiHealth();
+
+        Debug.Log("UI health bar call");
     }
 
     private void onFliped()

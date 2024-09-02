@@ -117,9 +117,7 @@ public class Player : Entity
     public IEnumerator isBusyFor(float second) // Croutine check Player có đang tấn công không. Khi kích hoạt mới log
     {
         isBusy = true;
-        Debug.Log("I is attack");
         yield return new WaitForSeconds(second);
-        Debug.Log("I not attack");
         isBusy = false;
     }
 

@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class CharacterStatus : MonoBehaviour
 {
+    private EntityFx fx;
+
     [Header("Major status info")]
     public Status strength; // với mỗi điểm nâng cấp thì dame cơ bản sẽ tăng lên 1 và 1% sát thương chí mạng
     public Status ability; // với mỗi điểm nâng cấp thì sẽ tăng các kĩ năng ví dụ là 1% né và 1% chí mạng
     public Status inteligent; // với mỗi điểm nâng cấp thì sẽ tăng 1 sức mạnh phép thuật và 3 giáp phép
-    public Status vitality; // với mỗi điểm nâng cấp sẽ tăng hp, giáp vật lý, giáp phép
+    public Status vitality; // với mỗi điểm nâng cấp sẽ tăng hp, giáp vật lý, giáp phép khoảng 3 - 5 điểm
 
     [Header("Offensive status info")]
     public Status dame; //dame vật lý
@@ -19,7 +21,6 @@ public class CharacterStatus : MonoBehaviour
     public Status armor; // chỉ số giáp
     public Status evasion; // chỉ số né chiêu
     public Status magicResistance;
-    public int currentHealth;
 
     [Header("Magic status info")]
     public Status fireDame;
@@ -40,8 +41,9 @@ public class CharacterStatus : MonoBehaviour
     private float ingniteDameTimer;
     private float ingniteDameCoolDown = 1f;
 
-
+    [Header("Final parameters")]
     public System.Action onUiHealth;
+    public int currentHealth;
 
 
 
@@ -50,6 +52,9 @@ public class CharacterStatus : MonoBehaviour
     {
         critPower.setDfaultValue(150);
         currentHealth = getMaxHealth();
+        fx = GetComponent<EntityFx>();
+
+        Debug.Log("Character call");
     }
 
 
@@ -115,7 +120,7 @@ public class CharacterStatus : MonoBehaviour
     public virtual void takeDame(int _dame) // Attack
     {
         decreaseHealthBy(_dame);
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -197,6 +202,7 @@ public class CharacterStatus : MonoBehaviour
         {
             isIngnite = _ingnite;
             ingniteTimer = 4f;
+            fx.ingniteColorFor(2f);
         }
 
         if (_chill)
@@ -279,7 +285,7 @@ public class CharacterStatus : MonoBehaviour
 
     public int getMaxHealth()
     {
-        return maxHealth.getValue() + vitality.getValue();
+        return maxHealth.getValue() + vitality.getValue() * 5;
     }
 }
 

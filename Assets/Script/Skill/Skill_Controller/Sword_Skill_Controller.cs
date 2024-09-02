@@ -169,7 +169,6 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     void stopWhenSpining() // Kiểm soát việc dừng lại khi đi xa Player
     {
-        Debug.Log(Vector2.Distance(player.transform.position, transform.position));
         if (Vector2.Distance(player.transform.position, transform.position) > maxTravelDistace && !wasStop)
         {
             wasStop = true;
