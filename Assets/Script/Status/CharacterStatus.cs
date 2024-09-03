@@ -27,23 +27,24 @@ public class CharacterStatus : MonoBehaviour
     public Status iceDame;
     public Status lightingDame;
 
-
+    [SerializeField] private float ailmentDuration;
     [SerializeField] private bool isIngnite; // Gây dame cháy liên tục trong 1 khoảng thời gian
     [SerializeField] private bool isChill; // Giảm giáp đi 20%
     [SerializeField] private bool isShocked; // Giảm khả năng đánh chính xác đi 20%
 
-    private float ingniteTimer; // thời gian hiệu ứng 
-    private float chillTimer;
-    private float shockTimer;
+    private float ingniteTimer; // thời gian hiệu ứng cháy
+    private float chillTimer; // Thời gian hiệu ứng làm chậm
+    private float shockTimer; // Thời gian hiệu ứng sốc
 
     //Dame effect burn
-    private int ingniteDame;
-    private float ingniteDameTimer;
-    private float ingniteDameCoolDown = 1f;
+    private int ingniteDame; // dame cháy
+    private float ingniteDameTimer; // thời gian gây dame liên tục
+    private float ingniteDameCoolDown = 1f; // thời gian hồi
 
-    [Header("Final parameters")]
-    public System.Action onUiHealth;
+    [Space]
     public int currentHealth;
+    public System.Action onUiHealth; //Event health bar
+
 
 
 
@@ -66,7 +67,7 @@ public class CharacterStatus : MonoBehaviour
 
         ingniteDameTimer -= Time.deltaTime;
 
-        if(chillTimer < 0)
+        if (chillTimer < 0)
         {
             isChill = false;
         }
@@ -81,35 +82,25 @@ public class CharacterStatus : MonoBehaviour
             isIngnite = false;
         }
 
-        if (ingniteDameTimer < 0 && isIngnite)
-        {
-            decreaseHealthBy(ingniteDame);
-           
-            if(currentHealth <= 0)
-            {
-                Die();
-            }
-
-            ingniteDameTimer = ingniteDameCoolDown;
-        }
+        continusIngniteDame(); // gây dame mỗi giây
     }
 
 
     public virtual void DoDame(CharacterStatus _targetStatus) // Quản lý việc gây dame vật lý
     {
-        if (AvoidAttack(_targetStatus))
+        if (AvoidAttack(_targetStatus)) // kiểm tra việc tránh dame
         {
             Debug.Log("Attack avoid");
             return;
         }
         int totalDame = dame.getValue() + strength.getValue();
 
-        if (CanCrit())
+        if (CanCrit()) // kiểm tra việc có thể chí mạng
         {
             totalDame = calculateCritalDame(totalDame);
         }
 
-        totalDame = CheckTargetArmor(totalDame, _targetStatus);
+        totalDame = CheckTargetArmor(totalDame, _targetStatus); // dame cuối cùng sau khi tính toán qua giáp
 
         _targetStatus.takeDame(totalDame);
 
@@ -127,7 +118,7 @@ public class CharacterStatus : MonoBehaviour
     }
 
 
-    private void decreaseHealthBy(int _dame)
+    private void decreaseHealthBy(int _dame) 
     {
         currentHealth -= _dame;
         if(onUiHealth != null)
@@ -151,8 +142,8 @@ public class CharacterStatus : MonoBehaviour
 
         _targetStatus.takeDame(totalMagicDame);
 
+        //Logic add ailment
         if (Mathf.Max(_fireDame, _iceDame, _lightingDame) <= 0) return;
-
 
         bool canAplyIngnite = _fireDame > _iceDame && _fireDame > _lightingDame;
         bool canAplyChill = _iceDame > _fireDame && _iceDame > _lightingDame;
@@ -191,7 +182,7 @@ public class CharacterStatus : MonoBehaviour
 
     }
 
-    public void setUpIngnite(int _dame) => ingniteDame = _dame;
+    public void setUpIngnite(int _dame) => ingniteDame = _dame;// quản lý dame của ingniteDame
 
 
     public void aplyAilment(bool _ingnite, bool _chill, bool _shocked) // nhận các hiệu ứng gây hại
@@ -201,20 +192,23 @@ public class CharacterStatus : MonoBehaviour
         if (_ingnite)
         {
             isIngnite = _ingnite;
-            ingniteTimer = 4f;
-            fx.ingniteColorFor(2f);
+            ingniteTimer = ailmentDuration;
+            fx.ingniteColorFor(ailmentDuration);
         }
 
         if (_chill)
         {
             isChill = _chill;
-            chillTimer = 3;
+            chillTimer = ailmentDuration;
+            GetComponent<Entity>().slowEntityBy(0.2f, ailmentDuration);
+            fx.chillColorFor(ailmentDuration);
         }
 
         if (_shocked)
         {
             isShocked = _shocked;
-            shockTimer = 3f;
+            shockTimer = ailmentDuration;
+            fx.shockColorFor(ailmentDuration);
         }
     }
 
@@ -230,7 +224,7 @@ public class CharacterStatus : MonoBehaviour
 
     private int CheckTargetArmor(int dame, CharacterStatus _target) // hàm tính toán dame vật lý gây ra
     {
-        if (_target.isChill)
+        if (_target.isChill) // nếu nhận hiệu ứng Chill thì sẽ giảm giáp
         {
             dame -= Mathf.RoundToInt(_target.armor.getValue() * 0.8f);
             Debug.Log("Dame after chill: " +dame);
@@ -249,12 +243,26 @@ public class CharacterStatus : MonoBehaviour
     {
         int toltalEvasion = _target.evasion.getValue() + _target.ability.getValue();
 
-        if (isShocked)
+        if (isShocked) // tăng khả năng né dame của target
         {
             toltalEvasion += 20;
         }
 
         return sytemRate(toltalEvasion);
+    }
+    private void continusIngniteDame() // gây dame hiệu ứng liên tục của ingnite
+    {
+        if (ingniteDameTimer < 0 && isIngnite)
+        {
+            decreaseHealthBy(ingniteDame);
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+
+            ingniteDameTimer = ingniteDameCoolDown;
+        }
     }
 
     private bool CanCrit() // tính toán tỉ lệ chí mạng

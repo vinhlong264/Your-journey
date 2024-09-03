@@ -10,7 +10,7 @@ public class EntityFx : MonoBehaviour
 
 
     [Header("Apply Ailment info")]
-    [SerializeField] private Color chill;
+    [SerializeField] private Color[] chill;
     [SerializeField] private Color[] ingnite;
     [SerializeField] private Color[] shock;
 
@@ -49,6 +49,44 @@ public class EntityFx : MonoBehaviour
         sr.color = Color.white;
     }
 
+    public void chillColorFor(float _second)
+    {
+        InvokeRepeating("chillColor", 0, 0.3f);
+        Invoke("canCelRedBlink", _second);
+    }
+
+    private void chillColor()
+    {
+        if (sr.color != chill[0])
+        {
+            sr.color = chill[0];
+        }
+        else
+        {
+            sr.color = chill[1];
+        }
+    }
+
+
+    public void shockColorFor(float _second)
+    {
+        InvokeRepeating("shockColorFx", 0, 0.3f);
+        Invoke("canCelRedBlink", _second);
+    }
+
+
+    private void shockColorFx()
+    {
+        if (sr.color != shock[0])
+        {
+            sr.color = shock[0];
+        }
+        else
+        {
+            sr.color = shock[1];
+        }
+    }
+
     public void ingniteColorFor(float _second)
     {
         InvokeRepeating("IngniteColorFx", 0, 0.3f);
@@ -66,4 +104,5 @@ public class EntityFx : MonoBehaviour
             sr.color = ingnite[1];
         }
     }
+
 }

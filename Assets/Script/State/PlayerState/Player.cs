@@ -4,9 +4,11 @@ using UnityEngine;
 public class Player : Entity
 {
     public float jumpForce;
-    [Header("Health infor")]
-    [SerializeField] float maxHp;
-    private float currentHp;
+    [Header("Default value")]
+    private float deafaultMoveSpeed;
+    private float deadaultJumpForce;
+    private float deadaultDashSpeed;
+    
     
     [Header("Attack info")]
     public float[] attackMovement;
@@ -76,9 +78,13 @@ public class Player : Entity
         base.Start();
         entityFx = GetComponent<EntityFx>();
         _stateMachine.initialize(_idleState);
-        currentHp = maxHp;
         isFacingRight = true;
         isFacingDir = 1f;
+
+
+        deafaultMoveSpeed = moveSpeed;
+        deadaultJumpForce = jumpForce;
+        deadaultDashSpeed = dashSpeed;
     }
 
     // Update is called once per frame
@@ -91,6 +97,25 @@ public class Player : Entity
         {
             SkillManager.instance.crystal_skill.CanUseSkill();
         }
+    }
+
+    public override void slowEntityBy(float _slowPercentage, float _slowDuration)
+    {
+        moveSpeed = moveSpeed * (1f -  _slowPercentage);
+        jumpForce = jumpForce * (1f - _slowPercentage);
+        dashSpeed = dashSpeed * (1f - _slowPercentage);
+        animator.speed = animator.speed * (1f - _slowPercentage);
+
+        Invoke("returnDefaultValue", _slowDuration);
+    }
+
+
+    protected override void returnDefaultValue()
+    {
+        base.returnDefaultValue();
+        moveSpeed = deafaultMoveSpeed;
+        jumpForce = deadaultJumpForce;
+        dashSpeed = deadaultDashSpeed;
     }
 
     #region Skill

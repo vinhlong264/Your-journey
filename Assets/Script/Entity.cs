@@ -122,6 +122,16 @@ public class Entity : MonoBehaviour
         isKnock = false;
     }
 
+    public virtual void slowEntityBy(float _slowPercentage , float _slowDuration)
+    {
+
+    }
+
+    protected virtual void returnDefaultValue()
+    {
+        animator.speed = 1;
+    }
+
     protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(ground.position, groundCheckDis);
