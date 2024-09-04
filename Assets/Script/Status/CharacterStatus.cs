@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CharacterStatus : MonoBehaviour
 {
+    #region Variable
     private EntityFx fx;
 
     [Header("Major status info")]
@@ -41,11 +42,15 @@ public class CharacterStatus : MonoBehaviour
     private float ingniteDameTimer; // thời gian gây dame liên tục
     private float ingniteDameCoolDown = 1f; // thời gian hồi
 
+    //Dame effect lighting
+    private int strikeDame;
+    [SerializeField] private GameObject thunerPrefabs;
+
     [Space]
     public int currentHealth;
     public System.Action onUiHealth; //Event health bar
 
-
+    #endregion
 
 
 
@@ -102,7 +107,7 @@ public class CharacterStatus : MonoBehaviour
 
         totalDame = CheckTargetArmor(totalDame, _targetStatus); // dame cuối cùng sau khi tính toán qua giáp
 
-        _targetStatus.takeDame(totalDame);
+        //_targetStatus.takeDame(totalDame);
 
         doDameMagical(_targetStatus);
     }
@@ -178,25 +183,36 @@ public class CharacterStatus : MonoBehaviour
             _targetStatus.setUpIngnite(Mathf.RoundToInt(_fireDame * 0.2f));
         }
 
+
+        if (canAplyShock)
+        {
+            _targetStatus.setUpDameLinghting(Mathf.RoundToInt(_lightingDame * 0.2f));
+        }
+
         _targetStatus.aplyAilment(canAplyIngnite, canAplyChill, canAplyShock);
 
     }
 
     public void setUpIngnite(int _dame) => ingniteDame = _dame;// quản lý dame của ingniteDame
+    public void setUpDameLinghting(int _dame) =>strikeDame = _dame; // quản lý dame của lighting
 
 
     public void aplyAilment(bool _ingnite, bool _chill, bool _shocked) // nhận các hiệu ứng gây hại
     {
-        if (isIngnite || isChill || isShocked) return;
 
-        if (_ingnite)
+        bool canAplyIngnite = !isIngnite && !isChill && !isShocked;
+        bool canAplyChill = !isIngnite && !isChill && !isShocked;
+        bool canAplyShock = !isIngnite && !isChill;
+
+
+        if (_ingnite && canAplyIngnite)
         {
             isIngnite = _ingnite;
             ingniteTimer = ailmentDuration;
             fx.ingniteColorFor(ailmentDuration);
         }
 
-        if (_chill)
+        if (_chill && canAplyChill)
         {
             isChill = _chill;
             chillTimer = ailmentDuration;
@@ -204,13 +220,56 @@ public class CharacterStatus : MonoBehaviour
             fx.chillColorFor(ailmentDuration);
         }
 
-        if (_shocked)
+        if(_shocked && canAplyShock)
         {
-            isShocked = _shocked;
-            shockTimer = ailmentDuration;
-            fx.shockColorFor(ailmentDuration);
+            if (!isShocked)
+            {
+                AplyShock(_shocked);
+            }
+            else
+            {
+                if (GetComponent<Player>() != null) return;
+
+                effectEnemyClosest();
+            }
+
+
         }
     }
+
+    private void AplyShock(bool _shocked)
+    {
+        if (isShocked) return;
+
+        shockTimer = ailmentDuration;
+        fx.shockColorFor(ailmentDuration);
+        isShocked = _shocked;
+    }
+
+    private void effectEnemyClosest()
+    {
+        Collider2D[] coliders = Physics2D.OverlapCircleAll(transform.position, 25);
+        float distanceToClosest = Mathf.Infinity;
+        Transform closestToEnemt = null;
+
+        foreach (var hit in coliders)
+        {
+            float distance = Vector2.Distance(transform.position, hit.transform.position);
+            if (distance < distanceToClosest)
+            {
+                distanceToClosest = distance;
+                closestToEnemt = hit.transform;
+            }
+        }
+
+
+        if (closestToEnemt != null)
+        {
+            GameObject newThunder = Instantiate(thunerPrefabs, closestToEnemt.position, Quaternion.identity);
+            newThunder.GetComponent<ThunderController>().setUpThunder(strikeDame, closestToEnemt.GetComponent<CharacterStatus>());
+        }
+    }
+
 
     //Hàm tính toán dame phép gây ra
     private int checkTargetMagicResistance(CharacterStatus _targetStatus, int _fireDame, int _iceDame, int _lightingDame)
@@ -255,6 +314,7 @@ public class CharacterStatus : MonoBehaviour
         if (ingniteDameTimer < 0 && isIngnite)
         {
             decreaseHealthBy(ingniteDame);
+            Debug.Log(ingniteDame);
 
             if (currentHealth <= 0)
             {
