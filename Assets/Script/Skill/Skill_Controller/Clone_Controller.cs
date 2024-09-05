@@ -4,6 +4,9 @@ public class Clone_Controller : MonoBehaviour
 {
     private Animator anim;
     private SpriteRenderer sr;
+    private Player player;
+
+
     private Transform closestEnemy; // vị trí của Enemy 
     [SerializeField] private float CoolDown; // kiểm soát thời gian hồi chiêu
     [SerializeField] private float colorLosingSpeed; // Tốc độ giảm alpha
@@ -44,7 +47,7 @@ public class Clone_Controller : MonoBehaviour
     }
 
     //Hàm setup thuộc tính của Clone
-    public void setUpClone(Transform _cloneTrasform , float _coolDown , Vector3 _offset , Transform _closestEnemy , bool _canDuplicateClone)
+    public void setUpClone(Transform _cloneTrasform , float _coolDown , Vector3 _offset , Transform _closestEnemy , bool _canDuplicateClone,Player _player)
     {
         if (canAttack)
         {
@@ -58,6 +61,7 @@ public class Clone_Controller : MonoBehaviour
         closestEnemy = _closestEnemy;
 
         canDuplicateClone = _canDuplicateClone;
+        player = _player;
 
         FacingClone();
     }
@@ -75,7 +79,7 @@ public class Clone_Controller : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().DameEffect();
+                player.status.DoDame(hit.GetComponent<CharacterStatus>());
                 if (canDuplicateClone)
                 {
                     if(Random.Range(0,100) < 99)

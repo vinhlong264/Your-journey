@@ -36,7 +36,7 @@ public class Crystal_Skill : Skill
         {
             currenrCrystal = Instantiate(newCrystal , player.transform.position , Quaternion.identity);
             Crystal_Skill_Controller curentCrystalScript = currenrCrystal.GetComponent<Crystal_Skill_Controller>();
-            curentCrystalScript.setUpCrystal(crystalDuration , moveSpeed , canExplore , canMoveEnemies , findToClosestEnemy(currenrCrystal.transform));
+            curentCrystalScript.setUpCrystal(crystalDuration , moveSpeed , canExplore , canMoveEnemies , findToClosestEnemy(currenrCrystal.transform) , player);
         }
         else
         {
@@ -76,7 +76,7 @@ public class Crystal_Skill : Skill
                 listCrystal.Remove(CrystalSpawn); // xóa khỏi list khi nó đc lấy ra
 
                 newCrystal.GetComponent<Crystal_Skill_Controller>()
-                    .setUpCrystal(crystalDuration, moveSpeed, canExplore, canMoveEnemies, findToClosestEnemy(newCrystal.transform));
+                    .setUpCrystal(crystalDuration, moveSpeed, canExplore, canMoveEnemies, findToClosestEnemy(newCrystal.transform), player);
 
                 if(listCrystal.Count <= 0f) // khi list rỗng sẽ tự động thêm và phải chờ một thời gian ms đc sử dụng
                 {

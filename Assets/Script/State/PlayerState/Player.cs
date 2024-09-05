@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    #region variable
     public float jumpForce;
     [Header("Default value")]
     private float deafaultMoveSpeed;
@@ -25,9 +26,6 @@ public class Player : Entity
     [SerializeField] float dashCooldown;
 
     public GameObject sword;
-
-    #region Component
-    private EntityFx entityFx;
 
     #endregion
 
@@ -76,7 +74,6 @@ public class Player : Entity
     public override void Start()
     {
         base.Start();
-        entityFx = GetComponent<EntityFx>();
         _stateMachine.initialize(_idleState);
         isFacingRight = true;
         isFacingDir = 1f;
@@ -173,10 +170,9 @@ public class Player : Entity
         }
     }
 
-    public void DameEffect()
+    public override void dameEffect()
     {
-        entityFx.StartCoroutine("FlashFx");
-        //Debug.Log("Attack: " + gameObject.name);
+       base.dameEffect();
     }
 
     public override void Die()

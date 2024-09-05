@@ -33,7 +33,8 @@ public class Entity : MonoBehaviour
 
     private SpriteRenderer sr;
     public Collider2D cd { get; private set; }
-    public CharacterStatus status { get; private set; } 
+    public CharacterStatus status { get; private set; }
+    public EntityFx fx { get; private set; }
     #endregion
 
     public virtual void Awake()
@@ -47,7 +48,9 @@ public class Entity : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         cd = GetComponent<Collider2D>();
+        fx = GetComponent<EntityFx>();
         status = GetComponent<CharacterStatus>();
+        
     }
 
     public virtual void Update()
@@ -112,6 +115,12 @@ public class Entity : MonoBehaviour
     public virtual void Die()
     {
 
+    }
+
+    public virtual void dameEffect()
+    {
+        fx.StartCoroutine("FlashFx");
+        StartCoroutine("isKnockBack");
     }
 
     protected IEnumerator isKnockBack() // Coroutine tạo hiệu ứng knockBack

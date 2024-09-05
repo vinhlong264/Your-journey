@@ -52,8 +52,6 @@ public class CharacterStatus : MonoBehaviour
 
     #endregion
 
-
-
     protected virtual void Start()
     {
         critPower.setDfaultValue(150);
@@ -87,57 +85,10 @@ public class CharacterStatus : MonoBehaviour
             isIngnite = false;
         }
 
-        continusIngniteDame(); // gây dame mỗi giây
+        applyIngniteDame(); // gây dame cháy mỗi giây
     }
 
-
-    public virtual void DoDame(CharacterStatus _targetStatus) // Quản lý việc gây dame vật lý
-    {
-        if (AvoidAttack(_targetStatus)) // kiểm tra việc tránh dame
-        {
-            Debug.Log("Attack avoid");
-            return;
-        }
-        int totalDame = dame.getValue() + strength.getValue();
-
-        if (CanCrit()) // kiểm tra việc có thể chí mạng
-        {
-            totalDame = calculateCritalDame(totalDame);
-        }
-
-        totalDame = CheckTargetArmor(totalDame, _targetStatus); // dame cuối cùng sau khi tính toán qua giáp
-
-        //_targetStatus.takeDame(totalDame);
-
-        doDameMagical(_targetStatus);
-    }
-
-
-    public virtual void takeDame(int _dame) // Attack
-    {
-        decreaseHealthBy(_dame);
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-
-    private void decreaseHealthBy(int _dame) 
-    {
-        currentHealth -= _dame;
-        if(onUiHealth != null)
-        {
-            onUiHealth();
-        }
-    }
-
-    protected virtual void Die()
-    {
-
-    }
-
-
+    #region calculate dame magic and appy ailment
     public void doDameMagical(CharacterStatus _targetStatus) // Quản lý việc gây dame phép
     {
         int _fireDame = fireDame.getValue();
@@ -150,52 +101,63 @@ public class CharacterStatus : MonoBehaviour
         //Logic add ailment
         if (Mathf.Max(_fireDame, _iceDame, _lightingDame) <= 0) return;
 
-        bool canAplyIngnite = _fireDame > _iceDame && _fireDame > _lightingDame;
-        bool canAplyChill = _iceDame > _fireDame && _iceDame > _lightingDame;
-        bool canAplyShock = _lightingDame > _iceDame && _lightingDame > _fireDame;
+        logicCanApplyAilment(_targetStatus, _fireDame, _iceDame, _lightingDame);
 
-        while (!canAplyIngnite && !canAplyChill && !canAplyShock)
+    }
+
+    //Hàm tính toán dame phép gây ra
+    private int checkTargetMagicResistance(CharacterStatus _targetStatus, int _fireDame, int _iceDame, int _lightingDame)
+    {
+        int magicDame = _fireDame + _iceDame + _lightingDame + inteligent.getValue();
+        magicDame -= _targetStatus.magicResistance.getValue() + (_targetStatus.inteligent.getValue() * 3);
+
+        magicDame = Mathf.Clamp(magicDame, 0, int.MaxValue);
+        return magicDame;
+    }
+
+    private void logicCanApplyAilment(CharacterStatus _targetStatus, int _fireDame, int _iceDame, int _lightingDame)
+    {
+        bool canApplyIngnite = _fireDame > _iceDame && _fireDame > _lightingDame;
+        bool canApplyChill = _iceDame > _fireDame && _iceDame > _lightingDame;
+        bool canApplyShock = _lightingDame > _iceDame && _lightingDame > _fireDame;
+
+        while (!canApplyIngnite && !canApplyChill && !canApplyShock)
         {
             if (Random.value < 0.5f && _fireDame > 0)
             {
-                canAplyIngnite = true;
-                _targetStatus.aplyAilment(canAplyIngnite, canAplyChill, canAplyShock);
+                canApplyIngnite = true;
+                _targetStatus.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
                 return;
             }
 
             if (Random.value < 0.5f && _iceDame > 0)
             {
-                canAplyChill = true;
-                _targetStatus.aplyAilment(canAplyIngnite, canAplyChill, canAplyShock);
+                canApplyChill = true;
+                _targetStatus.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
                 return;
             }
 
             if (Random.value < 0.5f && _lightingDame > 0)
             {
-                canAplyShock = true;
-                _targetStatus.aplyAilment(canAplyIngnite, canAplyChill, canAplyShock);
+                canApplyShock = true;
+                _targetStatus.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
                 return;
             }
         }
 
-        if(canAplyIngnite)
+        if (canApplyIngnite)
         {
             _targetStatus.setUpIngnite(Mathf.RoundToInt(_fireDame * 0.2f));
         }
 
 
-        if (canAplyShock)
+        if (canApplyShock)
         {
             _targetStatus.setUpDameLinghting(Mathf.RoundToInt(_lightingDame * 0.2f));
         }
 
-        _targetStatus.aplyAilment(canAplyIngnite, canAplyChill, canAplyShock);
-
+        _targetStatus.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
     }
-
-    public void setUpIngnite(int _dame) => ingniteDame = _dame;// quản lý dame của ingniteDame
-    public void setUpDameLinghting(int _dame) =>strikeDame = _dame; // quản lý dame của lighting
-
 
     public void aplyAilment(bool _ingnite, bool _chill, bool _shocked) // nhận các hiệu ứng gây hại
     {
@@ -229,15 +191,29 @@ public class CharacterStatus : MonoBehaviour
             else
             {
                 if (GetComponent<Player>() != null) return;
-
-                effectEnemyClosest();
+                effectStrikeEnemyClosest();
             }
-
-
         }
     }
 
-    private void AplyShock(bool _shocked)
+    public void setUpIngnite(int _dame) => ingniteDame = _dame;// quản lý dame của ingniteDame
+
+    private void applyIngniteDame() // gây dame hiệu ứng liên tục của ingnite
+    {
+        if (ingniteDameTimer < 0 && isIngnite)
+        {
+            decreaseHealthBy(ingniteDame);
+            Debug.Log(ingniteDame);
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+
+            ingniteDameTimer = ingniteDameCoolDown;
+        }
+    }
+    public void AplyShock(bool _shocked)
     {
         if (isShocked) return;
 
@@ -245,8 +221,9 @@ public class CharacterStatus : MonoBehaviour
         fx.shockColorFor(ailmentDuration);
         isShocked = _shocked;
     }
+    public void setUpDameLinghting(int _dame) =>strikeDame = _dame; // quản lý dame của lighting
 
-    private void effectEnemyClosest()
+    private void effectStrikeEnemyClosest() // gây hiệu ứng sét giật với enemy gần nhất
     {
         Collider2D[] coliders = Physics2D.OverlapCircleAll(transform.position, 25);
         float distanceToClosest = Mathf.Infinity;
@@ -268,17 +245,28 @@ public class CharacterStatus : MonoBehaviour
             GameObject newThunder = Instantiate(thunerPrefabs, closestToEnemt.position, Quaternion.identity);
             newThunder.GetComponent<ThunderController>().setUpThunder(strikeDame, closestToEnemt.GetComponent<CharacterStatus>());
         }
-    }
+    } 
 
+    #endregion
 
-    //Hàm tính toán dame phép gây ra
-    private int checkTargetMagicResistance(CharacterStatus _targetStatus, int _fireDame, int _iceDame, int _lightingDame)
+    #region calculate dame physics
+    public virtual void DoDame(CharacterStatus _targetStatus) // Quản lý việc gây dame vật lý
     {
-        int magicDame = _fireDame + _iceDame + _lightingDame + inteligent.getValue();
-        magicDame -= _targetStatus.magicResistance.getValue() + (_targetStatus.inteligent.getValue() * 3);
+        if (AvoidAttack(_targetStatus)) // kiểm tra việc tránh dame
+        {
+            Debug.Log("Attack avoid");
+            return;
+        }
+        int totalDame = dame.getValue() + strength.getValue();
 
-        magicDame = Mathf.Clamp(magicDame, 0, int.MaxValue);
-        return magicDame;
+        if (CanCrit()) // kiểm tra việc có thể chí mạng
+        {
+            totalDame = calculateCritalDame(totalDame);
+        }
+
+        totalDame = CheckTargetArmor(totalDame, _targetStatus); // dame cuối cùng sau khi tính toán qua giáp
+
+        _targetStatus.takeDame(totalDame);
     }
 
     private int CheckTargetArmor(int dame, CharacterStatus _target) // hàm tính toán dame vật lý gây ra
@@ -309,21 +297,7 @@ public class CharacterStatus : MonoBehaviour
 
         return sytemRate(toltalEvasion);
     }
-    private void continusIngniteDame() // gây dame hiệu ứng liên tục của ingnite
-    {
-        if (ingniteDameTimer < 0 && isIngnite)
-        {
-            decreaseHealthBy(ingniteDame);
-            Debug.Log(ingniteDame);
-
-            if (currentHealth <= 0)
-            {
-                Die();
-            }
-
-            ingniteDameTimer = ingniteDameCoolDown;
-        }
-    }
+    
 
     private bool CanCrit() // tính toán tỉ lệ chí mạng
     {
@@ -338,8 +312,9 @@ public class CharacterStatus : MonoBehaviour
 
         return Mathf.RoundToInt(finalDame);
     }
+    #endregion
 
-
+    #region Dame impact and System rate
     private bool sytemRate(int _value) // hệ thống xử lý tỉ lệ
     {
         if (Random.Range(0, 100) <= _value)
@@ -350,18 +325,39 @@ public class CharacterStatus : MonoBehaviour
         return false;
     }
 
-
     public int getMaxHealth()
     {
         return maxHealth.getValue() + vitality.getValue() * 5;
     }
+    public virtual void takeDame(int _dame) // Attack
+    {
+        decreaseHealthBy(_dame);
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    private void decreaseHealthBy(int _dame) 
+    {
+        currentHealth -= _dame;
+        if(onUiHealth != null)
+        {
+            onUiHealth();
+        }
+    }
+
+    protected virtual void Die()
+    {
+
+    }
+    #endregion
 }
 
 
 
 
 [System.Serializable]
-public class Status // Class để chứa các thay đổi về chỉ số
+public class Status // Class để chứa các thay đổi về chỉ số cơ bản
 {
     [SerializeField] private int baseValue; // chỉ số gốc 
     public List<int> modifiers = new List<int>(); // list các chỉ số dùng để thay đổi baseValue
@@ -384,12 +380,12 @@ public class Status // Class để chứa các thay đổi về chỉ số
     }
 
 
-    public void addModifiers(int _modifier) // thêm sự thay đổi
+    public void addModifiers(int _modifier) // thêm thay đổi
     {
         modifiers.Add(_modifier);
     }
 
-    public void removeModifiers(int _modifier) // xóa sự thay đổi
+    public void removeModifiers(int _modifier) // xóa thay đổi
     {
         modifiers.Remove(_modifier);
     }

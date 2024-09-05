@@ -12,9 +12,6 @@ public class Skeleton : Enemy
     public float hpMax;
     public float currentHp;
 
-
-    [Header("Fx")]
-    public EntityFx fx;
     #region State
     public SkeletonIdleState idleState {  get; private set; }
     public SkeletonRunState runState { get; private set; }
@@ -40,28 +37,19 @@ public class Skeleton : Enemy
     {
         base.Start();
         StateMachine.initialize(idleState);
-        fx = GetComponent<EntityFx>();
         currentHp = hpMax;
         isFacingDir = 1f;
         isFacingRight = true;
     }
 
-    public override void DameEffect()
-    {
-        //Debug.Log("Receive dame");
-        fx.StartCoroutine("FlashFx");
-        StartCoroutine("isKnockBack");
-    }
-
     public override void Update()
     {
         base.Update();
-        //if (Input.GetKeyDown(KeyCode.U))
-        //{
-        //    StateMachine.changeState(stunState);
-        //}
+    }
 
-        //Debug.Log("Stun check: " + checkStunned());
+    public override void dameEffect()
+    {
+        base.dameEffect();
     }
 
 

@@ -37,6 +37,7 @@ public class ThunderController : MonoBehaviour
 
     void DameBy()
     {
+        target.AplyShock(true);
         target.takeDame(1);
         Destroy(gameObject, 0.4f);
     }

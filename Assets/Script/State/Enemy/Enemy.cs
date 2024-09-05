@@ -88,9 +88,9 @@ public class Enemy : Entity
     }
 
 
-    public virtual void DameEffect()
+    public override void dameEffect()
     {
-
+        base.dameEffect();
     }
 
     public override void Die()

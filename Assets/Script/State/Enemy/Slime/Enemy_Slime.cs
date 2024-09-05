@@ -21,13 +21,12 @@ public class Enemy_Slime : Enemy
     [SerializeField] int amountSline;
     [SerializeField] SlimeType slimeType;
 
-
-
-    private EntityFx fx;
+    #region state
     public SlimeIdleState idleState { get; private set; }
     public SlimeRunState runState { get; private set; }
     public SlimeBatteState battleState { get; private set; }
     public SlimeAttackState attackState { get; private set; }
+    #endregion
     public override void Awake()
     {
         base.Awake();
@@ -41,16 +40,14 @@ public class Enemy_Slime : Enemy
     {
         base.Start();
         StateMachine.initialize(idleState);
-        fx = GetComponent<EntityFx>();
         isFacingRight = false;
         isFacingDir = -1f;
         hpCurrent = hpMax;
     }
 
-    public override void DameEffect()
+    public override void dameEffect()
     {
-        fx.StartCoroutine("FlashFx");
-        StartCoroutine("isKnockBack");
+        base.dameEffect();
     }
 
 

@@ -17,19 +17,21 @@ public class Crystal_Skill_Controller : MonoBehaviour
 
     private Animator animator;
     private CircleCollider2D cd;
+    private Player player;
     private void Start()
     {
         animator = GetComponent<Animator>();
         cd = GetComponent<CircleCollider2D>();
     }
 
-    public void setUpCrystal(float _crystalDuration, float _moveSpeed, bool _canExplore, bool _canMoveEnemies , Transform _closestTarget)
+    public void setUpCrystal(float _crystalDuration, float _moveSpeed, bool _canExplore, bool _canMoveEnemies , Transform _closestTarget , Player _player)
     {
         CrystalExitTime = _crystalDuration;
         moveSpeed = _moveSpeed;
         canExplore = _canExplore;
         canMoveEnemies = _canMoveEnemies;
         closestTarget = _closestTarget;
+        player = _player;
     }
 
     // Update is called once per frame
@@ -77,10 +79,9 @@ public class Crystal_Skill_Controller : MonoBehaviour
 
         foreach(var hit in attackCheck)
         {
-            Enemy enemy = hit.GetComponent<Enemy>();
-            if (enemy != null)
+            if (hit.GetComponent<Enemy>() != null)
             {
-                enemy.DameEffect();
+                player.status.doDameMagical(hit.GetComponent<CharacterStatus>());
             }
         }
     }

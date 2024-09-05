@@ -16,7 +16,7 @@ public class Clone_Skill : Skill
     public void CreateClone(Transform _clonePos, Vector3 _ofSet) // Hàm khởi tạo clone
     {
         GameObject newClone = Instantiate(Clone_Pre);
-        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos, coolDown, _ofSet, findToClosestEnemy(newClone.transform), canDuplicateClone);
+        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos, coolDown, _ofSet, findToClosestEnemy(newClone.transform), canDuplicateClone,player);
     }
 
     #region Method Skills of Clone

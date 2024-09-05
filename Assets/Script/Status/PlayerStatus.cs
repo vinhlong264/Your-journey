@@ -13,7 +13,7 @@ public class PlayerStatus : CharacterStatus
     public override void takeDame(int _dame)
     {
         base.takeDame(_dame);
-        player.DameEffect();
+        player.dameEffect();
     }
 
     protected override void Die()

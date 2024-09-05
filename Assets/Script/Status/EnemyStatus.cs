@@ -14,7 +14,7 @@ public class EnemyStatus : CharacterStatus
     public override void takeDame(int _dame)
     {
         base.takeDame(_dame);
-        enemy.DameEffect();
+        enemy.dameEffect();
     }
 
     protected override void Die()
