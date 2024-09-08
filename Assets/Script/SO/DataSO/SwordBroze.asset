@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7b05f917becc224482f9cbb674a4b06, type: 3}
-  m_Name: animal_skin
+  m_Script: {fileID: 11500000, guid: a9200131dec075047a2727141bb51045, type: 3}
+  m_Name: SwordBroze
   m_EditorClassIdentifier: 
-  itemName: Animal Skin
-  icon: {fileID: 371459068, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
+  ItemType: 1
+  itemName: SwordBroze
+  icon: {fileID: -1019236712, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
+  EqipmentType: 0

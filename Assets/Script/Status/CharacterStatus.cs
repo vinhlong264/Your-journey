@@ -57,8 +57,6 @@ public class CharacterStatus : MonoBehaviour
         critPower.setDfaultValue(150);
         currentHealth = getMaxHealth();
         fx = GetComponent<EntityFx>();
-
-        Debug.Log("Character call");
     }
 
 

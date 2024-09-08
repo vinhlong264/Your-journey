@@ -1,15 +1,29 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 public class Inventory : MonoBehaviour
 {
     public static Inventory Instance { get; set; }
 
+    [Header("Equipment infor")]
+    [SerializeField] private List<InventoryItem> eqipmentItemList;
+    [SerializeField] private Dictionary<ItemEquipmentSO ,  InventoryItem> equipmentDictionary;
+
     [SerializeField] private List<InventoryItem> itemIventoryList;
     [SerializeField] private Dictionary<itemDataSO, InventoryItem> itemInvetoryDictionary;
 
+    [SerializeField] private List<InventoryItem> itemStashList;
+    [SerializeField] private Dictionary<itemDataSO ,  InventoryItem> itemStashDictionary;
+
     [Header("Iventory UI")]
-    [SerializeField] private Transform itemSlotParent;
-    [SerializeField] private UI_ItemSlot[] itemSlot;
+    [SerializeField] private Transform inventorySlotParent;
+    [SerializeField] private UI_ItemSlot[] itemIventorySLot;
+
+    [SerializeField] private Transform stashSlotParent;
+    [SerializeField] private UI_ItemSlot[] itemStashSlot;
+
+    [SerializeField] private Transform equipmentSlotParent;
+    [SerializeField] private UI_EqipmentSlot[] equipmentSlot;
 
     private void Awake()
     {
@@ -28,62 +42,174 @@ public class Inventory : MonoBehaviour
         itemIventoryList = new List<InventoryItem>();
         itemInvetoryDictionary = new Dictionary<itemDataSO, InventoryItem>();
 
-        itemSlot = itemSlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        itemStashList = new List<InventoryItem>();
+        itemStashDictionary = new Dictionary<itemDataSO, InventoryItem>();
+
+        eqipmentItemList = new List<InventoryItem>();
+        equipmentDictionary = new Dictionary<ItemEquipmentSO, InventoryItem>();
+
+        itemIventorySLot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        itemStashSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EqipmentSlot>();
+    }
+
+    public void equipmentItem(itemDataSO _item)
+    {
+        ItemEquipmentSO newEqipment = _item as ItemEquipmentSO;
+        InventoryItem newItem = new InventoryItem(newEqipment);
+
+        ItemEquipmentSO oldEqipment = null;
+
+        foreach(KeyValuePair<ItemEquipmentSO , InventoryItem> item in equipmentDictionary)
+        {
+            if(item.Key.EqipmentType == newEqipment.EqipmentType)
+            {
+                oldEqipment = item.Key;
+            }
+        }
+
+        if(oldEqipment != null)
+        {
+            unEqipmentItem(oldEqipment);
+            addItem(oldEqipment);
+        }
+
+        eqipmentItemList.Add(newItem);
+        equipmentDictionary.Add(newEqipment, newItem);
+        removeItem(_item);
+
+        updateSlotItemUI();
+    }
+
+    private void unEqipmentItem(ItemEquipmentSO eqipmentToRemove)
+    {
+        if (equipmentDictionary.TryGetValue(eqipmentToRemove, out InventoryItem value))
+        {
+            eqipmentItemList.Remove(value);
+            equipmentDictionary.Remove(eqipmentToRemove);
+        }
     }
 
     private void updateSlotItemUI()
     {
-        for(int i = 0; i < itemIventoryList.Count; i++)
+        for(int i = 0; i < equipmentSlot.Length; i++)
         {
-            itemSlot[i].updateUISlotItem(itemIventoryList[i]);
+            foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary)
+            {
+                if (item.Key.EqipmentType == equipmentSlot[i].slotType)
+                {
+                    equipmentSlot[i].updateUISlotItem(item.Value);
+                }
+            }
+        }
+
+
+        for (int i = 0; i < itemIventorySLot.Length; i++)
+        {
+            itemIventorySLot[i].cleanItem();
+        }
+
+        for (int i = 0; i < itemStashSlot.Length; i++)
+        {
+            itemStashSlot[i].cleanItem();
+        }
+
+        for (int i = 0; i < itemIventoryList.Count; i++)
+        {
+            itemIventorySLot[i].updateUISlotItem(itemIventoryList[i]);
+        }
+
+        for(int i = 0; i < itemStashList.Count; i++)
+        {
+            itemStashSlot[i].updateUISlotItem(itemStashList[i]);    
         }
     }
 
+    #region add item
     public void addItem(itemDataSO _item)
+    {
+        if(_item.ItemType == ItemType.Equipment)
+        {
+            addEquipment(_item);
+        }
+        else if(_item.ItemType == ItemType.Material)
+        {
+            addMaterial(_item);
+        }
+
+        updateSlotItemUI();
+    }
+    private void addMaterial(itemDataSO _item)
+    {
+        if (itemStashDictionary.TryGetValue(_item, out InventoryItem stashValue))
+        {
+            stashValue.addStack();
+        }
+        else
+        {
+            InventoryItem newItemStash = new InventoryItem(_item);
+            itemStashList.Add(newItemStash);
+            itemStashDictionary.Add(_item, newItemStash);
+        }
+    }
+
+    private void addEquipment(itemDataSO _item)
     {
         if (itemInvetoryDictionary.TryGetValue(_item, out InventoryItem value))
         {
             value.addStack();
-            Debug.Log("Nhận item có cùng key");
         }
         else
         {
             InventoryItem newItem = new InventoryItem(_item);
             itemIventoryList.Add(newItem);
             itemInvetoryDictionary.Add(_item, newItem);
-            Debug.Log("Nhận item mới");
         }
+    }
+    #endregion
+
+    #region remove item
+    public void removeItem(itemDataSO _item)
+    {
+        removeItemInventory(_item);
+
+        removeItemStash(_item);
 
         updateSlotItemUI();
     }
 
-    public void removeItem(itemDataSO _item)
+    private void removeItemInventory(itemDataSO _itemIventory)
     {
-        if (itemInvetoryDictionary.TryGetValue(_item, out InventoryItem value))
+        if (itemInvetoryDictionary.TryGetValue(_itemIventory, out InventoryItem valueInventory))
         {
-            if (value.stackSize <= 1) // nếu giá trị stacksize hiện tại bằng 1 thì sẽ xóa nó đi, nghĩa là có đúng 1 item loại key đó
+            if (valueInventory.stackSize <= 1) // nếu giá trị stacksize hiện tại bằng 1 thì sẽ xóa nó đi, nghĩa là có đúng 1 item loại key đó
             {
-                itemIventoryList.Remove(value);
-                itemInvetoryDictionary.Remove(_item);
+                itemIventoryList.Remove(valueInventory);
+                itemInvetoryDictionary.Remove(_itemIventory);
             }
             else // ngược lại nếu nhiều hơn 1 thì sẽ giảm số lượng item loại key đó sở hữu
             {
-                value.removeStack(); // xóa 1 item cùng key khỏi Inventory
-                Debug.Log($"Xóa 1 item có key: {_item} - value: {value}");
+                valueInventory.removeStack(); // xóa 1 item cùng key khỏi Inventory
             }
         }
-        updateSlotItemUI();
     }
 
-
-    private void Update()
+    private void removeItemStash(itemDataSO _itemStash)
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if(itemStashDictionary.TryGetValue(_itemStash , out InventoryItem valueStash))
         {
-            itemDataSO newItem = itemIventoryList[itemIventoryList.Count - 1].data;
-            removeItem(newItem);
+            if(valueStash.stackSize <= 1)
+            {
+                itemStashList.Remove(valueStash);
+                itemStashDictionary.Remove(_itemStash);
+            }
+            else
+            {
+                valueStash.removeStack();
+            }
         }
     }
+    #endregion
 
 }
 

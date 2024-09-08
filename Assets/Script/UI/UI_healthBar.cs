@@ -21,7 +21,6 @@ public class UI_healthBar : MonoBehaviour
 
         updateUiHealth();
 
-        Debug.Log("UI health bar call");
     }
 
     private void onFliped()
