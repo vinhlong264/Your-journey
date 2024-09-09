@@ -16,3 +16,17 @@ MonoBehaviour:
   itemName: Sword_Wood
   icon: {fileID: 682402774, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   EqipmentType: 0
+  strength: 1
+  ability: 0
+  inteligent: 0
+  vitality: 0
+  dame: 4
+  critChance: 0
+  critPower: 0
+  maxHealth: 0
+  armor: 0
+  evasion: 0
+  magicResistance: 0
+  fireDame: 0
+  iceDame: 0
+  lightingDame: 0

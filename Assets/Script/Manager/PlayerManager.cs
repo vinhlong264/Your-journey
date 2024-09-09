@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    public static PlayerManager instance {  get; private set; }
+    protected static PlayerManager instance;
+
+    public static PlayerManager Instance { get =>  instance; }
+
+
+
 
     public Player player;
 

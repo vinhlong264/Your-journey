@@ -16,3 +16,17 @@ MonoBehaviour:
   itemName: Armor
   icon: {fileID: -1342292842, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   EqipmentType: 1
+  strength: 0
+  ability: 2
+  inteligent: 0
+  vitality: 0
+  dame: 0
+  critChance: 0
+  critPower: 0
+  maxHealth: 0
+  armor: 4
+  evasion: 0
+  magicResistance: 0
+  fireDame: 0
+  iceDame: 0
+  lightingDame: 0
