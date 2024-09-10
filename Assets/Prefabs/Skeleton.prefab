@@ -235,7 +235,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1644683663
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.6226415, g: 0, b: 0, a: 0.6862745}
@@ -621,6 +621,8 @@ MonoBehaviour:
   isShocked: 0
   thunerPrefabs: {fileID: 583608072295307890, guid: 94b7ae373881f8047a3787e60d933e03, type: 3}
   currentHealth: 0
+  level: 5
+  perCanStage: 0.4
 --- !u!1 &3720438228909725742
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,7 +696,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1644683663
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -85727878, guid: 687df074731fbf744b668d2275dbb675, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -1,31 +1,30 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 public class Inventory : MonoBehaviour
 {
     public static Inventory Instance { get; set; }
 
     [Header("Equipment infor")]
-    [SerializeField] private List<InventoryItem> eqipmentItemList;
-    [SerializeField] private Dictionary<ItemEquipmentSO ,  InventoryItem> equipmentDictionary;
+    [SerializeField] private List<InventoryItem> eqipmentItemList; // Danh sách Eqipment để thêm vào Eqipment table
+    [SerializeField] private Dictionary<ItemEquipmentSO, InventoryItem> equipmentDictionary;
 
-    [SerializeField] private List<InventoryItem> itemIventoryList;
+    [SerializeField] private List<InventoryItem> itemIventoryList; // Danh sách item(Equipment) để thêm vào Inventory
     [SerializeField] private Dictionary<itemDataSO, InventoryItem> itemInvetoryDictionary;
 
-    [SerializeField] private List<InventoryItem> itemStashList;
-    [SerializeField] private Dictionary<itemDataSO ,  InventoryItem> itemStashDictionary;
+    [SerializeField] private List<InventoryItem> itemStashList;  //Danh sách item(Material) để thêm vào Stash
+    [SerializeField] private Dictionary<itemDataSO, InventoryItem> itemStashDictionary;
 
     [Header("Iventory UI")]
-    [SerializeField] private Transform inventorySlotParent;
+    [SerializeField] private Transform inventorySlotParent; // Transform Parent dùng để quản lý các slot Item(Equipment)
     [SerializeField] private UI_ItemSlot[] itemIventorySLot;
 
-    [SerializeField] private Transform stashSlotParent;
+    [SerializeField] private Transform stashSlotParent; // Transform Parent dùng để quản lý các slot Item(Material)
     [SerializeField] private UI_ItemSlot[] itemStashSlot;
 
-    [SerializeField] private Transform equipmentSlotParent;
+    [SerializeField] private Transform equipmentSlotParent; // Transform Parent dùng để quản lý việc lưu vào slot Eqipment table
     [SerializeField] private UI_EqipmentSlot[] equipmentSlot;
 
-    private void Awake()
+    private void Awake() // Singleton
     {
         if (Instance != null)
         {
@@ -60,15 +59,15 @@ public class Inventory : MonoBehaviour
 
         ItemEquipmentSO oldEqipment = null;
 
-        foreach(KeyValuePair<ItemEquipmentSO , InventoryItem> item in equipmentDictionary)
+        foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary)
         {
-            if(item.Key.EqipmentType == newEqipment.EqipmentType)
+            if (item.Key.EqipmentType == newEqipment.EqipmentType)
             {
                 oldEqipment = item.Key;
             }
         }
 
-        if(oldEqipment != null)
+        if (oldEqipment != null)
         {
             unEqipmentItem(oldEqipment);
             addItem(oldEqipment);
@@ -82,7 +81,7 @@ public class Inventory : MonoBehaviour
         updateSlotItemUI();
     }
 
-    private void unEqipmentItem(ItemEquipmentSO eqipmentToRemove)
+    public void unEqipmentItem(ItemEquipmentSO eqipmentToRemove)
     {
         if (equipmentDictionary.TryGetValue(eqipmentToRemove, out InventoryItem value))
         {
@@ -94,7 +93,7 @@ public class Inventory : MonoBehaviour
 
     private void updateSlotItemUI()
     {
-        for(int i = 0; i < equipmentSlot.Length; i++)
+        for (int i = 0; i < equipmentSlot.Length; i++)
         {
             foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary)
             {
@@ -121,20 +120,20 @@ public class Inventory : MonoBehaviour
             itemIventorySLot[i].updateUISlotItem(itemIventoryList[i]);
         }
 
-        for(int i = 0; i < itemStashList.Count; i++)
+        for (int i = 0; i < itemStashList.Count; i++)
         {
-            itemStashSlot[i].updateUISlotItem(itemStashList[i]);    
+            itemStashSlot[i].updateUISlotItem(itemStashList[i]);
         }
     }
 
     #region add item
     public void addItem(itemDataSO _item)
     {
-        if(_item.ItemType == ItemType.Equipment)
+        if (_item.ItemType == ItemType.Equipment)
         {
             addEquipment(_item);
         }
-        else if(_item.ItemType == ItemType.Material)
+        else if (_item.ItemType == ItemType.Material)
         {
             addMaterial(_item);
         }
@@ -198,9 +197,9 @@ public class Inventory : MonoBehaviour
 
     private void removeItemStash(itemDataSO _itemStash)
     {
-        if(itemStashDictionary.TryGetValue(_itemStash , out InventoryItem valueStash))
+        if (itemStashDictionary.TryGetValue(_itemStash, out InventoryItem valueStash))
         {
-            if(valueStash.stackSize <= 1)
+            if (valueStash.stackSize <= 1)
             {
                 itemStashList.Remove(valueStash);
                 itemStashDictionary.Remove(_itemStash);
@@ -217,10 +216,10 @@ public class Inventory : MonoBehaviour
 
 
 [System.Serializable]
-public class InventoryItem
+public class InventoryItem // Class quản lý item trong Inventory
 {
-    public itemDataSO data;
-    public int stackSize;
+    public itemDataSO data; // SO
+    public int stackSize; // số lượng
 
     public InventoryItem(itemDataSO _item)
     {
@@ -228,7 +227,7 @@ public class InventoryItem
         addStack();
     }
 
-    public void addStack() => stackSize++;
-    public void removeStack() => stackSize--;
+    public void addStack() => stackSize++; // thêm số lượng
+    public void removeStack() => stackSize--; // giảm số lượng
 
 }

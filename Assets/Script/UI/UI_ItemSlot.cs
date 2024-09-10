@@ -1,17 +1,17 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private Image imageItem;
-    [SerializeField] private TextMeshProUGUI itemText;
+    [SerializeField] private Image imageItem; // icon item
+    [SerializeField] private TextMeshProUGUI itemText; // text số lượng
 
-    [SerializeField] private InventoryItem item;
+    [SerializeField] protected InventoryItem item; // Item
 
 
-    public void updateUISlotItem(InventoryItem newItem)
+    public void updateUISlotItem(InventoryItem newItem) // Update item vào các slot
     {
         item = newItem;
 
@@ -30,7 +30,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    public void cleanItem()
+    public void cleanItem() // Clean Item
     {
         item = null;
         imageItem.sprite = null;
@@ -38,9 +38,9 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
         itemText.text = "";
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData) // trang bị Eqipment
     {
-        if(item.data.ItemType == ItemType.Equipment)
+        if(item.data.ItemType == ItemType.Equipment) // nếu cùng loại sẽ được thêm
         {
             Inventory.Instance.equipmentItem(item.data);
         }
