@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Data/Equipment")]
@@ -27,6 +28,8 @@ public class ItemEquipmentSO : itemDataSO
     public int fireDame;
     public int iceDame;
     public int lightingDame;
+
+    public List<InventoryItem> craft;
 
     public void addModifier()
     {

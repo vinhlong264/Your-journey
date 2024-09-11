@@ -59,7 +59,7 @@ public class Inventory : MonoBehaviour
 
         ItemEquipmentSO oldEqipment = null;
 
-        foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary)
+        foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary) // Lấy ra key có Enum là EqipmentType 
         {
             if (item.Key.EqipmentType == newEqipment.EqipmentType)
             {
@@ -67,16 +67,17 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (oldEqipment != null)
+        if (oldEqipment != null) // nếu nó tồn tại sẽ thay thế nó bằng 1 equipment mới
         {
             unEqipmentItem(oldEqipment);
             addItem(oldEqipment);
         }
 
-        eqipmentItemList.Add(newItem);
-        equipmentDictionary.Add(newEqipment, newItem);
-        newEqipment.addModifier();
-        removeItem(_item);
+        eqipmentItemList.Add(newItem); // thêm eqipment vào bảng trang bị
+        equipmentDictionary.Add(newEqipment, newItem); // add vào dictionary
+
+        newEqipment.addModifier(); // Thay đổi thông số
+        removeItem(_item);// xóa item này khỏi list Iventory
 
         updateSlotItemUI();
     }
@@ -89,6 +90,38 @@ public class Inventory : MonoBehaviour
             equipmentDictionary.Remove(eqipmentToRemove);
             eqipmentToRemove.removeModifier();
         }
+    }
+
+    public bool canCraft(ItemEquipmentSO _itemToCraft , List<InventoryItem> _requirmentMaterial)
+    {
+        List<InventoryItem> materialToRemove = new List<InventoryItem>();
+        for(int i = 0; i < _requirmentMaterial.Count ; i++)
+        {
+            if (itemStashDictionary.TryGetValue(_requirmentMaterial[i].data, out InventoryItem stashValue))
+            {
+                if(stashValue.stackSize < _requirmentMaterial[i].stackSize)
+                {
+                    Debug.Log("Not enough material");
+                    return false;
+                }
+                else
+                {
+                    materialToRemove.Add(stashValue);
+                }
+            }
+            else
+            {
+                Debug.Log("Not enough material");
+                return false;
+            }
+        }
+
+        for(int i = 0;i < materialToRemove.Count; i++)
+        {
+            removeItem(materialToRemove[i].data);
+        }
+        Debug.Log("Here is your item: "+ _itemToCraft.name);    
+        return true;
     }
 
     private void updateSlotItemUI()
