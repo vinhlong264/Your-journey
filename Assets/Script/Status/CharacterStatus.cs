@@ -338,6 +338,7 @@ public class CharacterStatus : MonoBehaviour
     private void decreaseHealthBy(int _dame) 
     {
         currentHealth -= _dame;
+        Debug.Log(_dame);
         if(onUiHealth != null)
         {
             onUiHealth();

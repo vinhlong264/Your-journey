@@ -1,24 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class itemObj : MonoBehaviour
 {
     [SerializeField] private itemDataSO item;
+    private Rigidbody2D rb;
     private SpriteRenderer sr;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     private void OnValidate()
     {
-        GetComponent<SpriteRenderer>().sprite = item.icon;
+        if (item == null) return;
+
+        itemVisual();
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void setUpItem(itemDataSO _item, Vector2 _velicity)
     {
-        if(collision.GetComponent<Player>() != null)
-        {
-            Inventory.Instance.addItem(item);
-            Destroy(gameObject);
-        }
+        item = _item;
+        rb.velocity = _velicity;
+
+        itemVisual();
+    }
+    private void itemVisual()
+    {
+        GetComponent<SpriteRenderer>().sprite = item.icon;
+        gameObject.name = item.name;
+    }
+
+    public void itemPickUp()
+    {
+        Inventory.Instance.addItem(item);
+        Destroy(gameObject);
     }
 }

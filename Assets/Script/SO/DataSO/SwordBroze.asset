@@ -15,6 +15,7 @@ MonoBehaviour:
   ItemType: 1
   itemName: SwordBroze
   icon: {fileID: -1019236712, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
+  rateDrop: 30
   EqipmentType: 0
   strength: 3
   ability: 0

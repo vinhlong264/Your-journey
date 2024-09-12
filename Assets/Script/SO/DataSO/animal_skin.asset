@@ -15,3 +15,4 @@ MonoBehaviour:
   ItemType: 0
   itemName: Animal Skin
   icon: {fileID: 371459068, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
+  rateDrop: 50

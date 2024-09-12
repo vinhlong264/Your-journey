@@ -408,6 +408,7 @@ GameObject:
   - component: {fileID: 4051455771088312552}
   - component: {fileID: 5774002972601357003}
   - component: {fileID: 7238600316782056284}
+  - component: {fileID: 5062259941845046243}
   m_Layer: 7
   m_Name: Skeleton
   m_TagString: Untagged
@@ -621,8 +622,30 @@ MonoBehaviour:
   isShocked: 0
   thunerPrefabs: {fileID: 583608072295307890, guid: 94b7ae373881f8047a3787e60d933e03, type: 3}
   currentHealth: 0
-  level: 5
+  level: 1
   perCanStage: 0.4
+--- !u!114 &5062259941845046243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3536847460245775772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6417d3bfb9651564189f69492835d310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleItemDrop: 2
+  possibleDrop:
+  - {fileID: 11400000, guid: 0f29a7889326c6947a176a6965c16a4d, type: 2}
+  - {fileID: 11400000, guid: 6fe3496617492264381f29e0e504ad65, type: 2}
+  - {fileID: 11400000, guid: 3c859cc32382b0a4db893de128aeaae0, type: 2}
+  - {fileID: 11400000, guid: 6f8ed2aff1946a14fbfd36994a25d0b6, type: 2}
+  - {fileID: 11400000, guid: a60889602665308439211770838dca9c, type: 2}
+  possibleDropList: []
+  itemPrefabs: {fileID: 2377043365835868226, guid: 8c2438b37e9704c48acd7dbe07366931, type: 3}
+  item: {fileID: 0}
 --- !u!1 &3720438228909725742
 GameObject:
   m_ObjectHideFlags: 0

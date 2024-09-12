@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyStatus : CharacterStatus
 {
     private Enemy enemy;
+    private itemDrop dropSystem;
 
     [SerializeField] int level;
     [Range(0, 1f)]
@@ -15,6 +16,7 @@ public class EnemyStatus : CharacterStatus
 
         base.Start();
         enemy = GetComponent<Enemy>();
+        dropSystem = GetComponent<itemDrop>();  
     }
 
     private void applyPower()
@@ -43,5 +45,6 @@ public class EnemyStatus : CharacterStatus
     {
         base.Die();
         enemy.Die();
+        dropSystem.generateDrop();
     }
 }
