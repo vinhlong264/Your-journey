@@ -17,6 +17,7 @@ MonoBehaviour:
   icon: {fileID: 682402774, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   rateDrop: 70
   EqipmentType: 0
+  ItemEffect: []
   strength: 1
   ability: 0
   inteligent: 0

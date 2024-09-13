@@ -1,11 +1,13 @@
 
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Data/Equipment")]
 public class ItemEquipmentSO : itemDataSO
 {
     public EqipmentType EqipmentType;
+    public itemEffectSO[] ItemEffect;
 
     [Header("Major status")]
     public int strength;
@@ -30,6 +32,14 @@ public class ItemEquipmentSO : itemDataSO
     public int lightingDame;
 
     public List<InventoryItem> craft;
+
+    public void excuteItemEffect()
+    {
+        foreach(var item in ItemEffect)
+        {
+            item.excuteEffect();
+        }
+    }
 
     public void addModifier()
     {

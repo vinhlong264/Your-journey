@@ -52,7 +52,7 @@ public class Inventory : MonoBehaviour
         equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EqipmentSlot>();
     }
 
-    public void equipmentItem(itemDataSO _item)
+    public void equipmentItem(itemDataSO _item) // Quản lý eqipment table
     {
         ItemEquipmentSO newEqipment = _item as ItemEquipmentSO;
         InventoryItem newItem = new InventoryItem(newEqipment);
@@ -82,7 +82,7 @@ public class Inventory : MonoBehaviour
         updateSlotItemUI();
     }
 
-    public void unEqipmentItem(ItemEquipmentSO eqipmentToRemove)
+    public void unEqipmentItem(ItemEquipmentSO eqipmentToRemove) // Quản lý việc gỡ trang bị
     {
         if (equipmentDictionary.TryGetValue(eqipmentToRemove, out InventoryItem value))
         {
@@ -92,7 +92,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool canCraft(ItemEquipmentSO _itemToCraft , List<InventoryItem> _requirmentMaterial)
+    public bool canCraft(ItemEquipmentSO _itemToCraft , List<InventoryItem> _requirmentMaterial) // Quản lý việc ghép nguyên liệu
     {
         List<InventoryItem> materialToRemove = new List<InventoryItem>();
         for(int i = 0; i < _requirmentMaterial.Count ; i++)
@@ -244,6 +244,20 @@ public class Inventory : MonoBehaviour
         }
     }
     #endregion
+
+    public ItemEquipmentSO getEquipmentBy(EqipmentType _type)
+    {
+        ItemEquipmentSO newEquipment = null;
+        foreach(KeyValuePair<ItemEquipmentSO , InventoryItem> item in equipmentDictionary)
+        {
+            if(item.Key.EqipmentType == _type)
+            {
+                newEquipment = item.Key;
+            }
+        }
+
+        return newEquipment;
+    }
 
 }
 

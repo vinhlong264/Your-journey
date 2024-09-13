@@ -27,6 +27,8 @@ public class PlayerAnimationEvent : MonoBehaviour
             {
                 EnemyStatus enemyStatus = hit.GetComponent<EnemyStatus>();
                 player.status.DoDame(enemyStatus);
+
+                //Inventory.Instance.getEquipmentBy(EqipmentType.Sword).excuteItemEffect();
             }
         }
     }
