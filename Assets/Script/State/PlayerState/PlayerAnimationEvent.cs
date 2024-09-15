@@ -26,9 +26,18 @@ public class PlayerAnimationEvent : MonoBehaviour
             if(hit.GetComponent<Enemy>() != null)
             {
                 EnemyStatus enemyStatus = hit.GetComponent<EnemyStatus>();
-                player.status.DoDame(enemyStatus);
 
-                //Inventory.Instance.getEquipmentBy(EqipmentType.Sword).excuteItemEffect();
+                if (enemyStatus == null) return;
+
+                player.status.DoDame(enemyStatus);
+                //player.status.doDameMagical(enemyStatus);
+
+                ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
+                if(equipment != null)
+                {
+                    equipment.excuteItemEffect(enemyStatus.transform);
+                } 
+                
             }
         }
     }

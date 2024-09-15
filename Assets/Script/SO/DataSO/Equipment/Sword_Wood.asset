@@ -31,5 +31,5 @@ MonoBehaviour:
   magicResistance: 0
   fireDame: 0
   iceDame: 0
-  lightingDame: 0
+  lightingDame: 5
   craft: []

@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4576d00dffe5f048964daf4aa15b5ae, type: 3}
-  m_Name: Lighting Strike
+  m_Script: {fileID: 11500000, guid: d3ff5fe387049314595c2e0c23beae8a, type: 3}
+  m_Name: thunderStrikeEffect
   m_EditorClassIdentifier: 
+  objEffect: {fileID: 8404209029719784695, guid: 93cbf3fc5ff34674c803ccccbb1e1ae8, type: 3}

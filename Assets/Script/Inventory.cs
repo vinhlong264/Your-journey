@@ -24,6 +24,10 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform equipmentSlotParent; // Transform Parent dùng để quản lý việc lưu vào slot Eqipment table
     [SerializeField] private UI_EqipmentSlot[] equipmentSlot;
 
+
+
+    [SerializeField] private itemDataSO[] itemStart;
+
     private void Awake() // Singleton
     {
         if (Instance != null)
@@ -50,6 +54,12 @@ public class Inventory : MonoBehaviour
         itemIventorySLot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         itemStashSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EqipmentSlot>();
+
+
+        for(int i = 0; i < itemStart.Length; i++)
+        {
+            addItem(itemStart[i]);
+        }
     }
 
     public void equipmentItem(itemDataSO _item) // Quản lý eqipment table

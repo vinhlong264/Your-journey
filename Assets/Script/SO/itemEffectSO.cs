@@ -1,10 +1,11 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Data/ItemEffect")]
-public class itemEffectSO : ScriptableObject
+public class itemEffectSO : ScriptableObject // class base effectSO
 {
-    public virtual void excuteEffect()
+    [SerializeField] protected GameObject objEffect;
+    public virtual void excuteEffect(Transform _enemyPos)
     {
-        Debug.Log("Effect skill");
+        
     }
 }

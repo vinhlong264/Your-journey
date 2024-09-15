@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class ThunderController : MonoBehaviour
+public class sockThunderCtrl : MonoBehaviour
 {
-    [SerializeField] CharacterStatus target;
-    [SerializeField] private float speed;
+    private CharacterStatus target; 
+    private float speed;
     private Animator anim;
     private bool isTrigger;
 
@@ -21,6 +21,7 @@ public class ThunderController : MonoBehaviour
     void Update()
     {
         if (isTrigger) return;
+
         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
         if(Vector2.Distance(transform.position , target.transform.position) < 0.1f)
         {

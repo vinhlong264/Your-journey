@@ -33,11 +33,11 @@ public class ItemEquipmentSO : itemDataSO
 
     public List<InventoryItem> craft;
 
-    public void excuteItemEffect()
+    public void excuteItemEffect(Transform _enemyPos)
     {
         foreach(var item in ItemEffect)
         {
-            item.excuteEffect();
+            item.excuteEffect(_enemyPos);
         }
     }
 

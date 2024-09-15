@@ -93,6 +93,7 @@ public class CharacterStatus : MonoBehaviour
         int _iceDame = iceDame.getValue();
         int _lightingDame = lightingDame.getValue();
         int totalMagicDame = checkTargetMagicResistance(_targetStatus, _fireDame, _iceDame, _lightingDame);
+        Debug.Log("Dame magical: "+totalMagicDame);
 
         _targetStatus.takeDame(totalMagicDame);
 
@@ -241,7 +242,7 @@ public class CharacterStatus : MonoBehaviour
         if (closestToEnemt != null)
         {
             GameObject newThunder = Instantiate(thunerPrefabs, closestToEnemt.position, Quaternion.identity);
-            newThunder.GetComponent<ThunderController>().setUpThunder(strikeDame, closestToEnemt.GetComponent<CharacterStatus>());
+            newThunder.GetComponent<sockThunderCtrl>().setUpThunder(strikeDame, closestToEnemt.GetComponent<CharacterStatus>());
         }
     } 
 
@@ -256,6 +257,7 @@ public class CharacterStatus : MonoBehaviour
             return;
         }
         int totalDame = dame.getValue() + strength.getValue();
+        Debug.Log("Dame physics: " + totalDame);
 
         if (CanCrit()) // kiểm tra việc có thể chí mạng
         {
@@ -338,7 +340,6 @@ public class CharacterStatus : MonoBehaviour
     private void decreaseHealthBy(int _dame) 
     {
         currentHealth -= _dame;
-        Debug.Log(_dame);
         if(onUiHealth != null)
         {
             onUiHealth();
