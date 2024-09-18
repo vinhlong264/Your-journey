@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 public class Inventory : MonoBehaviour
 {
@@ -24,7 +25,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform equipmentSlotParent; // Transform Parent dùng để quản lý việc lưu vào slot Eqipment table
     [SerializeField] private UI_EqipmentSlot[] equipmentSlot;
 
-
+    private float lastTimeUseEffect = 0;
+    private float coolDownEffect = 0;
 
     [SerializeField] private itemDataSO[] itemStart;
 
@@ -269,6 +271,23 @@ public class Inventory : MonoBehaviour
         return newEquipment;
     }
 
+    public bool useCanBottle()
+    {
+        ItemEquipmentSO newCurrentEffect = getEquipmentBy(EqipmentType.Bottle);
+
+        bool canUse = Time.time > lastTimeUseEffect + coolDownEffect;
+        if (!canUse)
+        {
+            Debug.Log("CoolDown");
+            return false;
+        }
+
+        coolDownEffect = newCurrentEffect.coolDownEffect;
+        lastTimeUseEffect = Time.time;
+        newCurrentEffect.excuteItemEffect(null);
+        Debug.Log("Bật hiệu ứng");
+        return true;
+    }
 }
 
 

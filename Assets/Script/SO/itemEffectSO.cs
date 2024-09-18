@@ -6,6 +6,6 @@ public class itemEffectSO : ScriptableObject // class base effectSO
     [SerializeField] protected GameObject objEffect;
     public virtual void excuteEffect(Transform _enemyPos)
     {
-        
+        Debug.Log("effect excute");
     }
 }

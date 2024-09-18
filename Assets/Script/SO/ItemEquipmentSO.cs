@@ -7,6 +7,7 @@ using UnityEngine;
 public class ItemEquipmentSO : itemDataSO
 {
     public EqipmentType EqipmentType;
+    public float coolDownEffect;
     public itemEffectSO[] ItemEffect;
 
     [Header("Major status")]

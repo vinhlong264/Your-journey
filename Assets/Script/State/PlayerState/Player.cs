@@ -95,6 +95,11 @@ public class Player : Entity
         {
             SkillManager.instance.crystal_skill.CanUseSkill();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Inventory.Instance.useCanBottle();
+        }
     }
 
     public override void slowEntityBy(float _slowPercentage, float _slowDuration)

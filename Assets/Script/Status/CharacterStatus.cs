@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStatus : MonoBehaviour
@@ -85,6 +86,24 @@ public class CharacterStatus : MonoBehaviour
 
         applyIngniteDame(); // gây dame cháy mỗi giây
     }
+
+
+    public void increaseModfierStatus(int _amount, float _duration, Status _status)
+    {
+        StartCoroutine(addModifierStatus(_amount, _duration, _status));
+    }
+
+    IEnumerator addModifierStatus(int _amount, float _duration, Status _status)
+    {
+        _status.addModifiers(_amount);
+        Debug.Log("Nhận hiệu ứng");
+        yield return new WaitForSeconds(_duration);
+        _status.removeModifiers(_amount);
+        Debug.Log("Hết hiệu ứng");
+    }
+
+
+
 
     #region calculate dame magic and appy ailment
     public void doDameMagical(CharacterStatus _targetStatus) // Quản lý việc gây dame phép
@@ -329,6 +348,21 @@ public class CharacterStatus : MonoBehaviour
     {
         return maxHealth.getValue() + vitality.getValue() * 5;
     }
+
+    public void increaseHealthBy(int _amountHeal)
+    {
+        currentHealth += _amountHeal;
+        if(currentHealth > getMaxHealth())
+        {
+            currentHealth = getMaxHealth();
+        }
+
+        if(onUiHealth != null)
+        {
+            onUiHealth();
+        }
+    }
+
     public virtual void takeDame(int _dame) // Attack
     {
         decreaseHealthBy(_dame);
