@@ -371,7 +371,7 @@ public class CharacterStatus : MonoBehaviour
             Die();
         }
     }
-    private void decreaseHealthBy(int _dame) 
+    protected virtual void decreaseHealthBy(int _dame) 
     {
         currentHealth -= _dame;
         if(onUiHealth != null)

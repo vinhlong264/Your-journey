@@ -9,7 +9,7 @@ public class healEffectSO : itemEffectSO
         PlayerStatus playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStatus>();
         if (playerStatus == null) return;
 
-        int healthAmount = Mathf.RoundToInt(playerStatus.getMaxHealth() + healPerecent);
+        int healthAmount = Mathf.RoundToInt(playerStatus.getMaxHealth() * healPerecent);
 
         playerStatus.increaseHealthBy(healthAmount);
     }

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9200131dec075047a2727141bb51045, type: 3}
+  m_Name: Armor_KingFreezee
+  m_EditorClassIdentifier: 
+  ItemType: 1
+  itemName: Armor_KingFreezee
+  icon: {fileID: -1439676860, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
+  rateDrop: 0
+  EqipmentType: 1
+  coolDownEffect: 5
+  ItemEffect:
+  - {fileID: 11400000, guid: 55ebefb505a391946b35a47415aa7a76, type: 2}
+  strength: 0
+  ability: 0
+  inteligent: 0
+  vitality: 0
+  dame: 0
+  critChance: 0
+  critPower: 0
+  maxHealth: 0
+  armor: 0
+  evasion: 0
+  magicResistance: 0
+  fireDame: 0
+  iceDame: 0
+  lightingDame: 0
+  craft: []

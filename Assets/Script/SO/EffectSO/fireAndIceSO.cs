@@ -6,7 +6,7 @@ public class fireAndIceSO : itemEffectSO
     [SerializeField] private float xVelocity;
     public override void excuteEffect(Transform _respawnPos)
     {
-        Player player = PlayerManager.Instance.player;
+        //Player player = PlayerManager.Instance.player;
 
         bool thirtyAttack = player._attackState.comboCounter == 2;
 

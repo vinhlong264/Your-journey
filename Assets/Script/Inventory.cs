@@ -25,8 +25,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform equipmentSlotParent; // Transform Parent dùng để quản lý việc lưu vào slot Eqipment table
     [SerializeField] private UI_EqipmentSlot[] equipmentSlot;
 
-    private float lastTimeUseEffect = 0;
-    private float coolDownEffect = 0;
+    private float lastTimeUseBollte = 0;
+    private float lastTimeUseArmor = 0;
 
     [SerializeField] private itemDataSO[] itemStart;
 
@@ -257,6 +257,8 @@ public class Inventory : MonoBehaviour
     }
     #endregion
 
+
+    #region take Eqipment and use skill special Equipment
     public ItemEquipmentSO getEquipmentBy(EqipmentType _type)
     {
         ItemEquipmentSO newEquipment = null;
@@ -275,19 +277,34 @@ public class Inventory : MonoBehaviour
     {
         ItemEquipmentSO newCurrentEffect = getEquipmentBy(EqipmentType.Bottle);
 
-        bool canUse = Time.time > lastTimeUseEffect + coolDownEffect;
+        bool canUse = Time.time > lastTimeUseBollte + newCurrentEffect.coolDownEffect;
         if (!canUse)
         {
             Debug.Log("CoolDown");
             return false;
         }
-
-        coolDownEffect = newCurrentEffect.coolDownEffect;
-        lastTimeUseEffect = Time.time;
+        lastTimeUseBollte = Time.time;
         newCurrentEffect.excuteItemEffect(null);
         Debug.Log("Bật hiệu ứng");
         return true;
     }
+
+
+    public bool canUseArmor()
+    {
+        ItemEquipmentSO currentArmor = getEquipmentBy(EqipmentType.Armor);
+
+        if((Time.time > lastTimeUseArmor + currentArmor.coolDownEffect))
+        {
+            lastTimeUseArmor = Time.time;
+            Debug.Log("Freeze");
+            return true;
+        }
+
+        Debug.Log("Armor cooldown");
+        return false;
+    }
+    #endregion
 }
 
 

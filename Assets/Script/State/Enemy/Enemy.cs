@@ -78,6 +78,9 @@ public class Enemy : Entity
         }
     }
 
+
+    public virtual void FreezeBy(float _time) => StartCoroutine(FreezeForTimer(_time));
+
     protected virtual IEnumerator FreezeForTimer(float _second)
     {
         FreezeToTimer(true);

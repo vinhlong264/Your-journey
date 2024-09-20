@@ -21,5 +21,17 @@ public class PlayerStatus : CharacterStatus
         base.Die();
         player.Die();
     }
+
+    protected override void decreaseHealthBy(int _dame)
+    {
+        base.decreaseHealthBy(_dame);
+
+        ItemEquipmentSO currentArmor = Inventory.Instance.getEquipmentBy(EqipmentType.Armor);
+
+        if (currentArmor != null)
+        {
+            currentArmor.excuteItemEffect(player.transform);
+        }
+    }
 }
 
