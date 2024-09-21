@@ -1,6 +1,5 @@
 
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Data/Equipment")]
@@ -36,7 +35,7 @@ public class ItemEquipmentSO : itemDataSO
 
     public void excuteItemEffect(Transform _enemyPos)
     {
-        foreach(var item in ItemEffect)
+        foreach (var item in ItemEffect)
         {
             item.excuteEffect(_enemyPos);
         }
@@ -45,7 +44,7 @@ public class ItemEquipmentSO : itemDataSO
     public void addModifier()
     {
         PlayerStatus playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStatus>();
-        
+
         //Major status
         playerStatus.strength.addModifiers(strength);
         playerStatus.ability.addModifiers(ability);
@@ -61,8 +60,8 @@ public class ItemEquipmentSO : itemDataSO
         playerStatus.maxHealth.addModifiers(maxHealth);
         playerStatus.armor.addModifiers(armor);
         playerStatus.evasion.addModifiers(evasion);
-        playerStatus.magicResistance.addModifiers(magicResistance); 
-        
+        playerStatus.magicResistance.addModifiers(magicResistance);
+
         //Magical status
         playerStatus.fireDame.addModifiers(fireDame);
         playerStatus.iceDame.addModifiers(iceDame);
@@ -97,11 +96,11 @@ public class ItemEquipmentSO : itemDataSO
     }
 
 }
-public enum EqipmentType
-{
-    Sword,
-    Armor,
-    Helmet,
-    Bottle,
-    Necklace
-}
+//public enum EqipmentType
+//{
+//    Sword,
+//    Armor,
+//    Helmet,
+//    Bottle,
+//    Necklace
+//}

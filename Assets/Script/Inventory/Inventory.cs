@@ -25,6 +25,9 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform equipmentSlotParent; // Transform Parent dùng để quản lý việc lưu vào slot Eqipment table
     [SerializeField] private UI_EqipmentSlot[] equipmentSlot;
 
+    [SerializeField] private Transform statusSlotParent; // Transform  Parent dùng để quản lý việc lưu và cập nhập UI
+    [SerializeField] private UI_StatSlot[] statusSlot;
+
     private float lastTimeUseBollte = 0;
     private float lastTimeUseArmor = 0;
 
@@ -56,6 +59,7 @@ public class Inventory : MonoBehaviour
         itemIventorySLot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         itemStashSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EqipmentSlot>();
+        statusSlot = statusSlotParent.GetComponentsInChildren<UI_StatSlot>();
 
 
         for(int i = 0; i < itemStart.Length; i++)
@@ -168,6 +172,11 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < itemStashList.Count; i++)
         {
             itemStashSlot[i].updateUISlotItem(itemStashList[i]);
+        }
+
+        for(int i = 0; i < statusSlot.Length; i++)
+        {
+            statusSlot[i].updateStatusUI();
         }
     }
 

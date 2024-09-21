@@ -26,7 +26,7 @@ public class EnemyStatus : CharacterStatus
         applyModifier(dame);
     }
 
-    private void applyModifier(Status _status)
+    private void applyModifier(Stat _status)
     {
         for(int i = 1; i < level; i++)
         {

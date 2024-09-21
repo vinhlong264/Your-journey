@@ -8,26 +8,26 @@ public class CharacterStatus : MonoBehaviour
     private EntityFx fx;
 
     [Header("Major status info")]
-    public Status strength; // với mỗi điểm nâng cấp thì dame cơ bản sẽ tăng lên 1 và 1% sát thương chí mạng
-    public Status ability; // với mỗi điểm nâng cấp thì sẽ tăng các kĩ năng ví dụ là 1% né và 1% chí mạng
-    public Status inteligent; // với mỗi điểm nâng cấp thì sẽ tăng 1 sức mạnh phép thuật và 3 giáp phép
-    public Status vitality; // với mỗi điểm nâng cấp sẽ tăng hp, giáp vật lý, giáp phép khoảng 3 - 5 điểm
+    public Stat strength; // với mỗi điểm nâng cấp thì dame cơ bản sẽ tăng lên 1 và 1% sát thương chí mạng
+    public Stat ability; // với mỗi điểm nâng cấp thì sẽ tăng các kĩ năng ví dụ là 1% né và 1% chí mạng
+    public Stat inteligent; // với mỗi điểm nâng cấp thì sẽ tăng 1 sức mạnh phép thuật và 3 giáp phép
+    public Stat vitality; // với mỗi điểm nâng cấp sẽ tăng hp, giáp vật lý, giáp phép khoảng 3 - 5 điểm
 
     [Header("Offensive status info")]
-    public Status dame; //dame vật lý
-    public Status critChance; // tỉ lệ chí mạng
-    public Status critPower; // DefaultValue là 150%
+    public Stat dame; //dame vật lý
+    public Stat critChance; // tỉ lệ chí mạng
+    public Stat critPower; // DefaultValue là 150%
 
     [Header("Defend status info")]
-    public Status maxHealth; // chỉ số máu tối đa
-    public Status armor; // chỉ số giáp
-    public Status evasion; // chỉ số né chiêu
-    public Status magicResistance;
+    public Stat maxHealth; // chỉ số máu tối đa
+    public Stat armor; // chỉ số giáp
+    public Stat evasion; // chỉ số né chiêu
+    public Stat magicResistance; // chỉ số giáp phép
 
     [Header("Magic status info")]
-    public Status fireDame;
-    public Status iceDame;
-    public Status lightingDame;
+    public Stat fireDame;
+    public Stat iceDame;
+    public Stat lightingDame;
 
     [SerializeField] private float ailmentDuration;
     [SerializeField] private bool isIngnite; // Gây dame cháy liên tục trong 1 khoảng thời gian
@@ -88,12 +88,12 @@ public class CharacterStatus : MonoBehaviour
     }
 
 
-    public void increaseModfierStatus(int _amount, float _duration, Status _status)
+    public void increaseModfierStatus(int _amount, float _duration, Stat _status)
     {
         StartCoroutine(addModifierStatus(_amount, _duration, _status));
     }
 
-    IEnumerator addModifierStatus(int _amount, float _duration, Status _status)
+    IEnumerator addModifierStatus(int _amount, float _duration, Stat _status)
     {
         _status.addModifiers(_amount);
         Debug.Log("Nhận hiệu ứng");
@@ -384,14 +384,52 @@ public class CharacterStatus : MonoBehaviour
     {
 
     }
+
+
+    public Stat getStat(StatType type) // hàm để lấy ra Status theo type
+    {
+        switch (type)
+        {
+            case StatType.Strength:
+                return strength;
+            case StatType.Ability:
+                return ability;
+            case StatType.inteligent:
+                return inteligent;
+            case StatType.vitality:
+                return vitality;
+            case StatType.MaxHealth:
+                return maxHealth;               
+            case StatType.Armor:
+                return armor;
+            case StatType.Evasion:
+                return evasion;
+            case StatType.MagicResitance:
+                return magicResistance;
+            case StatType.Dame:
+                return dame;
+            case StatType.CritPower:
+                return critPower;
+            case StatType.CritChance:
+                return critChance;
+            case StatType.FireDame:
+                return fireDame;
+            case StatType.IceDame:
+                return iceDame;
+            case StatType.LightingDame:
+                return lightingDame;
+        }
+        return null;
+    } 
+
+
+
     #endregion
 }
 
 
-
-
 [System.Serializable]
-public class Status // Class để chứa các thay đổi về chỉ số cơ bản
+public class Stat // Class để chứa các thay đổi về chỉ số cơ bản
 {
     [SerializeField] private int baseValue; // chỉ số gốc 
     public List<int> modifiers = new List<int>(); // list các chỉ số dùng để thay đổi baseValue

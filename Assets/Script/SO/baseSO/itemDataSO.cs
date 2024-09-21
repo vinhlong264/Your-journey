@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data" , menuName = "Data/Item")]
+[CreateAssetMenu(fileName = "Data", menuName = "Data/Item")]
 public class itemDataSO : ScriptableObject
 {
     public ItemType ItemType;
@@ -12,8 +11,8 @@ public class itemDataSO : ScriptableObject
     public float rateDrop; // tỉ lệ rơi của item
 }
 
-public enum ItemType
-{
-    Material,
-    Equipment
-}
+//public enum ItemType
+//{
+//    Material,
+//    Equipment
+//}
