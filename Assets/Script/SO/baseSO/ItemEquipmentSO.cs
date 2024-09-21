@@ -102,5 +102,6 @@ public enum EqipmentType
     Sword,
     Armor,
     Helmet,
-    Bottle
+    Bottle,
+    Necklace
 }
