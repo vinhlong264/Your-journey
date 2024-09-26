@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 public class Inventory : MonoBehaviour
 {
@@ -62,7 +61,7 @@ public class Inventory : MonoBehaviour
         statusSlot = statusSlotParent.GetComponentsInChildren<UI_StatSlot>();
 
 
-        for(int i = 0; i < itemStart.Length; i++)
+        for (int i = 0; i < itemStart.Length; i++)
         {
             addItem(itemStart[i]);
         }
@@ -108,14 +107,14 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool canCraft(ItemEquipmentSO _itemToCraft , List<InventoryItem> _requirmentMaterial) // Quản lý việc ghép nguyên liệu
+    public bool canCraft(ItemEquipmentSO _itemToCraft, List<InventoryItem> _requirmentMaterial) // Quản lý việc ghép nguyên liệu
     {
         List<InventoryItem> materialToRemove = new List<InventoryItem>();
-        for(int i = 0; i < _requirmentMaterial.Count ; i++)
+        for (int i = 0; i < _requirmentMaterial.Count; i++)
         {
             if (itemStashDictionary.TryGetValue(_requirmentMaterial[i].data, out InventoryItem stashValue))
             {
-                if(stashValue.stackSize < _requirmentMaterial[i].stackSize)
+                if (stashValue.stackSize < _requirmentMaterial[i].stackSize)
                 {
                     Debug.Log("Not enough material");
                     return false;
@@ -132,11 +131,11 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        for(int i = 0;i < materialToRemove.Count; i++)
+        for (int i = 0; i < materialToRemove.Count; i++)
         {
             removeItem(materialToRemove[i].data);
         }
-        Debug.Log("Here is your item: "+ _itemToCraft.name);    
+        Debug.Log("Here is your item: " + _itemToCraft.name);
         return true;
     }
 
@@ -174,7 +173,7 @@ public class Inventory : MonoBehaviour
             itemStashSlot[i].updateUISlotItem(itemStashList[i]);
         }
 
-        for(int i = 0; i < statusSlot.Length; i++)
+        for (int i = 0; i < statusSlot.Length; i++)
         {
             statusSlot[i].updateStatusUI();
         }
@@ -183,7 +182,7 @@ public class Inventory : MonoBehaviour
     #region add item
     public void addItem(itemDataSO _item)
     {
-        if (_item.ItemType == ItemType.Equipment)
+        if (_item.ItemType == ItemType.Equipment && canAddItem())
         {
             addEquipment(_item);
         }
@@ -221,6 +220,17 @@ public class Inventory : MonoBehaviour
             itemInvetoryDictionary.Add(_item, newItem);
         }
     }
+
+    public bool canAddItem()
+    {
+        if (itemIventoryList.Count >= itemIventorySLot.Length || itemStashList.Count >= itemStashSlot.Length)
+        {
+            Debug.Log("No more space");
+            return false;
+        }
+        return true;
+    }
+
     #endregion
 
     #region remove item
@@ -271,9 +281,9 @@ public class Inventory : MonoBehaviour
     public ItemEquipmentSO getEquipmentBy(EqipmentType _type)
     {
         ItemEquipmentSO newEquipment = null;
-        foreach(KeyValuePair<ItemEquipmentSO , InventoryItem> item in equipmentDictionary)
+        foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary)
         {
-            if(item.Key.EqipmentType == _type)
+            if (item.Key.EqipmentType == _type)
             {
                 newEquipment = item.Key;
             }
@@ -303,7 +313,7 @@ public class Inventory : MonoBehaviour
     {
         ItemEquipmentSO currentArmor = getEquipmentBy(EqipmentType.Armor);
 
-        if((Time.time > lastTimeUseArmor + currentArmor.coolDownEffect))
+        if ((Time.time > lastTimeUseArmor + currentArmor.coolDownEffect))
         {
             lastTimeUseArmor = Time.time;
             Debug.Log("Freeze");

@@ -88,7 +88,7 @@ public class CharacterStatus : MonoBehaviour
     }
 
 
-    public void increaseModfierStatus(int _amount, float _duration, Stat _status)
+    public void increaseModfierStatus(int _amount, float _duration, Stat _status) // buff stat
     {
         StartCoroutine(addModifierStatus(_amount, _duration, _status));
     }
@@ -96,10 +96,10 @@ public class CharacterStatus : MonoBehaviour
     IEnumerator addModifierStatus(int _amount, float _duration, Stat _status)
     {
         _status.addModifiers(_amount);
-        Debug.Log("Nhận hiệu ứng");
+        Debug.Log("Nhận buff");
         yield return new WaitForSeconds(_duration);
         _status.removeModifiers(_amount);
-        Debug.Log("Hết hiệu ứng");
+        Debug.Log("Hết buff");
     }
 
 
@@ -112,7 +112,6 @@ public class CharacterStatus : MonoBehaviour
         int _iceDame = iceDame.getValue();
         int _lightingDame = lightingDame.getValue();
         int totalMagicDame = checkTargetMagicResistance(_targetStatus, _fireDame, _iceDame, _lightingDame);
-        Debug.Log("Dame magical: "+totalMagicDame);
 
         _targetStatus.takeDame(totalMagicDame);
 
@@ -123,7 +122,7 @@ public class CharacterStatus : MonoBehaviour
 
     }
 
-    //Hàm tính toán dame phép gây ra
+    //Hàm tính toán nhận dame phép
     private int checkTargetMagicResistance(CharacterStatus _targetStatus, int _fireDame, int _iceDame, int _lightingDame)
     {
         int magicDame = _fireDame + _iceDame + _lightingDame + inteligent.getValue();
@@ -133,12 +132,31 @@ public class CharacterStatus : MonoBehaviour
         return magicDame;
     }
 
-    private void logicCanApplyAilment(CharacterStatus _targetStatus, int _fireDame, int _iceDame, int _lightingDame)
+    private void logicCanApplyAilment(CharacterStatus _targetStatus, int _fireDame, int _iceDame, int _lightingDame)  // logic apply Ailment
     {
         bool canApplyIngnite = _fireDame > _iceDame && _fireDame > _lightingDame;
         bool canApplyChill = _iceDame > _fireDame && _iceDame > _lightingDame;
         bool canApplyShock = _lightingDame > _iceDame && _lightingDame > _fireDame;
 
+        ApplyRadomAilment(_targetStatus, _fireDame, _iceDame, _lightingDame, ref canApplyIngnite, ref canApplyChill, ref canApplyShock);
+
+        if (canApplyIngnite)
+        {
+            _targetStatus.setUpIngnite(Mathf.RoundToInt(_fireDame * 0.2f));
+        }
+
+
+        if (canApplyShock)
+        {
+            _targetStatus.setUpDameLinghting(Mathf.RoundToInt(_lightingDame * 0.2f));
+        }
+
+        _targetStatus.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
+    }
+
+    //Logic apply ngẫu nhiên các Ailment khi các chỉ số dame phép bằng nhau
+    private void ApplyRadomAilment(CharacterStatus _targetStatus, int _fireDame, int _iceDame, int _lightingDame, ref bool canApplyIngnite, ref bool canApplyChill, ref bool canApplyShock)
+    {
         while (!canApplyIngnite && !canApplyChill && !canApplyShock)
         {
             if (Random.value < 0.5f && _fireDame > 0)
@@ -162,37 +180,24 @@ public class CharacterStatus : MonoBehaviour
                 return;
             }
         }
-
-        if (canApplyIngnite)
-        {
-            _targetStatus.setUpIngnite(Mathf.RoundToInt(_fireDame * 0.2f));
-        }
-
-
-        if (canApplyShock)
-        {
-            _targetStatus.setUpDameLinghting(Mathf.RoundToInt(_lightingDame * 0.2f));
-        }
-
-        _targetStatus.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
     }
 
     public void aplyAilment(bool _ingnite, bool _chill, bool _shocked) // nhận các hiệu ứng gây hại
     {
 
-        bool canAplyIngnite = !isIngnite && !isChill && !isShocked;
-        bool canAplyChill = !isIngnite && !isChill && !isShocked;
+        bool canAplyIngnite = !isChill && !isShocked;
+        bool canAplyChill = !isIngnite && !isShocked;
         bool canAplyShock = !isIngnite && !isChill;
 
 
-        if (_ingnite && canAplyIngnite)
+        if (_ingnite && canAplyIngnite) //Apply effect burn
         {
             isIngnite = _ingnite;
             ingniteTimer = ailmentDuration;
             fx.ingniteColorFor(ailmentDuration);
         }
 
-        if (_chill && canAplyChill)
+        if (_chill && canAplyChill) //Apply effect Slow
         {
             isChill = _chill;
             chillTimer = ailmentDuration;
@@ -200,7 +205,7 @@ public class CharacterStatus : MonoBehaviour
             fx.chillColorFor(ailmentDuration);
         }
 
-        if(_shocked && canAplyShock)
+        if(_shocked && canAplyShock) // Apply effect shock
         {
             if (!isShocked)
             {
@@ -283,7 +288,7 @@ public class CharacterStatus : MonoBehaviour
             totalDame = calculateCritalDame(totalDame);
         }
 
-        totalDame = CheckTargetArmor(totalDame, _targetStatus); // dame cuối cùng sau khi tính toán qua giáp
+        totalDame = CheckTargetArmor(totalDame, _targetStatus);
 
         _targetStatus.takeDame(totalDame);
     }

@@ -31,7 +31,7 @@ MonoBehaviour:
   armor: 0
   evasion: 0
   magicResistance: 0
-  fireDame: 5
-  iceDame: 5
+  fireDame: 10
+  iceDame: 10
   lightingDame: 0
   craft: []

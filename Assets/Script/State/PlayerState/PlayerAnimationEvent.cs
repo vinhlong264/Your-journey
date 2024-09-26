@@ -29,8 +29,8 @@ public class PlayerAnimationEvent : MonoBehaviour
 
                 if (enemyStatus == null) return;
 
-                player.status.DoDame(enemyStatus);
-                //player.status.doDameMagical(enemyStatus);
+                //player.status.DoDame(enemyStatus);
+                player.status.doDameMagical(enemyStatus);
 
                 ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
                 if(equipment != null)

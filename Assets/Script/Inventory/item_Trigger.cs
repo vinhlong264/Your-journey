@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class item_Trigger : MonoBehaviour
@@ -10,10 +8,10 @@ public class item_Trigger : MonoBehaviour
         myItem = GetComponentInParent<itemObj>();
     }
 
-    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.GetComponent<Player>() != null)
+        if (collision.GetComponent<Player>() != null)
         {
             myItem.itemPickUp();
         }
