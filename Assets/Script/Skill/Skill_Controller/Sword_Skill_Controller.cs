@@ -116,7 +116,7 @@ public class Sword_Skill_Controller : MonoBehaviour
                 indexTarget++;
                 amountBouncing--;
 
-                if (amountBouncing <= 0) // sau khi nảy hết số lượt quy định thì sẽ isBouncing = false, isReturning = true
+                if (amountBouncing <= 0 || EnemyTarget.Count == 1) // sau khi nảy hết số lượt quy định thì sẽ isBouncing = false, isReturning = true
                 {
                     isBouncing = false; // dừng kĩ năng nảy của sword
                     isReturning = true; // Sword quay lại với Plater

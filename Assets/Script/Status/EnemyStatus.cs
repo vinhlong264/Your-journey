@@ -46,5 +46,6 @@ public class EnemyStatus : CharacterStatus
         base.Die();
         enemy.Die();
         dropSystem.generateDrop();
+        return;
     }
 }

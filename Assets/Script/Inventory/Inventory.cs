@@ -2,7 +2,8 @@
 using UnityEngine;
 public class Inventory : MonoBehaviour
 {
-    public static Inventory Instance { get; set; }
+    private static Inventory instance;
+    public static Inventory Instance { get => instance; }
 
     [Header("Equipment infor")]
     [SerializeField] private List<InventoryItem> eqipmentItemList; // Danh sách Eqipment để thêm vào Eqipment table
@@ -34,13 +35,13 @@ public class Inventory : MonoBehaviour
 
     private void Awake() // Singleton
     {
-        if (Instance != null)
+        if (instance != null)
         {
             DestroyImmediate(gameObject);
         }
         else
         {
-            Instance = this;
+            instance = this;
         }
     }
 

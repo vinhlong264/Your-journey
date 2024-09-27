@@ -84,10 +84,8 @@ public class Enemy : Entity
     protected virtual IEnumerator FreezeForTimer(float _second)
     {
         FreezeToTimer(true);
-        Debug.Log("Đang bị đóng băng");
         yield return new WaitForSeconds(_second);
         FreezeToTimer(false);
-        Debug.Log("Kết thúc đóng băng");
     }
 
 
