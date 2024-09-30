@@ -9,29 +9,31 @@ public class ItemEquipmentSO : itemDataSO
     public float coolDownEffect;
     public itemEffectSO[] ItemEffect;
 
-    [Header("Major status")]
+    [Header("Major stat")]
     public int strength;
     public int ability;
     public int inteligent;
     public int vitality;
 
-    [Header("Offensive status info")]
+    [Header("Offensive stat info")]
     public int dame;
     public int critChance;
     public int critPower;
 
-    [Header("Defend status info")]
+    [Header("Defend stat info")]
     public int maxHealth;
     public int armor;
     public int evasion;
     public int magicResistance;
 
-    [Header("Magical status")]
+    [Header("Magical stat")]
     public int fireDame;
     public int iceDame;
     public int lightingDame;
 
     public List<InventoryItem> craft;
+
+    private int descriptionLenght;
 
     public void excuteItemEffect(Transform _enemyPos)
     {
@@ -95,12 +97,61 @@ public class ItemEquipmentSO : itemDataSO
         playerStatus.lightingDame.removeModifiers(lightingDame);
     }
 
+    public override string GetDescription()
+    {
+        sb.Length = 0;
+        descriptionLenght = 0;
+
+        //Major stat
+        addItemDescription(strength, StatType.Strength);
+        addItemDescription(ability, StatType.Ability);
+        addItemDescription(inteligent, StatType.inteligent);
+        addItemDescription(vitality, StatType.vitality);
+
+        //Offensive stat
+        addItemDescription(dame , StatType.Dame);
+        addItemDescription(critChance, StatType.CritChance);
+        addItemDescription(critPower, StatType.CritPower);
+
+        //Defend stat
+        addItemDescription(maxHealth, StatType.Health);
+        addItemDescription(armor, StatType.Armor);
+        addItemDescription(evasion, StatType.Evasion);
+        addItemDescription(magicResistance, StatType.MagicResitance);
+
+        //Magic stat
+        addItemDescription(fireDame, StatType.FireDame);
+        addItemDescription(iceDame, StatType.IceDame);
+        addItemDescription(lightingDame, StatType.LightingDame);
+
+
+        if(descriptionLenght < 5)
+        {
+            for (int i = 0; i < 5 - descriptionLenght; i++)
+            {
+                sb.AppendLine();
+                sb.Append("");
+            }
+        }
+        return sb.ToString();
+    }
+
+    private void addItemDescription(int _value , StatType type)
+    {
+        if(_value != 0)
+        {
+            if(sb.Length > 0)
+            {
+                sb.AppendLine();
+            }
+
+            if(_value > 0)
+            {
+                sb.Append("+ " + _value + " " + type);
+            }
+
+            descriptionLenght++;
+        } 
+    }
+
 }
-//public enum EqipmentType
-//{
-//    Sword,
-//    Armor,
-//    Helmet,
-//    Bottle,
-//    Necklace
-//}

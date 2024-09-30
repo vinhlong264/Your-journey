@@ -2,13 +2,22 @@
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
-public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
+public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler , IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image imageItem; // icon item
     [SerializeField] private TextMeshProUGUI itemText; // text số lượng
 
     [SerializeField] protected InventoryItem item; // Item
+
+    [SerializeField] private UI uiDes;
+
+
+    private void Awake()
+    {
+        uiDes = GetComponentInParent<UI>();
+    }
 
 
     public void updateUISlotItem(InventoryItem newItem) // Update item vào các slot
@@ -51,5 +60,19 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
         {
             Inventory.Instance.equipmentItem(item.data);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(item == null) return;
+
+        uiDes.uiSlot.showDescription(item.data as ItemEquipmentSO);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (item == null) return;
+
+        uiDes.uiSlot.hideDescription();
     }
 }

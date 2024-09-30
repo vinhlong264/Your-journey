@@ -15,4 +15,4 @@ MonoBehaviour:
   ItemType: 0
   itemName: Iron
   icon: {fileID: -2082854189, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
-  rateDrop: 50
+  rateDrop: 70

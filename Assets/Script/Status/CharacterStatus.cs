@@ -214,6 +214,7 @@ public class CharacterStatus : MonoBehaviour
             else
             {
                 if (GetComponent<Player>() != null) return;
+
                 effectStrikeEnemyClosest();
             }
         }
@@ -250,23 +251,27 @@ public class CharacterStatus : MonoBehaviour
     {
         Collider2D[] coliders = Physics2D.OverlapCircleAll(transform.position, 25);
         float distanceToClosest = Mathf.Infinity;
-        Transform closestToEnemt = null;
+        Transform closestToEnemy = null;
 
         foreach (var hit in coliders)
         {
-            float distance = Vector2.Distance(transform.position, hit.transform.position);
-            if (distance < distanceToClosest)
+            if (hit.GetComponent<EnemyStatus>() != null && Vector2.Distance(transform.position,hit.transform.position) < 0.1f)
             {
-                distanceToClosest = distance;
-                closestToEnemt = hit.transform;
+                float distance = Vector2.Distance(transform.position, hit.transform.position);
+                if (distance < distanceToClosest)
+                {
+                    distanceToClosest = distance;
+                    closestToEnemy = hit.transform;
+                }
             }
         }
 
 
-        if (closestToEnemt != null)
+
+        if (closestToEnemy != null)
         {
-            GameObject newThunder = Instantiate(thunerPrefabs, closestToEnemt.position, Quaternion.identity);
-            newThunder.GetComponent<sockThunderCtrl>().setUpThunder(strikeDame, closestToEnemt.GetComponent<CharacterStatus>());
+            GameObject newThunder = Instantiate(thunerPrefabs, closestToEnemy.position, Quaternion.identity);
+            newThunder.GetComponent<sockThunderCtrl>().setUpThunder(strikeDame, closestToEnemy.GetComponent<EnemyStatus>());
         }
     } 
 
@@ -281,7 +286,6 @@ public class CharacterStatus : MonoBehaviour
             return;
         }
         int totalDame = dame.getValue() + strength.getValue();
-        Debug.Log("Dame physics: " + totalDame);
 
         if (CanCrit()) // kiểm tra việc có thể chí mạng
         {
@@ -403,7 +407,7 @@ public class CharacterStatus : MonoBehaviour
                 return inteligent;
             case StatType.vitality:
                 return vitality;
-            case StatType.MaxHealth:
+            case StatType.Health:
                 return maxHealth;               
             case StatType.Armor:
                 return armor;

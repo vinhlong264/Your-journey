@@ -15,7 +15,7 @@ MonoBehaviour:
   ItemType: 1
   itemName: Sword_Wood
   icon: {fileID: 682402774, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
-  rateDrop: 70
+  rateDrop: 10
   EqipmentType: 0
   coolDownEffect: 0
   ItemEffect: []

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class sockThunderCtrl : MonoBehaviour
 {
-    private CharacterStatus target; 
-    private float speed;
+    [SerializeField] private EnemyStatus target; 
+    private float speed = 35;
     private Animator anim;
     private bool isTrigger;
 
@@ -13,21 +13,26 @@ public class sockThunderCtrl : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
-    public void setUpThunder(int _dame , CharacterStatus _target)
+    public void setUpThunder(int _dame , EnemyStatus _target)
     {
         dame = _dame;
         target = _target;
     }
     void Update()
     {
+        if(!target) return;
+
         if (isTrigger) return;
 
         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+
         if(Vector2.Distance(transform.position , target.transform.position) < 0.1f)
         {
-            anim.transform.localRotation = Quaternion.identity;
             transform.localRotation = Quaternion.identity;
-            anim.transform.localScale = new Vector3(2, 2);
+            anim.transform.localRotation = Quaternion.identity;
+
+            transform.localRotation = Quaternion.identity;
+            anim.transform.localScale = new Vector3(3, 3);
 
             Invoke("DameBy", 0.1f);
             isTrigger = true;

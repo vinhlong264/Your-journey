@@ -1,36 +1,29 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class itemDrop : MonoBehaviour
 {
-    [SerializeField] private int possibleItemDrop; // số lượng rơi
+    [SerializeField] private int amountPossibleDrop; // số lượng rơi
     [SerializeField] private itemDataSO[] possibleDrop; // quản lý các item
-    [SerializeField] private List<itemDataSO> possibleDropList; // lưu item
+    //[SerializeField] private List<itemDataSO> possibleDropList = new List<itemDataSO>(); // lưu item
 
     [SerializeField] private GameObject itemPrefabs;
     [SerializeField] private itemDataSO item;
-
-    private void Start()
-    {
-        possibleDropList = new List<itemDataSO>();
-    }
-
     public void generateDrop()
     {
-        for (int i = 0; i < possibleDrop.Length - 1; i++)
+        for (int i = 0; i < possibleDrop.Length; i++)
         {
-            if (Random.Range(0, 100) <= possibleDrop[i].rateDrop) // so sánh tỉ lệ giữa các item trong mảng
-            {
-                possibleDropList.Add(possibleDrop[i]);
-            }
+            int indexRandom = Random.Range(0, possibleDrop.Length);
+            itemDataSO temp = possibleDrop[i];
+            possibleDrop[i] = possibleDrop[indexRandom];
+            possibleDrop[indexRandom] = temp;
         }
 
-        for (int i = 0; i < possibleItemDrop; i++)
+        for (int i = 0; i < amountPossibleDrop; i++)
         {
-            itemDataSO _itemDropRandom = possibleDropList[Random.Range(0, possibleDropList.Count - 1)];
-
-            possibleDropList.Remove(_itemDropRandom);
-            dropItem(_itemDropRandom);
+            if (Random.Range(0, 100) <= possibleDrop[i].rateDrop)
+            {
+                dropItem(possibleDrop[i]);
+            }
         }
     }
 

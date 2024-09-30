@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
+    public UI_information uiSlot;
+
     public void swicthOptions(GameObject _entity)
     {
         for (int i = 0; i < transform.childCount; i++)

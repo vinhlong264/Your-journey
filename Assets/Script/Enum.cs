@@ -6,7 +6,7 @@ public enum StatType
     inteligent,
     vitality,
     //Defend type status
-    MaxHealth,
+    Health,
     Armor,
     Evasion,
     MagicResitance,
