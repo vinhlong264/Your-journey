@@ -55,7 +55,7 @@ public class ItemEquipmentSO : itemDataSO
 
         //Offensive status
         playerStatus.dame.addModifiers(dame);
-        playerStatus.critChance.addModifiers(critChance);
+        playerStatus.critRate.addModifiers(critChance);
         playerStatus.critPower.addModifiers(critPower);
 
         //Defend status
@@ -82,7 +82,7 @@ public class ItemEquipmentSO : itemDataSO
 
         //Offensive status
         playerStatus.dame.removeModifiers(dame);
-        playerStatus.critChance.removeModifiers(critChance);
+        playerStatus.critRate.removeModifiers(critChance);
         playerStatus.critPower.removeModifiers(critPower);
 
         //Defend status
@@ -110,7 +110,7 @@ public class ItemEquipmentSO : itemDataSO
 
         //Offensive stat
         addItemDescription(dame , StatType.Dame);
-        addItemDescription(critChance, StatType.CritChance);
+        addItemDescription(critChance, StatType.CritRate);
         addItemDescription(critPower, StatType.CritPower);
 
         //Defend stat

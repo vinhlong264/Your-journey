@@ -10,12 +10,12 @@ public class CharacterStatus : MonoBehaviour
     [Header("Major status info")]
     public Stat strength; // với mỗi điểm nâng cấp thì dame cơ bản sẽ tăng lên 1 và 1% sát thương chí mạng
     public Stat ability; // với mỗi điểm nâng cấp thì sẽ tăng các kĩ năng ví dụ là 1% né và 1% chí mạng
-    public Stat inteligent; // với mỗi điểm nâng cấp thì sẽ tăng 1 sức mạnh phép thuật và 3 giáp phép
-    public Stat vitality; // với mỗi điểm nâng cấp sẽ tăng hp, giáp vật lý, giáp phép khoảng 3 - 5 điểm
+    public Stat inteligent; // với mỗi điểm nâng cấp thì sẽ tăng 1 sức mạnh phép thuật và 3% giáp phép
+    public Stat vitality; // với mỗi điểm nâng cấp sẽ tăng hp, 3% giáp vật lý
 
     [Header("Offensive status info")]
     public Stat dame; //dame vật lý
-    public Stat critChance; // tỉ lệ chí mạng
+    public Stat critRate; // tỉ lệ chí mạng
     public Stat critPower; // DefaultValue là 150%
 
     [Header("Defend status info")]
@@ -95,11 +95,9 @@ public class CharacterStatus : MonoBehaviour
 
     IEnumerator addModifierStatus(int _amount, float _duration, Stat _status)
     {
-        _status.addModifiers(_amount);
-        Debug.Log("Nhận buff");
+        _status.addModifiers(_amount); // Nhận buff
         yield return new WaitForSeconds(_duration);
-        _status.removeModifiers(_amount);
-        Debug.Log("Hết buff");
+        _status.removeModifiers(_amount); // Xóa buff
     }
 
 
@@ -329,7 +327,7 @@ public class CharacterStatus : MonoBehaviour
 
     private bool CanCrit() // tính toán tỉ lệ chí mạng
     {
-        int criticalRate = critChance.getValue() + ability.getValue();
+        int criticalRate = critRate.getValue() + ability.getValue();
         return sytemRate(criticalRate);
     }
 
@@ -393,46 +391,6 @@ public class CharacterStatus : MonoBehaviour
     {
 
     }
-
-
-    public Stat getStat(StatType type) // hàm để lấy ra Status theo type
-    {
-        switch (type)
-        {
-            case StatType.Strength:
-                return strength;
-            case StatType.Ability:
-                return ability;
-            case StatType.inteligent:
-                return inteligent;
-            case StatType.vitality:
-                return vitality;
-            case StatType.Health:
-                return maxHealth;               
-            case StatType.Armor:
-                return armor;
-            case StatType.Evasion:
-                return evasion;
-            case StatType.MagicResitance:
-                return magicResistance;
-            case StatType.Dame:
-                return dame;
-            case StatType.CritPower:
-                return critPower;
-            case StatType.CritChance:
-                return critChance;
-            case StatType.FireDame:
-                return fireDame;
-            case StatType.IceDame:
-                return iceDame;
-            case StatType.LightingDame:
-                return lightingDame;
-        }
-        return null;
-    } 
-
-
-
     #endregion
 }
 

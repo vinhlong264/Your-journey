@@ -13,7 +13,7 @@ public enum StatType
 
     //Dame physical status
     Dame,
-    CritChance,
+    CritRate,
     CritPower,
 
     //Dame magical status

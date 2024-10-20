@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class PlayerStatus : CharacterStatus
+﻿public class PlayerStatus : CharacterStatus
 {
     private Player player;
     protected override void Start()
@@ -32,6 +30,42 @@ public class PlayerStatus : CharacterStatus
         {
             currentArmor.excuteItemEffect(player.transform);
         }
+    }
+
+    public Stat getStat(StatType type) // hàm để lấy ra Status theo type
+    {
+        switch (type)
+        {
+            case StatType.Strength:
+                return strength;
+            case StatType.Ability:
+                return ability;
+            case StatType.inteligent:
+                return inteligent;
+            case StatType.vitality:
+                return vitality;
+            case StatType.Health:
+                return maxHealth;
+            case StatType.Armor:
+                return armor;
+            case StatType.Evasion:
+                return evasion;
+            case StatType.MagicResitance:
+                return magicResistance;
+            case StatType.Dame:
+                return dame;
+            case StatType.CritPower:
+                return critPower;
+            case StatType.CritRate:
+                return critRate;
+            case StatType.FireDame:
+                return fireDame;
+            case StatType.IceDame:
+                return iceDame;
+            case StatType.LightingDame:
+                return lightingDame;
+        }
+        return null;
     }
 }
 

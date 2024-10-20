@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting;
+using UnityEngine.UI;
 
-public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler , IPointerEnterHandler, IPointerExitHandler
+public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image imageItem; // icon item
     [SerializeField] private TextMeshProUGUI itemText; // text số lượng
@@ -25,10 +24,10 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler , IPointerEnterHan
         item = newItem;
 
         imageItem.color = Color.white;
-        if(item != null)
+        if (item != null)
         {
             imageItem.sprite = item.data.icon;
-            if(item.stackSize > 1)
+            if (item.stackSize > 1)
             {
                 itemText.text = item.stackSize.ToString();
             }
@@ -49,14 +48,14 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler , IPointerEnterHan
 
     public virtual void OnPointerDown(PointerEventData eventData) // trang bị Eqipment
     {
-        if(item == null) return;
+        if (item == null) return;
 
         if (Input.GetKeyDown(KeyCode.LeftControl)) // remove item in Iventory
         {
             Inventory.Instance.removeItem(item.data);
         }
 
-        if(item.data.ItemType == ItemType.Equipment) // nếu cùng loại sẽ được thêm
+        if (item.data.ItemType == ItemType.Equipment) // nếu cùng loại sẽ được thêm
         {
             Inventory.Instance.equipmentItem(item.data);
         }
@@ -64,7 +63,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler , IPointerEnterHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(item == null) return;
+        if (item == null) return;
 
         uiDes.uiSlot.showDescription(item.data as ItemEquipmentSO);
     }

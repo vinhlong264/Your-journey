@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UI_EqipmentSlot : UI_ItemSlot
@@ -14,7 +11,7 @@ public class UI_EqipmentSlot : UI_ItemSlot
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if(item == null || item.data == null) return;
+        if (item == null || item.data == null) return;
 
         Inventory.Instance.unEqipmentItem(item.data as ItemEquipmentSO);
         Inventory.Instance.addItem(item.data as ItemEquipmentSO);
