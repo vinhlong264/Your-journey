@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    public UI_information uiSlot;
+    public UI_EqipmentInfor uiSlot;
+    public UI_StatsInfo uiStatsInfo;
     [SerializeField] private GameObject UI_Character;
     [SerializeField] private GameObject UI_Atribute;
     [SerializeField] private GameObject UI_SkillTree;
@@ -10,7 +11,7 @@ public class UI : MonoBehaviour
 
     private void Start()
     {
-        //switchOptionByKey(null);
+        switchOptionByKey(null);
     }
 
 
@@ -50,14 +51,14 @@ public class UI : MonoBehaviour
         }
     }
 
-    private void switchOptionByKey(GameObject _menu)
+    private void switchOptionByKey(GameObject _entityWindow)
     {
-        if(_menu != null && _menu.activeSelf)
+        if(_entityWindow != null && _entityWindow.activeSelf) // kiểm tra xem nếu _entityWindow != null và đang được active thì tắt đi
         {
-            _menu.SetActive(false);
+            _entityWindow.SetActive(false);
             return;
         }
 
-        swicthOptions(_menu);
+        swicthOptions(_entityWindow);
     }
 }

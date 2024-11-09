@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class UI_information : MonoBehaviour
+public class UI_EqipmentInfor : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameItemText;
     [SerializeField] private TextMeshProUGUI typeItemText;
