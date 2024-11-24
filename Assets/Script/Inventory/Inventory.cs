@@ -140,9 +140,9 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    private void updateSlotItemUI()
+    private void updateSlotItemUI() // cập nhập các UI_item
     {
-        for (int i = 0; i < equipmentSlot.Length; i++)
+        for (int i = 0; i < equipmentSlot.Length; i++) // equipment
         {
             foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary)
             {
@@ -154,17 +154,17 @@ public class Inventory : MonoBehaviour
         }
 
 
-        for (int i = 0; i < itemIventorySLot.Length; i++)
+        for (int i = 0; i < itemIventorySLot.Length; i++) // Xóa các inventory item khi thay đổi
         {
             itemIventorySLot[i].cleanItem();
         }
 
-        for (int i = 0; i < itemStashSlot.Length; i++)
+        for (int i = 0; i < itemStashSlot.Length; i++) //  Xóa các stash item khi thay đổi
         {
             itemStashSlot[i].cleanItem();
         }
 
-        for (int i = 0; i < itemIventoryList.Count; i++)
+        for (int i = 0; i < itemIventoryList.Count; i++) 
         {
             itemIventorySLot[i].updateUISlotItem(itemIventoryList[i]);
         }

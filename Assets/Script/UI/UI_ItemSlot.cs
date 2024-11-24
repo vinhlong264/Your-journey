@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image imageItem; // icon item
-    [SerializeField] private TextMeshProUGUI itemText; // text số lượng
+    [SerializeField] protected Image imageItem; // icon item
+    [SerializeField] protected TextMeshProUGUI itemText; // text số lượng
 
-    [SerializeField] protected InventoryItem item; // Item
+    [SerializeField] public InventoryItem item; // Item
 
-    [SerializeField] private UI uiDes;
+    [SerializeField] protected UI uiDes;
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         uiDes = GetComponentInParent<UI>();
     }
