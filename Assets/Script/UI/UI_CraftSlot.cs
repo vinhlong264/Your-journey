@@ -12,7 +12,7 @@ public class UI_CraftSlot : UI_ItemSlot
         if (_data == null) return; 
 
 
-        item.data = _data;
+        item.itemData = _data;
 
         imageItem.sprite = _data.icon;
         itemText.text = _data.name;
@@ -21,10 +21,6 @@ public class UI_CraftSlot : UI_ItemSlot
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        ItemEquipmentSO itemCraftData = item.data as ItemEquipmentSO;
-        if(Inventory.Instance.canCraft(itemCraftData, itemCraftData.craft)) // kiểm tra xem có đủ điều kiện để Craft không
-        {
-            Inventory.Instance.addItem(itemCraftData);
-        }
+        uiDes.uiCanCraftWindow.setUpCraftWindow(item.itemData as ItemEquipmentSO);
     }
 }

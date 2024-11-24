@@ -26,7 +26,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         imageItem.color = Color.white;
         if (item != null)
         {
-            imageItem.sprite = item.data.icon;
+            imageItem.sprite = item.itemData.icon;
             if (item.stackSize > 1)
             {
                 itemText.text = item.stackSize.ToString();
@@ -52,12 +52,12 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
         if (Input.GetKeyDown(KeyCode.LeftControl)) // remove item in Iventory
         {
-            Inventory.Instance.removeItem(item.data);
+            Inventory.Instance.removeItem(item.itemData);
         }
 
-        if (item.data.ItemType == ItemType.Equipment) // nếu cùng loại sẽ được thêm
+        if (item.itemData.ItemType == ItemType.Equipment) // nếu cùng loại sẽ được thêm
         {
-            Inventory.Instance.equipmentItem(item.data);
+            Inventory.Instance.equipmentItem(item.itemData);
         }
     }
 
@@ -65,7 +65,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     {
         if (item == null) return;
 
-        uiDes.uiSlot.showDescription(item.data as ItemEquipmentSO);
+        uiDes.uiSlot.showDescription(item.itemData as ItemEquipmentSO);
     }
 
     public void OnPointerExit(PointerEventData eventData)

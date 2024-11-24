@@ -110,32 +110,47 @@ public class Inventory : MonoBehaviour
 
     public bool canCraft(ItemEquipmentSO _itemToCraft, List<InventoryItem> _requirmentMaterial) // Quản lý việc ghép nguyên liệu
     {
-        List<InventoryItem> materialToRemove = new List<InventoryItem>();
+        if(_requirmentMaterial.Count <= 0) // kiểm tra xem Equipment này có yêu cầu material không
+        {
+            Debug.Log("Equipment not exits material");
+            return false;
+        }
+
+
+        List<InventoryItem> materialToRemove = new List<InventoryItem>(); // List để chứa các material để rèn
+
         for (int i = 0; i < _requirmentMaterial.Count; i++)
         {
-            if (itemStashDictionary.TryGetValue(_requirmentMaterial[i].data, out InventoryItem stashValue))
+            //Tìm xem itemStashDictionary có material yêu cầu không, nếu không thì trả về false luôn và ngược lại
+            if (itemStashDictionary.TryGetValue(_requirmentMaterial[i].itemData, out InventoryItem stashValue))
             {
+                Debug.Log("Find material");
+
+                // Nếu có, kiểm tra xem số lượng trong kho có đủ để rèn không
                 if (stashValue.stackSize < _requirmentMaterial[i].stackSize)
                 {
                     Debug.Log("Not enough material");
-                    return false;
+                    return false; // nếu không đủ thì trả về false luôn
                 }
                 else
                 {
+                    Debug.Log("Enough material");
                     materialToRemove.Add(stashValue);
                 }
             }
             else
             {
-                Debug.Log("Not enough material");
+                Debug.Log("Not Find material");
                 return false;
             }
         }
 
         for (int i = 0; i < materialToRemove.Count; i++)
         {
-            removeItem(materialToRemove[i].data);
+            removeItem(materialToRemove[i].itemData); // xóa các material đã dùng để rèn đi
         }
+
+        addEquipment(_itemToCraft);
         Debug.Log("Here is your item: " + _itemToCraft.name);
         return true;
     }
@@ -331,12 +346,12 @@ public class Inventory : MonoBehaviour
 [System.Serializable]
 public class InventoryItem // Class quản lý item trong Inventory
 {
-    public itemDataSO data; // SO
+    public itemDataSO itemData; // SO
     public int stackSize; // số lượng
 
     public InventoryItem(itemDataSO _item)
     {
-        data = _item;
+        itemData = _item;
         addStack();
     }
 

@@ -4,6 +4,9 @@ public class UI : MonoBehaviour
 {
     public UI_EqipmentInfor uiSlot;
     public UI_StatsInfo uiStatsInfo;
+    public UI_CraftWindow uiCanCraftWindow;
+
+
     [SerializeField] private GameObject UI_Character;
     [SerializeField] private GameObject UI_Atribute;
     [SerializeField] private GameObject UI_SkillTree;
