@@ -5,13 +5,10 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     protected static PlayerManager instance;
-
     public static PlayerManager Instance { get =>  instance; }
-
-
-
-
     public Player player;
+
+    public int exp;
 
     private void Awake()
     {
@@ -25,5 +22,7 @@ public class PlayerManager : MonoBehaviour
         }
                 
     }
+
+
 
 }

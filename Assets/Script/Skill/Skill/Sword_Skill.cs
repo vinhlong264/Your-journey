@@ -40,7 +40,7 @@ public class Sword_Skill : Skill
     {
         if (Input.GetKey(KeyCode.Mouse1))
         {
-            FinalDir = new Vector2(AnimDir().normalized.x * laughDirection.x, AnimDir().normalized.y * laughDirection.y);
+            FinalDir = new Vector2(getDirectionMouse().normalized.x * laughDirection.x, getDirectionMouse().normalized.y * laughDirection.y);
 
             for (int i = 0; i < dots.Length; i++)
             {
@@ -91,7 +91,7 @@ public class Sword_Skill : Skill
     }
 
     #region Anim Dot
-    private Vector2 AnimDir() // hàm tính hướng của người chơi với con chuột trên màn hình
+    private Vector2 getDirectionMouse() // hàm tính hướng của người chơi với con chuột trên màn hình
     {
         Vector2 playerPos = player.transform.position; // lấy vị trí của Player
         Vector2 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Lấy vị trí của con trỏ chuột
@@ -120,7 +120,7 @@ public class Sword_Skill : Skill
 
     private Vector2 DotsPostion(float t) // hàm tính toán vị trí của các dots, hay nói đây là chuyển động cong đều
     {
-        Vector2 dir = new Vector2(AnimDir().normalized.x * laughDirection.x , AnimDir().normalized.y * laughDirection.y);
+        Vector2 dir = new Vector2(getDirectionMouse().normalized.x * laughDirection.x , getDirectionMouse().normalized.y * laughDirection.y);
         Vector2 postion = (Vector2)player.transform.position + dir * t + 0.5f * (Physics2D.gravity * swordGravity) * Mathf.Pow(t , 2);
         return postion;
     }

@@ -13,22 +13,16 @@ public class UI_CraftList : MonoBehaviour , IPointerClickHandler
     [SerializeField] private List<itemDataSO> itemMaterial;
     void Start()
     {
-        AssignCraftSlot();
+        transform.parent.GetChild(0).GetComponent<UI_CraftList>().setUpCraftList();
+        setDefaultEquipmentCraft();
     }
 
-    private void AssignCraftSlot()
-    {
-        for (int i = craftSlotParent.childCount - 1; i >= 0; i--)
-        {
-            craftsSlot.Add(craftSlotParent.GetChild(i).GetComponent<UI_CraftSlot>());
-        }
-    }
 
     public void setUpCraftList()
     {
-        for(int i = 0; i < craftsSlot.Count; i++)
+        for(int i = 0; i < craftSlotParent.childCount; i++)
         {
-            Destroy(craftsSlot[i].gameObject);
+            Destroy(craftSlotParent.GetChild(i).gameObject);
         }
 
         craftsSlot = new List<UI_CraftSlot>();
@@ -44,5 +38,13 @@ public class UI_CraftList : MonoBehaviour , IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         setUpCraftList();
+    }
+
+    private void setDefaultEquipmentCraft()
+    {
+        if(craftEquipment[0] != null)
+        {
+            GetComponentInParent<UI>().uiCanCraftWindow.setUpCraftWindow(craftEquipment[0]);
+        }
     }
 }

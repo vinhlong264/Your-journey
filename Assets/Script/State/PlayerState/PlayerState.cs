@@ -12,7 +12,7 @@ public class PlayerState
     protected float InputY;
     protected bool triggerCalled;
     protected float stateTimer; //Biến quản lý thời gian chuyển state Dash về Idle
-    private string _animationBoolName; // biến tên của animation được chuyển tiếp
+    protected string _animationBoolName; // biến tên của animation được chuyển tiếp
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, string animationBoolName) 
     {

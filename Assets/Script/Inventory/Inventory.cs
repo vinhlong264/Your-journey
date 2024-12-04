@@ -108,7 +108,18 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool canCraft(ItemEquipmentSO _itemToCraft, List<InventoryItem> _requirmentMaterial) // Quản lý việc ghép nguyên liệu
+    #region Craft
+
+    public void Craft(ItemEquipmentSO _eqipmentCratf , List<InventoryItem> _materialRequirement)
+    {
+        if(canCraft(_eqipmentCratf , _materialRequirement))
+        {
+            addEquipment(_eqipmentCratf);
+            Debug.Log("Here is your item: " + _eqipmentCratf.name);
+        }
+    }
+
+    private bool canCraft(ItemEquipmentSO _itemToCraft, List<InventoryItem> _requirmentMaterial) // Quản lý việc ghép nguyên liệu
     {
         if(_requirmentMaterial.Count <= 0) // kiểm tra xem Equipment này có yêu cầu material không
         {
@@ -150,10 +161,12 @@ public class Inventory : MonoBehaviour
             removeItem(materialToRemove[i].itemData); // xóa các material đã dùng để rèn đi
         }
 
-        addEquipment(_itemToCraft);
-        Debug.Log("Here is your item: " + _itemToCraft.name);
+        //addEquipment(_itemToCraft);
+        //Debug.Log("Here is your item: " + _itemToCraft.name);
         return true;
     }
+
+    #endregion
 
     private void updateSlotItemUI() // cập nhập các UI_item
     {
@@ -198,7 +211,7 @@ public class Inventory : MonoBehaviour
     #region add item
     public void addItem(itemDataSO _item)
     {
-        if (_item.ItemType == ItemType.Equipment /*&& canAddItem()*/)
+        if (_item.ItemType == ItemType.Equipment && canAddItem())
         {
             addEquipment(_item);
         }
@@ -235,6 +248,8 @@ public class Inventory : MonoBehaviour
             itemIventoryList.Add(newItem);
             itemInvetoryDictionary.Add(_item, newItem);
         }
+
+        updateSlotItemUI();
     }
 
     public bool canAddItem()

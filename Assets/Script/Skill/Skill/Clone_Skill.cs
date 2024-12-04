@@ -20,7 +20,7 @@ public class Clone_Skill : Skill
     }
 
     #region Method Skills of Clone
-    public void CreateDashOnStart()  // tạo ra clone khi Player bắt đầu 1 state nào đó
+    public void CreateDashOnStart()  // tạo ra clone khi Player bắt đầu Dash
     {
         if (createDashCloneOnStart)
         {
@@ -29,7 +29,7 @@ public class Clone_Skill : Skill
     }
 
 
-    public void CreateDashCloneOnOver() // tạo ra clone khi Player kết thúc 1 state nào đó
+    public void CreateDashCloneOnOver() // tạo ra clone khi Player kết thúc Dash
     {
         if (createDashCloneOnOver)
         {
