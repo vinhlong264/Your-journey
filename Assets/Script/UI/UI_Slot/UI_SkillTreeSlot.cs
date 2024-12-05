@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_SkillTreeSlot : MonoBehaviour
+public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler , IPointerExitHandler
 {
     [Header("Skill information")]
     [SerializeField] private string skillName; // tên skill
@@ -13,12 +14,19 @@ public class UI_SkillTreeSlot : MonoBehaviour
     [SerializeField] private UI_SkillTreeSlot[] shouldBeUnlocked; // Mảng chứa các skill đã được mở khóa(có thể gọi là kĩ năng tiền đề để nâng cấp skill tiếp theo)
     [SerializeField] private UI_SkillTreeSlot[] shouldBeLocked; // Mảng chứa các skill đang bị khóa
     [SerializeField] private Image skillImage;
+    [SerializeField] private Color skillLockColor;
+
+    private UI ui;
 
 
     private void Start()
     {
+        ui = GetComponentInParent<UI>();
         skillImage = GetComponent<Image>();
+        skillImage.color = skillLockColor;
+
         GetComponent<Button>().onClick.AddListener(() => unlockedSkill());
+
     }
 
     private void OnValidate()
@@ -47,9 +55,16 @@ public class UI_SkillTreeSlot : MonoBehaviour
         }
 
         isUnlocked = true;
-        skillImage.color = Color.green;
+        skillImage.color = Color.white;
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        ui.uiSkillInfo.showInformatioSkill(skillName, skillDescription);
+    }
 
-
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ui.uiSkillInfo.hideInformationWindow();
+    }
 }

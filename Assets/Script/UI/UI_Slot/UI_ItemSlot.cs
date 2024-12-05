@@ -65,13 +65,13 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     {
         if (item == null) return;
 
-        uiDes.uiSlot.showDescription(item.itemData as ItemEquipmentSO);
+        uiDes.uiEquipmentInfo.showDescription(item.itemData as ItemEquipmentSO);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (item == null) return;
 
-        uiDes.uiSlot.hideDescription();
+        uiDes.uiEquipmentInfo.hideDescription();
     }
 }

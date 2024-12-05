@@ -2,9 +2,11 @@
 
 public class UI : MonoBehaviour
 {
-    public UI_EqipmentInfor uiSlot;
+    public UI_EqipmentInfor uiEquipmentInfo;
     public UI_StatsInfo uiStatsInfo;
+    public UI_SkillInformation uiSkillInfo;
     public UI_CraftWindow uiCanCraftWindow;
+    
 
 
     [SerializeField] private GameObject UI_Character;
