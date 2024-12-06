@@ -1,8 +1,14 @@
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UI_EqipmentSlot : UI_ItemSlot
 {
     public EqipmentType slotType;
+
+    protected override void Start()
+    {
+        base.Start();
+    }
 
     private void OnValidate()
     {

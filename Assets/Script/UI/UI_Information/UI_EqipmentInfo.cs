@@ -9,6 +9,10 @@ public class UI_EqipmentInfor : MonoBehaviour
     private int frontSizeDefaunt = 36;
 
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
 
     public void showDescription(ItemEquipmentSO itemEqipment)
     {
@@ -18,6 +22,8 @@ public class UI_EqipmentInfor : MonoBehaviour
         nameItemText.text = itemEqipment.name;
         typeItemText.text = itemEqipment.EqipmentType.ToString();
         descriptionText.text = itemEqipment.GetDescription();
+
+        Debug.Log(nameItemText.text+": " +nameItemText.text.Length);
 
         adjustFrontSize(nameItemText);
 

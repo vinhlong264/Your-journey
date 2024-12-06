@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9200131dec075047a2727141bb51045, type: 3}
-  m_Name: Armor_KingFreezee
+  m_Name: Bottle Heal
   m_EditorClassIdentifier: 
   ItemType: 1
-  itemName: Armor_KingFreezee
-  icon: {fileID: -1439676860, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
+  itemName: Heal
+  icon: {fileID: -474877257, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   rateDrop: 0
-  EqipmentType: 1
+  EqipmentType: 3
   coolDownEffect: 5
   ItemEffect:
-  - {fileID: 11400000, guid: 55ebefb505a391946b35a47415aa7a76, type: 2}
+  - {fileID: 11400000, guid: cda1b8e1295e5b948b13ee2287deecfa, type: 2}
   strength: 0
   ability: 0
   inteligent: 0

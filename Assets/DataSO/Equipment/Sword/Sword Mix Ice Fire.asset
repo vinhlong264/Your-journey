@@ -10,30 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9200131dec075047a2727141bb51045, type: 3}
-  m_Name: SwordBroze
+  m_Name: Sword Mix Ice Fire
   m_EditorClassIdentifier: 
   ItemType: 1
-  itemName: SwordBroze
-  icon: {fileID: -1019236712, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
-  rateDrop: 10
+  itemName: SwordMixDame
+  icon: {fileID: 2078701519, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
+  rateDrop: 0
   EqipmentType: 0
   coolDownEffect: 0
   ItemEffect:
-  - {fileID: 11400000, guid: c74e412db1deb5346843c60a40531c6b, type: 2}
-  strength: 3
+  - {fileID: 11400000, guid: 237350646aedcdc4eb7b92fae0ae9dd8, type: 2}
+  strength: 0
   ability: 0
   inteligent: 0
   vitality: 0
-  dame: 10
+  dame: 20
   critChance: 0
   critPower: 0
   maxHealth: 0
   armor: 0
   evasion: 0
   magicResistance: 0
-  fireDame: 0
-  iceDame: 0
-  lightingDame: 5
-  craft:
-  - itemData: {fileID: 11400000, guid: 3c859cc32382b0a4db893de128aeaae0, type: 2}
-    stackSize: 4
+  fireDame: 10
+  iceDame: 10
+  lightingDame: 0
+  craft: []

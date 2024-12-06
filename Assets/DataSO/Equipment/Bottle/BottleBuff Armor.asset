@@ -10,32 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9200131dec075047a2727141bb51045, type: 3}
-  m_Name: Sword_Dracula
+  m_Name: BottleBuff Armor
   m_EditorClassIdentifier: 
   ItemType: 1
-  itemName: Sword_Dracula
-  icon: {fileID: 534402886, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
+  itemName: buf Armor
+  icon: {fileID: -1725945744, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   rateDrop: 0
-  EqipmentType: 0
-  coolDownEffect: 0
+  EqipmentType: 3
+  coolDownEffect: 5
   ItemEffect:
-  - {fileID: 11400000, guid: cda1b8e1295e5b948b13ee2287deecfa, type: 2}
+  - {fileID: 11400000, guid: 19132d9a28052a6488c79f2f91ed1115, type: 2}
   strength: 0
   ability: 0
   inteligent: 0
   vitality: 0
-  dame: 5
-  critChance: 5
+  dame: 0
+  critChance: 0
   critPower: 0
   maxHealth: 0
   armor: 0
   evasion: 0
-  magicResistance: 25
+  magicResistance: 0
   fireDame: 0
   iceDame: 0
   lightingDame: 0
-  craft:
-  - itemData: {fileID: 11400000, guid: 0f29a7889326c6947a176a6965c16a4d, type: 2}
-    stackSize: 1
-  - itemData: {fileID: 11400000, guid: 3c859cc32382b0a4db893de128aeaae0, type: 2}
-    stackSize: 1
+  craft: []

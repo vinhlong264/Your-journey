@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9200131dec075047a2727141bb51045, type: 3}
-  m_Name: Sword_Wood
+  m_Name: Sword Broze
   m_EditorClassIdentifier: 
   ItemType: 1
-  itemName: Sword_Wood
-  icon: {fileID: 682402774, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
+  itemName: SwordBroze
+  icon: {fileID: -1019236712, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   rateDrop: 10
   EqipmentType: 0
   coolDownEffect: 0
-  ItemEffect: []
-  strength: 0
+  ItemEffect:
+  - {fileID: 11400000, guid: c74e412db1deb5346843c60a40531c6b, type: 2}
+  strength: 3
   ability: 0
   inteligent: 0
   vitality: 0
-  dame: 4
+  dame: 10
   critChance: 0
   critPower: 0
   maxHealth: 0
@@ -33,4 +34,6 @@ MonoBehaviour:
   fireDame: 0
   iceDame: 0
   lightingDame: 5
-  craft: []
+  craft:
+  - itemData: {fileID: 11400000, guid: 3c859cc32382b0a4db893de128aeaae0, type: 2}
+    stackSize: 4

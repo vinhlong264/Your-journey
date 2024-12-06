@@ -2,9 +2,9 @@
 
 public class UI_CraftSlot : UI_ItemSlot
 {
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
     }
 
     public void setUpCraftSlot(ItemEquipmentSO _data) // Cài đặt những thứ cần thiết
@@ -21,6 +21,6 @@ public class UI_CraftSlot : UI_ItemSlot
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        uiDes.uiCanCraftWindow.setUpCraftWindow(item.itemData as ItemEquipmentSO);
+        //uiDes.uiCanCraftWindow.setUpCraftWindow(item.itemData as ItemEquipmentSO);
     }
 }

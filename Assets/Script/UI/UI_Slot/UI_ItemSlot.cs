@@ -7,15 +7,12 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 {
     [SerializeField] protected Image imageItem; // icon item
     [SerializeField] protected TextMeshProUGUI itemText; // text số lượng
+    protected UI ui;
+    [SerializeField] protected InventoryItem item; // Item
 
-    [SerializeField] public InventoryItem item; // Item
-
-    [SerializeField] protected UI uiDes;
-
-
-    protected virtual void Awake()
+    protected virtual void Start()
     {
-        uiDes = GetComponentInParent<UI>();
+        ui = GetComponentInParent<UI>();
     }
 
 
@@ -61,17 +58,46 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
         if (item == null) return;
 
-        uiDes.uiEquipmentInfo.showDescription(item.itemData as ItemEquipmentSO);
+        ui.uiEquipmentInfo.showDescription(item.itemData as ItemEquipmentSO);
+        ui.uiEquipmentInfo.transform.position = moveForMouse();
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public virtual void OnPointerExit(PointerEventData eventData)
     {
         if (item == null) return;
 
-        uiDes.uiEquipmentInfo.hideDescription();
+        ui.uiEquipmentInfo.hideDescription();
+    }
+
+
+    protected Vector3 moveForMouse()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        float offSetX = 0;
+        float offSetY = 0;
+
+        if (mousePos.x > 600)
+        {
+            offSetX = -150f;
+        }
+        else
+        {
+            offSetX = 150f;
+        }
+
+        if (mousePos.y > 300)
+        {
+            offSetY = -150f;
+        }
+        else
+        {
+            offSetY = 150f;
+        }
+
+        return new Vector3(mousePos.x + offSetX, mousePos.y + offSetY, 0);
     }
 }
