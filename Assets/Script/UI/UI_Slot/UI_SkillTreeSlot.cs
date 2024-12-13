@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler , IPointerExitHandler
+public class UI_SkillTreeSlot : UI_ItemSlot
 {
     [Header("Skill information")]
     [SerializeField] private string skillName; // tên skill
@@ -16,12 +16,9 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler , IPointerEx
     [SerializeField] private Image skillImage;
     [SerializeField] private Color skillLockColor;
 
-    private UI ui;
-
-
-    private void Start()
-    {
-        ui = GetComponentInParent<UI>();
+    protected override void Start()
+    {   
+        base.Start();
         skillImage = GetComponent<Image>();
         skillImage.color = skillLockColor;
 
@@ -58,12 +55,12 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler , IPointerEx
         skillImage.color = Color.white;
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public override void OnPointerEnter(PointerEventData eventData)
     {
         ui.uiSkillInfo.showInformatioSkill(skillName, skillDescription);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public override void OnPointerExit(PointerEventData eventData)
     {
         ui.uiSkillInfo.hideInformationWindow();
     }

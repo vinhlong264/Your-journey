@@ -51,6 +51,8 @@ public class CharacterStatus : MonoBehaviour
     public int currentHealth;
     public System.Action onUiHealth; //Event health bar
 
+    protected float expReceive;
+
     #endregion
 
     protected virtual void Start()
@@ -392,6 +394,9 @@ public class CharacterStatus : MonoBehaviour
 
     }
     #endregion
+
+
+
 }
 
 

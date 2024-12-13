@@ -10,6 +10,8 @@ public class EnemyStatus : CharacterStatus
     [SerializeField] int level;
     [Range(0, 1f)]
     [SerializeField] private float perCanStage;
+
+    [SerializeField] private float expReward;
     protected override void Start()
     {
         applyPower();
@@ -45,6 +47,8 @@ public class EnemyStatus : CharacterStatus
     {
         base.Die();
         enemy.Die();
+        Observer.callBackEvent(expReward);
+
         dropSystem.generateDrop();
         return;
     }

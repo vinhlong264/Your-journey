@@ -1,4 +1,4 @@
-
+﻿
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +6,14 @@ using UnityEngine;
 public class ItemEquipmentSO : itemDataSO
 {
     public EqipmentType EqipmentType;
-    public float coolDownEffect;
-    public itemEffectSO[] ItemEffect;
+    [TextArea]
+    [SerializeField] private string descriptionEquipment; // Thông tin skin
+    public float coolDownEffect; // Thời gian tồn tại hiệu ứng
+    public itemEffectSO[] ItemEffect; // Hiệu ứng
 
-    [Header("Major stat")]
+
+    //Các chỉ số cộng thêm khi trang bị
+    [Header("Major stat")] 
     public int strength;
     public int ability;
     public int inteligent;
@@ -31,11 +35,11 @@ public class ItemEquipmentSO : itemDataSO
     public int iceDame;
     public int lightingDame;
 
-    public List<InventoryItem> craft;
+    public List<InventoryItem> craft; // List chứa nguyên liệu để có thể chế tạo
 
     private int descriptionLenght;
 
-    public void excuteItemEffect(Transform _enemyPos)
+    public void excuteItemEffect(Transform _enemyPos) // Effect
     {
         foreach (var item in ItemEffect)
         {
@@ -43,7 +47,7 @@ public class ItemEquipmentSO : itemDataSO
         }
     }
 
-    public void addModifier()
+    public void addModifier() // cộng thêm chỉ số
     {
         PlayerStatus playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStatus>();
 
@@ -70,7 +74,7 @@ public class ItemEquipmentSO : itemDataSO
         playerStatus.lightingDame.addModifiers(lightingDame);
     }
 
-    public void removeModifier()
+    public void removeModifier() // Xóa chỉ số
     {
         PlayerStatus playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStatus>();
 
@@ -97,7 +101,7 @@ public class ItemEquipmentSO : itemDataSO
         playerStatus.lightingDame.removeModifiers(lightingDame);
     }
 
-    public override string GetDescription()
+    public override string GetDescription() // Hàm để cập nhập thông tin trang bị
     {
         sb.Length = 0;
         descriptionLenght = 0;
@@ -132,6 +136,12 @@ public class ItemEquipmentSO : itemDataSO
                 sb.AppendLine();
                 sb.Append("");
             }
+        }
+
+        if(descriptionEquipment.Length > 0)
+        {
+            sb.AppendLine();
+            sb.Append(descriptionEquipment);
         }
         return sb.ToString();
     }

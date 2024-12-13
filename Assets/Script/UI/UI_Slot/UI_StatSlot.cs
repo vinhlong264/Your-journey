@@ -2,13 +2,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UI_StatSlot : UI_ItemSlot
 {
     [SerializeField] string statName;
     [SerializeField] StatType statType;
     [SerializeField] TextMeshProUGUI statNameText;
     [SerializeField] TextMeshProUGUI statValue;
-    [SerializeField] UI uiDes;
     [TextArea]
     [SerializeField] private string statDescription;
 
@@ -23,10 +22,11 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
 
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         updateStatusUI();
-        uiDes = GetComponentInParent<UI>();
+        
     }
 
 
@@ -69,13 +69,13 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public override void OnPointerEnter(PointerEventData eventData)
     {
-        uiDes.uiStatsInfo.showStatsDes(statDescription);
+        ui.uiStatsInfo.showStatsDes(statDescription);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public override void OnPointerExit(PointerEventData eventData)
     {
-        uiDes.uiStatsInfo.hideStatsDes();
+        ui.uiStatsInfo.hideStatsDes();
     }
 }

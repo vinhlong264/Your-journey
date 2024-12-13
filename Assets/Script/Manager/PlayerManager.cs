@@ -1,28 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Singleton<PlayerManager>
 {
-    protected static PlayerManager instance;
-    public static PlayerManager Instance { get =>  instance; }
+    private static PlayerManager instance;
     public Player player;
 
-    public int exp;
+    [Header("Level")]
+    [SerializeField] private LevelSystem levelSystem;
+    [SerializeField] private int currentLevel;
+    [SerializeField] private float currentExp;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if(instance != null)
-        {
-            DestroyImmediate(this.gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
-                
+        base.Awake();
+    }
+
+    private void OnEnable()
+    {
+        Observer.onGainReward += receiveReward;
+    }
+
+    private void OnDisable()
+    {
+        Observer.onGainReward -= receiveReward;
     }
 
 
+    private void Start()
+    {
+        levelSystem = new LevelSystem();
+    }
 
+    private void receiveReward(float reward)
+    {
+        currentExp += reward;
+        if (levelSystem.gainExp(currentExp))
+        {
+            currentLevel = levelSystem.getCurrentLevel();
+            currentExp = levelSystem.getExperience();
+        }
+    }
 }

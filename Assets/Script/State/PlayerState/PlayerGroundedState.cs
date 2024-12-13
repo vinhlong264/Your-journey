@@ -62,7 +62,7 @@ public class PlayerGroundedState : PlayerState
         {
             return true;
         }
-        Debug.Log("tồn tại sword");
+        Debug.Log("Take sword");
         Sword_Skill_Controller scl = _player.sword.GetComponent<Sword_Skill_Controller>();
         if (scl != null)
         {

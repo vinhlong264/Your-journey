@@ -23,8 +23,6 @@ public class UI_EqipmentInfor : MonoBehaviour
         typeItemText.text = itemEqipment.EqipmentType.ToString();
         descriptionText.text = itemEqipment.GetDescription();
 
-        Debug.Log(nameItemText.text+": " +nameItemText.text.Length);
-
         adjustFrontSize(nameItemText);
 
         gameObject.SetActive(true);
