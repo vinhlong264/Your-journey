@@ -28,7 +28,7 @@ public class PlayerGroundedState : PlayerState
         }
 
         // Kích hoạt đòn đánh gây choáng
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && _player.skill.parry_Skill.parryUnlock)
         {
             _stateMachine.changeState(_player._counterAttackState);
         }

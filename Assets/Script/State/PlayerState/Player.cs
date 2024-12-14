@@ -26,6 +26,8 @@ public class Player : Entity
     public float dashTimer { get; set; }
     [SerializeField] float dashCooldown;
 
+    public SkillManager skill { get; private set; }
+
     public GameObject sword;
 
     #endregion
@@ -76,6 +78,9 @@ public class Player : Entity
     {
         base.Start();
         _stateMachine.initialize(_idleState);
+
+        skill = SkillManager.instance;
+
         isFacingRight = true;
         isFacingDir = 1f;
 
@@ -161,10 +166,15 @@ public class Player : Entity
         {
             return;
         }
-        //dashTimer -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash_skill.CanUseSkill()) // kích hoạt dash
+
+        if (!skill.dash_skill.dashUnlock)
         {
-            /*dashTimer = dashCooldown;*/ // sau khi kích hoạt dash sẽ chờ 1 khoảng delay để kích hoạt được tiếp
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && skill.dash_skill.CanUseSkill()) // kích hoạt dash
+        {
+
             dashDirection = Input.GetAxisRaw("Horizontal");
 
             if (dashDirection == 0)

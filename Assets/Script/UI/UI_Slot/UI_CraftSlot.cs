@@ -21,6 +21,6 @@ public class UI_CraftSlot : UI_ItemSlot
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        //uiDes.uiCanCraftWindow.setUpCraftWindow(item.itemData as ItemEquipmentSO);
+        ui.uiCanCraftWindow.setUpCraftWindow(item.itemData as ItemEquipmentSO);
     }
 }

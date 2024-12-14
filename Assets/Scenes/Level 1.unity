@@ -501,6 +501,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton
       objectReference: {fileID: 0}
+    - target: {fileID: 3536847460245775772, guid: 878898815ed646d4f805eb1944781201, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4470160902107739982, guid: 878898815ed646d4f805eb1944781201, type: 3}
       propertyPath: m_LocalPosition.x
       value: -25.53
@@ -1792,11 +1796,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Multiple Mirage
   skillDescription: 'Your  mirage has 30% of your attack.
 
@@ -2278,11 +2277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Multiple Destruction
   skillDescription: You can create up to 3 crystal at a time.
   isUnlocked: 0
@@ -2839,11 +2833,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Mirage
   skillDescription: 'You leave your mirage instead of you when you blink.
 
@@ -4233,11 +4222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4458851748761810652}
-  experience:
-    exp: 0
-    expRequirement: 10
-  expCurrent: 0
-  level: 0
+  currentLevel: 0
+  currentExp: 0
 --- !u!1 &479081534
 GameObject:
   m_ObjectHideFlags: 0
@@ -5241,11 +5227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Dash - "Here I am"
   skillDescription: "You leave mirage when you dash.\r"
   isUnlocked: 0
@@ -5529,11 +5510,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Dash
   skillDescription: 'You can dash to avoid attacks.
 
@@ -6046,11 +6022,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Black Hole
   skillDescription: "You trap enemies in a blackhole which allows\nyou to do tons
     of damage.\r"
@@ -6711,11 +6682,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Explore
   skillDescription: 'Crystal can explode.
 
@@ -7134,11 +7100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Bouncy Sword
   skillDescription: 'Sword can boucne beetwen targets.
 
@@ -8081,11 +8042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Crystal Mirage
   skillDescription: "You create crystal instead of mirage. \r\nWith all it's qualites.\n[Only
     one upgrade can be choosen]"
@@ -8235,11 +8191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Dodge
   skillDescription: You getting 10% of a evasion.
   isUnlocked: 0
@@ -8380,11 +8331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Vulnerability
   skillDescription: Enemy hit by sword , takes 10% more damage.
   isUnlocked: 0
@@ -8666,11 +8612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Parry Defense
   skillDescription: You restore a bit of health with succsesful parry.
   isUnlocked: 0
@@ -10250,11 +10191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Throw Sword
   skillDescription: 'Throws sword into the enemy.
 
@@ -10666,11 +10602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Parry with a mirage
   skillDescription: You create a clone with succsesful parry.
   isUnlocked: 0
@@ -13929,11 +13860,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Dodge mirage
   skillDescription: You can create mirage on dodge.
   isUnlocked: 0
@@ -14457,11 +14383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Dash - "Actually I am"
   skillDescription: You create mirage at your arrival.
   isUnlocked: 0
@@ -14997,11 +14918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Time stop
   skillDescription: "\rWhen enemy hit by sword, his time stops."
   isUnlocked: 0
@@ -15885,10 +15801,11 @@ GameObject:
   - component: {fileID: 1344034097}
   - component: {fileID: 1344034096}
   - component: {fileID: 1344034095}
-  - component: {fileID: 1344034098}
   - component: {fileID: 1344034099}
+  - component: {fileID: 1344034098}
   - component: {fileID: 1344034100}
   - component: {fileID: 1344034101}
+  - component: {fileID: 1344034102}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -15910,6 +15827,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDownTimer: 0
   coolDown: 5
+  dashSkillUnlockBtn: {fileID: 621767554}
+  dashCreateCloneBtn: {fileID: 596851771}
+  dashCreateCloneArrivalBtn: {fileID: 1271285511}
 --- !u!114 &1344034096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15953,8 +15873,6 @@ MonoBehaviour:
   coolDown: 2
   Clone_Pre: {fileID: 5208422648343834587, guid: 20eccc584ae61b944a904efbdcced7d8, type: 3}
   cloneDuration: 5
-  createDashCloneOnStart: 1
-  createDashCloneOnOver: 1
   CreateCloneCouterAttack: 1
   canDuplicateClone: 0
 --- !u!114 &1344034099
@@ -16039,6 +15957,23 @@ MonoBehaviour:
   - {fileID: 1885430222551567074, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
   - {fileID: 1885430222551567074, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
   - {fileID: 1885430222551567074, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+--- !u!114 &1344034102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344034094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10cd76d6b75f254fb9dfa3a0b6dfd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTimer: 0
+  coolDown: 0
+  parryUnlockSkillBtn: {fileID: 1770029721}
+  parryRestoreSkillBtn: {fileID: 886462852}
+  parryWithMirageSkillBtn: {fileID: 1082464013}
 --- !u!1001 &1344825621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17527,11 +17462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Time Mirage
   skillDescription: 'Your mirage can attack targets.
 
@@ -17809,11 +17739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Crystal
   skillDescription: You create magic crystal that does magic damage. By clickinb
     ability again , you can teleport to your crystal.
@@ -17960,11 +17885,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Controller Destruction
   skillDescription: 'Crystal moves towards the enemy.
 
@@ -23222,11 +23142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Bullet Sword
   skillDescription: 'Sword can peirce targets.
 
@@ -24132,11 +24047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Parry
   skillDescription: You can parry attack to avoid damage.
   isUnlocked: 0
@@ -25927,11 +25837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Agrresive Mirage
   skillDescription: 'Your mirage has 80% of your damage.
 
@@ -27095,11 +27000,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0445af4543f4194094a46ecd1510b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageItem: {fileID: 0}
-  itemText: {fileID: 0}
-  item:
-    itemData: {fileID: 0}
-    stackSize: 0
   skillName: Spin Sword
   skillDescription: 'Sword will spin like a chain saw.
 
@@ -29139,8 +29039,8 @@ SceneRoots:
   - {fileID: 1778850471}
   - {fileID: 456154705}
   - {fileID: 1344034097}
-  - {fileID: 339840840}
   - {fileID: 1576804667}
   - {fileID: 1384609880}
   - {fileID: 1360184069}
   - {fileID: 35885230}
+  - {fileID: 339840840}

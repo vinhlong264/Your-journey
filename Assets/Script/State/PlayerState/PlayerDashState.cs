@@ -7,17 +7,14 @@
     public override void Enter()
     {
         base.Enter();
-        SkillManager.instance.clone_skill.CreateDashOnStart();
-        /* Hàm được gọi từ SkillManager thông qua singleton
-       Hàm CreateClone có tham số truyền vào là transform nhằm lấy được vị trí của Player hiện tại để khi bắt đầu kích hoạt
-       Dash sẽ tạo ra Clone ở thời điểm ấy*/
+        _player.skill.dash_skill.dashCreateClone(); // Tạo ra clone ở ngay khi Dash được kích hoạt
         stateTimer = _player.dashDuration;
     }
 
     public override void Execute()
     {
         base.Execute();
-        _player.setVelocity(_player.dashSpeed * _player.dashDirection, 0); // kiểm soát tốc độ di chuyển của dash
+        _player.setVelocity(_player.dashSpeed * _player.dashDirection, 0); // tốc độ Dash
         //Debug.Log("I doing Dash");
         if (stateTimer < 0) // nếu stateTimer < 0 sẽ chuyển qua trạng thái idle
         {
@@ -33,7 +30,7 @@
     public override void Exit()
     {
         base.Exit();
-        _player.setVelocity(0, rb.velocity.y); // set về 0 nhằm tạo ra sự cân bằng khi di chuyển, khi hết dash sẽ dừng lại 1 nhịp
-        SkillManager.instance.clone_skill.CreateDashCloneOnOver();
+        _player.setVelocity(0, rb.velocity.y); // Kết thúc Dash thì gia tốc x sẽ về 0
+        _player.skill.dash_skill.dashCreateOnArrival();
     }
 }

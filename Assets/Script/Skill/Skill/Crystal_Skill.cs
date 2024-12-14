@@ -21,7 +21,7 @@ public class Crystal_Skill : Skill
     [SerializeField] private float multiCooldown; // coolDown của Multi
     [SerializeField] private int amountOfMulti; // số lượng multi
     [SerializeField] private List<GameObject> listCrystal = new List<GameObject>();// List chứa crystal
-    public override void UseSkill()
+    protected override void UseSkill()
     {
         base.UseSkill();
 

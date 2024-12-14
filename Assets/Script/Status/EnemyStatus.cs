@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class EnemyStatus : CharacterStatus
+public class EnemyStatus : CharacterStatus, ISubject
 {
     private Enemy enemy;
     private itemDrop dropSystem;
@@ -12,6 +13,7 @@ public class EnemyStatus : CharacterStatus
     [SerializeField] private float perCanStage;
 
     [SerializeField] private float expReward;
+
     protected override void Start()
     {
         applyPower();
@@ -19,6 +21,8 @@ public class EnemyStatus : CharacterStatus
         base.Start();
         enemy = GetComponent<Enemy>();
         dropSystem = GetComponent<itemDrop>();  
+
+        
     }
 
     private void applyPower()
@@ -47,9 +51,18 @@ public class EnemyStatus : CharacterStatus
     {
         base.Die();
         enemy.Die();
-        Observer.callBackEvent(expReward);
-
+        eventCallBack(expReward);
         dropSystem.generateDrop();
         return;
+    }
+
+    public void eventCallBack(float value)
+    {
+        FindObserverManager().Listener(value);
+    }
+
+    private IObsever FindObserverManager()
+    {
+        return FindObjectsOfType<MonoBehaviour>().OfType<IObsever>().FirstOrDefault();
     }
 }

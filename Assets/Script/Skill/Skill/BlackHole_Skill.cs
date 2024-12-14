@@ -20,7 +20,7 @@ public class BlackHole_Skill : Skill
         return base.CanUseSkill();
     }
 
-    public override void UseSkill()
+    protected override void UseSkill()
     {
         base.UseSkill();
         GameObject newBlackHole = Instantiate(blackHolePrefabs , player.transform.position , Quaternion.identity);

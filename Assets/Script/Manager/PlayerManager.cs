@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerManager : Singleton<PlayerManager>
+public class PlayerManager : Singleton<PlayerManager>, IObsever
 {
     private static PlayerManager instance;
     public Player player;
@@ -15,25 +15,24 @@ public class PlayerManager : Singleton<PlayerManager>
         base.Awake();
     }
 
-    private void OnEnable()
-    {
-        Observer.onGainReward += receiveReward;
-    }
-
-    private void OnDisable()
-    {
-        Observer.onGainReward -= receiveReward;
-    }
-
-
     private void Start()
     {
         levelSystem = new LevelSystem();
     }
 
-    private void receiveReward(float reward)
+    //private void receiveReward(float reward)
+    //{
+    //    currentExp += reward;
+    //    if (levelSystem.gainExp(currentExp))
+    //    {
+    //        currentLevel = levelSystem.getCurrentLevel();
+    //        currentExp = levelSystem.getExperience();
+    //    }
+    //}
+
+    public void Listener(float value)
     {
-        currentExp += reward;
+        currentExp += value;
         if (levelSystem.gainExp(currentExp))
         {
             currentLevel = levelSystem.getCurrentLevel();

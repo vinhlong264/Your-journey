@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_CraftList : MonoBehaviour , IPointerClickHandler
+public class UI_CraftList : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private Transform craftSlotParent;
     [SerializeField] private List<UI_CraftSlot> craftsSlot;
@@ -20,16 +18,16 @@ public class UI_CraftList : MonoBehaviour , IPointerClickHandler
 
     public void setUpCraftList()
     {
-        for(int i = 0; i < craftSlotParent.childCount; i++)
+        for (int i = 0; i < craftSlotParent.childCount; i++)
         {
             Destroy(craftSlotParent.GetChild(i).gameObject);
         }
 
         craftsSlot = new List<UI_CraftSlot>();
 
-        for(int i = 0; i < craftEquipment.Count; i++)
+        for (int i = 0; i < craftEquipment.Count; i++)
         {
-            GameObject newGameObject = Instantiate(craftSlotObj , craftSlotParent);
+            GameObject newGameObject = Instantiate(craftSlotObj, craftSlotParent);
             newGameObject.GetComponent<UI_CraftSlot>().setUpCraftSlot(craftEquipment[i]);
 
         }
@@ -42,7 +40,7 @@ public class UI_CraftList : MonoBehaviour , IPointerClickHandler
 
     private void setDefaultEquipmentCraft()
     {
-        if(craftEquipment[0] != null)
+        if (craftEquipment[0] != null)
         {
             GetComponentInParent<UI>().uiCanCraftWindow.setUpCraftWindow(craftEquipment[0]);
         }

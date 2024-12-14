@@ -32,8 +32,8 @@ public class PlayerCounterAttackState : PlayerState
                     _player.animator.SetBool("SuccesfullCounterAttack", true);
                     if (canCreateClone)
                     {
-                        canCreateClone = false;
-                        SkillManager.instance.clone_skill.CreateCloneCounterAttack(hit.transform);
+                         canCreateClone = false;
+                        _player.skill.parry_Skill.parryCreatMirage(hit.transform);
                     }                    
                 }
             }

@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 public class Skill : MonoBehaviour
 {
     [SerializeField] protected float coolDownTimer;
     [SerializeField] protected float coolDown;
     protected Player player;
+    protected SkillManager skillManager;
 
     protected virtual void Start()
     {
         player = PlayerManager.Instance.player;
+        skillManager = GetComponent<SkillManager>();
     }
     
     protected virtual void Update()
@@ -28,7 +31,7 @@ public class Skill : MonoBehaviour
         return false;
     }
 
-    public virtual void UseSkill()
+    protected virtual void UseSkill()
     {
         // sử dụng những skill được chỉ định
     }

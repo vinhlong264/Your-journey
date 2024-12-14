@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.XR;
 using UnityEngine;
 
 public class SkillManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class SkillManager : MonoBehaviour
     public Sword_Skill sword_Skill { get ; private set; }
     public BlackHole_Skill blackHole_skill {  get ; private set; }
     public Crystal_Skill crystal_skill { get ; private set; }
+    public Parry_Skill parry_Skill { get ; private set; }
+
     private void Awake()
     {
         if(instance != null)
@@ -29,5 +32,6 @@ public class SkillManager : MonoBehaviour
         sword_Skill = GetComponent<Sword_Skill>();
         blackHole_skill = GetComponent<BlackHole_Skill>();
         crystal_skill = GetComponent<Crystal_Skill>();
+        parry_Skill = GetComponent<Parry_Skill>();
     }
 }

@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_SkillTreeSlot : UI_ItemSlot
+public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Skill information")]
     [SerializeField] private string skillName; // tên skill
@@ -16,14 +16,20 @@ public class UI_SkillTreeSlot : UI_ItemSlot
     [SerializeField] private Image skillImage;
     [SerializeField] private Color skillLockColor;
 
-    protected override void Start()
+    public System.Action eventUnlockSKill; // Event
+
+
+    private UI ui;
+
+    private void Awake()
+    {
+        GetComponent<Button>().onClick.AddListener(() => unlockedSkill());
+    }
+    private void Start()
     {   
-        base.Start();
         skillImage = GetComponent<Image>();
         skillImage.color = skillLockColor;
-
-        GetComponent<Button>().onClick.AddListener(() => unlockedSkill());
-
+        ui = GetComponentInParent<UI>();
     }
 
     private void OnValidate()
@@ -33,6 +39,7 @@ public class UI_SkillTreeSlot : UI_ItemSlot
 
     private void unlockedSkill()
     {
+        Debug.Log("Unlock Skill");
         for (int i = 0; i < shouldBeUnlocked.Length; i++)
         {
             if (shouldBeUnlocked[i].isUnlocked == false) // Kiểm tra xem các skill tiền đề có được mở khóa chưa, nếu chưa thì thoát luôn
@@ -52,15 +59,18 @@ public class UI_SkillTreeSlot : UI_ItemSlot
         }
 
         isUnlocked = true;
+
+        eventUnlockSKill();
         skillImage.color = Color.white;
     }
 
-    public override void OnPointerEnter(PointerEventData eventData)
+
+    public void OnPointerEnter(PointerEventData eventData)
     {
         ui.uiSkillInfo.showInformatioSkill(skillName, skillDescription);
     }
 
-    public override void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData)
     {
         ui.uiSkillInfo.hideInformationWindow();
     }
