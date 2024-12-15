@@ -12,7 +12,11 @@ public class Parry_Skill : Skill
 
     [Header("Parry with create Mirage")]
     [SerializeField] private UI_SkillTreeSlot parryWithMirageSkillBtn;
+
+    [Range(0f, 1f)]
+    [SerializeField] private float percentRestoreHealth;
     public bool parryWithMirageUnlock { get; private set; }
+
 
     protected override void Start()
     {
@@ -26,10 +30,12 @@ public class Parry_Skill : Skill
     {
         base.UseSkill();
 
-        //if (parryRestoreUnlock)
-        //{
-            
-        //}
+        if (parryRestoreUnlock)
+        {
+            int restoreHealthy = Mathf.RoundToInt(player.status.getMaxHealth() * percentRestoreHealth);
+            Debug.Log("Restore: "+restoreHealthy);
+            player.status.restoreHealthBy(restoreHealthy);
+        }
     }
 
     private void onUnlockParry()

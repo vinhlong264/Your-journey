@@ -358,7 +358,7 @@ public class CharacterStatus : MonoBehaviour
         return maxHealth.getValue() + vitality.getValue() * 5;
     }
 
-    public void increaseHealthBy(int _amountHeal)
+    public void restoreHealthBy(int _amountHeal)
     {
         currentHealth += _amountHeal;
         if(currentHealth > getMaxHealth())

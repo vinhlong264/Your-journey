@@ -6,17 +6,17 @@ public class Player : Entity
 {
     #region variable
     public float jumpForce;
+
     [Header("Default value")]
     private float deafaultMoveSpeed;
     private float deadaultJumpForce;
     private float deadaultDashSpeed;
     
-    
     [Header("Attack info")]
     public float[] attackMovement;
     public Transform AttackCheck;
     public float attackRadius;
-    public float counterAttackDurarion;
+    public float counterAttackDurarion; // thời gian trong state counter
     public bool isBusy { get; private set; }
 
     [Header("Dash Info")]
@@ -96,9 +96,9 @@ public class Player : Entity
         _stateMachine.currentState.Execute(); //Thực hiện việc chạy các state
         checkForDashInput();
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && skill.crystal_skill.crystalSkillUnlocked)
         {
-            SkillManager.instance.crystal_skill.CanUseSkill();
+            skill.crystal_skill.CanUseSkill();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))

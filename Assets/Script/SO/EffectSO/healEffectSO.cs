@@ -11,6 +11,6 @@ public class healEffectSO : itemEffectSO
 
         int healthAmount = Mathf.RoundToInt(playerStatus.getMaxHealth() * healPerecent);
 
-        playerStatus.increaseHealthBy(healthAmount);
+        playerStatus.restoreHealthBy(healthAmount);
     }
 }
