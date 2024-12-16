@@ -25,12 +25,12 @@ public class UI_StatSlot : UI_ItemSlot
     protected override void Start()
     {
         base.Start();
-        updateStatusUI();
+        updateStatsUI();
         
     }
 
 
-    public void updateStatusUI()
+    public void updateStatsUI()
     {
         PlayerStatus playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStatus>();
 

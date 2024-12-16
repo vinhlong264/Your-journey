@@ -15806,6 +15806,7 @@ GameObject:
   - component: {fileID: 1344034100}
   - component: {fileID: 1344034101}
   - component: {fileID: 1344034102}
+  - component: {fileID: 1344034103}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -15981,6 +15982,24 @@ MonoBehaviour:
   parryRestoreSkillBtn: {fileID: 886462852}
   parryWithMirageSkillBtn: {fileID: 1082464013}
   percentRestoreHealth: 0.2
+--- !u!114 &1344034103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344034094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f77e7ff526d9740900a22ce8d6d0d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTimer: 0
+  coolDown: 0
+  dogdeSkillUnlockBtn: {fileID: 837896682}
+  dogdeSkillUnlocked: 0
+  dogdeWithMirageUnlockBtn: {fileID: 1215746446}
+  dogdeWithMirageUnlocked: 0
 --- !u!1001 &1344825621
 PrefabInstance:
   m_ObjectHideFlags: 0

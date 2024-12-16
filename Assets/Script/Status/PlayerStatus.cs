@@ -33,6 +33,11 @@ public class PlayerStatus : CharacterStatus
         }
     }
 
+    public override void onEvasion()
+    {
+        SkillManager.instance.dogde_Skill.createMirageOnDogde(transform);
+    }
+
     public Stat getStat(StatType type) // hàm để lấy ra Status theo type
     {
         switch (type)

@@ -202,9 +202,14 @@ public class Inventory : MonoBehaviour
             itemStashSlot[i].updateUISlotItem(itemStashList[i]);
         }
 
+        updateStatsUI();
+    }
+
+    public void updateStatsUI()
+    {
         for (int i = 0; i < statsSlot.Length; i++)
         {
-            statsSlot[i].updateStatusUI();
+            statsSlot[i].updateStatsUI();
         }
     }
 

@@ -282,6 +282,7 @@ public class CharacterStatus : MonoBehaviour
     {
         if (AvoidAttack(_targetStatus)) // kiểm tra việc tránh dame
         {
+            _targetStatus.onEvasion();
             Debug.Log("Attack avoid");
             return;
         }
@@ -387,6 +388,11 @@ public class CharacterStatus : MonoBehaviour
         {
             onUiHealth();
         }
+    }
+
+    public virtual void onEvasion()
+    {
+
     }
 
     protected virtual void Die()
