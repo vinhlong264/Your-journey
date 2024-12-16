@@ -21,7 +21,7 @@ public class SkeletonAnimationTrigger : MonoBehaviour
         {
             if(hit.GetComponent<Player>() != null)
             {
-                PlayerStatus playerStatus = hit.GetComponent<PlayerStatus>();
+                PlayerStats playerStatus = hit.GetComponent<PlayerStats>();
                 skeleton.status.DoDame(playerStatus);
             }
         }

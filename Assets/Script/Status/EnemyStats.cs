@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemyStatus : CharacterStatus, ISubject
+public class EnemyStats : CharacterStats, ISubject
 {
     private Enemy enemy;
     private itemDrop dropSystem;

@@ -7,7 +7,7 @@ public class freezeEffectSO : itemEffectSO
 
     public override void excuteEffect(Transform _transfomTarget)
     {
-        PlayerStatus playerStatus = player.GetComponent<PlayerStatus>();
+        PlayerStats playerStatus = player.GetComponent<PlayerStats>();
 
         if(playerStatus?.currentHealth > playerStatus?.getMaxHealth() * 0.1f) return; // Tạo ra kĩ năng khi hp dưới 10% sẽ gây đóng băng xung quanh
 

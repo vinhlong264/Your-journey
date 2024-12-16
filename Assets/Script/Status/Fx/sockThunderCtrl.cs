@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class sockThunderCtrl : MonoBehaviour
 {
-    [SerializeField] private EnemyStatus target; 
+    [SerializeField] private EnemyStats target; 
     private float speed = 35;
     private Animator anim;
     private bool isTrigger;
@@ -13,7 +13,7 @@ public class sockThunderCtrl : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
-    public void setUpThunder(int _dame , EnemyStatus _target)
+    public void setUpThunder(int _dame , EnemyStats _target)
     {
         dame = _dame;
         target = _target;

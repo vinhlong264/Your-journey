@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerStatus : CharacterStatus
+public class PlayerStats : CharacterStats
 {
     private Player player;
     protected override void Start()

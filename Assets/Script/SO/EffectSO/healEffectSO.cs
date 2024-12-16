@@ -6,7 +6,7 @@ public class healEffectSO : itemEffectSO
     [SerializeField] private float healPerecent;
     public override void excuteEffect(Transform _enemyPos)
     {
-        PlayerStatus playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStatus>();
+        PlayerStats playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStats>();
         if (playerStatus == null) return;
 
         int healthAmount = Mathf.RoundToInt(playerStatus.getMaxHealth() * healPerecent);

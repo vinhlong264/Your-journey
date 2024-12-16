@@ -565,10 +565,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7238600316782056284, guid: 878898815ed646d4f805eb1944781201, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3536847460245775772, guid: 878898815ed646d4f805eb1944781201, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1650981939}
   m_SourcePrefab: {fileID: 100100000, guid: 878898815ed646d4f805eb1944781201, type: 3}
 --- !u!1 &62666486
 GameObject:
@@ -15872,6 +15876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDownTimer: 0
   coolDown: 2
+  percentDameExtra: 50
   Clone_Pre: {fileID: 5208422648343834587, guid: 20eccc584ae61b944a904efbdcced7d8, type: 3}
   cloneDuration: 5
   CreateCloneCouterAttack: 1
@@ -22728,6 +22733,74 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3839011259650742634, guid: 7eaf6e61950d0314d9deea53773e1e79, type: 3}
   m_PrefabInstance: {fileID: 1649898061}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1650981931 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3536847460245775772, guid: 878898815ed646d4f805eb1944781201, type: 3}
+  m_PrefabInstance: {fileID: 35885230}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1650981939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650981931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372ab25c10fdca747800459143bdffb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength:
+    baseValue: 0
+    modifiers: 
+  ability:
+    baseValue: 0
+    modifiers: 
+  inteligent:
+    baseValue: 0
+    modifiers: 
+  vitality:
+    baseValue: 0
+    modifiers: 
+  dame:
+    baseValue: 10
+    modifiers: 
+  critRate:
+    baseValue: 0
+    modifiers: 
+  critPower:
+    baseValue: 0
+    modifiers: 
+  maxHealth:
+    baseValue: 100
+    modifiers: 
+  armor:
+    baseValue: 0
+    modifiers: 
+  evasion:
+    baseValue: 0
+    modifiers: 
+  magicResistance:
+    baseValue: 0
+    modifiers: 
+  fireDame:
+    baseValue: 0
+    modifiers: 
+  iceDame:
+    baseValue: 0
+    modifiers: 
+  lightingDame:
+    baseValue: 0
+    modifiers: 
+  ailmentDuration: 0
+  isIngnite: 0
+  isChill: 0
+  isShocked: 0
+  thunerPrefabs: {fileID: 0}
+  currentHealth: 0
+  level: 0
+  perCanStage: 0
+  expReward: 20
 --- !u!1001 &1658336306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29014,7 +29087,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   maxHealth:
-    baseValue: 100
+    baseValue: 1000
     modifiers: 
   armor:
     baseValue: 0

@@ -32,7 +32,7 @@ public class UI_StatSlot : UI_ItemSlot
 
     public void updateStatsUI()
     {
-        PlayerStatus playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStatus>();
+        PlayerStats playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStats>();
 
         if (playerStatus == null) return;
 
@@ -41,7 +41,7 @@ public class UI_StatSlot : UI_ItemSlot
         parametersUpdate(playerStatus);
     }
 
-    private void parametersUpdate(PlayerStatus playerStatus)
+    private void parametersUpdate(PlayerStats playerStatus)
     {
         if (statType == StatType.Health)
         {

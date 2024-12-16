@@ -81,7 +81,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                player.status.doDameMagical(hit.GetComponent<CharacterStatus>());
+                player.status.doDameMagical(hit.GetComponent<CharacterStats>());
             }
         }
     }

@@ -9,7 +9,7 @@ public class Entity : MonoBehaviour
     public float moveSpeed;
 
     [Header("HitKnock info")]
-    [SerializeField]protected Vector2 knockBackDir;
+    [SerializeField] protected Vector2 knockBackDir;
     [SerializeField] protected float knockBackDuration;
     [SerializeField] protected bool isKnock;
 
@@ -33,7 +33,7 @@ public class Entity : MonoBehaviour
 
     private SpriteRenderer sr;
     public Collider2D cd { get; private set; }
-    public CharacterStatus status { get; private set; }
+    public CharacterStats status { get; private set; }
     public EntityFx fx { get; private set; }
     #endregion
 
@@ -49,7 +49,7 @@ public class Entity : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         cd = GetComponent<Collider2D>();
         fx = GetComponent<EntityFx>();
-        status = GetComponent<CharacterStatus>();
+        status = GetComponent<CharacterStats>();
         
     }
 

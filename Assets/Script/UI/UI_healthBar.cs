@@ -7,14 +7,14 @@ public class UI_healthBar : MonoBehaviour
 {
     private Entity entity;
     private RectTransform myTransform;
-    private CharacterStatus myCharacter;
+    private CharacterStats myCharacter;
     private Slider mySlider;
     void Start()
     {
         entity = GetComponentInParent<Entity>();
         myTransform = GetComponent<RectTransform>();
         mySlider = GetComponentInChildren<Slider>();
-        myCharacter = GetComponentInParent<CharacterStatus>();
+        myCharacter = GetComponentInParent<CharacterStats>();
 
         entity.onFliped += onFliped;
         myCharacter.onUiHealth += updateUiHealth;

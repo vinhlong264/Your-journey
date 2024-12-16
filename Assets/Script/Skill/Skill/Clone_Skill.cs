@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Clone_Skill : Skill
 {
+    [SerializeField] private float percentDameExtra;
+
     [Header("Clone info")]
     [SerializeField] private GameObject Clone_Pre;
     [SerializeField] private float cloneDuration;
@@ -14,7 +16,8 @@ public class Clone_Skill : Skill
     public void CreateClone(Transform _clonePos, Vector3 _ofSet) // Hàm khởi tạo clone
     {
         GameObject newClone = Instantiate(Clone_Pre);
-        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos, coolDown, _ofSet, findToClosestEnemy(newClone.transform), canDuplicateClone, player);
+        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos, coolDown, _ofSet, 
+            findToClosestEnemy(newClone.transform), canDuplicateClone, player,percentDameExtra);
     }
 
     #region Method Skills of Clone

@@ -25,7 +25,7 @@ public class PlayerAnimationEvent : MonoBehaviour
         {
             if(hit.GetComponent<Enemy>() != null)
             {
-                EnemyStatus enemyStatus = hit.GetComponent<EnemyStatus>();
+                EnemyStats enemyStatus = hit.GetComponent<EnemyStats>();
 
                 if (enemyStatus == null) return;
 

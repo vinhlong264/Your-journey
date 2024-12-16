@@ -219,7 +219,7 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private void SworDameController(Enemy enemy) // Method attack
     {
-        player.status.DoDame(enemy.GetComponent<CharacterStatus>());
+        player.status.DoDame(enemy.GetComponent<CharacterStats>());
         enemy.StartCoroutine("FreezeForTimer", FrezeeTimer);
     }
 

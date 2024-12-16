@@ -2,17 +2,17 @@
 
 public class effectControllerBase : MonoBehaviour // Class base về các effect
 {
-    protected PlayerStatus playerStatus;
+    protected PlayerStats playerStatus;
     protected virtual void Start()
     {
-        playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStatus>();
+        playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStats>();
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<Enemy>() != null)
         {
-            EnemyStatus enemyStatus = collision.GetComponent<EnemyStatus>();
+            EnemyStats enemyStatus = collision.GetComponent<EnemyStats>();
             if (enemyStatus != null)
             {
                 playerStatus.doDameMagical(enemyStatus);

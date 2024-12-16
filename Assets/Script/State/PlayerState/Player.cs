@@ -188,7 +188,7 @@ public class Player : Entity
 
     public override void dameEffect()
     {
-       base.dameEffect();
+        fx.StartCoroutine("FlashFx");
     }
 
     public override void Die()
