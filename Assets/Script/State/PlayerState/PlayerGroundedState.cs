@@ -22,7 +22,7 @@ public class PlayerGroundedState : PlayerState
         }
 
         //Kích hoạt sword skill
-        if (Input.GetKeyDown(KeyCode.Mouse1) && hasNoSword())
+        if (Input.GetKeyDown(KeyCode.Mouse1) && hasNoSword() && _player.skill.sword_Skill.throwSwordUnlocked)
         {
             _stateMachine.changeState(_player._animSwordState);
         }

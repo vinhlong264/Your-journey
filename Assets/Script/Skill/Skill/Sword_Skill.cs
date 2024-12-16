@@ -1,32 +1,46 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class Sword_Skill : Skill
 {
-    [SerializeField] private SwordType swordType = SwordType.REGULAR;
-    [SerializeField] private float FrezeeTimer;
+    [SerializeField] private SwordType swordType;
     [SerializeField] private float speedReturning;
 
-    [Header("Bounce info")]
+    [Header("Throw sword skill")]
+    [SerializeField] private UI_SkillTreeSlot throwSwordUnlockBtn;
+    public bool throwSwordUnlocked { get; private set; }
+
+    [Header("Bounce sword skill")]
+    [SerializeField] private UI_SkillTreeSlot bounceSwordUnlockBtn;
     [SerializeField] private int amoutOfBounce;
     [SerializeField] private float bounceGravity;
 
-    [Header("Pierce infor")]
+    [Header("Pierce sword skill")]
+    [SerializeField] private UI_SkillTreeSlot pierceSwordUnlockbtn;
     [SerializeField] private int amountPierce;
     [SerializeField] private float pierceGravity;
 
     [Header("Spin info")]
+    [SerializeField] private UI_SkillTreeSlot spinSwordUnlockBtn;
     [SerializeField] private float hitCooldown;
     [SerializeField] private float maxTravelDistance = 7f;
     [SerializeField] private float spinDuration = 2f;
     [SerializeField] private float spinGravity = 1f;
 
 
-    [Header("Skill Infor")]
+    [Header("Sword FreeTime Target")]
+    [SerializeField] private UI_SkillTreeSlot freeTimeUnlockBtn;
+    [SerializeField] private float FreezeTimer;
+    private bool freeTimeUnlocked;
+
+    [Header("Sword take vulnerable bleeding")]
+    [SerializeField] private UI_SkillTreeSlot bleedingUnlockBtn;
+    private bool bleedingUnlocked;
+    
+
+    [Header("Skill Sword Infor")]
     [SerializeField] private GameObject swordPrefabs; // sword clone
     [SerializeField] private Vector2 laughDirection; // Hướng ném của cây kiếm
     [SerializeField] private float swordGravity; // trọng lực
-
     private Vector2 FinalDir; // Hướng ném của cây kiếm sau khi tính toán
 
     [Header("Animation Dots infor")]
@@ -36,6 +50,24 @@ public class Sword_Skill : Skill
     [SerializeField] private Transform dotsParent; // vị trí chứa các dots khi được khởi tạo
 
     [SerializeField] private GameObject[] dots;
+    protected override void Start()
+    {
+        base.Start();
+        InitializeDots();
+        swordType = SwordType.REGULAR;
+
+        throwSwordUnlockBtn.eventUnlockSKill += onThrowSwordUnlock;
+
+        //branch sword type
+        bounceSwordUnlockBtn.eventUnlockSKill += onBounceSwordUnlock;
+        pierceSwordUnlockbtn.eventUnlockSKill += onPierceSwordUnlock;
+        spinSwordUnlockBtn.eventUnlockSKill += onSpinSwordUnlock;
+
+        //Branch time stop skill
+        freeTimeUnlockBtn.eventUnlockSKill += onFreeTimeUnlock;
+        bleedingUnlockBtn.eventUnlockSKill += onBleedingUnlock;
+
+    }
 
     protected override void Update()
     {
@@ -47,23 +79,18 @@ public class Sword_Skill : Skill
             {
                 dots[i].transform.position = DotsPostion(i * BetweenSpaceDots);
             }
-        }        
+        }
     }
 
-    protected override void Start()
-    {
-        base.Start();
-        InitializeDots();
-    }
 
 
     public void createSword() // khởi tạo sword
     {
-        GameObject newSword = Instantiate(swordPrefabs , player.transform.position , transform.rotation);
+        GameObject newSword = Instantiate(swordPrefabs, player.transform.position, transform.rotation);
         Sword_Skill_Controller sw = newSword.GetComponent<Sword_Skill_Controller>();
-        if(sw != null)
+        if (sw != null)
         {
-            if(swordType == SwordType.BOUNCE)
+            if (swordType == SwordType.BOUNCE)
             {
                 swordGravity = bounceGravity;
                 sw.isBounce(true, amoutOfBounce);
@@ -83,13 +110,63 @@ public class Sword_Skill : Skill
             }
 
 
-            sw.setupSword(FinalDir, swordGravity , speedReturning , FrezeeTimer , player);
+            sw.setupSword(FinalDir, swordGravity, speedReturning, FreezeTimer, freeTimeUnlocked , bleedingUnlocked, player);
         }
 
         player.AsignNewSword(newSword); // gán sword hiện tại được ném ra cho Player
 
         DotsActive(false);
     }
+
+    private void onThrowSwordUnlock()
+    {
+        if (throwSwordUnlockBtn.isUnlocked)
+        {
+            throwSwordUnlocked = true;
+        }
+    }
+
+    private void onBounceSwordUnlock()
+    {
+        if (bounceSwordUnlockBtn.isUnlocked)
+        {
+            swordType = SwordType.BOUNCE;
+        }
+    }
+
+    private void onPierceSwordUnlock()
+    {
+        if (pierceSwordUnlockbtn.isUnlocked)
+        {
+            swordType = SwordType.PIERCE;
+        }
+    }
+
+    private void onSpinSwordUnlock()
+    {
+        if (spinSwordUnlockBtn.isUnlocked)
+        {
+            swordType = SwordType.SPIN;
+        }
+    }
+
+    private void onFreeTimeUnlock()
+    {
+        if (freeTimeUnlockBtn.isUnlocked)
+        {
+            freeTimeUnlocked = true;
+        }
+    }
+
+    private void onBleedingUnlock()
+    {
+        if (bleedingUnlockBtn.isUnlocked)
+        {
+            bleedingUnlocked = true;
+        }
+    }
+    
+
 
     #region Anim Dot
     private Vector2 getDirectionMouse() // hàm tính hướng của người chơi với con chuột trên màn hình
@@ -103,7 +180,7 @@ public class Sword_Skill : Skill
 
     public void DotsActive(bool _isActive) // hàm tắt bật các dots
     {
-        for(int i = 0; i < dots.Length; i++)
+        for (int i = 0; i < dots.Length; i++)
         {
             dots[i].gameObject.SetActive(_isActive);
         }
@@ -112,17 +189,17 @@ public class Sword_Skill : Skill
     private void InitializeDots() // khởi tạo các Dots
     {
         dots = new GameObject[amountDots];
-        for(int i = 0; i < amountDots; i++)
+        for (int i = 0; i < amountDots; i++)
         {
-            dots[i] = Instantiate(dotsPrefabs , player.transform.position , Quaternion.identity , dotsParent.transform);
+            dots[i] = Instantiate(dotsPrefabs, player.transform.position, Quaternion.identity, dotsParent.transform);
             dots[i].gameObject.SetActive(false);
         }
     }
 
     private Vector2 DotsPostion(float t) // hàm tính toán vị trí của các dots, hay nói đây là chuyển động cong đều
     {
-        Vector2 dir = new Vector2(getDirectionMouse().normalized.x * laughDirection.x , getDirectionMouse().normalized.y * laughDirection.y);
-        Vector2 postion = (Vector2)player.transform.position + dir * t + 0.5f * (Physics2D.gravity * swordGravity) * Mathf.Pow(t , 2);
+        Vector2 dir = new Vector2(getDirectionMouse().normalized.x * laughDirection.x, getDirectionMouse().normalized.y * laughDirection.y);
+        Vector2 postion = (Vector2)player.transform.position + dir * t + 0.5f * (Physics2D.gravity * swordGravity) * Mathf.Pow(t, 2);
         return postion;
     }
     #endregion

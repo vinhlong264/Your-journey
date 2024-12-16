@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,6 +14,13 @@ public class EnemyStats : CharacterStats, ISubject
 
     [SerializeField] private float expReward;
 
+    [Header("Aliment Bleeding")]
+    private float dameFinalBleeding;
+    [SerializeField] private bool isBleeding; // Kiểm tra xem có đang bleeding
+    [SerializeField] private float percentBleeding;
+    [SerializeField] private float bleedingTimer;
+    [SerializeField] private float bleedingCoolDown; //Thời gian làm mới bleeding
+
     protected override void Start()
     {
         applyPower();
@@ -23,6 +30,33 @@ public class EnemyStats : CharacterStats, ISubject
         dropSystem = GetComponent<itemDrop>();  
 
         
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        isBleedingHealth();
+    }
+
+    private void isBleedingHealth()
+    {
+        if (isBleeding)
+        {
+            Debug.Log("Rỉ máu");
+            bleedingTimer -= Time.deltaTime;
+            if (bleedingTimer < 0)
+            {
+                dameFinalBleeding = (dame.getValue() + strength.getValue()) * percentBleeding/100;
+                decreaseHealthBy(Mathf.RoundToInt(dameFinalBleeding));
+                if (currentHealth <= 0)
+                {
+                    Die();
+                    isBleeding = false;
+                }
+
+                bleedingTimer = bleedingCoolDown;
+            }
+        }
     }
 
     private void applyPower()
@@ -55,11 +89,17 @@ public class EnemyStats : CharacterStats, ISubject
         dropSystem.generateDrop();
         return;
     }
+    public override void applyBleedingHealth(bool _isBleeding)
+    {
+        isBleeding = _isBleeding;
+    }
+
 
     public void eventCallBack(float value)
     {
         FindObserverManager().Listener(value);
     }
+
 
     private IObsever FindObserverManager()
     {

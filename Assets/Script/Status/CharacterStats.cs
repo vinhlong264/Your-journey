@@ -155,28 +155,28 @@ public class CharacterStats : MonoBehaviour
     }
 
     //Logic apply ngẫu nhiên các Ailment khi các chỉ số dame phép bằng nhau
-    private void ApplyRadomAilment(CharacterStats _targetStatus, int _fireDame, int _iceDame, int _lightingDame, ref bool canApplyIngnite, ref bool canApplyChill, ref bool canApplyShock)
+    private void ApplyRadomAilment(CharacterStats _targetReceive, int _fireDame, int _iceDame, int _lightingDame, ref bool canApplyIngnite, ref bool canApplyChill, ref bool canApplyShock)
     {
         while (!canApplyIngnite && !canApplyChill && !canApplyShock)
         {
             if (Random.value < 0.5f && _fireDame > 0)
             {
                 canApplyIngnite = true;
-                _targetStatus.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
+                _targetReceive.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
                 return;
             }
 
             if (Random.value < 0.5f && _iceDame > 0)
             {
                 canApplyChill = true;
-                _targetStatus.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
+                _targetReceive.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
                 return;
             }
 
             if (Random.value < 0.5f && _lightingDame > 0)
             {
                 canApplyShock = true;
-                _targetStatus.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
+                _targetReceive.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
                 return;
             }
         }
@@ -312,16 +312,21 @@ public class CharacterStats : MonoBehaviour
         _targetReceive.takeDame(totalDame);
     }
 
-    private int CheckTargetArmor(int dame, CharacterStats _target) // hàm tính toán dame vật lý gây ra
+    public virtual void applyBleedingHealth(bool _isBleeding)
     {
-        if (_target.isChill) // nếu nhận hiệu ứng Chill thì sẽ giảm giáp
+        
+    }
+
+    private int CheckTargetArmor(int dame, CharacterStats _targetReceive) // hàm tính toán dame vật lý gây ra
+    {
+        if (_targetReceive.isChill) // nếu nhận hiệu ứng Chill thì sẽ giảm giáp
         {
-            dame -= Mathf.RoundToInt(_target.armor.getValue() * 0.8f);
+            dame -= Mathf.RoundToInt(_targetReceive.armor.getValue() * 0.8f);
             Debug.Log("Dame after chill: " +dame);
         }
         else
         {
-            dame -= _target.armor.getValue();
+            dame -= _targetReceive.armor.getValue();
         }
 
         dame = Mathf.Clamp(dame, 0, int.MaxValue);

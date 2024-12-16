@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Sword_Skill_Controller : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D rb;
+    private Rigidbody2D rb;
     private Animator anim;
     private Collider2D cd;
     [SerializeField] private bool canRotation = true;
@@ -12,7 +11,6 @@ public class Sword_Skill_Controller : MonoBehaviour
     private Player player;
     [SerializeField] private bool isReturning; // biến kiểm tra có thể quay lại không
     private float speedReturning; // biến kiểm soát tốc độ quay về
-    private float FrezeeTimer;
 
     [Header("Bounce info")]
     private float speedBouce = 15f;
@@ -34,6 +32,13 @@ public class Sword_Skill_Controller : MonoBehaviour
     private float hitTimer;
     private float hitCoolDown;
 
+    [Header("FreezeTime info")]
+    private bool isFreezeTime;
+    private float FrezeeTimer;
+
+    [Header("Bleeding info")]
+    private bool isBleeding;
+
 
     void Awake()
     {
@@ -42,21 +47,24 @@ public class Sword_Skill_Controller : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
-    public void setupSword(Vector2 _dir, float _gravityScale , float _speedReturning , float _FrezeeTimer , Player _player) // hàm quản lý chuyển động của sword
+    public void setupSword(Vector2 _dir, float _gravityScale, float _speedReturning, 
+        float _FrezeeTimer, bool _isFrezeeTime , bool _isBleeding , Player _player) // hàm quản lý chuyển động của sword
     {
         player = _player;
         rb.velocity = _dir;
         rb.gravityScale = _gravityScale;
         speedReturning = _speedReturning;
         FrezeeTimer = _FrezeeTimer;
+        isFreezeTime = _isFrezeeTime;
+        isBleeding = _isBleeding;
 
-        if(amountPierce <= 0)
+        if (amountPierce <= 0)
         {
             anim.SetBool("Rotation", true);
         }
     }
 
-    public void isBounce(bool _isBouncing , int _amountOfBouce)
+    public void isBounce(bool _isBouncing, int _amountOfBouce)
     {
         isBouncing = _isBouncing;
         amountBouncing = _amountOfBouce;
@@ -70,7 +78,7 @@ public class Sword_Skill_Controller : MonoBehaviour
         amountPierce = _amountPierce;
     }
 
-    public void isSpin(bool _isSpining , float _maxTravelDistace , float _spinDuration , float _hitCoolDown)
+    public void isSpin(bool _isSpining, float _maxTravelDistace, float _spinDuration, float _hitCoolDown)
     {
         isSpining = _isSpining;
         maxTravelDistace = _maxTravelDistace;
@@ -80,10 +88,10 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private void Update()
     {
-        if(canRotation)
-         transform.right = rb.velocity;
+        if (canRotation)
+            transform.right = rb.velocity;
 
-        
+
 
         SwordReturn();
 
@@ -136,14 +144,14 @@ public class Sword_Skill_Controller : MonoBehaviour
         {
             stopWhenSpining();
 
-            if(wasStop)
+            if (wasStop)
             {
                 Vector2 posTarget = new Vector2(transform.position.x + 1, transform.position.y);
                 transform.position = Vector2.MoveTowards(transform.position, posTarget, 1.5f * Time.deltaTime);
 
 
                 spinTimer -= Time.deltaTime;
-                if(spinTimer < 0)
+                if (spinTimer < 0)
                 {
                     isSpining = false;
                     isReturning = true;
@@ -151,7 +159,7 @@ public class Sword_Skill_Controller : MonoBehaviour
             }
 
             hitTimer -= Time.deltaTime;
-            if(hitTimer < 0) // thời gian nhận dame
+            if (hitTimer < 0) // thời gian nhận dame
             {
                 hitTimer = hitCoolDown;
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1);
@@ -181,7 +189,7 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     public void ReturnSword()
     {
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
         //rb.isKinematic = false;
         transform.parent = null;
         isReturning = true;
@@ -191,23 +199,23 @@ public class Sword_Skill_Controller : MonoBehaviour
     {
         if (isReturning) return; // khi isReturning == true sẽ thoát luôn khỏi hàm này để đảm bảo k thực hiện logic bên dưới
 
-        if(collision.GetComponent<Enemy>() != null)
+        if (collision.GetComponent<Enemy>() != null)
         {
             Enemy enemy = collision.GetComponent<Enemy>();
             SworDameController(enemy);
-        }        
+        }
 
-        if (collision.GetComponent<Enemy>() != null )
+        if (collision.GetComponent<Enemy>() != null)
         {
-            if(isBouncing && EnemyTarget.Count <= 0) // hàm kiểm tra để đủ điều kiện kích hoạt việc nảy qua lại sword
+            if (isBouncing && EnemyTarget.Count <= 0) // hàm kiểm tra để đủ điều kiện kích hoạt việc nảy qua lại sword
             {
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10);
                 //Kiểm tra trong phạm vị của vòng tròn là có bao nhiêu Enenmy thì sẽ gán chúng vào list
-                foreach(var hit in colliders)
+                foreach (var hit in colliders)
                 {
-                    if(hit.GetComponent<Enemy>() != null)
+                    if (hit.GetComponent<Enemy>() != null)
                     {
-                        EnemyTarget.Add(hit.transform); 
+                        EnemyTarget.Add(hit.transform);
                     }
                 }
 
@@ -220,12 +228,21 @@ public class Sword_Skill_Controller : MonoBehaviour
     private void SworDameController(Enemy enemy) // Method attack
     {
         player.status.DoDame(enemy.GetComponent<CharacterStats>());
-        enemy.StartCoroutine("FreezeForTimer", FrezeeTimer);
+
+        if (isFreezeTime)
+        {
+            enemy.StartCoroutine("FreezeForTimer", FrezeeTimer);
+        }
+
+        if (isBleeding)
+        {
+            enemy.StartCoroutine("BleedingHealth", 10f);
+        }
     }
 
     void StuckInto(Collider2D collision)
     {
-        if(amountPierce > 0 && collision.GetComponent<Enemy>() != null) // Logic để tạo skill Pierce của sword
+        if (amountPierce > 0 && collision.GetComponent<Enemy>() != null) // Logic để tạo skill Pierce của sword
         {
             amountPierce--;
             Debug.Log(amountPierce);
@@ -236,8 +253,8 @@ public class Sword_Skill_Controller : MonoBehaviour
         {
             stopWhenSpining();
             return;
-        } 
-        
+        }
+
 
         canRotation = false;
         cd.enabled = false;

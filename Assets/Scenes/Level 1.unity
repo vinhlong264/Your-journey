@@ -8336,7 +8336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillName: Vulnerability
-  skillDescription: Enemy hit by sword , takes 10% more damage.
+  skillDescription: Enemy hit by sword , bleeding every second with 10% damage it's
+    in 10s
   isUnlocked: 0
   shouldBeUnlocked:
   - {fileID: 1058877955}
@@ -15895,17 +15896,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDownTimer: 0
   coolDown: 0
-  swordType: 1
-  FrezeeTimer: 0.75
+  swordType: 0
   speedReturning: 15
+  throwSwordUnlockBtn: {fileID: 1058877955}
+  bounceSwordUnlockBtn: {fileID: 762702600}
   amoutOfBounce: 5
   bounceGravity: 5
+  pierceSwordUnlockbtn: {fileID: 1674179715}
   amountPierce: 2
   pierceGravity: 2
+  spinSwordUnlockBtn: {fileID: 1995831007}
   hitCooldown: 0.35
   maxTravelDistance: 3
   spinDuration: 2
   spinGravity: 1
+  freeTimeUnlockBtn: {fileID: 1292779350}
+  FreezeTimer: 10
+  bleedingUnlockBtn: {fileID: 846321280}
   swordPrefabs: {fileID: 5384756190214489774, guid: c529ca6499d52c14394a4d2bb84ce011, type: 3}
   laughDirection: {x: 35, y: 25}
   swordGravity: 3
@@ -22801,6 +22808,10 @@ MonoBehaviour:
   level: 0
   perCanStage: 0
   expReward: 20
+  isBleeding: 0
+  percentBleeding: 10
+  bleedingTimer: 0
+  bleedingCoolDown: 1
 --- !u!1001 &1658336306
 PrefabInstance:
   m_ObjectHideFlags: 0

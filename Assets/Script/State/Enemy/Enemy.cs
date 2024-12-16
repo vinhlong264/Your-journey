@@ -83,9 +83,20 @@ public class Enemy : Entity
 
     protected virtual IEnumerator FreezeForTimer(float _second)
     {
+        Debug.Log("start Frezee time");
         FreezeToTimer(true);
         yield return new WaitForSeconds(_second);
         FreezeToTimer(false);
+        Debug.Log("end Frezee time");
+    }
+
+    protected virtual IEnumerator BleedingHealth(float _second)
+    {
+        status.applyBleedingHealth(true);
+        Debug.Log("Đang rỉ máu");
+        yield return new WaitForSeconds(_second);
+        Debug.Log("Ngừng rỉ máu");
+        status.applyBleedingHealth(false);
     }
 
 
