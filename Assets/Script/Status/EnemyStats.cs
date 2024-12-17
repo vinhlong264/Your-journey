@@ -29,7 +29,6 @@ public class EnemyStats : CharacterStats, ISubject
         enemy = GetComponent<Enemy>();
         dropSystem = GetComponent<itemDrop>();  
 
-        
     }
 
     protected override void Update()

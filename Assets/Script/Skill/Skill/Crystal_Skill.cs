@@ -58,9 +58,7 @@ public class Crystal_Skill : Skill
 
         if (currenrCrystal == null) // Khởi tạo Crystal
         {
-            currenrCrystal = Instantiate(newCrystal, player.transform.position, Quaternion.identity);
-            Crystal_Skill_Controller curentCrystalScript = currenrCrystal.GetComponent<Crystal_Skill_Controller>();
-            curentCrystalScript.setUpCrystal(crystalDuration, moveSpeed, crystalExploreUnlock, crystalMovingTargetUnlock, findToClosestEnemy(currenrCrystal.transform), player);
+            createCrystal();
         }
         else
         {
@@ -82,6 +80,13 @@ public class Crystal_Skill : Skill
                 currenrCrystal.GetComponent<Crystal_Skill_Controller>().FinishCrystal();
             }
         }
+    }
+
+    public void createCrystal()
+    {
+        currenrCrystal = Instantiate(newCrystal, player.transform.position, Quaternion.identity);
+        Crystal_Skill_Controller curentCrystalScript = currenrCrystal.GetComponent<Crystal_Skill_Controller>();
+        curentCrystalScript.setUpCrystal(crystalDuration, moveSpeed, crystalExploreUnlock, crystalMovingTargetUnlock, findToClosestEnemy(currenrCrystal.transform), player);
     }
 
     #region Event unlock skill

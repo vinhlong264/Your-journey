@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStats : MonoBehaviour
+public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
 {
     #region Variable
     private EntityFx fx;
@@ -44,8 +44,9 @@ public class CharacterStats : MonoBehaviour
     private float ingniteDameCoolDown = 1f; // thời gian hồi
 
     //Dame effect lighting
-    private int strikeDame;
-    [SerializeField] private GameObject thunerPrefabs;
+    protected int strikeDame;
+    [SerializeField] protected GameObject thunerPrefabs;
+    protected Transform closestToEnemy;
 
     [Space]
     public int currentHealth;
@@ -106,7 +107,7 @@ public class CharacterStats : MonoBehaviour
 
 
     #region calculate dame magic and appy ailment
-    public void doDameMagical(CharacterStats _targetStatus) // Quản lý việc gây dame phép
+    public virtual void doDameMagical(CharacterStats _targetStatus) // Quản lý việc gây dame phép
     {
         int _fireDame = fireDame.getValue();
         int _iceDame = iceDame.getValue();
@@ -123,7 +124,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     //Hàm tính toán nhận dame phép
-    private int checkTargetMagicResistance(CharacterStats _targetStatus, int _fireDame, int _iceDame, int _lightingDame)
+    protected int checkTargetMagicResistance(CharacterStats _targetStatus, int _fireDame, int _iceDame, int _lightingDame)
     {
         int magicDame = _fireDame + _iceDame + _lightingDame + inteligent.getValue();
         magicDame -= _targetStatus.magicResistance.getValue() + (_targetStatus.inteligent.getValue() * 3);
@@ -132,13 +133,13 @@ public class CharacterStats : MonoBehaviour
         return magicDame;
     }
 
-    private void logicCanApplyAilment(CharacterStats _targetStatus, int _fireDame, int _iceDame, int _lightingDame)  // logic apply Ailment
+    protected virtual void logicCanApplyAilment(CharacterStats _targetStatus, int _fireDame, int _iceDame, int _lightingDame)  // logic apply Ailment
     {
         bool canApplyIngnite = _fireDame > _iceDame && _fireDame > _lightingDame;
         bool canApplyChill = _iceDame > _fireDame && _iceDame > _lightingDame;
         bool canApplyShock = _lightingDame > _iceDame && _lightingDame > _fireDame;
 
-        ApplyRadomAilment(_targetStatus, _fireDame, _iceDame, _lightingDame, ref canApplyIngnite, ref canApplyChill, ref canApplyShock);
+        //ApplyRadomAilment(_targetStatus, _fireDame, _iceDame, _lightingDame, ref canApplyIngnite, ref canApplyChill, ref canApplyShock);
 
         if (canApplyIngnite)
         {
@@ -155,7 +156,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     //Logic apply ngẫu nhiên các Ailment khi các chỉ số dame phép bằng nhau
-    private void ApplyRadomAilment(CharacterStats _targetReceive, int _fireDame, int _iceDame, int _lightingDame, ref bool canApplyIngnite, ref bool canApplyChill, ref bool canApplyShock)
+    protected void ApplyRadomAilment(CharacterStats _targetReceive, int _fireDame, int _iceDame, int _lightingDame, ref bool canApplyIngnite, ref bool canApplyChill, ref bool canApplyShock)
     {
         while (!canApplyIngnite && !canApplyChill && !canApplyShock)
         {
@@ -182,13 +183,12 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    public void aplyAilment(bool _ingnite, bool _chill, bool _shocked) // nhận các hiệu ứng gây hại
+    public virtual void aplyAilment(bool _ingnite, bool _chill, bool _shocked) // nhận các hiệu ứng gây hại
     {
 
         bool canAplyIngnite = !isChill && !isShocked;
         bool canAplyChill = !isIngnite && !isShocked;
         bool canAplyShock = !isIngnite && !isChill;
-
 
         if (_ingnite && canAplyIngnite) //Apply effect burn
         {
@@ -222,7 +222,7 @@ public class CharacterStats : MonoBehaviour
 
     public void setUpIngnite(int _dame) => ingniteDame = _dame;// quản lý dame của ingniteDame
 
-    private void applyIngniteDame() // gây dame hiệu ứng liên tục của ingnite
+    protected virtual void applyIngniteDame() // gây dame hiệu ứng liên tục của ingnite
     {
         if (ingniteDameTimer < 0 && isIngnite)
         {
@@ -237,25 +237,29 @@ public class CharacterStats : MonoBehaviour
             ingniteDameTimer = ingniteDameCoolDown;
         }
     }
-    public void AplyShock(bool _shocked)
+    public virtual void AplyShock(bool _shocked)
     {
-        if (isShocked) return;
+        if (isShocked)
+        {
+            return;
+        }
 
         shockTimer = ailmentDuration;
-        fx.shockColorFor(ailmentDuration);
         isShocked = _shocked;
+
+        fx.shockColorFor(ailmentDuration);
     }
     public void setUpDameLinghting(int _dame) =>strikeDame = _dame; // quản lý dame của lighting
 
-    private void effectStrikeEnemyClosest() // gây hiệu ứng sét giật với enemy gần nhất
+    protected virtual void effectStrikeEnemyClosest() // gây hiệu ứng sét giật với enemy gần nhất
     {
         Collider2D[] coliders = Physics2D.OverlapCircleAll(transform.position, 25);
         float distanceToClosest = Mathf.Infinity;
-        Transform closestToEnemy = null;
+        closestToEnemy = null;
 
         foreach (var hit in coliders)
         {
-            if (hit.GetComponent<EnemyStats>() != null && Vector2.Distance(transform.position,hit.transform.position) < 0.1f)
+            if (hit.GetComponent<EnemyStats>() != null && Vector2.Distance(transform.position, hit.transform.position) < 0.1f)
             {
                 float distance = Vector2.Distance(transform.position, hit.transform.position);
                 if (distance < distanceToClosest)
@@ -266,7 +270,7 @@ public class CharacterStats : MonoBehaviour
             }
         }
 
-
+        Debug.Log(this);
 
         if (closestToEnemy != null)
         {
@@ -278,20 +282,7 @@ public class CharacterStats : MonoBehaviour
     #endregion
 
     #region calculate dame physics
-
-    public virtual void DoDameWithSkill(CharacterStats _targetReceive , float extraDame)
-    {
-        int _dame = dame.getValue() + strength.getValue();
-        int finalDame = _dame + Mathf.RoundToInt(_dame + extraDame / 100);
-
-        finalDame = CheckTargetArmor(finalDame, _targetReceive);
-        Debug.Log("DameTotal: " + finalDame);
-        _targetReceive.takeDame(finalDame);
-    }
-
-
-
-    public virtual void DoDame(CharacterStats _targetReceive) // Quản lý việc gây dame vật lý
+    public virtual void DoDamePhysical(CharacterStats _targetReceive) // Quản lý việc gây dame vật lý
     {
         if (AvoidAttack(_targetReceive)) // kiểm tra việc tránh dame
         {
@@ -317,7 +308,7 @@ public class CharacterStats : MonoBehaviour
         
     }
 
-    private int CheckTargetArmor(int dame, CharacterStats _targetReceive) // hàm tính toán dame vật lý gây ra
+    protected int CheckTargetArmor(int dame, CharacterStats _targetReceive) // hàm tính toán dame vật lý gây ra
     {
         if (_targetReceive.isChill) // nếu nhận hiệu ứng Chill thì sẽ giảm giáp
         {
@@ -334,7 +325,7 @@ public class CharacterStats : MonoBehaviour
         return dame;
     }
 
-    private bool AvoidAttack(CharacterStats _target) // Tính toán tỉ lệ né đòn
+    protected bool AvoidAttack(CharacterStats _target) // Tính toán tỉ lệ né đòn
     {
         int toltalEvasion = _target.evasion.getValue() + _target.ability.getValue();
 
@@ -347,13 +338,13 @@ public class CharacterStats : MonoBehaviour
     }
     
 
-    private bool CanCrit() // tính toán tỉ lệ chí mạng
+    protected bool CanCrit() // tính toán tỉ lệ chí mạng
     {
         int criticalRate = critRate.getValue() + ability.getValue();
         return sytemRate(criticalRate);
     }
 
-    private int calculateCritalDame(int _dame) // Tính toán sát thương chí mạng
+    protected int calculateCritalDame(int _dame) // Tính toán sát thương chí mạng
     {
         float totalCriticalPower = (critPower.getValue() + strength.getValue()) * 0.01f;
         float finalDame = _dame * totalCriticalPower;
@@ -363,7 +354,7 @@ public class CharacterStats : MonoBehaviour
     #endregion
 
     #region Dame impact and System rate
-    private bool sytemRate(int _value) // hệ thống xử lý tỉ lệ
+    protected bool sytemRate(int _value) // hệ thống xử lý tỉ lệ
     {
         if (Random.Range(0, 100) <= _value)
         {

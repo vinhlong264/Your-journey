@@ -16,6 +16,9 @@ public class Clone_Controller : MonoBehaviour
     [SerializeField] private float AttackRadius; // phạm vi tấn công
     [SerializeField] private bool canAttack; // kiểm tra xem clone có được tấn công không
 
+    [Header("Attack hit effect")]
+    private bool canAttackWithEffect;
+
     [Header("Clone Mirage")]
     private bool canDuplicateClone; // kiểm tra xem có thể ra nhiều clone không
     private int isFacing = 1;
@@ -47,10 +50,10 @@ public class Clone_Controller : MonoBehaviour
     }
 
     //Hàm setup thuộc tính của Clone
-    public void setUpClone(Transform _cloneTrasform , float _coolDown , Vector3 _offset 
-        , Transform _closestEnemy , bool _canDuplicateClone,Player _player , float _percentDameExtra)
+    public void setUpClone(Transform _cloneTrasform , float _coolDown , bool _canAttack , Vector3 _offset 
+        ,Transform _closestEnemy , bool _canAttackWithEffect , bool _canDuplicateClone,Player _player , float _percentDameExtra)
     {
-        if (canAttack)
+        if (_canAttack)
         {
             anim.SetInteger("AttackNumber", Random.Range(1, 3));
         }
@@ -61,6 +64,7 @@ public class Clone_Controller : MonoBehaviour
 
         closestEnemy = _closestEnemy;
 
+        canAttackWithEffect = _canAttackWithEffect;
         canDuplicateClone = _canDuplicateClone;
         player = _player;
         percentDameExtra = _percentDameExtra;
@@ -81,10 +85,24 @@ public class Clone_Controller : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                player.status.DoDameWithSkill(hit.GetComponent<CharacterStats>() , percentDameExtra);
+                //player.status.DoDameWithSkill(hit.GetComponent<CharacterStats>() , percentDameExtra);
+                PlayerStats playerStats = player.GetComponent<PlayerStats>(); 
+                EnemyStats enemyStats = hit.GetComponent<EnemyStats>();
+
+                playerStats.DoDameWithSkill(enemyStats, percentDameExtra);
+
+                ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
+
+                if (canAttackWithEffect && equipment != null)
+                {
+                    Debug.Log("Effect");
+                    equipment.excuteItemEffect(hit.transform);
+                }
+
+
                 if (canDuplicateClone)
                 {
-                    if(Random.Range(0,100) < 99)
+                    if (Random.Range(0, 100) >= 50)
                     {
                         SkillManager.instance.clone_skill.CreateClone(hit.transform, new Vector3(0.5f * isFacing, 0, 0));
                     }

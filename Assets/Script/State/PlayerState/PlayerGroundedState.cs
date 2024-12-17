@@ -16,7 +16,7 @@ public class PlayerGroundedState : PlayerState
         base.Execute();
 
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && _player.skill.blackHole_skill.blackHoleUnlocked)
         {
             _stateMachine.changeState(_player._blackHoleState);
         }

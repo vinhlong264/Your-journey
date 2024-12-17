@@ -22,7 +22,7 @@ public class SkeletonAnimationTrigger : MonoBehaviour
             if(hit.GetComponent<Player>() != null)
             {
                 PlayerStats playerStatus = hit.GetComponent<PlayerStats>();
-                skeleton.status.DoDame(playerStatus);
+                skeleton.status.doDameMagical(playerStatus);
             }
         }
     }

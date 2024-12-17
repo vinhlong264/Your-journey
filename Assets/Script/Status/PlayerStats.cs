@@ -9,12 +9,44 @@ public class PlayerStats : CharacterStats
         player = GetComponent<Player>();
     }
 
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+
+    public void DoDameWithSkill(CharacterStats _targetReceive, float percentDame)
+    {
+        if (AvoidAttack(_targetReceive)) return;
+
+        int _dame = dame.getValue() + strength.getValue();
+        int finalDame = Mathf.RoundToInt(_dame * (percentDame / 100));
+
+        if (CanCrit())
+        {
+            finalDame = calculateCritalDame(finalDame);
+        }
+
+        finalDame = CheckTargetArmor(finalDame, _targetReceive);
+        Debug.Log("DameTotal: " + finalDame);
+        _targetReceive.takeDame(finalDame);
+    }
+
+    public override void DoDamePhysical(CharacterStats _targetReceive)
+    {
+        base.DoDamePhysical(_targetReceive);
+    }
+
+    public override void doDameMagical(CharacterStats _targetStatus)
+    {
+        base.doDameMagical(_targetStatus);
+    }
+
     public override void takeDame(int _dame)
     {
         base.takeDame(_dame);
         player.dameEffect();
     }
-
     protected override void Die()
     {
         base.Die();
