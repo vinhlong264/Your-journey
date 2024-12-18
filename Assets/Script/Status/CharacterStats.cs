@@ -8,26 +8,26 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
     private EntityFx fx;
 
     [Header("Major status info")]
-    public Stat strength; // với mỗi điểm nâng cấp thì dame cơ bản sẽ tăng lên 1 và 1% sát thương chí mạng
-    public Stat ability; // với mỗi điểm nâng cấp thì sẽ tăng các kĩ năng ví dụ là 1% né và 1% chí mạng
-    public Stat inteligent; // với mỗi điểm nâng cấp thì sẽ tăng 1 sức mạnh phép thuật và 3% giáp phép
-    public Stat vitality; // với mỗi điểm nâng cấp sẽ tăng hp, 3% giáp vật lý
+    public Stats strength; // với mỗi điểm nâng cấp thì dame cơ bản sẽ tăng lên 1 và 1% sát thương chí mạng
+    public Stats ability; // với mỗi điểm nâng cấp thì sẽ tăng các kĩ năng ví dụ là 1% né và 1% chí mạng
+    public Stats inteligent; // với mỗi điểm nâng cấp thì sẽ tăng 1 sức mạnh phép thuật và 3% giáp phép
+    public Stats vitality; // với mỗi điểm nâng cấp sẽ tăng hp, 3% giáp vật lý
 
     [Header("Offensive status info")]
-    public Stat dame; //dame vật lý
-    public Stat critRate; // tỉ lệ chí mạng
-    public Stat critPower; // DefaultValue là 150%
+    public Stats dame; //dame vật lý
+    public Stats critRate; // tỉ lệ chí mạng
+    public Stats critPower; // DefaultValue là 150%
 
     [Header("Defend status info")]
-    public Stat maxHealth; // chỉ số máu tối đa
-    public Stat armor; // chỉ số giáp
-    public Stat evasion; // chỉ số né chiêu
-    public Stat magicResistance; // chỉ số giáp phép
+    public Stats maxHealth; // chỉ số máu tối đa
+    public Stats armor; // chỉ số giáp
+    public Stats evasion; // chỉ số né chiêu
+    public Stats magicResistance; // chỉ số giáp phép
 
     [Header("Magic status info")]
-    public Stat fireDame;
-    public Stat iceDame;
-    public Stat lightingDame;
+    public Stats fireDame;
+    public Stats iceDame;
+    public Stats lightingDame;
 
     [SerializeField] private float ailmentDuration;
     [SerializeField] private bool isIngnite; // Gây dame cháy liên tục trong 1 khoảng thời gian
@@ -50,6 +50,7 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
 
     [Space]
     public int currentHealth;
+
     public System.Action onUiHealth; //Event health bar
 
     protected float expReceive;
@@ -91,12 +92,12 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
     }
 
 
-    public void increaseModfierStatus(int _amount, float _duration, Stat _status) // buff stat
+    public void increaseModfierStatus(int _amount, float _duration, Stats _status) // buff stat
     {
         StartCoroutine(addModifierStatus(_amount, _duration, _status));
     }
 
-    IEnumerator addModifierStatus(int _amount, float _duration, Stat _status)
+    IEnumerator addModifierStatus(int _amount, float _duration, Stats _status)
     {
         _status.addModifiers(_amount); // Nhận buff
         yield return new WaitForSeconds(_duration);
@@ -109,11 +110,12 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
     #region calculate dame magic and appy ailment
     public virtual void doDameMagical(CharacterStats _targetStatus) // Quản lý việc gây dame phép
     {
-        int _fireDame = fireDame.getValue();
-        int _iceDame = iceDame.getValue();
-        int _lightingDame = lightingDame.getValue();
-        int totalMagicDame = checkTargetMagicResistance(_targetStatus, _fireDame, _iceDame, _lightingDame);
+        int _fireDame = getFireDame();
+        int _iceDame = getIceDame();
+        int _lightingDame = getLightingDame();
 
+        int totalMagicDame = checkTargetMagicResistance(_targetStatus, _fireDame, _iceDame, _lightingDame);
+        Debug.Log(this.name+" Dame Magical: "+totalMagicDame);
         _targetStatus.takeDame(totalMagicDame);
 
         //Logic add ailment
@@ -126,12 +128,20 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
     //Hàm tính toán nhận dame phép
     protected int checkTargetMagicResistance(CharacterStats _targetStatus, int _fireDame, int _iceDame, int _lightingDame)
     {
-        int magicDame = _fireDame + _iceDame + _lightingDame + inteligent.getValue();
-        magicDame -= _targetStatus.magicResistance.getValue() + (_targetStatus.inteligent.getValue() * 3);
+        int _magicDame = _fireDame + _iceDame + _lightingDame;
 
-        magicDame = Mathf.Clamp(magicDame, 0, int.MaxValue);
-        return magicDame;
+        int _magicResistance = Mathf.RoundToInt((_targetStatus.magicResistance.getValue() + _targetStatus.inteligent.getValue()) * 0.03f);
+
+        _magicDame -= _magicResistance;
+        Debug.Log(this.name +" magic dame 3 kind: "+_magicDame);
+
+        _magicDame = Mathf.Clamp(_magicDame, 0, int.MaxValue);
+        return _magicDame;
     }
+
+    protected int getFireDame() => fireDame.getValue() + inteligent.getValue();
+    protected int getIceDame() => iceDame.getValue() + inteligent.getValue();
+    protected int getLightingDame() => lightingDame.getValue() + inteligent.getValue();
 
     protected virtual void logicCanApplyAilment(CharacterStats _targetStatus, int _fireDame, int _iceDame, int _lightingDame)  // logic apply Ailment
     {
@@ -269,9 +279,6 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
                 }
             }
         }
-
-        Debug.Log(this);
-
         if (closestToEnemy != null)
         {
             GameObject newThunder = Instantiate(thunerPrefabs, closestToEnemy.position, Quaternion.identity);
@@ -298,7 +305,7 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
         }
 
         totalDame = CheckTargetArmor(totalDame, _targetReceive);
-        //Debug.Log("Total Dame: " + totalDame);
+        Debug.Log(this.name +" Total Dame Physical: " + totalDame);
 
         _targetReceive.takeDame(totalDame);
     }
@@ -369,6 +376,11 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
         return maxHealth.getValue() + vitality.getValue() * 5;
     }
 
+    public int getMaxDame()
+    {
+        return dame.getValue() + strength.getValue();
+    }
+
     public void restoreHealthBy(int _amountHeal)
     {
         currentHealth += _amountHeal;
@@ -417,7 +429,7 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
 
 
 [System.Serializable]
-public class Stat // Class để chứa các thay đổi về chỉ số cơ bản
+public class Stats // Class để chứa các thay đổi về chỉ số cơ bản
 {
     [SerializeField] private int baseValue; // chỉ số gốc 
     public List<int> modifiers = new List<int>(); // list các chỉ số dùng để thay đổi baseValue

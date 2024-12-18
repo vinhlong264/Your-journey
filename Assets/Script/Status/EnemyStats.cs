@@ -65,7 +65,7 @@ public class EnemyStats : CharacterStats, ISubject
         applyModifier(dame);
     }
 
-    private void applyModifier(Stat _status)
+    private void applyModifier(Stats _status)
     {
         for(int i = 1; i < level; i++)
         {

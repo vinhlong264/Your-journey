@@ -30,7 +30,7 @@ public class PlayerAnimationEvent : MonoBehaviour
 
                 if (enemyStatus == null) return;
 
-                playerStats.DoDamePhysical(enemyStatus); // damage physical
+                /*playerStats.DoDamePhysical(enemyStatus);*/ // damage physical
                 playerStats.doDameMagical(enemyStatus); // dame magiacal
 
                 ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);

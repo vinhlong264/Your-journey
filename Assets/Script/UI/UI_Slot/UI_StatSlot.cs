@@ -1,9 +1,12 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class UI_StatSlot : UI_ItemSlot
+public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    private UI ui;
+    public bool isUpdateStats;
     [SerializeField] string statName;
     [SerializeField] StatType statType;
     [SerializeField] TextMeshProUGUI statNameText;
@@ -22,13 +25,16 @@ public class UI_StatSlot : UI_ItemSlot
     }
 
 
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
+        ui = GetComponentInParent<UI>();
         updateStatsUI();
-        
     }
 
+    private void Update()
+    {
+        
+    }
 
     public void updateStatsUI()
     {
@@ -50,7 +56,7 @@ public class UI_StatSlot : UI_ItemSlot
 
         if (statType == StatType.Dame)
         {
-            statValue.text = (playerStatus.dame.getValue() + playerStatus.strength.getValue()).ToString();
+            statValue.text = (playerStatus.getMaxDame()).ToString();
         }
 
         if (statType == StatType.CritRate)
@@ -69,12 +75,13 @@ public class UI_StatSlot : UI_ItemSlot
         }
     }
 
-    public override void OnPointerEnter(PointerEventData eventData)
+
+    public void OnPointerEnter(PointerEventData eventData)
     {
         ui.uiStatsInfo.showStatsDes(statDescription);
     }
 
-    public override void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData)
     {
         ui.uiStatsInfo.hideStatsDes();
     }

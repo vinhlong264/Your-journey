@@ -21,7 +21,7 @@ MonoBehaviour:
   coolDownEffect: 0
   ItemEffect:
   - {fileID: 11400000, guid: c74e412db1deb5346843c60a40531c6b, type: 2}
-  strength: 3
+  strength: 0
   ability: 0
   inteligent: 0
   vitality: 0
