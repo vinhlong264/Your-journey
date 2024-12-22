@@ -13,10 +13,11 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject UI_Atribute;
     [SerializeField] private GameObject UI_SkillTree;
     [SerializeField] private GameObject UI_Setting;
+    [SerializeField] private GameObject UI_InGame;
 
     private void Start()
     {
-        switchOptionByKey(null);
+        swicthOptions(UI_InGame);
     }
 
 
@@ -61,9 +62,23 @@ public class UI : MonoBehaviour
         if(_entityWindow != null && _entityWindow.activeSelf) // kiểm tra xem nếu _entityWindow != null và đang được active thì tắt đi
         {
             _entityWindow.SetActive(false);
+            checkForInGame();
             return;
         }
 
         swicthOptions(_entityWindow);
+    }
+
+    private void checkForInGame()
+    {
+        for(int i =  0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.activeSelf)
+            {
+                return;
+            }
+        }
+
+        swicthOptions(UI_InGame);
     }
 }

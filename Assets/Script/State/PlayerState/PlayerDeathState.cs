@@ -9,7 +9,6 @@ public class PlayerDeathState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Enter: "+_animationBoolName);
     }
 
     public override void Execute()
@@ -21,6 +20,5 @@ public class PlayerDeathState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        Debug.Log("Exit: " + _animationBoolName);
     }
 }

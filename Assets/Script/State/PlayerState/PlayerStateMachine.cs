@@ -1,13 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-
-public class PlayerStateMachine
+﻿public class PlayerStateMachine
 {
-    public PlayerState currentState {  get; private set; }
+    public PlayerState currentState { get; private set; }
 
-   public  void initialize(PlayerState _state) // hàm bắt đầu của 1 state hiện tại
+    public void initialize(PlayerState _state) // hàm bắt đầu của 1 state hiện tại
     {
         currentState = _state; // gán currentState = state hiện tại
         currentState.Enter(); // gọi hàm Enter chạy state ấy

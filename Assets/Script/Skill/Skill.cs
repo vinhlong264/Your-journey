@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 public class Skill : MonoBehaviour
 {
     [SerializeField] protected float coolDownTimer;
@@ -7,12 +6,13 @@ public class Skill : MonoBehaviour
     protected Player player;
     protected SkillManager skillManager;
 
+    public float CoolDown { get => coolDown; }
     protected virtual void Start()
     {
         player = PlayerManager.Instance.player;
         skillManager = GetComponent<SkillManager>();
     }
-    
+
     protected virtual void Update()
     {
         coolDownTimer -= Time.deltaTime;
@@ -20,7 +20,7 @@ public class Skill : MonoBehaviour
 
     public virtual bool CanUseSkill()
     {
-        if(coolDownTimer <= 0f)
+        if (coolDownTimer <= 0f)
         {
             //Sử dụng skill
             UseSkill();
@@ -37,7 +37,7 @@ public class Skill : MonoBehaviour
     }
 
     // Hàm dùng để tìm ra vị trí gần nhất của Enemy vs các Skill cần lấy vị trí
-    protected virtual Transform findToClosestEnemy(Transform _checkTransform) 
+    protected virtual Transform findToClosestEnemy(Transform _checkTransform)
     {
         Collider2D[] col = Physics2D.OverlapCircleAll(_checkTransform.position, 25);
         float closesDistance = Mathf.Infinity; // đại diện 1 giá trị dương vô cùng
