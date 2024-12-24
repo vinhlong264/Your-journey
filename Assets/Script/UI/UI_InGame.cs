@@ -7,7 +7,10 @@ public class UI_InGame : MonoBehaviour
     private PlayerStats myStats;
 
     [SerializeField] private Image dashCoolDownImage;
-    [SerializeField] private Image dashUIActive;
+    [SerializeField] private Image parryCoolDownImage;
+    [SerializeField] private Image crystalCoolDownImage;
+    [SerializeField] private Image throwSwordCoolDownImage;
+    [SerializeField] private Image UltimateCoolDownImage;
 
     void Start()
     {
@@ -24,7 +27,31 @@ public class UI_InGame : MonoBehaviour
             setCoolDownOf(dashCoolDownImage);
         }
 
+        if(Input.GetKeyDown(KeyCode.Q) && SkillManager.instance.parry_Skill.parryUnlock)
+        {
+            setCoolDownOf(parryCoolDownImage);
+        }
+
+        if(Input.GetKeyDown(KeyCode.F) && SkillManager.instance.crystal_skill.crystalSkillUnlocked)
+        {
+            setCoolDownOf(crystalCoolDownImage);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && SkillManager.instance.sword_Skill.throwSwordUnlocked)
+        {
+            setCoolDownOf(throwSwordCoolDownImage);
+        }
+
+        if(Input.GetKeyDown(KeyCode.R) && SkillManager.instance.blackHole_skill.blackHoleUnlocked)
+        {
+            setCoolDownOf(UltimateCoolDownImage);
+        }
+
         checkCoolDownOf(dashCoolDownImage, SkillManager.instance.dash_skill.CoolDown);
+        checkCoolDownOf(parryCoolDownImage , SkillManager.instance.parry_Skill.CoolDown);
+        checkCoolDownOf(crystalCoolDownImage, SkillManager.instance.crystal_skill.CoolDown);
+        checkCoolDownOf(throwSwordCoolDownImage, SkillManager.instance.sword_Skill.CoolDown);
+        checkCoolDownOf(UltimateCoolDownImage, SkillManager.instance.blackHole_skill.CoolDown);
     }
 
     private void updateHealthBar()

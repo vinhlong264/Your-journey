@@ -49,7 +49,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
         }
 
 
-        if (canMoveEnemies)
+        if (canMoveEnemies && closestTarget != null)
         {
             transform.position = Vector2.MoveTowards(transform.position, closestTarget.position, moveSpeed * Time.deltaTime);
             if (Vector2.Distance(transform.position, closestTarget.position) < 0.5f) // đến khoảng cách chỉ định sẽ phát nổ và reset canMoveEnemies
