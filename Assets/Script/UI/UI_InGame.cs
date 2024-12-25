@@ -32,7 +32,7 @@ public class UI_InGame : MonoBehaviour
             setCoolDownOf(parryCoolDownImage);
         }
 
-        if(Input.GetKeyDown(KeyCode.F) && SkillManager.instance.crystal_skill.crystalSkillUnlocked)
+        if(Input.GetKeyDown(KeyCode.E) && SkillManager.instance.crystal_skill.crystalSkillUnlocked)
         {
             setCoolDownOf(crystalCoolDownImage);
         }

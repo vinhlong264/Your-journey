@@ -23,22 +23,22 @@ public class UI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             switchOptionByKey(UI_Character);
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             switchOptionByKey(UI_Atribute);
         }
 
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             switchOptionByKey(UI_SkillTree);
         }
 
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             switchOptionByKey(UI_Setting);
         }

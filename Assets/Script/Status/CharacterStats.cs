@@ -115,7 +115,7 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
         int _lightingDame = getLightingDame();
 
         int totalMagicDame = checkTargetMagicResistance(_targetStatus, _fireDame, _iceDame, _lightingDame);
-        Debug.Log(this.name+" Dame Magical: "+totalMagicDame);
+        //Debug.Log(this.name+" Dame Magical: "+totalMagicDame);
         _targetStatus.takeDame(totalMagicDame);
 
         //Logic add ailment
@@ -133,7 +133,6 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
         int _magicResistance = Mathf.RoundToInt((_targetStatus.magicResistance.getValue() + _targetStatus.inteligent.getValue()) * 0.03f);
 
         _magicDame -= _magicResistance;
-        Debug.Log(this.name +" magic dame 3 kind: "+_magicDame);
 
         _magicDame = Mathf.Clamp(_magicDame, 0, int.MaxValue);
         return _magicDame;
@@ -305,7 +304,7 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
         }
 
         totalDame = CheckTargetArmor(totalDame, _targetReceive);
-        Debug.Log(this.name +" Total Dame Physical: " + totalDame);
+        //Debug.Log(this.name +" Total Dame Physical: " + totalDame);
 
         _targetReceive.takeDame(totalDame);
     }
@@ -317,14 +316,22 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
 
     protected int CheckTargetArmor(int dame, CharacterStats _targetReceive) // hàm tính toán dame vật lý gây ra
     {
-        if (_targetReceive.isChill) // nếu nhận hiệu ứng Chill thì sẽ giảm giáp
+        if (_targetReceive.armor.getValue() > 0 && dame > _targetReceive.armor.getValue())
         {
-            dame -= Mathf.RoundToInt(_targetReceive.armor.getValue() * 0.8f);
-            Debug.Log("Dame after chill: " +dame);
+            if (_targetReceive.isChill) // nếu nhận hiệu ứng Chill thì sẽ giảm giáp
+            {
+                dame -= Mathf.RoundToInt(_targetReceive.armor.getValue() * 0.8f);
+                Debug.Log("Dame after chill: " + dame);
+            }
+            else
+            {
+                dame -= _targetReceive.armor.getValue();
+            }
         }
         else
         {
-            dame -= _targetReceive.armor.getValue();
+            Debug.Log("Giáp quá lớn sao với dame");
+            dame = 0;
         }
 
         dame = Mathf.Clamp(dame, 0, int.MaxValue);

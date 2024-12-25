@@ -96,12 +96,12 @@ public class Player : Entity
         _stateMachine.currentState.Execute(); //Thực hiện việc chạy các state
         checkForDashInput();
 
-        if (Input.GetKeyDown(KeyCode.F) && skill.crystal_skill.crystalSkillUnlocked)
+        if (Input.GetKeyDown(KeyCode.E) && skill.crystal_skill.crystalSkillUnlocked)
         {
             skill.crystal_skill.CanUseSkill();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             Inventory.Instance.useCanBottle();
         }
