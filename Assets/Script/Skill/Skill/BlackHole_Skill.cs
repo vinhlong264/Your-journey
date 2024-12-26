@@ -31,7 +31,7 @@ public class BlackHole_Skill : Skill
         return base.CanUseSkill();
     }
 
-    protected override void UseSkill()
+    public override void UseSkill()
     {
         base.UseSkill();
         GameObject newBlackHole = Instantiate(blackHolePrefabs , player.transform.position , Quaternion.identity);
@@ -59,7 +59,7 @@ public class BlackHole_Skill : Skill
             currentBlackHole = null;
             return true;
         }
-
+        coolDownTimer = coolDown;
         return false;
     }
 }

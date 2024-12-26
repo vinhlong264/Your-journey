@@ -37,3 +37,12 @@ public enum EqipmentType
     Bottle,
     Necklace
 }
+
+public enum Skilltype
+{
+    Dash,
+    Parry,
+    Crystal,
+    ThrowSword,
+    Ultimate
+}

@@ -26,7 +26,7 @@ public class Parry_Skill : Skill
         parryWithMirageSkillBtn.eventUnlockSKill += onUnlockParryWithMirage;
     }
 
-    protected override void UseSkill()
+    public override void UseSkill()
     {
         base.UseSkill();
 

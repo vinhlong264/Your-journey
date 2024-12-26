@@ -18,13 +18,19 @@ public class PlayerGroundedState : PlayerState
 
         if (Input.GetKeyDown(KeyCode.R) && _player.skill.blackHole_skill.blackHoleUnlocked)
         {
-            _stateMachine.changeState(_player._blackHoleState);
+            if (_player.skill.blackHole_skill.CanUseSkill()) 
+            {
+                _stateMachine.changeState(_player._blackHoleState);
+            }
         }
 
         //Kích hoạt sword skill
-        if (Input.GetKeyDown(KeyCode.Mouse1) && hasNoSword() && _player.skill.sword_Skill.throwSwordUnlocked)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && hasNoSword() && _player.skill.sword_Skill.swordSkillUnlocked)
         {
-            _stateMachine.changeState(_player._animSwordState);
+            if (_player.skill.sword_Skill.CanUseSkill())
+            {
+                _stateMachine.changeState(_player._animSwordState);
+            }
         }
 
         // Kích hoạt đòn đánh gây choáng

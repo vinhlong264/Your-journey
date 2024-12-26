@@ -34,11 +34,8 @@ public class PlayerBlackHoleState : PlayerState
             rb.velocity = new Vector2(0, -0.1f);
             if(!canUseSkill)
             {
-                if (SkillManager.instance.blackHole_skill.CanUseSkill())
-                {
-                    canUseSkill = true;
-                    Debug.Log("Cast BlackHole");
-                }
+                _player.skill.blackHole_skill.UseSkill();
+                canUseSkill = true;
             }
 
         }

@@ -45,7 +45,7 @@ public class Crystal_Skill : Skill
 
     }
 
-    protected override void UseSkill()
+    public override void UseSkill()
     {
         base.UseSkill();
 
@@ -80,6 +80,8 @@ public class Crystal_Skill : Skill
                 currenrCrystal.GetComponent<Crystal_Skill_Controller>().FinishCrystal();
             }
         }
+
+        coolDownTimer = coolDown;
     }
 
     public void createCrystal()
@@ -138,7 +140,7 @@ public class Crystal_Skill : Skill
         {
             if (listCrystal.Count > 0)
             {
-                //coolDown = 0;
+                coolDown = 0;
 
                 GameObject CrystalSpawn = listCrystal[listCrystal.Count - 1];
                 GameObject newCrystal = Instantiate(CrystalSpawn, player.transform.position, Quaternion.identity);
@@ -152,6 +154,7 @@ public class Crystal_Skill : Skill
                     Debug.Log("Dừng sử dụng Skill");
                     coolDown = multiCooldown;
                     refillCrystal();
+                    return false;
                 }
 
                 return true;

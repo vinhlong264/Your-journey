@@ -20,11 +20,6 @@ public class Dogde_Skill : Skill
         dogdeSkillUnlockBtn.eventUnlockSKill += onDogdeSkillUnlock;
         dogdeWithMirageUnlockBtn.eventUnlockSKill += onDogdeWithMirageUnlock;
     }
-
-    protected override void UseSkill()
-    {
-        base.UseSkill();
-    }
     
     private void onDogdeSkillUnlock() // Unlock skill Dogde
     {

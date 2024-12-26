@@ -98,7 +98,10 @@ public class Player : Entity
 
         if (Input.GetKeyDown(KeyCode.E) && skill.crystal_skill.crystalSkillUnlocked)
         {
-            skill.crystal_skill.CanUseSkill();
+            if (skill.crystal_skill.CanUseSkill())
+            {
+                skill.crystal_skill.UseSkill();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.T))
@@ -136,6 +139,7 @@ public class Player : Entity
     public void CatchTheSword() // chuyển về State Catch sword
     {
         _stateMachine.changeState(_catchSwordState);
+        skill.sword_Skill.endSkill();
         Destroy(sword);
     }
 
@@ -174,6 +178,7 @@ public class Player : Entity
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && skill.dash_skill.CanUseSkill()) // kích hoạt dash
         {
+            skill.dash_skill.UseSkill();
 
             dashDirection = Input.GetAxisRaw("Horizontal");
 

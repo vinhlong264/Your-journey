@@ -21,10 +21,11 @@ public class Dash_Skill : Skill
         dashCreateCloneBtn.eventUnlockSKill += onDashCloneUnlock;
         dashCreateCloneArrivalBtn.eventUnlockSKill += onDashCloneArirval;
     }
-    protected override void UseSkill()
+    public override void UseSkill()
     {
         base.UseSkill();
         //Debug.Log("đã sử dụng skill");
+        coolDownTimer = coolDown;
     }
 
     private void onDashUnlock() // Mở khóa skill Dash

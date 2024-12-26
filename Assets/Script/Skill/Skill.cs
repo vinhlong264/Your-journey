@@ -5,6 +5,7 @@ public class Skill : MonoBehaviour
     [SerializeField] protected float coolDown;
     protected Player player;
     protected SkillManager skillManager;
+    public bool isUsing { get; set; }
 
     public float CoolDown { get => coolDown; }
     protected virtual void Start()
@@ -23,17 +24,24 @@ public class Skill : MonoBehaviour
         if (coolDownTimer <= 0f)
         {
             //Sử dụng skill
-            UseSkill();
-            coolDownTimer = coolDown;
+            //UseSkill();
+            //coolDownTimer = coolDown;
             return true;
         }
         Debug.Log("Đang hồi chiêu");
         return false;
     }
 
-    protected virtual void UseSkill()
+
+    public virtual void UseSkill()
     {
         // sử dụng những skill được chỉ định
+    }
+
+    public virtual void endSkill()
+    {
+        coolDownTimer = coolDown;
+        //isUsing = false;
     }
 
     // Hàm dùng để tìm ra vị trí gần nhất của Enemy vs các Skill cần lấy vị trí

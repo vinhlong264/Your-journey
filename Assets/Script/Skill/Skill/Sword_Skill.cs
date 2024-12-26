@@ -7,7 +7,7 @@ public class Sword_Skill : Skill
 
     [Header("Throw sword skill")]
     [SerializeField] private UI_SkillTreeSlot throwSwordUnlockBtn;
-    public bool throwSwordUnlocked { get; private set; }
+    public bool swordSkillUnlocked { get; private set; }
 
     [Header("Bounce sword skill")]
     [SerializeField] private UI_SkillTreeSlot bounceSwordUnlockBtn;
@@ -71,6 +71,7 @@ public class Sword_Skill : Skill
 
     protected override void Update()
     {
+        base.Update();
         if (Input.GetKey(KeyCode.Mouse1))
         {
             FinalDir = new Vector2(getDirectionMouse().normalized.x * laughDirection.x, getDirectionMouse().normalized.y * laughDirection.y);
@@ -81,7 +82,6 @@ public class Sword_Skill : Skill
             }
         }
     }
-
 
 
     public void createSword() // khởi tạo sword
@@ -122,7 +122,7 @@ public class Sword_Skill : Skill
     {
         if (throwSwordUnlockBtn.isUnlocked)
         {
-            throwSwordUnlocked = true;
+            swordSkillUnlocked = true;
         }
     }
 
