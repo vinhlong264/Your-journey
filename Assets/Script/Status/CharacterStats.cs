@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
+public class CharacterStats : MonoBehaviour, IDameHandlePhysical
 {
     #region Variable
     private EntityFx fx;
@@ -288,83 +288,138 @@ public class CharacterStats : MonoBehaviour, IDamagePhysical, IDameMagical
     #endregion
 
     #region calculate dame physics
-    public virtual void DoDamePhysical(CharacterStats _targetReceive) // Quản lý việc gây dame vật lý
+
+    public void DoDamePhysical(CharacterStats _statSender)
     {
-        if (AvoidAttack(_targetReceive)) // kiểm tra việc tránh dame
+        if (AvoidAttack())
         {
-            _targetReceive.onEvasion();
-            Debug.Log("Attack avoid");
+            Debug.Log("Né dame");
             return;
         }
-        int totalDame = dame.getValue() + strength.getValue();
+        Debug.Log("Không thể né dame");
 
-        if (CanCrit()) // kiểm tra việc có thể chí mạng
-        {
-            totalDame = calculateCritalDame(totalDame);
-        }
-
-        totalDame = CheckTargetArmor(totalDame, _targetReceive);
-        //Debug.Log(this.name +" Total Dame Physical: " + totalDame);
-
-        _targetReceive.takeDame(totalDame);
+        int damage = _statSender.dame.getValue() + _statSender.strength.getValue();
+        damage = CheckArmor(damage);
+        Debug.Log("Sender: " + _statSender.name + " - Receive: " + this.name);
+        takeDame(damage);
     }
 
-    public virtual void applyBleedingHealth(bool _isBleeding)
+    public int CheckArmor(int finalDame)
     {
-        
-    }
-
-    protected int CheckTargetArmor(int dame, CharacterStats _targetReceive) // hàm tính toán dame vật lý gây ra
-    {
-        if (_targetReceive.armor.getValue() > 0 && dame > _targetReceive.armor.getValue())
+        float fullArmor = armor.getValue() + vitality.getValue() + (armor.getValue() * 0.3f);
+        if(fullArmor > 0)
         {
-            if (_targetReceive.isChill) // nếu nhận hiệu ứng Chill thì sẽ giảm giáp
+            if(finalDame < fullArmor)
             {
-                dame -= Mathf.RoundToInt(_targetReceive.armor.getValue() * 0.8f);
-                Debug.Log("Dame after chill: " + dame);
+                finalDame = 0;
             }
             else
             {
-                dame -= _targetReceive.armor.getValue();
+                finalDame -= Mathf.RoundToInt(fullArmor);
             }
         }
-        else
-        {
-            Debug.Log("Giáp quá lớn sao với dame");
-            dame = 0;
-        }
 
-        dame = Mathf.Clamp(dame, 0, int.MaxValue);
-
-        return dame;
+        return finalDame;
     }
 
-    protected bool AvoidAttack(CharacterStats _target) // Tính toán tỉ lệ né đòn
+    public bool AvoidAttack()
     {
-        int toltalEvasion = _target.evasion.getValue() + _target.ability.getValue();
+        int totalEvasion = evasion.getValue() + ability.getValue();
+        totalEvasion += Mathf.RoundToInt(totalEvasion + (totalEvasion * 0.1f));
+        Debug.Log(this.name + ": " + totalEvasion);
 
-        if (isShocked) // tăng khả năng né dame của target
-        {
-            toltalEvasion += 20;
-        }
-
-        return sytemRate(toltalEvasion);
+        return sytemRate(totalEvasion);
     }
-    
 
-    protected bool CanCrit() // tính toán tỉ lệ chí mạng
+    public bool CanCrit()
     {
-        int criticalRate = critRate.getValue() + ability.getValue();
-        return sytemRate(criticalRate);
+        throw new System.NotImplementedException();
     }
 
-    protected int calculateCritalDame(int _dame) // Tính toán sát thương chí mạng
+    public int CalculateCritDame(int _value)
     {
-        float totalCriticalPower = (critPower.getValue() + strength.getValue()) * 0.01f;
-        float finalDame = _dame * totalCriticalPower;
-
-        return Mathf.RoundToInt(finalDame);
+        throw new System.NotImplementedException();
     }
+
+
+    //public virtual void DoDamePhysical(CharacterStats _targetReceive) // Quản lý việc gây dame vật lý
+    //{
+    //    if (AvoidAttack(_targetReceive)) // kiểm tra việc tránh dame
+    //    {
+    //        _targetReceive.onEvasion();
+    //        Debug.Log("Attack avoid");
+    //        return;
+    //    }
+    //    int totalDame = dame.getValue() + strength.getValue();
+
+    //    if (CanCrit()) // kiểm tra việc có thể chí mạng
+    //    {
+    //        totalDame = calculateCritalDame(totalDame);
+    //    }
+
+    //    totalDame = CheckTargetArmor(totalDame, _targetReceive);
+    //    //Debug.Log(this.name +" Total Dame Physical: " + totalDame);
+
+    //    _targetReceive.takeDame(totalDame);
+    //}
+
+    public virtual void applyBleedingHealth(bool _isBleeding)
+    {
+
+    }
+
+    //protected int CheckTargetArmor(int dame, CharacterStats _targetReceive) // hàm tính toán dame vật lý gây ra
+    //{
+    //    if (_targetReceive.armor.getValue() > 0 && dame > _targetReceive.armor.getValue())
+    //    {
+    //        if (_targetReceive.isChill) // nếu nhận hiệu ứng Chill thì sẽ giảm giáp
+    //        {
+    //            dame -= Mathf.RoundToInt(_targetReceive.armor.getValue() * 0.8f);
+    //            Debug.Log("Dame after chill: " + dame);
+    //        }
+    //        else
+    //        {
+    //            dame -= _targetReceive.armor.getValue();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Giáp quá lớn sao với dame");
+    //        dame = 0;
+    //    }
+
+    //    dame = Mathf.Clamp(dame, 0, int.MaxValue);
+
+    //    return dame;
+    //}
+
+    //protected bool AvoidAttack(CharacterStats _target) // Tính toán tỉ lệ né đòn
+    //{
+    //    int toltalEvasion = _target.evasion.getValue() + _target.ability.getValue();
+
+    //    if (isShocked) // tăng khả năng né dame của target
+    //    {
+    //        toltalEvasion += 20;
+    //    }
+
+    //    return sytemRate(toltalEvasion);
+    //}
+
+
+    //protected bool CanCrit() // tính toán tỉ lệ chí mạng
+    //{
+    //    int criticalRate = critRate.getValue() + ability.getValue();
+    //    return sytemRate(criticalRate);
+    //}
+
+    //protected int calculateCritalDame(int _dame) // Tính toán sát thương chí mạng
+    //{
+    //    float totalCriticalPower = (critPower.getValue() + strength.getValue()) * 0.01f;
+    //    float finalDame = _dame * totalCriticalPower;
+
+    //    return Mathf.RoundToInt(finalDame);
+    //}
+
     #endregion
 
     #region Dame impact and System rate

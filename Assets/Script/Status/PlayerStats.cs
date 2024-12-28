@@ -21,22 +21,22 @@ public class PlayerStats : CharacterStats
     }
 
 
-    public void DoDameWithSkill(CharacterStats _targetReceive, float percentDame)
-    {
-        if (AvoidAttack(_targetReceive)) return;
+    //public void DoDameWithSkill(CharacterStats _targetReceive, float percentDame)
+    //{
+    //    if (AvoidAttack(_targetReceive)) return;
 
-        int _dame = dame.getValue() + strength.getValue();
-        int finalDame = Mathf.RoundToInt(_dame + ((_dame * percentDame) / 100));
+    //    int _dame = dame.getValue() + strength.getValue();
+    //    int finalDame = Mathf.RoundToInt(_dame + ((_dame * percentDame) / 100));
 
-        if (CanCrit())
-        {
-            finalDame = calculateCritalDame(finalDame);
-        }
+    //    if (CanCrit())
+    //    {
+    //        finalDame = calculateCritalDame(finalDame);
+    //    }
 
-        finalDame = CheckTargetArmor(finalDame, _targetReceive);
-        Debug.Log("DameTotal: " + finalDame);
-        _targetReceive.takeDame(finalDame);
-    }
+    //    finalDame = CheckTargetArmor(finalDame, _targetReceive);
+    //    Debug.Log("DameTotal: " + finalDame);
+    //    _targetReceive.takeDame(finalDame);
+    //}
 
     public override void takeDame(int _dame)
     {

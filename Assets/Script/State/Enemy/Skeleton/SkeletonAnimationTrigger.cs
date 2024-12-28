@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkeletonAnimationTrigger : MonoBehaviour
 {
     private Skeleton skeleton;
+    [SerializeField] private LayerMask whatIsMask;
     private void Start()
     {
         skeleton = GetComponentInParent<Skeleton>();
@@ -16,13 +17,13 @@ public class SkeletonAnimationTrigger : MonoBehaviour
 
     public void AttackTrigger()
     {
-        Collider2D[] attack = Physics2D.OverlapCircleAll(skeleton.AttackCheck.position, skeleton.attackRadius);
+        Collider2D[] attack = Physics2D.OverlapCircleAll(skeleton.AttackCheck.position, skeleton.attackRadius , whatIsMask);
         foreach(Collider2D hit in attack)
         {
-            if(hit.GetComponent<Player>() != null)
+            IDameHandlePhysical player = hit.GetComponent<IDameHandlePhysical>();
+            if (player != null)
             {
-                PlayerStats playerStatus = hit.GetComponent<PlayerStats>();
-                skeleton.status.doDameMagical(playerStatus);
+                player.DoDamePhysical(skeleton.GetComponent<EnemyStats>());
             }
         }
     }

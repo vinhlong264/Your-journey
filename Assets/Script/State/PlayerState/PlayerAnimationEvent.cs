@@ -26,18 +26,24 @@ public class PlayerAnimationEvent : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                PlayerStats playerStats = player.GetComponent<PlayerStats>();
-                EnemyStats enemyStatus = hit.GetComponent<EnemyStats>();
+                //PlayerStats playerStats = player.GetComponent<PlayerStats>();
+                //EnemyStats enemyStatus = hit.GetComponent<EnemyStats>();
 
-                if (enemyStatus == null) return;
+                //if (enemyStatus == null) return;
 
-                playerStats.DoDamePhysical(enemyStatus); // damage physical
-                //playerStats.doDameMagical(enemyStatus); // dame magiacal
+                //playerStats.DoDamePhysical(enemyStatus); // damage physical
+                ////playerStats.doDameMagical(enemyStatus); // dame magiacal
 
-                ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
-                if (equipment != null)
+                //ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
+                //if (equipment != null)
+                //{
+                //    equipment.excuteItemEffect(enemyStatus.transform);
+                //}
+
+                IDameHandlePhysical Enemy = hit.GetComponent<IDameHandlePhysical>();
+                if (Enemy != null)
                 {
-                    equipment.excuteItemEffect(enemyStatus.transform);
+                    Enemy.DoDamePhysical(player.GetComponent<PlayerStats>());
                 }
 
             }

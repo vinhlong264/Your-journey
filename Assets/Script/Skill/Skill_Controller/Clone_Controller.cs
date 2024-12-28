@@ -89,7 +89,7 @@ public class Clone_Controller : MonoBehaviour
                 PlayerStats playerStats = player.GetComponent<PlayerStats>(); 
                 EnemyStats enemyStats = hit.GetComponent<EnemyStats>();
 
-                playerStats.DoDameWithSkill(enemyStats, percentDameExtra);
+                //playerStats.DoDameWithSkill(enemyStats, percentDameExtra);
 
                 ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
 
