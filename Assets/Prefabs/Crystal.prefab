@@ -157,3 +157,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canExplore: 0
   growSpeed: 5
+  whatIsMask:
+    serializedVersion: 2
+    m_Bits: 128

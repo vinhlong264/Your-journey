@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStats : MonoBehaviour, IDameHandlePhysical
+public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDameHandleMagical, IBuffStats
 {
     #region Variable
     private EntityFx fx;
@@ -92,6 +92,7 @@ public class CharacterStats : MonoBehaviour, IDameHandlePhysical
     }
 
 
+    #region Buff stats
     public void increaseModfierStatus(int _amount, float _duration, Stats _status) // buff stat
     {
         StartCoroutine(addModifierStatus(_amount, _duration, _status));
@@ -99,49 +100,57 @@ public class CharacterStats : MonoBehaviour, IDameHandlePhysical
 
     IEnumerator addModifierStatus(int _amount, float _duration, Stats _status)
     {
-        _status.addModifiers(_amount); // Nhận buff
+        Debug.Log("Buff");
+        BuffStats(_status, _amount); // Nhận buff
         yield return new WaitForSeconds(_duration);
-        _status.removeModifiers(_amount); // Xóa buff
+        Debug.Log("Stop buff");
+        StopBuffStats(_status, _amount); // Xóa buff
     }
 
 
-
-
-    #region calculate dame magic and appy ailment
-    public virtual void doDameMagical(CharacterStats _targetStatus) // Quản lý việc gây dame phép
+    public void BuffStats(Stats stats , int amount)
     {
-        int _fireDame = getFireDame();
-        int _iceDame = getIceDame();
-        int _lightingDame = getLightingDame();
+        stats.addModifiers(amount);
+    }
 
-        int totalMagicDame = checkTargetMagicResistance(_targetStatus, _fireDame, _iceDame, _lightingDame);
-        //Debug.Log(this.name+" Dame Magical: "+totalMagicDame);
-        _targetStatus.takeDame(totalMagicDame);
+    public void StopBuffStats(Stats stats, int amount)
+    {
+        stats.removeModifiers(amount);
+    }
 
-        //Logic add ailment
-        if (Mathf.Max(_fireDame, _iceDame, _lightingDame) <= 0) return;
+    #endregion
 
-        logicCanApplyAilment(_targetStatus, _fireDame, _iceDame, _lightingDame);
+    #region calculate dame magic
+    public void DameDoMagical(CharacterStats _statSender)
+    {
+        int _fireDame = _statSender.getFireDame();
+        int _iceDame = _statSender.getIceDame();
+        int _lightingDame = _statSender.getLightingDame();
+
+        int totalDame = CheckMagicResistance(_fireDame, _iceDame, _lightingDame);
+        Debug.Log($"{_statSender.name} ,Sender: {totalDame}");
+
+        takeDame(totalDame);
 
     }
 
-    //Hàm tính toán nhận dame phép
-    protected int checkTargetMagicResistance(CharacterStats _targetStatus, int _fireDame, int _iceDame, int _lightingDame)
+    public int CheckMagicResistance(int _fireDame, int _iceDame, int _lightingDame)
     {
         int _magicDame = _fireDame + _iceDame + _lightingDame;
-
-        int _magicResistance = Mathf.RoundToInt((_targetStatus.magicResistance.getValue() + _targetStatus.inteligent.getValue()) * 0.03f);
+        int _magicResistance = Mathf.RoundToInt((magicResistance.getValue() + inteligent.getValue()) * 0.03f);
 
         _magicDame -= _magicResistance;
 
-        _magicDame = Mathf.Clamp(_magicDame, 0, int.MaxValue);
-        return _magicDame;
+        return Mathf.Clamp(_magicDame, 0, int.MaxValue);
     }
 
-    protected int getFireDame() => fireDame.getValue() + inteligent.getValue();
-    protected int getIceDame() => iceDame.getValue() + inteligent.getValue();
-    protected int getLightingDame() => lightingDame.getValue() + inteligent.getValue();
+    public int getFireDame() => fireDame.getValue() + inteligent.getValue();
+    public int getIceDame() => iceDame.getValue() + inteligent.getValue();
+    public int getLightingDame() => lightingDame.getValue() + inteligent.getValue();
 
+    #endregion
+
+    #region Apply Aliment
     protected virtual void logicCanApplyAilment(CharacterStats _targetStatus, int _fireDame, int _iceDame, int _lightingDame)  // logic apply Ailment
     {
         bool canApplyIngnite = _fireDame > _iceDame && _fireDame > _lightingDame;
@@ -214,7 +223,7 @@ public class CharacterStats : MonoBehaviour, IDameHandlePhysical
             fx.chillColorFor(ailmentDuration);
         }
 
-        if(_shocked && canAplyShock) // Apply effect shock
+        if (_shocked && canAplyShock) // Apply effect shock
         {
             if (!isShocked)
             {
@@ -258,7 +267,7 @@ public class CharacterStats : MonoBehaviour, IDameHandlePhysical
 
         fx.shockColorFor(ailmentDuration);
     }
-    public void setUpDameLinghting(int _dame) =>strikeDame = _dame; // quản lý dame của lighting
+    public void setUpDameLinghting(int _dame) => strikeDame = _dame; // quản lý dame của lighting
 
     protected virtual void effectStrikeEnemyClosest() // gây hiệu ứng sét giật với enemy gần nhất
     {
@@ -289,7 +298,7 @@ public class CharacterStats : MonoBehaviour, IDameHandlePhysical
 
     #region calculate dame physics
 
-    public void DoDamePhysical(CharacterStats _statSender)
+    public void DoDamePhysical(CharacterStats _statSender) // Dame handle
     {
         if (AvoidAttack())
         {
@@ -299,127 +308,66 @@ public class CharacterStats : MonoBehaviour, IDameHandlePhysical
         Debug.Log("Không thể né dame");
 
         int damage = _statSender.dame.getValue() + _statSender.strength.getValue();
+
+        if (CanCrit(_statSender))
+        {
+            Debug.Log("Crit");
+            damage = CalculateCritDame(damage, _statSender);
+        }
+
         damage = CheckArmor(damage);
-        Debug.Log("Sender: " + _statSender.name + " - Receive: " + this.name);
+        Debug.Log($"{_statSender.name} Sender : {damage} - {this.name} Receive: {damage}");
         takeDame(damage);
     }
 
-    public int CheckArmor(int finalDame)
+    public int CheckArmor(int _value)
     {
         float fullArmor = armor.getValue() + vitality.getValue() + (armor.getValue() * 0.3f);
-        if(fullArmor > 0)
+        if (fullArmor > 0)
         {
-            if(finalDame < fullArmor)
+            if (_value < fullArmor)
             {
-                finalDame = 0;
+                _value = 0;
             }
             else
             {
-                finalDame -= Mathf.RoundToInt(fullArmor);
+                _value -= Mathf.RoundToInt(fullArmor);
             }
         }
 
-        return finalDame;
+        return _value;
     }
 
     public bool AvoidAttack()
     {
         int totalEvasion = evasion.getValue() + ability.getValue();
-        totalEvasion += Mathf.RoundToInt(totalEvasion + (totalEvasion * 0.1f));
-        Debug.Log(this.name + ": " + totalEvasion);
+        Debug.Log(this.name + ", Evasion: " + totalEvasion);
 
         return sytemRate(totalEvasion);
     }
 
-    public bool CanCrit()
+    public bool CanCrit(CharacterStats _statSender)
     {
-        throw new System.NotImplementedException();
+        int critRate = _statSender.critRate.getValue() + _statSender.ability.getValue();
+
+        Debug.Log(_statSender.name + ",CritRate: " + critRate);
+        return sytemRate(critRate);
     }
 
-    public int CalculateCritDame(int _value)
+
+    public int CalculateCritDame(int _finalDame, CharacterStats _statSender)
     {
-        throw new System.NotImplementedException();
+        float dameCritPower = (_statSender.critPower.getValue() + _statSender.strength.getValue()) * 0.01f;
+
+        Debug.Log(_statSender.name + ", dameCritPower: " + (_finalDame + dameCritPower));
+        return Mathf.RoundToInt(_finalDame + dameCritPower);
     }
 
-
-    //public virtual void DoDamePhysical(CharacterStats _targetReceive) // Quản lý việc gây dame vật lý
-    //{
-    //    if (AvoidAttack(_targetReceive)) // kiểm tra việc tránh dame
-    //    {
-    //        _targetReceive.onEvasion();
-    //        Debug.Log("Attack avoid");
-    //        return;
-    //    }
-    //    int totalDame = dame.getValue() + strength.getValue();
-
-    //    if (CanCrit()) // kiểm tra việc có thể chí mạng
-    //    {
-    //        totalDame = calculateCritalDame(totalDame);
-    //    }
-
-    //    totalDame = CheckTargetArmor(totalDame, _targetReceive);
-    //    //Debug.Log(this.name +" Total Dame Physical: " + totalDame);
-
-    //    _targetReceive.takeDame(totalDame);
-    //}
 
     public virtual void applyBleedingHealth(bool _isBleeding)
     {
 
     }
-
-    //protected int CheckTargetArmor(int dame, CharacterStats _targetReceive) // hàm tính toán dame vật lý gây ra
-    //{
-    //    if (_targetReceive.armor.getValue() > 0 && dame > _targetReceive.armor.getValue())
-    //    {
-    //        if (_targetReceive.isChill) // nếu nhận hiệu ứng Chill thì sẽ giảm giáp
-    //        {
-    //            dame -= Mathf.RoundToInt(_targetReceive.armor.getValue() * 0.8f);
-    //            Debug.Log("Dame after chill: " + dame);
-    //        }
-    //        else
-    //        {
-    //            dame -= _targetReceive.armor.getValue();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Giáp quá lớn sao với dame");
-    //        dame = 0;
-    //    }
-
-    //    dame = Mathf.Clamp(dame, 0, int.MaxValue);
-
-    //    return dame;
-    //}
-
-    //protected bool AvoidAttack(CharacterStats _target) // Tính toán tỉ lệ né đòn
-    //{
-    //    int toltalEvasion = _target.evasion.getValue() + _target.ability.getValue();
-
-    //    if (isShocked) // tăng khả năng né dame của target
-    //    {
-    //        toltalEvasion += 20;
-    //    }
-
-    //    return sytemRate(toltalEvasion);
-    //}
-
-
-    //protected bool CanCrit() // tính toán tỉ lệ chí mạng
-    //{
-    //    int criticalRate = critRate.getValue() + ability.getValue();
-    //    return sytemRate(criticalRate);
-    //}
-
-    //protected int calculateCritalDame(int _dame) // Tính toán sát thương chí mạng
-    //{
-    //    float totalCriticalPower = (critPower.getValue() + strength.getValue()) * 0.01f;
-    //    float finalDame = _dame * totalCriticalPower;
-
-    //    return Mathf.RoundToInt(finalDame);
-    //}
-
     #endregion
 
     #region Dame impact and System rate
@@ -446,12 +394,12 @@ public class CharacterStats : MonoBehaviour, IDameHandlePhysical
     public void restoreHealthBy(int _amountHeal)
     {
         currentHealth += _amountHeal;
-        if(currentHealth > getMaxHealth())
+        if (currentHealth > getMaxHealth())
         {
             currentHealth = getMaxHealth();
         }
 
-        if(onUiHealth != null)
+        if (onUiHealth != null)
         {
             onUiHealth();
         }
@@ -465,10 +413,10 @@ public class CharacterStats : MonoBehaviour, IDameHandlePhysical
             Die();
         }
     }
-    protected virtual void decreaseHealthBy(int _dame) 
+    protected virtual void decreaseHealthBy(int _dame)
     {
         currentHealth -= _dame;
-        if(onUiHealth != null)
+        if (onUiHealth != null)
         {
             onUiHealth();
         }
@@ -484,8 +432,6 @@ public class CharacterStats : MonoBehaviour, IDameHandlePhysical
 
     }
     #endregion
-
-
 
 }
 

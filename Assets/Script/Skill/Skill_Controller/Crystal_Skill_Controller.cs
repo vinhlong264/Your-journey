@@ -14,7 +14,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
     private Transform closestTarget; // vị trí gần nhất của Enemy để tấn công
 
 
-
+    [SerializeField] private LayerMask whatIsMask;
     private Animator animator;
     private CircleCollider2D cd;
     private Player player;
@@ -75,13 +75,14 @@ public class Crystal_Skill_Controller : MonoBehaviour
 
     private void AnimationAttackExplore() // Take dame
     {
-        Collider2D[] attackCheck = Physics2D.OverlapCircleAll(transform.position, cd.radius);
+        Collider2D[] attackCheck = Physics2D.OverlapCircleAll(transform.position, cd.radius , whatIsMask);
 
         foreach(var hit in attackCheck)
         {
-            if (hit.GetComponent<Enemy>() != null)
+            IDameHandleMagical dameMagical = hit.GetComponent<IDameHandleMagical>();
+            if (dameMagical != null)
             {
-                player.status.doDameMagical(hit.GetComponent<CharacterStats>());
+                dameMagical.DameDoMagical(PlayerManager.Instance.playerStats);
             }
         }
     }

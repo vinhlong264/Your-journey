@@ -33112,6 +33112,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6311980755220613741, guid: 878898815ed646d4f805eb1944781201, type: 3}
+      propertyPath: evasion.baseValue
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33187,7 +33191,7 @@ MonoBehaviour:
     baseValue: 10
     modifiers: 
   critRate:
-    baseValue: 1
+    baseValue: 0
     modifiers: 
   critPower:
     baseValue: 0
@@ -33205,13 +33209,13 @@ MonoBehaviour:
     baseValue: 1
     modifiers: 
   fireDame:
-    baseValue: 0
+    baseValue: 1
     modifiers: 
   iceDame:
-    baseValue: 0
+    baseValue: 1
     modifiers: 
   lightingDame:
-    baseValue: 0
+    baseValue: 1
     modifiers: 
   ailmentDuration: 4
   isIngnite: 0

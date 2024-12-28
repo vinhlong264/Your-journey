@@ -12,10 +12,10 @@ public class effectControllerBase : MonoBehaviour // Class base về các effect
     {
         if (collision.GetComponent<Enemy>() != null)
         {
-            EnemyStats enemyStatus = collision.GetComponent<EnemyStats>();
-            if (enemyStatus != null)
+            IDameHandleMagical dameMagical = collision.GetComponent<IDameHandleMagical>();
+            if (dameMagical != null)
             {
-                playerStatus.doDameMagical(enemyStatus);
+                dameMagical.DameDoMagical(playerStatus);
             }
         }
     }
