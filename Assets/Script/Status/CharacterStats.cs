@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDameHandleMagical, IBuffStats
+public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDameHandleMagical, IBuffStats, IHarmfulEffect
 {
     #region Variable
     private EntityFx fx;
@@ -88,7 +88,7 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
             isIngnite = false;
         }
 
-        applyIngniteDame(); // gây dame cháy mỗi giây
+        ApplyBurn(); // gây dame cháy mỗi giây
     }
 
 
@@ -128,8 +128,9 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
         int _lightingDame = _statSender.getLightingDame();
 
         int totalDame = CheckMagicResistance(_fireDame, _iceDame, _lightingDame);
-        Debug.Log($"{_statSender.name} ,Sender: {totalDame}");
+        //Debug.Log($"{_statSender.name} ,Sender: {totalDame}");
 
+        LogicApplyAilement(_fireDame,_iceDame ,_lightingDame);
         takeDame(totalDame);
 
     }
@@ -151,83 +152,48 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
     #endregion
 
     #region Apply Aliment
-    protected virtual void logicCanApplyAilment(CharacterStats _targetStatus, int _fireDame, int _iceDame, int _lightingDame)  // logic apply Ailment
+
+    public void LogicApplyAilement(int _fireDame, int _iceDame, int _lightingDame)
     {
-        bool canApplyIngnite = _fireDame > _iceDame && _fireDame > _lightingDame;
-        bool canApplyChill = _iceDame > _fireDame && _iceDame > _lightingDame;
-        bool canApplyShock = _lightingDame > _iceDame && _lightingDame > _fireDame;
+        bool _canApplyIngnite = _fireDame > _iceDame && _fireDame > _lightingDame;
+        bool _canApplyChill = _iceDame > _fireDame && _iceDame > _lightingDame;
+        bool _canApplyLighting = _lightingDame > _fireDame && _lightingDame > _iceDame;
 
-        //ApplyRadomAilment(_targetStatus, _fireDame, _iceDame, _lightingDame, ref canApplyIngnite, ref canApplyChill, ref canApplyShock);
 
-        if (canApplyIngnite)
+        if (_canApplyIngnite)
         {
-            _targetStatus.setUpIngnite(Mathf.RoundToInt(_fireDame * 0.2f));
+            setUpIngnite(Mathf.RoundToInt(_fireDame * 0.2f));
         }
 
-
-        if (canApplyShock)
+        if (_canApplyLighting)
         {
-            _targetStatus.setUpDameLinghting(Mathf.RoundToInt(_lightingDame * 0.2f));
+            setUpDameLinghting(Mathf.RoundToInt(_lightingDame * 0.2f));
         }
 
-        _targetStatus.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
+        ApplyAilement(_canApplyIngnite , _canApplyChill , _canApplyLighting);
+
     }
 
-    //Logic apply ngẫu nhiên các Ailment khi các chỉ số dame phép bằng nhau
-    protected void ApplyRadomAilment(CharacterStats _targetReceive, int _fireDame, int _iceDame, int _lightingDame, ref bool canApplyIngnite, ref bool canApplyChill, ref bool canApplyShock)
+    public void ApplyAilement(bool _ingnite, bool _chill, bool _shock)
     {
-        while (!canApplyIngnite && !canApplyChill && !canApplyShock)
+        bool applyIngnite = !isChill && !isShocked;
+        if (applyIngnite && _ingnite)
         {
-            if (Random.value < 0.5f && _fireDame > 0)
-            {
-                canApplyIngnite = true;
-                _targetReceive.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
-                return;
-            }
-
-            if (Random.value < 0.5f && _iceDame > 0)
-            {
-                canApplyChill = true;
-                _targetReceive.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
-                return;
-            }
-
-            if (Random.value < 0.5f && _lightingDame > 0)
-            {
-                canApplyShock = true;
-                _targetReceive.aplyAilment(canApplyIngnite, canApplyChill, canApplyShock);
-                return;
-            }
-        }
-    }
-
-    public virtual void aplyAilment(bool _ingnite, bool _chill, bool _shocked) // nhận các hiệu ứng gây hại
-    {
-
-        bool canAplyIngnite = !isChill && !isShocked;
-        bool canAplyChill = !isIngnite && !isShocked;
-        bool canAplyShock = !isIngnite && !isChill;
-
-        if (_ingnite && canAplyIngnite) //Apply effect burn
-        {
+            Debug.Log(this.name +" Receive Burn");
             isIngnite = _ingnite;
             ingniteTimer = ailmentDuration;
             fx.ingniteColorFor(ailmentDuration);
         }
 
-        if (_chill && canAplyChill) //Apply effect Slow
+        bool applyShock = !isChill && !isIngnite;
+        if(applyShock && _shock)
         {
-            isChill = _chill;
-            chillTimer = ailmentDuration;
-            GetComponent<Entity>().slowEntityBy(0.2f, ailmentDuration);
-            fx.chillColorFor(ailmentDuration);
-        }
-
-        if (_shocked && canAplyShock) // Apply effect shock
-        {
+            Debug.Log(this.name + " Receive Shock");
+            isShocked = _shock;
             if (!isShocked)
             {
-                AplyShock(_shocked);
+                Debug.Log(this.name + "Apply Shock");
+                ApplyShock(_shock);
             }
             else
             {
@@ -236,11 +202,18 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
                 effectStrikeEnemyClosest();
             }
         }
+
+        bool applyChill = !isIngnite && !isShocked;
+        if(applyChill && _chill)
+        {
+            isChill = _chill;
+            chillTimer = ailmentDuration;
+            GetComponent<Entity>().slowEntityBy(0.2f , ailmentDuration);
+            fx.chillColorFor(ailmentDuration);
+        }
     }
 
-    public void setUpIngnite(int _dame) => ingniteDame = _dame;// quản lý dame của ingniteDame
-
-    protected virtual void applyIngniteDame() // gây dame hiệu ứng liên tục của ingnite
+    public void ApplyBurn()
     {
         if (ingniteDameTimer < 0 && isIngnite)
         {
@@ -255,18 +228,24 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
             ingniteDameTimer = ingniteDameCoolDown;
         }
     }
-    public virtual void AplyShock(bool _shocked)
+
+    public void ApplyChill(bool _canChill)
     {
-        if (isShocked)
-        {
-            return;
-        }
-
-        shockTimer = ailmentDuration;
-        isShocked = _shocked;
-
-        fx.shockColorFor(ailmentDuration);
+        
     }
+
+    public void ApplyShock(bool _canShock)
+    {
+        if (_canShock)
+        {
+            shockTimer = ailmentDuration;
+            isShocked = _canShock;
+            fx.shockColorFor(ailmentDuration);
+        }
+    }
+    
+    public void setUpIngnite(int _dame) => ingniteDame = _dame;// quản lý dame của ingniteDame
+
     public void setUpDameLinghting(int _dame) => strikeDame = _dame; // quản lý dame của lighting
 
     protected virtual void effectStrikeEnemyClosest() // gây hiệu ứng sét giật với enemy gần nhất
@@ -305,7 +284,7 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
             Debug.Log("Né dame");
             return;
         }
-        Debug.Log("Không thể né dame");
+        //Debug.Log("Không thể né dame");
 
         int damage = _statSender.dame.getValue() + _statSender.strength.getValue();
 
@@ -316,7 +295,7 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
         }
 
         damage = CheckArmor(damage);
-        Debug.Log($"{_statSender.name} Sender : {damage} - {this.name} Receive: {damage}");
+        //Debug.Log($"{_statSender.name} Sender : {damage} - {this.name} Receive: {damage}");
         takeDame(damage);
     }
 
@@ -341,7 +320,7 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
     public bool AvoidAttack()
     {
         int totalEvasion = evasion.getValue() + ability.getValue();
-        Debug.Log(this.name + ", Evasion: " + totalEvasion);
+        //Debug.Log(this.name + ", Evasion: " + totalEvasion);
 
         return sytemRate(totalEvasion);
     }
@@ -350,7 +329,7 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
     {
         int critRate = _statSender.critRate.getValue() + _statSender.ability.getValue();
 
-        Debug.Log(_statSender.name + ",CritRate: " + critRate);
+        //Debug.Log(_statSender.name + ",CritRate: " + critRate);
         return sytemRate(critRate);
     }
 
@@ -359,7 +338,7 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
     {
         float dameCritPower = (_statSender.critPower.getValue() + _statSender.strength.getValue()) * 0.01f;
 
-        Debug.Log(_statSender.name + ", dameCritPower: " + (_finalDame + dameCritPower));
+        //Debug.Log(_statSender.name + ", dameCritPower: " + (_finalDame + dameCritPower));
         return Mathf.RoundToInt(_finalDame + dameCritPower);
     }
 

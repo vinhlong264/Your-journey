@@ -33209,13 +33209,13 @@ MonoBehaviour:
     baseValue: 1
     modifiers: 
   fireDame:
-    baseValue: 1
+    baseValue: 0
     modifiers: 
   iceDame:
-    baseValue: 1
+    baseValue: 15
     modifiers: 
   lightingDame:
-    baseValue: 1
+    baseValue: 0
     modifiers: 
   ailmentDuration: 4
   isIngnite: 0

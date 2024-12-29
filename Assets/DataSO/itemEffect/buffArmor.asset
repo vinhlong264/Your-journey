@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: buffArmor
   m_EditorClassIdentifier: 
   objEffect: {fileID: 0}
-  buffType: 4
+  buffType: 5
   buffDurartion: 20
   amountBuff: 50

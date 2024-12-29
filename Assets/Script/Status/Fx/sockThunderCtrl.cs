@@ -43,7 +43,7 @@ public class sockThunderCtrl : MonoBehaviour
 
     void DameBy()
     {
-        target.AplyShock(true);
+        target.ApplyShock(true);
         target.takeDame(1);
         Destroy(gameObject, 0.4f);
     }
