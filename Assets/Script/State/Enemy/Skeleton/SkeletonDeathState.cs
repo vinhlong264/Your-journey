@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SkeletonDeathState : EnemyState
@@ -15,6 +13,7 @@ public class SkeletonDeathState : EnemyState
         base.Enter();
         skeleton.cd.enabled = false;
         skeleton.rb.bodyType = RigidbodyType2D.Static;
+        skeleton.CloseCounterAttack();
     }
 
     public override void Exit()

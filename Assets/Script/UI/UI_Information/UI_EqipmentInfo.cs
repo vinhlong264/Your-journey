@@ -30,6 +30,7 @@ public class UI_EqipmentInfor : MonoBehaviour
 
     public void hideDescription()
     {
+        nameItemText.fontSize = frontSizeDefaunt;
         gameObject.SetActive(false);
     }
 

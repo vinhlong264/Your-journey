@@ -1,10 +1,9 @@
-
 using UnityEngine;
 
-public class EnemyState
+public abstract class EnemyState
 {
-    protected Enemy enemyBase {  get; private set; }
-    protected EnemyStateMachine stateMachine { get; private set; }
+    protected Enemy enemyBase;
+    protected EnemyStateMachine stateMachine;
     protected bool triggerCalled;
     protected float stateTimer;
 

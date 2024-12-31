@@ -32,7 +32,7 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
     [SerializeField] private float ailmentDuration;
     [SerializeField] private bool isIngnite; // Gây dame cháy liên tục trong 1 khoảng thời gian
     [SerializeField] private bool isChill; // Giảm giáp đi 20%
-    [SerializeField] private bool isShocked; // Giảm khả năng đánh chính xác đi 20%
+    [SerializeField] private bool isShocked;
 
     private float ingniteTimer; // thời gian hiệu ứng cháy
     private float chillTimer; // Thời gian hiệu ứng làm chậm
@@ -127,10 +127,11 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
         int _iceDame = _statSender.getIceDame();
         int _lightingDame = _statSender.getLightingDame();
 
+        LogicApplyAilement(_fireDame, _iceDame, _lightingDame);
+
         int totalDame = CheckMagicResistance(_fireDame, _iceDame, _lightingDame);
         //Debug.Log($"{_statSender.name} ,Sender: {totalDame}");
 
-        LogicApplyAilement(_fireDame,_iceDame ,_lightingDame);
         takeDame(totalDame);
 
     }
@@ -138,7 +139,15 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
     public int CheckMagicResistance(int _fireDame, int _iceDame, int _lightingDame)
     {
         int _magicDame = _fireDame + _iceDame + _lightingDame;
-        int _magicResistance = Mathf.RoundToInt((magicResistance.getValue() + inteligent.getValue()) * 0.03f);
+
+        int _magicResistance = Mathf.RoundToInt((magicResistance.getValue() + inteligent.getValue()));
+        if (isChill)
+        {
+            _magicResistance = Mathf.RoundToInt(_magicResistance * 0.8f);
+        }
+
+
+        //Debug.Log(this.name+" :"+_magicResistance);
 
         _magicDame -= _magicResistance;
 
@@ -212,6 +221,7 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
             fx.chillColorFor(ailmentDuration);
         }
     }
+
 
     public void ApplyBurn()
     {

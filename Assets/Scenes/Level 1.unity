@@ -2677,7 +2677,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.039395835, y: 0.0795926}
   m_AnchorMax: {x: 0.95614576, y: 0.9244075}
-  m_AnchoredPosition: {x: 4.5, y: 2.0928955}
+  m_AnchoredPosition: {x: 4.5, y: 2.0927734}
   m_SizeDelta: {x: 6.8564453, y: 6.556885}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &196163319
@@ -3919,7 +3919,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.039395835, y: 0.0795926}
   m_AnchorMax: {x: 0.95614576, y: 0.9244075}
-  m_AnchoredPosition: {x: 4.5, y: 2.0928955}
+  m_AnchoredPosition: {x: 4.5, y: 2.0927734}
   m_SizeDelta: {x: 6.8564453, y: 6.556885}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &327388373
@@ -12958,7 +12958,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 164.74658, y: -29.85}
+  m_AnchoredPosition: {x: 164.74658, y: -29.849976}
   m_SizeDelta: {x: 329.49316, y: 59.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1097464365
@@ -17092,7 +17092,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.039395835, y: 0.0795926}
   m_AnchorMax: {x: 0.95614576, y: 0.9244075}
-  m_AnchoredPosition: {x: 4.5, y: 2.0928955}
+  m_AnchoredPosition: {x: 4.5, y: 2.0927734}
   m_SizeDelta: {x: 6.8564453, y: 6.556885}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1287879253
@@ -19739,7 +19739,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.039395835, y: 0.0795926}
   m_AnchorMax: {x: 0.95614576, y: 0.9244075}
-  m_AnchoredPosition: {x: 4.5, y: 2.0928955}
+  m_AnchoredPosition: {x: 4.5, y: 2.0927734}
   m_SizeDelta: {x: 6.8564453, y: 6.556885}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1400241198
@@ -33115,6 +33115,14 @@ PrefabInstance:
     - target: {fileID: 6311980755220613741, guid: 878898815ed646d4f805eb1944781201, type: 3}
       propertyPath: evasion.baseValue
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6311980755220613741, guid: 878898815ed646d4f805eb1944781201, type: 3}
+      propertyPath: inteligent.baseValue
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6311980755220613741, guid: 878898815ed646d4f805eb1944781201, type: 3}
+      propertyPath: magicResistance.baseValue
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

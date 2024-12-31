@@ -227,7 +227,8 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private void SworDameController(Enemy enemy) // Method attack
     {
-        player.status.DoDamePhysical(enemy.GetComponent<CharacterStats>());
+        IDameHandlePhysical dameHandel = enemy.GetComponent<EnemyStats>();
+        dameHandel.DoDamePhysical(player.status);
 
         if (isFreezeTime)
         {
