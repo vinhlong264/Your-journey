@@ -28,6 +28,11 @@ public abstract class EnemyState
         stateTimer -= Time.deltaTime;
     }
 
+    public virtual void FixUpdate()
+    {
+
+    }
+
     public virtual void Exit() 
     {
         //Debug.Log("I doing exit " + this.animationBoolName);

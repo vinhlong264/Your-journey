@@ -22,7 +22,7 @@ public class Skeleton : Enemy
 
     #endregion
 
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         idleState = new SkeletonIdleState(this , StateMachine , "Idle" , this );
@@ -33,7 +33,7 @@ public class Skeleton : Enemy
         deathState = new SkeletonDeathState(this, StateMachine, "Death", this);
     }
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         StateMachine.initialize(idleState);
@@ -42,9 +42,14 @@ public class Skeleton : Enemy
         isFacingRight = true;
     }
 
-    public override void Update()
+    protected override void Update()
     {
         base.Update();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
     }
 
     public override void dameEffect()

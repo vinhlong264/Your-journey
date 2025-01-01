@@ -17,13 +17,13 @@ public class SkeletonAnimationTrigger : MonoBehaviour
 
     public void AttackTrigger()
     {
-        Collider2D[] attack = Physics2D.OverlapCircleAll(skeleton.AttackCheck.position, skeleton.attackRadius , whatIsMask);
+        Collider2D[] attack = Physics2D.OverlapCircleAll(skeleton.AttackChecks.position, skeleton.AttackRadius , whatIsMask);
         foreach(Collider2D hit in attack)
         {
-            IDameHandlePhysical player = hit.GetComponent<IDameHandlePhysical>();
-            if (player != null)
+            IDameHandlePhysical targetReceive = hit.GetComponent<IDameHandlePhysical>();
+            if (targetReceive != null)
             {
-                player.DoDamePhysical(skeleton.GetComponent<EnemyStats>());
+                targetReceive.DoDamePhysical(skeleton.GetComponent<EnemyStats>());
             }
         }
     }

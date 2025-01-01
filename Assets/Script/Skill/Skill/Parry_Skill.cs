@@ -30,6 +30,8 @@ public class Parry_Skill : Skill
     {
         base.UseSkill();
 
+        coolDownTimer = coolDown;
+
         if (parryRestoreUnlock)
         {
             int restoreHealthy = Mathf.RoundToInt(player.status.getMaxHealth() * percentRestoreHealth);

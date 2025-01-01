@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -37,12 +36,12 @@ public class Entity : MonoBehaviour
     public EntityFx fx { get; private set; }
     #endregion
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
-        
+
     }
 
-    public virtual void Start()
+    protected virtual void Start()
     {
         sr = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
@@ -50,10 +49,15 @@ public class Entity : MonoBehaviour
         cd = GetComponent<Collider2D>();
         fx = GetComponent<EntityFx>();
         status = GetComponent<CharacterStats>();
-        
+
     }
 
-    public virtual void Update()
+    protected virtual void Update()
+    {
+
+    }
+
+    protected virtual void FixedUpdate()
     {
         
     }
@@ -68,11 +72,11 @@ public class Entity : MonoBehaviour
         rb.velocity = Vector2.zero;
     }
 
-    public void setVelocity(float xVelocity , float yVelocity)
+    public void setVelocity(float xVelocity, float yVelocity)
     {
         if (isKnock) return; // nếu isKnock == true thì thoát khỏi hàm này
 
-        rb.velocity = new Vector2 (xVelocity, yVelocity);
+        rb.velocity = new Vector2(xVelocity, yVelocity);
         FlipController(xVelocity);
     }
     private void FlipController(float _x) // hàm xoay nhân vật
@@ -93,7 +97,7 @@ public class Entity : MonoBehaviour
         isFacingRight = !isFacingRight;
         transform.Rotate(0, 180, 0);
 
-        if(onFliped != null)
+        if (onFliped != null)
         {
             onFliped();
         }
@@ -101,7 +105,7 @@ public class Entity : MonoBehaviour
 
     public void makeTransprent(bool _transprent)
     {
-        if(_transprent)
+        if (_transprent)
         {
             sr.color = Color.clear;
         }
@@ -131,7 +135,7 @@ public class Entity : MonoBehaviour
         isKnock = false;
     }
 
-    public virtual void slowEntityBy(float _slowPercentage , float _slowDuration)
+    public virtual void slowEntityBy(float _slowPercentage, float _slowDuration)
     {
 
     }

@@ -11,6 +11,7 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        _player.skill.parry_Skill.UseSkill();
         canCreateClone = true;
         stateTimer = _player.counterAttackDurarion; // Cooldown của CounterSate
         _player.animator.SetBool("SuccesfullCounterAttack", false);
@@ -23,9 +24,10 @@ public class PlayerCounterAttackState : PlayerState
         Collider2D[] col = Physics2D.OverlapCircleAll(_player.AttackCheck.position, _player.attackRadius);
         foreach (Collider2D hit in col)
         {
-            if (hit.GetComponent<Skeleton>() != null)
+            if (hit.GetComponent<Enemy>() != null)
             {
-                if (hit.GetComponent<Skeleton>().checkStunned())
+                Debug.Log(hit.GetComponent<Enemy>().checkStunned());
+                if (hit.GetComponent<Enemy>().checkStunned())
                 {
                     Debug.Log("Đang ở SuccesfullCounterAttack");
                     stateTimer = 10;

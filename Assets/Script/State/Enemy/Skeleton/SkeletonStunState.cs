@@ -17,8 +17,8 @@ public class SkeletonStunState : EnemyState
          * time: thời gian được gọi
          * repeatTime: thời gian lặp lại mỗi giây
          */
-        stateTimer = enemy.stunDuration;
-        enemy.rb.velocity = new Vector2(-enemy.isFacingDir * enemy.stunDirection.x , enemy.stunDirection.y );
+        stateTimer = enemy.StunDuration;
+        enemy.rb.velocity = new Vector2(-enemy.isFacingDir * enemy.StunDirection.x , enemy.StunDirection.y );
     }
 
     public override void Exit()

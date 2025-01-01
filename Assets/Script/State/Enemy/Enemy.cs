@@ -1,48 +1,70 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Enemy : Entity
+public abstract class Enemy : Entity
 {
     [Header("Attack info")]
-    public float battleTime;
-    public Transform AttackCheck;
-    public float attackCheckDis;
-    public float attackRadius;
-    public LayerMask isPlayer;
+    [SerializeField] protected float battleTime;
+    [SerializeField] protected Transform _attackCheck;
+    [SerializeField] protected float _attackCheckDis;
+    [SerializeField] protected float _attackRadius;
+    [SerializeField] protected LayerMask isPlayer;
 
 
     [Header("Stun info")]
-    public float stunDuration;
-    public Vector2 stunDirection;
+    [SerializeField] protected float stunDuration;
+    [SerializeField] protected Vector2 stunDirection;
     [SerializeField] protected bool isCanStun;
-    [SerializeField] GameObject CounterImage;
+    [SerializeField] protected GameObject CounterImage;
 
 
     public float DefaultSpeed;
 
+    #region Get Set
+
+    //Attack Variable
+    public float BattleTime { get => battleTime; }
+    public float AttackRadius { get => _attackRadius; }
+    public float AttackCheckDis {  get => _attackCheckDis; }
+
+    public Transform AttackChecks { get => _attackCheck; }
+
+
+    //Stun variable
+    public float StunDuration { get => stunDuration; }
+    public Vector2 StunDirection { get => stunDirection; }
+
+    #endregion
+
     public EnemyStateMachine StateMachine {  get; private set; }
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         StateMachine = new EnemyStateMachine();
     }
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         DefaultSpeed = moveSpeed;
     }
-    public override void Update()
+    protected override void Update()
     {
         base.Update();
         StateMachine.currentState.Update();
     }
 
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        StateMachine.currentState.FixUpdate();
+    }
+
     #region Conuter attack
     public virtual bool checkStunned()
     {
-        if (isCanStun) // isCanStun == true thì sẽ gọi hàm closeCounterAttack() để tắt phát hiện tấn công đi rồi trả hàm này về true
-                       // ngược lại sẽ trả về false
+        if (isCanStun) // isCanStun == true thì sẽ gọi hàm closeCounterAttack() để tắt phát hiện tấn công đi rồi trả hàm này về true                       
+                        // ngược lại sẽ trả về false
         {
             CloseCounterAttack();
             return true;
@@ -112,13 +134,13 @@ public class Enemy : Entity
 
     public void animationTriggerFinish() => StateMachine.currentState.AnimationTriggerCalled();
 
-    public RaycastHit2D isPlayerDetected() => Physics2D.Raycast(transform.position, Vector2.right * isFacingDir, attackCheckDis, isPlayer);
+    public RaycastHit2D isPlayerDetected() => Physics2D.Raycast(transform.position, Vector2.right * isFacingDir, _attackCheckDis, isPlayer);
 
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackCheckDis * isFacingDir, transform.position.y));
-        Gizmos.DrawWireSphere(AttackCheck.position, attackRadius);
+        Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + _attackCheckDis * isFacingDir, transform.position.y));
+        Gizmos.DrawWireSphere(_attackCheck.position, _attackRadius);
     }
 }

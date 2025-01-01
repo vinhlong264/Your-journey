@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SkeletonBattleState : EnemyState
 {
     private Skeleton enemy;
     private Transform Player;
     private float moveDir;
-    public SkeletonBattleState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName , Skeleton enemy) : base(enemyBase, stateMachine, animationBoolName)
+    public SkeletonBattleState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName, Skeleton enemy) : base(enemyBase, stateMachine, animationBoolName)
     {
         this.enemy = enemy;
     }
@@ -31,7 +29,7 @@ public class SkeletonBattleState : EnemyState
         {
             if (enemy.isPlayerDetected().distance < enemy.attackDistance)
             {
-                stateTimer = enemy.battleTime;
+                stateTimer = enemy.BattleTime;
                 if (canAttack())
                 {
                     stateMachine.changeState(enemy.attackState);
@@ -40,7 +38,7 @@ public class SkeletonBattleState : EnemyState
         }
         else
         {
-            if (stateTimer < 0 || Vector2.Distance(Player.transform.position , enemy.transform.position) < 7)
+            if (stateTimer < 0 || Vector2.Distance(Player.transform.position, enemy.transform.position) < 7)
             {
                 stateMachine.changeState(enemy.idleState);
             }
@@ -55,12 +53,17 @@ public class SkeletonBattleState : EnemyState
         {
             moveDir = -1f;
         }
-        enemy.setVelocity(moveDir, enemy.rb.velocity.y);   
+    }
+
+    public override void FixUpdate()
+    {
+        base.FixUpdate();
+        enemy.setVelocity(moveDir, enemy.rb.velocity.y);
     }
 
     private bool canAttack()
     {
-        if(Time.time >= enemy.lastTime + enemy.attackCooldown) 
+        if (Time.time >= enemy.lastTime + enemy.attackCooldown)
         //Kiểm tra nếu Time.time >= lastTime + attackCooldown sẽ gán lastTime = Time.time và trả hàm này về true, và ngược lại
         {
             enemy.lastTime = Time.time;

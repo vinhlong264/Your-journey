@@ -130,9 +130,9 @@ MonoBehaviour:
   isFacingRight: 0
   isFacingDir: 1
   battleTime: 4
-  AttackCheck: {fileID: 8123689437758682145}
-  attackCheckDis: 1.65
-  attackRadius: 0.73
+  _attackCheck: {fileID: 8123689437758682145}
+  _attackCheckDis: 5.5
+  _attackRadius: 0.8
   isPlayer:
     serializedVersion: 2
     m_Bits: 64
@@ -187,7 +187,7 @@ MonoBehaviour:
     baseValue: 2
     modifiers: 
   inteligent:
-    baseValue: 0
+    baseValue: 2
     modifiers: 
   vitality:
     baseValue: 0
@@ -208,10 +208,10 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   evasion:
-    baseValue: 80
+    baseValue: 0
     modifiers: 
   magicResistance:
-    baseValue: 0
+    baseValue: 10
     modifiers: 
   fireDame:
     baseValue: 0

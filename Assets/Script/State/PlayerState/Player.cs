@@ -51,7 +51,7 @@ public class Player : Entity
     #endregion
 
 
-    public override void Awake()
+    protected override void Awake()
     {
         _stateMachine = new PlayerStateMachine();
         /*Khởi tạo các đối tượng của các State:
@@ -74,7 +74,7 @@ public class Player : Entity
         _deathState = new PlayerDeathState(this, _stateMachine, "Death");
     }
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         _stateMachine.initialize(_idleState);
@@ -91,7 +91,7 @@ public class Player : Entity
     }
 
     // Update is called once per frame
-    public override void Update()
+    protected override void Update()
     {
         _stateMachine.currentState.Execute(); //Thực hiện việc chạy các state
         checkForDashInput();
