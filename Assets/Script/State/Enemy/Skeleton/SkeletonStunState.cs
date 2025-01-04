@@ -33,6 +33,7 @@ public class SkeletonStunState : EnemyState
         if(stateTimer < 0)
         {
             stateMachine.changeState(enemy.idleState);
+            enemyBase.isCanStun = true;
         }
     }
 }

@@ -5,6 +5,7 @@ public class SlimeBattleState : EnemyState
     private Slime _slime;
     private int countAtack;
     private Player _player;
+    private float moveDir;
     public SlimeBattleState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName, Slime slime) : base(enemyBase, stateMachine, animationBoolName)
     {
         this._slime = slime;
@@ -17,7 +18,7 @@ public class SlimeBattleState : EnemyState
         countAtack++;
         if (countAtack > 7)
         {
-            Debug.Log("Enough Enery");
+            _slime.activeSkill();
             countAtack = 0;
         }
     }
@@ -43,12 +44,21 @@ public class SlimeBattleState : EnemyState
                 stateMachine.changeState(_slime.idleState);
             }
         }
+
+        if(_player.transform.position.x > _slime.transform.position.x)
+        {
+            moveDir = 1f;
+        }
+        else if(_player.transform.position.x < _slime.transform.position.x)
+        {
+            moveDir = -1f;
+        }
     }
 
     public override void FixUpdate()
     {
         base.FixUpdate();
-        _slime.setVelocity(_slime.moveSpeed * _slime.isFacingDir, _slime.rb.velocity.y);
+        _slime.setVelocity(moveDir, _slime.rb.velocity.y);
     }
 
     public override void Exit()

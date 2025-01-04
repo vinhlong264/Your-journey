@@ -10,6 +10,8 @@ public abstract class AnimationEventBase : MonoBehaviour
     }
 
     protected void animationTriggerFinish() => enemyBase.animationTriggerFinish();
+    protected void openAttackWinDow() => enemyBase.OpenAttackWindow();
+    protected void closeAttackWindow() => enemyBase.CloseAttackWindow();
 
     protected virtual void AttackEventTrigger() 
     {

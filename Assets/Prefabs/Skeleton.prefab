@@ -136,11 +136,9 @@ MonoBehaviour:
   isPlayer:
     serializedVersion: 2
     m_Bits: 64
-  stunDuration: 1
-  stunDirection: {x: 5, y: 10}
-  isCanStun: 0
+  stunDuration: 5
+  stunDirection: {x: 5, y: 7}
   CounterImage: {fileID: 8333344512768393663}
-  DefaultSpeed: 0
   attackDistance: 1.5
   attackCooldown: 0.4
   lastTime: 0

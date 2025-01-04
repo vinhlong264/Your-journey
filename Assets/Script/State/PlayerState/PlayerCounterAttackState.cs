@@ -26,7 +26,6 @@ public class PlayerCounterAttackState : PlayerState
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                Debug.Log(hit.GetComponent<Enemy>().checkStunned());
                 if (hit.GetComponent<Enemy>().checkStunned())
                 {
                     Debug.Log("Đang ở SuccesfullCounterAttack");

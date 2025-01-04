@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SkeletonAnimationTrigger : MonoBehaviour
@@ -17,8 +15,8 @@ public class SkeletonAnimationTrigger : MonoBehaviour
 
     public void AttackTrigger()
     {
-        Collider2D[] attack = Physics2D.OverlapCircleAll(skeleton.AttackChecks.position, skeleton.AttackRadius , whatIsMask);
-        foreach(Collider2D hit in attack)
+        Collider2D[] attack = Physics2D.OverlapCircleAll(skeleton.AttackChecks.position, skeleton.AttackRadius, whatIsMask);
+        foreach (Collider2D hit in attack)
         {
             IDameHandlePhysical targetReceive = hit.GetComponent<IDameHandlePhysical>();
             if (targetReceive != null)
@@ -28,7 +26,7 @@ public class SkeletonAnimationTrigger : MonoBehaviour
         }
     }
 
-    public void OpenCounterAttack() => skeleton.OpenCounterAttack();
+    public void OpenCounterAttack() => skeleton.OpenAttackWindow();
 
-    public void CloseCounterAttack() => skeleton.CloseCounterAttack();
+    public void CloseCounterAttack() => skeleton.CloseAttackWindow();
 }

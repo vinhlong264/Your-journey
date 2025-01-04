@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,7 +38,7 @@ public class UI_healthBar : MonoBehaviour
         mySlider.maxValue = myCharacter.getMaxHealth();
         mySlider.value = myCharacter.currentHealth;
 
-        if(mySlider.value <= 0)
+        if (mySlider.value <= 0)
         {
             gameObject.SetActive(false);
         }

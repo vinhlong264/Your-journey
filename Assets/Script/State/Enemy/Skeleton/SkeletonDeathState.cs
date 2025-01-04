@@ -13,7 +13,7 @@ public class SkeletonDeathState : EnemyState
         base.Enter();
         skeleton.cd.enabled = false;
         skeleton.rb.bodyType = RigidbodyType2D.Static;
-        skeleton.CloseCounterAttack();
+        skeleton.CloseAttackWindow();
     }
 
     public override void Exit()

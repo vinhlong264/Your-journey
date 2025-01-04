@@ -14,11 +14,10 @@ public abstract class Enemy : Entity
     [Header("Stun info")]
     [SerializeField] protected float stunDuration;
     [SerializeField] protected Vector2 stunDirection;
-    [SerializeField] protected bool isCanStun;
+    public bool isCanStun { get; set; } = true;
     [SerializeField] protected GameObject CounterImage;
+    private float defaultSpeed;
 
-
-    public float DefaultSpeed;
 
     #region Get Set
 
@@ -33,6 +32,7 @@ public abstract class Enemy : Entity
     //Stun variable
     public float StunDuration { get => stunDuration; }
     public Vector2 StunDirection { get => stunDirection; }
+    public bool IsCanStun { get => isCanStun; }
 
     #endregion
 
@@ -46,7 +46,7 @@ public abstract class Enemy : Entity
     protected override void Start()
     {
         base.Start();
-        DefaultSpeed = moveSpeed;
+        defaultSpeed = moveSpeed;
     }
     protected override void Update()
     {
@@ -63,24 +63,22 @@ public abstract class Enemy : Entity
     #region Conuter attack
     public virtual bool checkStunned()
     {
-        if (isCanStun) // isCanStun == true thì sẽ gọi hàm closeCounterAttack() để tắt phát hiện tấn công đi rồi trả hàm này về true                       
-                        // ngược lại sẽ trả về false
+        if (isCanStun) 
         {
-            CloseCounterAttack();
+            //CloseCounterAttack();
+            isCanStun = false;
             return true;
         }
         return false;
     }
 
-    public void OpenCounterAttack()
+    public void OpenAttackWindow()
     {
-        isCanStun = true;
         CounterImage.SetActive(true);
     }
 
-    public void CloseCounterAttack()
+    public void CloseAttackWindow()
     {
-        isCanStun = false;
         CounterImage.SetActive(false);
     }
 
@@ -95,7 +93,7 @@ public abstract class Enemy : Entity
         }
         else
         {
-            moveSpeed = DefaultSpeed;
+            moveSpeed = defaultSpeed;
             animator.speed = 1;
         }
     }
