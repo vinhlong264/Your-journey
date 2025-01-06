@@ -82,6 +82,15 @@ public class Crystal_Skill : Skill
         }
 
         coolDownTimer = coolDown;
+
+        //StartCoroutine(delayCoolDown());
+    }
+
+    IEnumerator delayCoolDown()
+    {
+        yield return new WaitForSeconds(5);
+        Debug.Log("Start CoolDown");
+        coolDownTimer = coolDown;
     }
 
     public void createCrystal()

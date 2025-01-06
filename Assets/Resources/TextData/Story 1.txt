@@ -1,0 +1,10 @@
+ID	Character	Content
+1	NPC	Chào bạn, bạn đang trên đường đi đâu vậy?
+2	Player	Tôi đang đi đến ngôi làng của mạo hiểm giả
+3	NPC	Wao, bạn đang đến đó sao? Lâu lắm tôi mới thấy 1 nữ chiến binh đó. Trước đến giờ thôi toàn thấy healer thôi
+4	Player	Thật vậy sao, tôi là nữ chiến binh đầu tiên đến đây
+5	NPC	Bạn là người thứ 2 mới đúng, tôi nghe mọi người nói cách đây 50 năm cũng có 1 nữ chiến binh vị ấy đã từng đả bại quỷ vương P White
+6	Player	[Mừng hụt] Vậy sao tôi cứ tưởng mình là người đầu tiên chứ
+7	NPC	Sao phải buồn bạn, nhỡ đâu bạn lại là người tạo ra kì tích thì sao
+8	Player	[Cảm thấy vui] Tôi sẽ cố gắng, chào bạn tôi đi đây
+9	NPC	Đi mạnh giỏi

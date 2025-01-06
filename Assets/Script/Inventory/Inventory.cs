@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-public class Inventory : MonoBehaviour
+public class Inventory : Singleton<Inventory>
 {
-    private static Inventory instance;
-    public static Inventory Instance { get => instance; }
 
     [Header("Equipment infor")]
     [SerializeField] private List<InventoryItem> eqipmentItemList; // Danh sách Eqipment để thêm vào Eqipment table
@@ -33,16 +31,9 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private itemDataSO[] itemStart;
 
-    private void Awake() // Singleton
+    protected override void Awake()
     {
-        if (instance != null)
-        {
-            DestroyImmediate(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
+        MakeSingleton(true);
     }
 
     private void Start()

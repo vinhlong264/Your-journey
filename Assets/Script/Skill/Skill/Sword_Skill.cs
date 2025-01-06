@@ -118,6 +118,7 @@ public class Sword_Skill : Skill
         DotsActive(false);
     }
 
+    #region Unlock Skill
     private void onThrowSwordUnlock()
     {
         if (throwSwordUnlockBtn.isUnlocked)
@@ -165,8 +166,7 @@ public class Sword_Skill : Skill
             bleedingUnlocked = true;
         }
     }
-    
-
+    #endregion
 
     #region Anim Dot
     private Vector2 getDirectionMouse() // hàm tính hướng của người chơi với con chuột trên màn hình

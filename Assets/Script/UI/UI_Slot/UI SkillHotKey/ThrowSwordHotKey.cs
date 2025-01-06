@@ -9,6 +9,8 @@ public class ThrowSwordHotKey : UI_SkillHotKeyAbstract
             setCoolDownOf(skillImageCoolDown);
         }
 
+        if (skill.sword_Skill.isUsing) return;
+
         checkOfCoolDownOf(skillImageCoolDown, skill.sword_Skill.CoolDown);
     }
 }

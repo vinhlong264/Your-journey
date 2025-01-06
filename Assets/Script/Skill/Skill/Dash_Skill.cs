@@ -27,7 +27,7 @@ public class Dash_Skill : Skill
         //Debug.Log("đã sử dụng skill");
         coolDownTimer = coolDown;
     }
-
+    #region Unlock Skill
     private void onDashUnlock() // Mở khóa skill Dash
     {
         if (dashSkillUnlockBtn.isUnlocked)
@@ -68,5 +68,6 @@ public class Dash_Skill : Skill
         }
     }
 
+    #endregion 
 
 }

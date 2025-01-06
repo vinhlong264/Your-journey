@@ -16,7 +16,7 @@ public class PlayerManager : Singleton<PlayerManager>, IObsever
 
     protected override void Awake()
     {
-        base.Awake();
+        MakeSingleton(true);
     }
 
     private void Start()
