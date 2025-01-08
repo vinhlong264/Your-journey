@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class QuestSystem : Singleton<QuestSystem>
@@ -14,7 +15,7 @@ public class QuestSystem : Singleton<QuestSystem>
 
     private void Start()
     {
-        
+        LoadTextAsset("TextData/subQuest");
     }
 
     public void LoadTextAsset(string path)
@@ -38,6 +39,54 @@ public class QuestSystem : Singleton<QuestSystem>
             quest.reqireQuest = int.Parse(cols[6]);
 
             allQuest.Add(quest);
+        }
+    }
+
+
+    public Quest GetQuest(int _id)
+    {
+        var qip = GetQipStory(_id);
+        var getQuest = allQuest.FirstOrDefault(x=> x.branchStoryID == _id && x.qip == qip);
+
+        if(getQuest != null)
+        {
+            return getQuest;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public int GetQipStory(int _branchID)
+    {
+        var getBranch = branchStory.FirstOrDefault(x => x.branchID ==  _branchID);
+        if(getBranch != null)
+        {
+            return getBranch.questProgress;
+        }
+        else
+        {
+            return 0;
+        }
+
+    }
+
+    public void setQipStory(int id)
+    {
+        var getQip = branchStory.FirstOrDefault(x=>x.branchID == id);
+        if(getQip != null)
+        {
+            getQip.questProgress++;
+        }
+    }
+
+    public void backQipStory(int id)
+    {
+        var getBranch = branchStory.FirstOrDefault(y => y.branchID == id);
+        if (getBranch != null)
+        {
+            getBranch.questProgress--;
         }
     }
 

@@ -13,22 +13,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     void Start()
     {
-        //TextAsset textData = Resources.Load<TextAsset>("TextData/Story 1");
-        //string[] lines = textData.text.Split("\n");
-        //for(int i = 1; i < lines.Length; i++)
-        //{
-        //    if (string.IsNullOrWhiteSpace(lines[i]))
-        //        continue; // Bỏ qua dòng trống
 
-        //    string[] cols = lines[i].Split("\t");
-
-        //    Conversation conversation = new Conversation();       
-        //    conversation.id = System.Convert.ToInt32(cols[0]);
-        //    conversation.character = cols[1].Trim();
-        //    conversation.content = cols[2].Trim();
-
-        //    listConverStation.Add(conversation);
-        //}
     }
 
     public void LoadText(string _path)
@@ -66,7 +51,15 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            chatBoxObj.SetActive(false);
+            QuestSystem.Instance.setQipStory(1);
+            var getQuest = QuestSystem.Instance.GetQuest(2);
+            if(getQuest != null)
+            {
+                Debug.Log("Quest tồn tại");
+            }
+            Debug.Log("Quest không tồn tại");
+
+            gameObject.SetActive(false);
         }
     }
 

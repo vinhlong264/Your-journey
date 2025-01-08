@@ -41,7 +41,6 @@ public class EnemyStats : CharacterStats, ISubject
     {
         if (isBleeding)
         {
-            Debug.Log("Rỉ máu");
             bleedingTimer -= Time.deltaTime;
             if (bleedingTimer < 0)
             {

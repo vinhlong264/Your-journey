@@ -60,21 +60,21 @@ public class Slime : Enemy
     public override void Die()
     {
         base.Die();
+        CloseAttackWindow();
         StateMachine.changeState(deathState);
-        //if(type == SlimeType.BIG)
-        //{
-        //    test();
-        //}
-    }
+        if (type == SlimeType.SMALL) return;
 
-    private void test()
-    {
-        for(int i = 0; i < 3; i++)
+        if (slimeSmall == null) return;
+
+        for(int i = 0; i < 3 ; i++)
         {
-            GameObject newSlime = Instantiate(slimeSmall, transform.position, Quaternion.identity);
-            newSlime.GetComponent<Rigidbody2D>().AddForce(transform.forward , ForceMode2D.Impulse);
+            Vector3 temPos = new Vector3(Random.Range(10f,-10f), transform.position.y + Random.Range(12, 15), 0);
+            GameObject newSlime = Instantiate(slimeSmall , transform.position , Quaternion.identity);
+            newSlime.GetComponent<Rigidbody2D>().velocity = temPos;
         }
     }
+
+    
 
     public void activeSkill()
     {
