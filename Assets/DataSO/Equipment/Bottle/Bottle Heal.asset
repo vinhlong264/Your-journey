@@ -17,6 +17,7 @@ MonoBehaviour:
   icon: {fileID: -474877257, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   rateDrop: 0
   EqipmentType: 3
+  descriptionEquipment: "H\u1ED3i 5% hp"
   coolDownEffect: 5
   ItemEffect:
   - {fileID: 11400000, guid: cda1b8e1295e5b948b13ee2287deecfa, type: 2}

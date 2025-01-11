@@ -53,7 +53,6 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
 
     public System.Action onUiHealth; //Event health bar
 
-    protected float expReceive;
 
     #endregion
 

@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class EnemyStats : CharacterStats, ISubject
+public class EnemyStats : CharacterStats
 {
     private Enemy enemy;
     private itemDrop dropSystem;
@@ -12,7 +9,7 @@ public class EnemyStats : CharacterStats, ISubject
     [Range(0, 1f)]
     [SerializeField] private float perCanStage;
 
-    [SerializeField] private float expReward;
+    [SerializeField] private int expReward;
 
     [Header("Aliment Bleeding")]
     private float dameFinalBleeding;
@@ -27,7 +24,7 @@ public class EnemyStats : CharacterStats, ISubject
 
         base.Start();
         enemy = GetComponent<Enemy>();
-        dropSystem = GetComponent<itemDrop>();  
+        dropSystem = GetComponent<itemDrop>();
 
     }
 
@@ -44,7 +41,7 @@ public class EnemyStats : CharacterStats, ISubject
             bleedingTimer -= Time.deltaTime;
             if (bleedingTimer < 0)
             {
-                dameFinalBleeding = (dame.getValue() + strength.getValue()) * percentBleeding/100;
+                dameFinalBleeding = (dame.getValue() + strength.getValue()) * percentBleeding / 100;
                 decreaseHealthBy(Mathf.RoundToInt(dameFinalBleeding));
                 if (currentHealth <= 0)
                 {
@@ -66,7 +63,7 @@ public class EnemyStats : CharacterStats, ISubject
 
     private void applyModifier(Stats _status)
     {
-        for(int i = 1; i < level; i++)
+        for (int i = 1; i < level; i++)
         {
             float modifrer = _status.getValue() * perCanStage;
             _status.addModifiers(Mathf.RoundToInt(modifrer));
@@ -83,24 +80,13 @@ public class EnemyStats : CharacterStats, ISubject
     {
         base.Die();
         enemy.Die();
-        eventCallBack(expReward);
+
+        Observer.Instance.NotifyEvent(GameEvent.RewardExp, expReward);
         dropSystem.generateDrop();
         return;
     }
     public override void applyBleedingHealth(bool _isBleeding)
     {
         isBleeding = _isBleeding;
-    }
-
-
-    public void eventCallBack(float value)
-    {
-        FindObserverManager().Listener(value);
-    }
-
-
-    private IObsever FindObserverManager()
-    {
-        return FindObjectsOfType<MonoBehaviour>().OfType<IObsever>().FirstOrDefault();
     }
 }

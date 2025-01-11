@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerManager : Singleton<PlayerManager>, IObsever
+public class PlayerManager : Singleton<PlayerManager>
 {
     private static PlayerManager instance;
     public Player player;
@@ -14,9 +14,18 @@ public class PlayerManager : Singleton<PlayerManager>, IObsever
     [SerializeField] private int pointSkill;
     [SerializeField] private int pointAtribute;
 
+
+
     protected override void Awake()
     {
         MakeSingleton(true);
+
+        Observer.Instance.subscribeListener(GameEvent.RewardExp, Listener);
+    }
+
+    private void OnDisable()
+    {
+        Observer.Instance.unsubscribeListener(GameEvent.RewardExp, Listener);
     }
 
     private void Start()
@@ -24,19 +33,9 @@ public class PlayerManager : Singleton<PlayerManager>, IObsever
         levelSystem = new LevelSystem();
     }
 
-    //private void receiveReward(float reward)
-    //{
-    //    currentExp += reward;
-    //    if (levelSystem.gainExp(currentExp))
-    //    {
-    //        currentLevel = levelSystem.getCurrentLevel();
-    //        currentExp = levelSystem.getExperience();
-    //    }
-    //}
-
-    public void Listener(float value)
+    public void Listener(object value)
     {
-        currentExp += value;
+        currentExp +=  (int)value;
         if (levelSystem.gainExp(currentExp))
         {
             currentLevel = levelSystem.getCurrentLevel();

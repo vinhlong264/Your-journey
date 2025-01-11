@@ -31,6 +31,9 @@ public class Inventory : Singleton<Inventory>
 
     [SerializeField] private itemDataSO[] itemStart;
 
+    public float LastTimeUseBollte { get => lastTimeUseBollte; }
+    public float LastTimeUseArmor { get => lastTimeUseArmor; }
+
     protected override void Awake()
     {
         MakeSingleton(true);
@@ -183,6 +186,11 @@ public class Inventory : Singleton<Inventory>
             itemStashSlot[i].cleanItem();
         }
 
+        for(int i = 0; i < equipmentSlot.Length; i++)
+        {
+            equipmentSlot[i].cleanItem();
+        }
+
         for (int i = 0; i < itemIventoryList.Count; i++) 
         {
             itemIventorySLot[i].updateUISlotItem(itemIventoryList[i]);
@@ -308,12 +316,20 @@ public class Inventory : Singleton<Inventory>
     public ItemEquipmentSO getEquipmentBy(EqipmentType _type)
     {
         ItemEquipmentSO newEquipment = null;
+        InventoryItem equipmentInven = null;
         foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary)
         {
             if (item.Key.EqipmentType == _type)
             {
                 newEquipment = item.Key;
+                equipmentInven = item.Value;
             }
+        }
+
+        if(_type == EqipmentType.Bottle)
+        {
+            equipmentDictionary.Remove(newEquipment);
+            eqipmentItemList.Remove(equipmentInven);
         }
 
         return newEquipment;
@@ -329,6 +345,8 @@ public class Inventory : Singleton<Inventory>
             Debug.Log("CoolDown");
             return false;
         }
+
+        updateSlotItemUI();
         lastTimeUseBollte = Time.time;
         newCurrentEffect.excuteItemEffect(null);
         Debug.Log("Bật hiệu ứng");
@@ -340,15 +358,14 @@ public class Inventory : Singleton<Inventory>
     {
         ItemEquipmentSO currentArmor = getEquipmentBy(EqipmentType.Armor);
 
-        if ((Time.time > lastTimeUseArmor + currentArmor.coolDownEffect))
+        if (!(Time.time > lastTimeUseArmor + currentArmor.coolDownEffect))
         {
-            lastTimeUseArmor = Time.time;
-            Debug.Log("Freeze");
-            return true;
+            Debug.Log("Armor cooldown");
+            return false;
         }
 
-        Debug.Log("Armor cooldown");
-        return false;
+        Debug.Log("use");
+        return true;
     }
     #endregion
 }

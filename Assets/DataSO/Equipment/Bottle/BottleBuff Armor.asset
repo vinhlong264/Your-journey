@@ -17,7 +17,8 @@ MonoBehaviour:
   icon: {fileID: -1725945744, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   rateDrop: 0
   EqipmentType: 3
-  coolDownEffect: 5
+  descriptionEquipment: "T\u0103ng 50 gi\xE1p trong 20s"
+  coolDownEffect: 20
   ItemEffect:
   - {fileID: 11400000, guid: 19132d9a28052a6488c79f2f91ed1115, type: 2}
   strength: 0

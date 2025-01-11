@@ -18,6 +18,12 @@ public class PlayerJumpWallState : PlayerState
     public override void Execute()
     {
         base.Execute();
+
+        if (!_player.wallCheck())
+        {
+            _stateMachine.changeState(_player._idleState);
+        }
+
         if (stateTimer < 0)
         {
             _stateMachine.changeState(_player._airState);

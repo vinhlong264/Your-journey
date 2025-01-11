@@ -44,5 +44,6 @@ public enum Skilltype
     Parry,
     Crystal,
     ThrowSword,
-    Ultimate
+    Ultimate,
+    Bottle
 }
