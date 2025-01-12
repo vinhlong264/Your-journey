@@ -16,11 +16,12 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     }
 
 
-    public void updateUISlotItem(InventoryItem newItem) // Update item vào các slot
+    public virtual void updateUISlotItem(InventoryItem newItem) // Update item vào các slot
     {
         item = newItem;
 
         imageItem.color = Color.white;
+
         if (item != null)
         {
             imageItem.sprite = item.itemData.icon;
@@ -33,10 +34,13 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
                 itemText.text = "";
             }
         }
+
+        Debug.Log(item != null);
     }
 
     public void cleanItem() // Clean Item
     {
+        Debug.Log("call");
         item = null;
         imageItem.sprite = null;
         imageItem.color = Color.clear;

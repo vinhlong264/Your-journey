@@ -186,10 +186,10 @@ public class Inventory : Singleton<Inventory>
             itemStashSlot[i].cleanItem();
         }
 
-        for(int i = 0; i < equipmentSlot.Length; i++)
-        {
-            equipmentSlot[i].cleanItem();
-        }
+        //for(int i = 0; i < equipmentSlot.Length; i++)
+        //{
+        //    equipmentSlot[i].cleanItem();
+        //}
 
         for (int i = 0; i < itemIventoryList.Count; i++) 
         {
@@ -215,8 +215,9 @@ public class Inventory : Singleton<Inventory>
     #region add item
     public void addItem(itemDataSO _item)
     {
-        if (_item.ItemType == ItemType.Equipment && canAddItem())
+        if (_item.ItemType == ItemType.Equipment/* && canAddItem()*/)
         {
+            //Debug.Log("Call");
             addEquipment(_item);
         }
         else if (_item.ItemType == ItemType.Material)
@@ -252,7 +253,7 @@ public class Inventory : Singleton<Inventory>
             itemIventoryList.Add(newItem);
             itemInvetoryDictionary.Add(_item, newItem);
         }
-
+        //Debug.Log("call");
         updateSlotItemUI();
     }
 

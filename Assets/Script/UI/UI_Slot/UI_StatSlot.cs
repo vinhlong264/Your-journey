@@ -54,6 +54,11 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             statValue.text = playerStatus.getMaxHealth().ToString();
         }
 
+        if(statType == StatType.Armor)
+        {
+            statValue.text = (playerStatus.armor.getValue() + playerStatus.vitality.getValue() + 3).ToString();
+        }
+
         if (statType == StatType.Dame)
         {
             statValue.text = (playerStatus.getMaxDame()).ToString();

@@ -21,13 +21,13 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         MakeSingleton(true);
 
-        Observer.Instance.subscribeListener(GameEvent.RewardExp, Listener);
+        //Observer.Instance.subscribeListener(GameEvent.RewardExp, Listener);
     }
 
-    private void OnDisable()
-    {
-        Observer.Instance.unsubscribeListener(GameEvent.RewardExp, Listener);
-    }
+    //private void OnDisable()
+    //{
+    //    Observer.Instance.unsubscribeListener(GameEvent.RewardExp, Listener);
+    //}
 
     private void Start()
     {
@@ -39,7 +39,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         Debug.Log("Exp Receive: "+value);
         currentExp +=  (int)value;
-        Observer.Instance.NotifyEvent(GameEvent.UpdateCurrentExp , currentExp);
+        //Observer.Instance.NotifyEvent(GameEvent.UpdateCurrentExp , currentExp);
         if (levelSystem.gainExp(currentExp))
         {
             currentLevel = levelSystem.getCurrentLevel();

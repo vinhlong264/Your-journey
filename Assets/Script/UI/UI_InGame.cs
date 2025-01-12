@@ -14,7 +14,7 @@ public class UI_InGame : MonoBehaviour
 
     private void OnEnable()
     {
-        Observer.Instance.subscribeListener(GameEvent.UpdateCurrentExp, updateCurrentExp);
+        //Observer.Instance.subscribeListener(GameEvent.UpdateCurrentExp, updateCurrentExp);
     }
 
 

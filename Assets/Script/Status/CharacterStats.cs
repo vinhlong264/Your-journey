@@ -10,8 +10,8 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
     [Header("Major status info")]
     public Stats strength; // với mỗi điểm nâng cấp thì dame cơ bản sẽ tăng lên 1 và 1% sát thương chí mạng
     public Stats ability; // với mỗi điểm nâng cấp thì sẽ tăng các kĩ năng ví dụ là 1% né và 1% chí mạng
-    public Stats inteligent; // với mỗi điểm nâng cấp thì sẽ tăng 1 sức mạnh phép thuật và 3% giáp phép
-    public Stats vitality; // với mỗi điểm nâng cấp sẽ tăng hp, 3% giáp vật lý
+    public Stats inteligent; // với mỗi điểm nâng cấp thì sẽ tăng 1 sức mạnh phép thuật và 3 giáp phép
+    public Stats vitality; // với mỗi điểm nâng cấp sẽ tăng hp, 3 giáp vật lý
 
     [Header("Offensive status info")]
     public Stats dame; //dame vật lý
