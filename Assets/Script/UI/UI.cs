@@ -71,7 +71,7 @@ public class UI : MonoBehaviour
 
     private void checkForInGame()
     {
-        for(int i =  0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             if (transform.GetChild(i).gameObject.activeSelf)
             {

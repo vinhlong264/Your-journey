@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UI_EqipmentSlot : UI_ItemSlot

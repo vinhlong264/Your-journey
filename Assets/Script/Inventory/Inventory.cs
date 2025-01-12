@@ -90,6 +90,7 @@ public class Inventory : Singleton<Inventory>
         removeItem(_item);// xóa item này khỏi list Iventory
 
         updateSlotItemUI();
+        //Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
     public void unEqipmentItem(ItemEquipmentSO eqipmentToRemove) // Quản lý việc gỡ trang bị
@@ -155,8 +156,8 @@ public class Inventory : Singleton<Inventory>
             removeItem(materialToRemove[i].itemData); // xóa các material đã dùng để rèn đi
         }
 
-        //addEquipment(_itemToCraft);
-        //Debug.Log("Here is your item: " + _itemToCraft.name);
+        addEquipment(_itemToCraft);
+        Debug.Log("Here is your item: " + _itemToCraft.name);
         return true;
     }
 
@@ -170,6 +171,7 @@ public class Inventory : Singleton<Inventory>
             {
                 if (item.Key.EqipmentType == equipmentSlot[i].slotType)
                 {
+                    Debug.Log(item.Value);
                     equipmentSlot[i].updateUISlotItem(item.Value);
                 }
             }
@@ -204,6 +206,11 @@ public class Inventory : Singleton<Inventory>
         updateStatsUI();
     }
 
+    public List<InventoryItem> GetListItem() => itemIventoryList;
+    public List<InventoryItem> GetListStash() => itemStashList;
+    public List<InventoryItem> GetListEquiment() => eqipmentItemList;
+    public Dictionary<ItemEquipmentSO, InventoryItem> GetDictionaryEquiment() => equipmentDictionary;
+
     public void updateStatsUI()
     {
         for (int i = 0; i < statsSlot.Length; i++)
@@ -225,6 +232,7 @@ public class Inventory : Singleton<Inventory>
         }
 
         updateSlotItemUI();
+        //Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
     private void addMaterial(itemDataSO _item)
     {
@@ -254,6 +262,7 @@ public class Inventory : Singleton<Inventory>
         }
 
         updateSlotItemUI();
+        //Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
     public bool canAddItem()
@@ -276,6 +285,8 @@ public class Inventory : Singleton<Inventory>
         removeItemStash(_item);
 
         updateSlotItemUI();
+
+        //Observer.Instance.NotifyEvent(GameEvent.UpdateUI , null);
     }
 
     private void removeItemInventory(itemDataSO _itemIventory)
@@ -310,7 +321,6 @@ public class Inventory : Singleton<Inventory>
         }
     }
     #endregion
-
 
     #region take Eqipment and use skill special Equipment
     public ItemEquipmentSO getEquipmentBy(EqipmentType _type)
@@ -347,6 +357,7 @@ public class Inventory : Singleton<Inventory>
         }
 
         updateSlotItemUI();
+        //Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
         lastTimeUseBollte = Time.time;
         newCurrentEffect.excuteItemEffect(null);
         Debug.Log("Bật hiệu ứng");

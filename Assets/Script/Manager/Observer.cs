@@ -11,11 +11,10 @@ public class Observer : Singleton<Observer>
         MakeSingleton(false);
     }
 
-    public void subscribeListener(GameEvent key, callBackEvent _callBack) // đăng kí sự kiện
+    public void subscribeListener(GameEvent key, callBackEvent _callBack) // đăng kí lắng nghe sự kiện
     {
         if (EventObserver.ContainsKey(key)) return;
 
-        Debug.Log("Đăng kí sự kiện");
         EventObserver.Add(key, new HashSet<callBackEvent>());
         EventObserver[key].Add(_callBack);
     }
@@ -24,7 +23,6 @@ public class Observer : Singleton<Observer>
     {
         if (!EventObserver.ContainsKey(key))
         {
-            Debug.Log("Không tìm thấy key");
             return;
         }
         EventObserver[key].Remove(_callBack);
@@ -33,14 +31,14 @@ public class Observer : Singleton<Observer>
 
     public void NotifyEvent(GameEvent key, object value)
     {
-        Debug.Log("Thông báo sự kiện");
         foreach (KeyValuePair<GameEvent, HashSet<callBackEvent>> _event in EventObserver)
         {
             if (_event.Key == key)
             {
-                Debug.Log("Tìm thây sự kiện: " + key);
+                Debug.Log("Invoke event: " + _event.Value.Count);
                 foreach (var _action in _event.Value)
                 {
+                    //Debug.Log("Invoke event: " +_event.Value.Count);
                     _action?.Invoke(value);
                 }
             }
@@ -51,5 +49,6 @@ public class Observer : Singleton<Observer>
 public enum GameEvent
 {
     RewardExp,
-    UpdateCurrentExp
+    UpdateCurrentExp,
+    UpdateUI
 }

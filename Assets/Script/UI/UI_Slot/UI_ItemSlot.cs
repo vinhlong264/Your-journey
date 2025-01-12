@@ -20,9 +20,12 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     {
         item = newItem;
 
+        //Debug.Log(this.gameObject.name +" :"+ item);
+
         imageItem.color = Color.white;
         if (item != null)
         {
+            //Debug.Log("Call");
             imageItem.sprite = item.itemData.icon;
             if (item.stackSize > 1)
             {
