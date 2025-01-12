@@ -1,0 +1,224 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2334783047362637093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2669070891629630511}
+  - component: {fileID: 3575023255903110630}
+  - component: {fileID: 5309690160636010535}
+  - component: {fileID: 7861541885208724545}
+  - component: {fileID: 673309861662987092}
+  - component: {fileID: 6629217996862634775}
+  - component: {fileID: 7534639786028887682}
+  - component: {fileID: 3650792166318504544}
+  - component: {fileID: 404605451285311052}
+  m_Layer: 0
+  m_Name: SkillManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2669070891629630511
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2334783047362637093}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3575023255903110630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2334783047362637093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90f90f00749e6b74f89dece4601e0b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5309690160636010535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2334783047362637093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2216218a7775f1498d4aa5fa68c2499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTimer: 0
+  coolDown: 5
+  dashSkillUnlockBtn: {fileID: 0}
+  dashCreateCloneBtn: {fileID: 0}
+  dashCreateCloneArrivalBtn: {fileID: 0}
+--- !u!114 &7861541885208724545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2334783047362637093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc93844b120620f4585554dabf4bea7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTimer: 0
+  coolDown: 5
+  swordType: 0
+  speedReturning: 15
+  throwSwordUnlockBtn: {fileID: 0}
+  bounceSwordUnlockBtn: {fileID: 0}
+  amoutOfBounce: 5
+  bounceGravity: 5
+  pierceSwordUnlockbtn: {fileID: 0}
+  amountPierce: 2
+  pierceGravity: 2
+  spinSwordUnlockBtn: {fileID: 0}
+  hitCooldown: 0.35
+  maxTravelDistance: 3
+  spinDuration: 2
+  spinGravity: 1
+  freeTimeUnlockBtn: {fileID: 0}
+  FreezeTimer: 10
+  bleedingUnlockBtn: {fileID: 0}
+  swordPrefabs: {fileID: 5384756190214489774, guid: c529ca6499d52c14394a4d2bb84ce011, type: 3}
+  laughDirection: {x: 35, y: 25}
+  swordGravity: 3
+  amountDots: 20
+  BetweenSpaceDots: 0.07
+  dotsPrefabs: {fileID: 5937951610113118070, guid: 8018bc7c4f488be488bd21c4465ab2de, type: 3}
+  dotsParent: {fileID: 0}
+  dots: []
+--- !u!114 &673309861662987092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2334783047362637093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a730ecc155f860478519863db6e824c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTimer: 0
+  coolDown: 0
+  Clone_Pre: {fileID: 5208422648343834587, guid: 20eccc584ae61b944a904efbdcced7d8, type: 3}
+  cloneDuration: 5
+  cloneCanAttackUnlockBtn: {fileID: 0}
+  cloneAttackPercent: 30
+  agrresiveCloneUnlockBtn: {fileID: 0}
+  agrresiveClonePercent: 80
+  crystalInsteadMirageUnlockBtn: {fileID: 0}
+  multipleCloneUnlockBtn: {fileID: 0}
+  cloneMultiplePercent: 30
+--- !u!114 &6629217996862634775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2334783047362637093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13adcc3f08a2b6468d6b4b724036a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTimer: 0
+  coolDown: 40
+  amountOfCloneAttack: 5
+  cloneAttackCooldown: 0.35
+  blackHoleDuration: 3
+  blackHolePrefabs: {fileID: 7999831627890343807, guid: b44cd4435c5fa8245ae6e37a094ede3a, type: 3}
+  maxSize: 15
+  growSpeed: 3
+  shrinkSpeed: 6
+  blackHoleUnlockBtn: {fileID: 0}
+--- !u!114 &7534639786028887682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2334783047362637093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8d555fd2fb23944bdc7cb45b7b4398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTimer: 0
+  coolDown: 5
+  crystalSkillUnlockBtn: {fileID: 0}
+  crystalSkillUnlocked: 0
+  newCrystal: {fileID: 1885430222551567074, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+  currenrCrystal: {fileID: 0}
+  crystalSkillMovingTargetBtn: {fileID: 0}
+  crystalMovingTargetUnlock: 0
+  moveSpeed: 5
+  crystalSkillExploreBtn: {fileID: 0}
+  crystalExploreUnlock: 0
+  crystalDuration: 3
+  crystalSkillMultiUnlockBtn: {fileID: 0}
+  crystalMultiUnlock: 0
+  multiCooldown: 5
+  amountOfMulti: 3
+  listCrystal:
+  - {fileID: 1885430222551567074, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+  - {fileID: 1885430222551567074, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+  - {fileID: 1885430222551567074, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}
+  crystalSkillWithMirageBtn: {fileID: 0}
+  crystalCreateMirage: 0
+--- !u!114 &3650792166318504544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2334783047362637093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10cd76d6b75f254fb9dfa3a0b6dfd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTimer: 0
+  coolDown: 5
+  parryUnlockSkillBtn: {fileID: 0}
+  parryRestoreSkillBtn: {fileID: 0}
+  parryWithMirageSkillBtn: {fileID: 0}
+  percentRestoreHealth: 0.2
+--- !u!114 &404605451285311052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2334783047362637093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f77e7ff526d9740900a22ce8d6d0d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTimer: 0
+  coolDown: 0
+  dogdeSkillUnlockBtn: {fileID: 0}
+  dogdeSkillUnlocked: 0
+  dogdeWithMirageUnlockBtn: {fileID: 0}
+  dogdeWithMirageUnlocked: 0

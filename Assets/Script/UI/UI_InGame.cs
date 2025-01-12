@@ -1,36 +1,41 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_InGame : MonoBehaviour
 {
-    [SerializeField] private Slider mySlider;
+    [SerializeField] private Slider healthBarSlider;
+
+    [SerializeField] private Slider expCurrentSlider;
+    [SerializeField] private TextMeshProUGUI levelTxt;
+
+
     private PlayerStats myStats;
+
+    private void OnEnable()
+    {
+        Observer.Instance.subscribeListener(GameEvent.UpdateCurrentExp, updateCurrentExp);
+    }
+
+
     void Start()
     {
         myStats = PlayerManager.Instance.playerStats;
         myStats.onUiHealth += updateHealthBar;
         updateHealthBar();
+        levelTxt.text = $"Lv. {PlayerManager.Instance.CurrentLevel} + {PlayerManager.Instance.CurrentExp * 0.1}%";
     }
 
     private void updateHealthBar()
     {
-        mySlider.maxValue = myStats.getMaxHealth();
-        mySlider.value = myStats.currentHealth;
+        healthBarSlider.maxValue = myStats.getMaxHealth();
+        healthBarSlider.value = myStats.currentHealth;
     }
 
-    private void setCoolDownOf(Image _image)
+    public void updateCurrentExp(object value)
     {
-        if (_image.fillAmount <= 0)
-        {
-            _image.fillAmount = 1;
-        }
-    }
-
-    private void checkCoolDownOf(Image _image, float _coolDown)
-    {
-        if (_image.fillAmount > 0)
-        {
-            _image.fillAmount -= 1 / _coolDown * Time.deltaTime;
-        }
+        expCurrentSlider.maxValue = 100;
+        expCurrentSlider.value = (float)value;
+        levelTxt.text = $"Lv. {PlayerManager.Instance.CurrentLevel} + {(float)value * 0.1}%";
     }
 }

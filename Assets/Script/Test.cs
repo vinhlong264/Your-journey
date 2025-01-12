@@ -1,14 +1,13 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField] private DialogueSystem conversation;
-    private void OnMouseDown()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(Vector2.Distance(transform.position , PlayerManager.Instance.player.transform.position) < 2)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            conversation.LoadText("TextData/Story 1");
-            conversation.Dialogue();
+            SceneManager.LoadScene("Test");
         }
     }
 }

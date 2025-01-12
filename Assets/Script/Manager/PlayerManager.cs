@@ -14,7 +14,8 @@ public class PlayerManager : Singleton<PlayerManager>
     [SerializeField] private int pointSkill;
     [SerializeField] private int pointAtribute;
 
-
+    public int CurrentLevel { get => currentLevel; }
+    public float CurrentExp { get => currentExp; }
 
     protected override void Awake()
     {
@@ -31,11 +32,14 @@ public class PlayerManager : Singleton<PlayerManager>
     private void Start()
     {
         levelSystem = new LevelSystem();
+        currentLevel = levelSystem.getCurrentLevel();
     }
 
     public void Listener(object value)
     {
+        Debug.Log("Exp Receive: "+value);
         currentExp +=  (int)value;
+        Observer.Instance.NotifyEvent(GameEvent.UpdateCurrentExp , currentExp);
         if (levelSystem.gainExp(currentExp))
         {
             currentLevel = levelSystem.getCurrentLevel();

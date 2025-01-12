@@ -33,7 +33,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         if (!isDontDestroy)
         {
-            if (_instance != null)
+            if (_instance != null && _instance != this)
             {
                 Destroy(this.gameObject);
             }
@@ -44,14 +44,14 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
         else
         {
-            if (_instance != null)
+            if (_instance != null && _instance != this)
             {
                 Destroy(this.gameObject);
             }
             else
             {
                 _instance = this.GetComponent<T>();
-                DontDestroyOnLoad(this);
+                DontDestroyOnLoad(this.gameObject);
             }
         }
     }
