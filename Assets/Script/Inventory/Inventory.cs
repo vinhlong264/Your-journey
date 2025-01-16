@@ -14,15 +14,6 @@ public class Inventory : Singleton<Inventory>
     [SerializeField] private Dictionary<itemDataSO, InventoryItem> itemStashDictionary;
 
     [Header("Iventory UI")]
-    [SerializeField] private Transform inventorySlotParent; // Transform Parent dùng để quản lý các slot Item(Equipment)
-    [SerializeField] private UI_ItemSlot[] itemIventorySLot;
-
-    [SerializeField] private Transform stashSlotParent; // Transform Parent dùng để quản lý các slot Item(Material)
-    [SerializeField] private UI_ItemSlot[] itemStashSlot;
-
-    [SerializeField] private Transform equipmentSlotParent; // Transform Parent dùng để quản lý việc lưu vào slot Eqipment table
-    [SerializeField] private UI_EqipmentSlot[] equipmentSlot;
-
     [SerializeField] private Transform statsSlotParent; // Transform  Parent dùng để quản lý việc lưu và cập nhập UI
     [SerializeField] private UI_StatSlot[] statsSlot;
 
@@ -49,17 +40,7 @@ public class Inventory : Singleton<Inventory>
 
         eqipmentItemList = new List<InventoryItem>();
         equipmentDictionary = new Dictionary<ItemEquipmentSO, InventoryItem>();
-
-        itemIventorySLot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
-        itemStashSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
-        equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EqipmentSlot>();
-        statsSlot = statsSlotParent.GetComponentsInChildren<UI_StatSlot>();
-
-
-        for (int i = 0; i < itemStart.Length; i++)
-        {
-            addItem(itemStart[i]);
-        }
+        //statsSlot = statsSlotParent.GetComponentsInChildren<UI_StatSlot>();
     }
 
     public void equipmentItem(itemDataSO _item) // Quản lý eqipment table
@@ -89,8 +70,8 @@ public class Inventory : Singleton<Inventory>
         newEqipment.addModifier(); // Thay đổi thông số
         removeItem(_item);// xóa item này khỏi list Iventory
 
-        updateSlotItemUI();
-        //Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
+        //updateSlotItemUI();
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
     public void unEqipmentItem(ItemEquipmentSO eqipmentToRemove) // Quản lý việc gỡ trang bị
@@ -163,48 +144,6 @@ public class Inventory : Singleton<Inventory>
 
     #endregion
 
-    private void updateSlotItemUI() // cập nhập các UI_item
-    {
-        for (int i = 0; i < equipmentSlot.Length; i++) // equipment
-        {
-            foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary)
-            {
-                if (item.Key.EqipmentType == equipmentSlot[i].slotType)
-                {
-                    Debug.Log(item.Value);
-                    equipmentSlot[i].updateUISlotItem(item.Value);
-                }
-            }
-        }
-
-
-        for (int i = 0; i < itemIventorySLot.Length; i++) // Xóa các inventory item khi thay đổi
-        {
-            itemIventorySLot[i].cleanItem();
-        }
-
-        for (int i = 0; i < itemStashSlot.Length; i++) //  Xóa các stash item khi thay đổi
-        {
-            itemStashSlot[i].cleanItem();
-        }
-
-        for(int i = 0; i < equipmentSlot.Length; i++)
-        {
-            equipmentSlot[i].cleanItem();
-        }
-
-        for (int i = 0; i < itemIventoryList.Count; i++) 
-        {
-            itemIventorySLot[i].updateUISlotItem(itemIventoryList[i]);
-        }
-
-        for (int i = 0; i < itemStashList.Count; i++)
-        {
-            itemStashSlot[i].updateUISlotItem(itemStashList[i]);
-        }
-
-        updateStatsUI();
-    }
 
     public List<InventoryItem> GetListItem() => itemIventoryList;
     public List<InventoryItem> GetListStash() => itemStashList;
@@ -222,7 +161,7 @@ public class Inventory : Singleton<Inventory>
     #region add item
     public void addItem(itemDataSO _item)
     {
-        if (_item.ItemType == ItemType.Equipment && canAddItem())
+        if (_item.ItemType == ItemType.Equipment /*&&*/ /*canAddItem()*/)
         {
             addEquipment(_item);
         }
@@ -231,8 +170,8 @@ public class Inventory : Singleton<Inventory>
             addMaterial(_item);
         }
 
-        updateSlotItemUI();
-        //Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
+        //updateSlotItemUI();
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
     private void addMaterial(itemDataSO _item)
     {
@@ -261,19 +200,19 @@ public class Inventory : Singleton<Inventory>
             itemInvetoryDictionary.Add(_item, newItem);
         }
 
-        updateSlotItemUI();
-        //Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
+        //updateSlotItemUI();
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
-    public bool canAddItem()
-    {
-        if (itemIventoryList.Count >= itemIventorySLot.Length || itemStashList.Count >= itemStashSlot.Length)
-        {
-            Debug.Log("No more space");
-            return false;
-        }
-        return true;
-    }
+    //public bool canAddItem()
+    //{
+    //    if (itemIventoryList.Count >= itemIventorySLot.Length || itemStashList.Count >= itemStashSlot.Length)
+    //    {
+    //        Debug.Log("No more space");
+    //        return false;
+    //    }
+    //    return true;
+    //}
 
     #endregion
 
@@ -284,9 +223,9 @@ public class Inventory : Singleton<Inventory>
 
         removeItemStash(_item);
 
-        updateSlotItemUI();
+        //updateSlotItemUI();
 
-        //Observer.Instance.NotifyEvent(GameEvent.UpdateUI , null);
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
     private void removeItemInventory(itemDataSO _itemIventory)
@@ -356,8 +295,8 @@ public class Inventory : Singleton<Inventory>
             return false;
         }
 
-        updateSlotItemUI();
-        //Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
+        //updateSlotItemUI();
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
         lastTimeUseBollte = Time.time;
         newCurrentEffect.excuteItemEffect(null);
         Debug.Log("Bật hiệu ứng");

@@ -8,7 +8,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     [SerializeField] protected Image imageItem; // icon item
     [SerializeField] protected TextMeshProUGUI itemText; // text số lượng
     protected UI ui;
-    [SerializeField] protected InventoryItem item; // Item
+    [SerializeField] protected ItemInventory item; // Item
 
     protected virtual void Start()
     {
@@ -16,7 +16,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     }
 
 
-    public void updateUISlotItem(InventoryItem newItem) // Update item vào các slot
+    public void updateUISlotItem(ItemInventory newItem) // Update item vào các slot
     {
         item = newItem;
 
@@ -26,10 +26,10 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         if (item != null)
         {
             //Debug.Log("Call");
-            imageItem.sprite = item.itemData.icon;
-            if (item.stackSize > 1)
+            imageItem.sprite = item._itemData.icon;
+            if (item.CurrentQuantity > 1)
             {
-                itemText.text = item.stackSize.ToString();
+                itemText.text = item.CurrentQuantity.ToString();
             }
             else
             {
@@ -52,12 +52,12 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
         if (Input.GetKeyDown(KeyCode.LeftControl)) // remove item in Iventory
         {
-            Inventory.Instance.removeItem(item.itemData);
+            //Inventory.Instance.removeItem(item.itemData);
         }
 
-        if (item.itemData.ItemType == ItemType.Equipment) // nếu cùng loại sẽ được thêm
+        if (item._itemData.ItemType == ItemType.Equipment) // nếu cùng loại sẽ được thêm
         {
-            Inventory.Instance.equipmentItem(item.itemData);
+            //Inventory.Instance.equipmentItem(item.itemData);
         }
     }
 
@@ -65,7 +65,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     {
         if (item == null) return;
 
-        ui.uiEquipmentInfo.showDescription(item.itemData as ItemEquipmentSO);
+        ui.uiEquipmentInfo.showDescription(item._itemData as ItemEquipmentSO);
         ui.uiEquipmentInfo.transform.position = moveForMouse();
     }
 

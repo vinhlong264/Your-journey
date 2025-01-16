@@ -29,7 +29,7 @@ public class UI_UpgrateStats : MonoBehaviour
         {
             statsCount++;
             statsUpgrateText.text = "+" + statsCount;
-            Inventory.Instance.updateStatsUI(); // Cập nhập lại stats
+            /*Inventory.Instance.updateStatsUI();*/ // Cập nhập lại stats
         }
     }
 }

@@ -15,6 +15,7 @@ public class Observer : Singleton<Observer>
     {
         if (EventObserver.ContainsKey(key)) return;
 
+        Debug.Log("Đăng kí sự kiện");
         EventObserver.Add(key, new HashSet<callBackEvent>());
         EventObserver[key].Add(_callBack);
     }
@@ -25,8 +26,15 @@ public class Observer : Singleton<Observer>
         {
             return;
         }
-        EventObserver[key].Remove(_callBack);
-        EventObserver.Remove(key);
+
+        if(EventObserver[key].Count > 0)
+        {
+            EventObserver[key].Remove(_callBack);
+        }
+        else
+        {
+            EventObserver.Remove(key);
+        }
     }
 
     public void NotifyEvent(GameEvent key, object value)
@@ -35,11 +43,9 @@ public class Observer : Singleton<Observer>
         {
             if (_event.Key == key)
             {
-                Debug.Log("Invoke event: " + _event.Value.Count);
                 foreach (var _action in _event.Value)
                 {
-                    //Debug.Log("Invoke event: " +_event.Value.Count);
-                    _action?.Invoke(value);
+                    _action.Invoke(value);
                 }
             }
         }

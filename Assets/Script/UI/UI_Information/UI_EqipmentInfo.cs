@@ -1,3 +1,4 @@
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -18,8 +19,8 @@ public class UI_EqipmentInfor : MonoBehaviour
     {
         if (itemEqipment == null) return;
 
-
-        nameItemText.text = itemEqipment.name;
+        
+        nameItemText.text = (itemEqipment.name);
         typeItemText.text = itemEqipment.EqipmentType.ToString();
         descriptionText.text = itemEqipment.GetDescription();
 

@@ -34,10 +34,10 @@ public class itemObj : MonoBehaviour
 
     public void itemPickUp()
     {
-        if (!Inventory.Instance.canAddItem() && item.ItemType == ItemType.Equipment) return; // điều kiện để giới hạn số lượng có thể thỏa mãn số lượng trong Inventory
+        /*if (!Inventory.Instance.canAddItem() && item.ItemType == ItemType.Equipment) return;*/ // điều kiện để giới hạn số lượng có thể thỏa mãn số lượng trong Inventory
 
 
-        Inventory.Instance.addItem(item);
+        InventorySystem.Instance.addItem(item);
         Destroy(gameObject);
     }
 }

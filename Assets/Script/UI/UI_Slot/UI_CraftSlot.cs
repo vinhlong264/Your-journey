@@ -12,7 +12,7 @@ public class UI_CraftSlot : UI_ItemSlot
         if (_data == null) return; 
 
 
-        item.itemData = _data;
+        item._itemData = _data;
 
         imageItem.sprite = _data.icon;
         itemText.text = _data.name;
@@ -21,6 +21,6 @@ public class UI_CraftSlot : UI_ItemSlot
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        ui.uiCanCraftWindow.setUpCraftWindow(item.itemData as ItemEquipmentSO);
+        ui.uiCanCraftWindow.setUpCraftWindow(item._itemData as ItemEquipmentSO);
     }
 }

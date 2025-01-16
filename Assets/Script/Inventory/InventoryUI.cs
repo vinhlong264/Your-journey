@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
@@ -15,6 +16,9 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Transform stashManagerParent;
     [SerializeField] private UI_StatSlot[] statSlot;
 
+
+    [SerializeField] List<ItemInventory> items = new List<ItemInventory>();
+
     private void OnEnable()
     {
         Observer.Instance.subscribeListener(GameEvent.UpdateUI, updateInventoryUI);
@@ -22,7 +26,10 @@ public class InventoryUI : MonoBehaviour
 
     private void OnDisable()
     {
-        Observer.Instance.unsubscribeListener(GameEvent.UpdateUI , updateInventoryUI);
+        if(Observer.Instance != null)
+        {
+            Observer.Instance.unsubscribeListener(GameEvent.UpdateUI, updateInventoryUI);
+        }
     }
 
     void Start()
@@ -36,33 +43,12 @@ public class InventoryUI : MonoBehaviour
 
     private void updateInventoryUI(object value)
     {
-        for (int i = 0; i < equipmentSLot.Length; i++) // equipment
+        items = InventorySystem.Instance.GetListInventory();
+
+
+       for(int i = 0; i < items.Count; i++)
         {
-            foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in Inventory.Instance.GetDictionaryEquiment())
-            {
-                if (item.Key.EqipmentType == equipmentSLot[i].slotType)
-                {
-                    //Debug.Log(item.Value);
-                    equipmentSLot[i].updateUISlotItem(item.Value);
-                }
-            }
-        }
-
-
-        for (int i = 0; i < itemSLot.Length; i++) // Xóa các inventory item khi thay đổi
-        {
-            itemSLot[i].cleanItem();
-        }
-
-
-        for (int i = 0; i < equipmentSLot.Length; i++)
-        {
-            equipmentSLot[i].cleanItem();
-        }
-
-        for (int i = 0; i < Inventory.Instance.GetListItem().Count; i++)
-        {
-            itemSLot[i].updateUISlotItem(Inventory.Instance.GetListItem()[i]);
+            itemSLot[i].updateUISlotItem(items[i]);
         }
     }
 }
