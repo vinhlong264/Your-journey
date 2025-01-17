@@ -35,7 +35,7 @@ public class ItemEquipmentSO : itemDataSO
     public int iceDame;
     public int lightingDame;
 
-    public List<InventoryItem> craft; // List chứa nguyên liệu để có thể chế tạo
+    public List<ItemInventory> craft; // List chứa nguyên liệu để có thể chế tạo
 
     private int descriptionLenght;
 

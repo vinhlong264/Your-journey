@@ -1,17 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-public class Inventory : Singleton<Inventory>
+public class Inventory : Singleton<Inventory>, IInventory
 {
+    private enum InventoryState
+    {
+        Start,
+        End
+    }
+    [SerializeField] private InventoryState _state = InventoryState.End;
 
     [Header("Equipment infor")]
-    [SerializeField] private List<InventoryItem> eqipmentItemList; // Danh sách Eqipment để thêm vào Eqipment table
-    [SerializeField] private Dictionary<ItemEquipmentSO, InventoryItem> equipmentDictionary;
+    [SerializeField] private List<ItemInventory> eqipmentItemList; // Danh sách Eqipment để thêm vào Eqipment table
+    [SerializeField] private Dictionary<ItemEquipmentSO, ItemInventory> equipmentDictionary;
 
-    [SerializeField] private List<InventoryItem> itemIventoryList; // Danh sách item(Equipment) để thêm vào Inventory
-    [SerializeField] private Dictionary<itemDataSO, InventoryItem> itemInvetoryDictionary;
+    [SerializeField] private List<ItemInventory> listInventory; // Danh sách item(Equipment) để thêm vào Inventory
+    [SerializeField] private Dictionary<itemDataSO, ItemInventory> itemInvetoryDictionary;
 
-    [SerializeField] private List<InventoryItem> itemStashList;  //Danh sách item(Material) để thêm vào Stash
-    [SerializeField] private Dictionary<itemDataSO, InventoryItem> itemStashDictionary;
+    [SerializeField] private List<ItemInventory> itemStashList;  //Danh sách item(Material) để thêm vào Stash
+    [SerializeField] private Dictionary<itemDataSO, ItemInventory> itemStashDictionary;
 
     [Header("Iventory UI")]
     [SerializeField] private Transform inventorySlotParent; // Transform Parent dùng để quản lý các slot Item(Equipment)
@@ -41,14 +48,14 @@ public class Inventory : Singleton<Inventory>
 
     private void Start()
     {
-        itemIventoryList = new List<InventoryItem>();
-        itemInvetoryDictionary = new Dictionary<itemDataSO, InventoryItem>();
+        listInventory = new List<ItemInventory>();
+        itemInvetoryDictionary = new Dictionary<itemDataSO, ItemInventory>();
 
-        itemStashList = new List<InventoryItem>();
-        itemStashDictionary = new Dictionary<itemDataSO, InventoryItem>();
+        itemStashList = new List<ItemInventory>();
+        itemStashDictionary = new Dictionary<itemDataSO, ItemInventory>();
 
-        eqipmentItemList = new List<InventoryItem>();
-        equipmentDictionary = new Dictionary<ItemEquipmentSO, InventoryItem>();
+        eqipmentItemList = new List<ItemInventory>();
+        equipmentDictionary = new Dictionary<ItemEquipmentSO, ItemInventory>();
 
         itemIventorySLot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         itemStashSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
@@ -64,12 +71,13 @@ public class Inventory : Singleton<Inventory>
 
     public void equipmentItem(itemDataSO _item) // Quản lý eqipment table
     {
+        _state = InventoryState.Start;
         ItemEquipmentSO newEqipment = _item as ItemEquipmentSO;
-        InventoryItem newItem = new InventoryItem(newEqipment);
+        ItemInventory newItem = new ItemInventory(newEqipment);
 
         ItemEquipmentSO oldEqipment = null;
 
-        foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary) // Lấy ra key có Enum là EqipmentType 
+        foreach (KeyValuePair<ItemEquipmentSO, ItemInventory> item in equipmentDictionary) // Lấy ra key có Enum là EqipmentType 
         {
             if (item.Key.EqipmentType == newEqipment.EqipmentType)
             {
@@ -89,12 +97,15 @@ public class Inventory : Singleton<Inventory>
         newEqipment.addModifier(); // Thay đổi thông số
         removeItem(_item);// xóa item này khỏi list Iventory
 
-        updateSlotItemUI();
+        //updateSlotItemUI();
+        _state = InventoryState.End;
+
+        StartCoroutine(UpdateUI());
     }
 
     public void unEqipmentItem(ItemEquipmentSO eqipmentToRemove) // Quản lý việc gỡ trang bị
     {
-        if (equipmentDictionary.TryGetValue(eqipmentToRemove, out InventoryItem value))
+        if (equipmentDictionary.TryGetValue(eqipmentToRemove, out ItemInventory value))
         {
             eqipmentItemList.Remove(value);
             equipmentDictionary.Remove(eqipmentToRemove);
@@ -104,7 +115,7 @@ public class Inventory : Singleton<Inventory>
 
     #region Craft
 
-    public void Craft(ItemEquipmentSO _eqipmentCratf , List<InventoryItem> _materialRequirement)
+    public void Craft(ItemEquipmentSO _eqipmentCratf , List<ItemInventory> _materialRequirement)
     {
         if(canCraft(_eqipmentCratf , _materialRequirement))
         {
@@ -113,7 +124,7 @@ public class Inventory : Singleton<Inventory>
         }
     }
 
-    private bool canCraft(ItemEquipmentSO _itemToCraft, List<InventoryItem> _requirmentMaterial) // Quản lý việc ghép nguyên liệu
+    private bool canCraft(ItemEquipmentSO _itemToCraft, List<ItemInventory> _requirmentMaterial) // Quản lý việc ghép nguyên liệu
     {
         if(_requirmentMaterial.Count <= 0) // kiểm tra xem Equipment này có yêu cầu material không
         {
@@ -122,17 +133,17 @@ public class Inventory : Singleton<Inventory>
         }
 
 
-        List<InventoryItem> materialToRemove = new List<InventoryItem>(); // List để chứa các material để rèn
+        List<ItemInventory> materialToRemove = new List<ItemInventory>(); // List để chứa các material để rèn
 
         for (int i = 0; i < _requirmentMaterial.Count; i++)
         {
             //Tìm xem itemStashDictionary có material yêu cầu không, nếu không thì trả về false luôn và ngược lại
-            if (itemStashDictionary.TryGetValue(_requirmentMaterial[i].itemData, out InventoryItem stashValue))
+            if (itemStashDictionary.TryGetValue(_requirmentMaterial[i].itemData, out ItemInventory stashValue))
             {
                 Debug.Log("Find material");
 
                 // Nếu có, kiểm tra xem số lượng trong kho có đủ để rèn không
-                if (stashValue.stackSize < _requirmentMaterial[i].stackSize)
+                if (stashValue.currentQuantity < _requirmentMaterial[i].currentQuantity)
                 {
                     Debug.Log("Not enough material");
                     return false; // nếu không đủ thì trả về false luôn
@@ -155,54 +166,13 @@ public class Inventory : Singleton<Inventory>
             removeItem(materialToRemove[i].itemData); // xóa các material đã dùng để rèn đi
         }
 
-        //addEquipment(_itemToCraft);
+        addItem(_itemToCraft);
         //Debug.Log("Here is your item: " + _itemToCraft.name);
         return true;
     }
 
     #endregion
 
-    private void updateSlotItemUI() // cập nhập các UI_item
-    {
-        for (int i = 0; i < equipmentSlot.Length; i++) // equipment
-        {
-            foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary)
-            {
-                if (item.Key.EqipmentType == equipmentSlot[i].slotType)
-                {
-                    equipmentSlot[i].updateUISlotItem(item.Value);
-                }
-            }
-        }
-
-
-        for (int i = 0; i < itemIventorySLot.Length; i++) // Xóa các inventory item khi thay đổi
-        {
-            itemIventorySLot[i].cleanItem();
-        }
-
-        for (int i = 0; i < itemStashSlot.Length; i++) //  Xóa các stash item khi thay đổi
-        {
-            itemStashSlot[i].cleanItem();
-        }
-
-        //for(int i = 0; i < equipmentSlot.Length; i++)
-        //{
-        //    equipmentSlot[i].cleanItem();
-        //}
-
-        for (int i = 0; i < itemIventoryList.Count; i++) 
-        {
-            itemIventorySLot[i].updateUISlotItem(itemIventoryList[i]);
-        }
-
-        for (int i = 0; i < itemStashList.Count; i++)
-        {
-            itemStashSlot[i].updateUISlotItem(itemStashList[i]);
-        }
-
-        updateStatsUI();
-    }
 
     public void updateStatsUI()
     {
@@ -215,51 +185,50 @@ public class Inventory : Singleton<Inventory>
     #region add item
     public void addItem(itemDataSO _item)
     {
-        if (_item.ItemType == ItemType.Equipment/* && canAddItem()*/)
-        {
-            //Debug.Log("Call");
-            addEquipment(_item);
-        }
-        else if (_item.ItemType == ItemType.Material)
-        {
-            addMaterial(_item);
-        }
+        _state = InventoryState.Start;
 
-        updateSlotItemUI();
-    }
-    private void addMaterial(itemDataSO _item)
-    {
-        if (itemStashDictionary.TryGetValue(_item, out InventoryItem stashValue))
+        if(itemInvetoryDictionary.TryGetValue(_item , out ItemInventory value))
         {
-            stashValue.addStack();
+            if (_item.onlyItem)
+            {
+                listInventory.Add(value);
+            }
+            else
+            {
+                value.addQuantity();
+            }
         }
         else
         {
-            InventoryItem newItemStash = new InventoryItem(_item);
-            itemStashList.Add(newItemStash);
-            itemStashDictionary.Add(_item, newItemStash);
+            ItemInventory newItem = new ItemInventory(_item);
+            listInventory.Add(newItem);
+            itemInvetoryDictionary.Add(_item , newItem);
         }
+
+        _state = InventoryState.End;
+
+        StartCoroutine(UpdateUI());
     }
 
     private void addEquipment(itemDataSO _item)
     {
-        if (itemInvetoryDictionary.TryGetValue(_item, out InventoryItem value))
+        if (itemInvetoryDictionary.TryGetValue(_item, out ItemInventory value))
         {
-            value.addStack();
+            listInventory.Add(value);
         }
         else
         {
-            InventoryItem newItem = new InventoryItem(_item);
-            itemIventoryList.Add(newItem);
+            ItemInventory newItem = new ItemInventory(_item);
+            listInventory.Add(newItem);
             itemInvetoryDictionary.Add(_item, newItem);
         }
         //Debug.Log("call");
-        updateSlotItemUI();
+        //updateSlotItemUI();
     }
 
     public bool canAddItem()
     {
-        if (itemIventoryList.Count >= itemIventorySLot.Length || itemStashList.Count >= itemStashSlot.Length)
+        if (listInventory.Count >= itemIventorySLot.Length || itemStashList.Count >= itemStashSlot.Length)
         {
             Debug.Log("No more space");
             return false;
@@ -276,37 +245,37 @@ public class Inventory : Singleton<Inventory>
 
         removeItemStash(_item);
 
-        updateSlotItemUI();
+        //updateSlotItemUI();
     }
 
     private void removeItemInventory(itemDataSO _itemIventory)
     {
-        if (itemInvetoryDictionary.TryGetValue(_itemIventory, out InventoryItem valueInventory))
+        if (itemInvetoryDictionary.TryGetValue(_itemIventory, out ItemInventory valueInventory))
         {
-            if (valueInventory.stackSize <= 1) // nếu giá trị stacksize hiện tại bằng 1 thì sẽ xóa nó đi, nghĩa là có đúng 1 item loại key đó
+            if (valueInventory.currentQuantity <= 1) // nếu giá trị stacksize hiện tại bằng 1 thì sẽ xóa nó đi, nghĩa là có đúng 1 item loại key đó
             {
-                itemIventoryList.Remove(valueInventory);
+                listInventory.Remove(valueInventory);
                 itemInvetoryDictionary.Remove(_itemIventory);
             }
             else // ngược lại nếu nhiều hơn 1 thì sẽ giảm số lượng item loại key đó sở hữu
             {
-                valueInventory.removeStack(); // xóa 1 item cùng key khỏi Inventory
+                valueInventory.removeQuantity(); // xóa 1 item cùng key khỏi Inventory
             }
         }
     }
 
     private void removeItemStash(itemDataSO _itemStash)
     {
-        if (itemStashDictionary.TryGetValue(_itemStash, out InventoryItem valueStash))
+        if (itemStashDictionary.TryGetValue(_itemStash, out ItemInventory valueStash))
         {
-            if (valueStash.stackSize <= 1)
+            if (valueStash.currentQuantity <= 1)
             {
                 itemStashList.Remove(valueStash);
                 itemStashDictionary.Remove(_itemStash);
             }
             else
             {
-                valueStash.removeStack();
+                valueStash.removeQuantity();
             }
         }
     }
@@ -317,8 +286,8 @@ public class Inventory : Singleton<Inventory>
     public ItemEquipmentSO getEquipmentBy(EqipmentType _type)
     {
         ItemEquipmentSO newEquipment = null;
-        InventoryItem equipmentInven = null;
-        foreach (KeyValuePair<ItemEquipmentSO, InventoryItem> item in equipmentDictionary)
+        ItemInventory equipmentInven = null;
+        foreach (KeyValuePair<ItemEquipmentSO, ItemInventory> item in equipmentDictionary)
         {
             if (item.Key.EqipmentType == _type)
             {
@@ -347,7 +316,7 @@ public class Inventory : Singleton<Inventory>
             return false;
         }
 
-        updateSlotItemUI();
+        
         lastTimeUseBollte = Time.time;
         newCurrentEffect.excuteItemEffect(null);
         Debug.Log("Bật hiệu ứng");
@@ -369,22 +338,35 @@ public class Inventory : Singleton<Inventory>
         return true;
     }
     #endregion
+
+    IEnumerator UpdateUI()
+    {
+        yield return new WaitUntil(() => _state == InventoryState.End);
+
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
+
+        _state = InventoryState.Start;
+    }
+
+
+    public List<ItemInventory> GetListInventory() => listInventory;
+    public Dictionary<ItemEquipmentSO , ItemInventory> GetDictionanryEqiupment() => equipmentDictionary;
 }
 
 
 [System.Serializable]
-public class InventoryItem // Class quản lý item trong Inventory
+public class ItemInventory // Class quản lý item trong Inventory
 {
     public itemDataSO itemData; // SO
-    public int stackSize; // số lượng
+    public int currentQuantity; // số lượng
 
-    public InventoryItem(itemDataSO _item)
+    public ItemInventory(itemDataSO _item)
     {
         itemData = _item;
-        addStack();
+        addQuantity();
     }
 
-    public void addStack() => stackSize++; // thêm số lượng
-    public void removeStack() => stackSize--; // giảm số lượng
+    public void addQuantity() => currentQuantity++; // thêm số lượng
+    public void removeQuantity() => currentQuantity--; // giảm số lượng
 
 }

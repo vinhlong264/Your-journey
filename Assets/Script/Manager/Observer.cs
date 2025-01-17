@@ -51,5 +51,6 @@ public class Observer : Singleton<Observer>
 public enum GameEvent
 {
     RewardExp,
-    UpdateCurrentExp
+    UpdateCurrentExp,
+    UpdateUI
 }

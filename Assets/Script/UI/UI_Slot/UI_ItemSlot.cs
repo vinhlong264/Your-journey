@@ -8,7 +8,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     [SerializeField] protected Image imageItem; // icon item
     [SerializeField] protected TextMeshProUGUI itemText; // text số lượng
     protected UI ui;
-    [SerializeField] protected InventoryItem item; // Item
+    [SerializeField] protected ItemInventory item; // Item
 
     protected virtual void Start()
     {
@@ -16,7 +16,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     }
 
 
-    public virtual void updateUISlotItem(InventoryItem newItem) // Update item vào các slot
+    public virtual void updateUISlotItem(ItemInventory newItem) // Update item vào các slot
     {
         item = newItem;
 
@@ -25,22 +25,19 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
         if (item != null)
         {
             imageItem.sprite = item.itemData.icon;
-            if (item.stackSize > 1)
+            if (item.currentQuantity > 1)
             {
-                itemText.text = item.stackSize.ToString();
+                itemText.text = item.currentQuantity.ToString();
             }
             else
             {
                 itemText.text = "";
             }
         }
-
-        Debug.Log(item != null);
     }
 
     public void cleanItem() // Clean Item
     {
-        Debug.Log("call");
         item = null;
         imageItem.sprite = null;
         imageItem.color = Color.clear;

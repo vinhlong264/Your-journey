@@ -39,7 +39,7 @@ public class UI_CraftWindow : MonoBehaviour
 
             if(materialText != null)
             {
-                materialText.text = _data.craft[i].stackSize.ToString();
+                materialText.text = _data.craft[i].currentQuantity.ToString();
                 materialText.color = Color.white;
             }
         }

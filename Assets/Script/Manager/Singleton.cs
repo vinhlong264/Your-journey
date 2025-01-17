@@ -2,12 +2,22 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T _instance = null;
-
+    protected static T _instance = null;
+    protected static bool applicationIsQuitting = false;
     public static T Instance
     {
         get
         {
+            if (applicationIsQuitting)
+            {
+                Debug.LogWarning("[Singleton] Instance '" + typeof(T) +
+                    "' already destroyed on application quit." +
+                    " Won't create again - returning null.");
+                return null;
+            }
+
+
+
             if (_instance == null)
             {
                 if (FindObjectOfType<T>() != null)
@@ -54,6 +64,11 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                 DontDestroyOnLoad(this.gameObject);
             }
         }
+    }
+
+    protected void OnApplicationQuit()
+    {
+        applicationIsQuitting = true;
     }
 
 }
