@@ -63,15 +63,14 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     {
         if (item == null) return;
 
-        ui.uiEquipmentInfo.showDescription(item.itemData as ItemEquipmentSO);
-        ui.uiEquipmentInfo.transform.position = moveForMouse();
+        //ui.uiEquipmentInfo.showDescription(item.itemData as ItemEquipmentSO);
+        //ui.uiEquipmentInfo.transform.position = moveForMouse();
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
         if (item == null) return;
-
-        ui.uiEquipmentInfo.hideDescription();
+        //ui.uiEquipmentInfo.hideDescription();
     }
 
 

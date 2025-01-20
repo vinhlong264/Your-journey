@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class UI_InGame : MonoBehaviour
 {
     [SerializeField] private Slider healthBarSlider;
-
-    [SerializeField] private Slider expCurrentSlider;
     [SerializeField] private TextMeshProUGUI levelTxt;
 
 
@@ -34,8 +32,6 @@ public class UI_InGame : MonoBehaviour
 
     public void updateCurrentExp(object value)
     {
-        expCurrentSlider.maxValue = 100;
-        expCurrentSlider.value = (float)value;
         levelTxt.text = $"Lv. {PlayerManager.Instance.CurrentLevel} + {(float)value * 0.1}%";
     }
 }

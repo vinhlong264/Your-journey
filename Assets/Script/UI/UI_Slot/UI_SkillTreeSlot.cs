@@ -17,7 +17,7 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [SerializeField] private Color skillLockColor;
 
     public System.Action eventUnlockSKill; // Event
-
+    [SerializeField] private UI_SkillInformation skillInfor;
 
     private UI ui;
 
@@ -29,7 +29,6 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {   
         skillImage = GetComponent<Image>();
         skillImage.color = skillLockColor;
-        ui = GetComponentInParent<UI>();
     }
 
     private void OnValidate()
@@ -67,11 +66,14 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ui.uiSkillInfo.showInformatioSkill(skillName, skillDescription);
+        Debug.Log("OnPointerEnter");
+        skillInfor.showInformatioSkill(skillName, skillDescription);
     }
+        
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ui.uiSkillInfo.hideInformationWindow();
+        Debug.Log("OnPointerExit");
+       skillInfor.hideInformationWindow();
     }
 }

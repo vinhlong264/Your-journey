@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,30 +26,30 @@ public class InventoryUI : MonoBehaviour
     private void Awake()
     {
         itemSlots = inventoryParent.GetComponentsInChildren<UI_ItemSlot>();
-        equippableSlots = equippableParent.GetComponentsInChildren<UI_EqipmentSlot>();
+        //equippableSlots = equippableParent.GetComponentsInChildren<UI_EqipmentSlot>();
     }
 
     private void updateUI(object value)
     {
         inventoryItems = Inventory.Instance.GetListInventory();
-        equipmentItems = Inventory.Instance.GetDictionanryEqiupment();
+        equipmentItems = Inventory.Instance.GetDictionaryEqiupment();
 
-        for (int i = 0; i < equippableSlots.Length; i++)
-        {
-            foreach (KeyValuePair<ItemEquipmentSO, ItemInventory> e in equipmentItems)
-            {
-                if (e.Key.EqipmentType == equippableSlots[i].slotType)
-                {
-                    Debug.Log("Equipment: " + e.Key.EqipmentType);
-                    equippableSlots[i].updateUISlotItem(e.Value);
-                }
-            }
-        }
+        //for (int i = 0; i < equippableSlots.Length; i++)
+        //{
+        //    foreach (KeyValuePair<ItemEquipmentSO, ItemInventory> e in equipmentItems)
+        //    {
+        //        if (e.Key.EqipmentType == equippableSlots[i].slotType)
+        //        {
+        //            Debug.Log("Equipment: " + e.Key.EqipmentType);
+        //            equippableSlots[i].updateUISlotItem(e.Value);
+        //        }
+        //    }
+        //}
 
-        for (int i = 0; i < itemSlots.Length; i++)
-        {
-            itemSlots[i].cleanItem();
-        }
+        //for (int i = 0; i < itemSlots.Length; i++)
+        //{
+        //    itemSlots[i].cleanItem();
+        //}
 
 
 

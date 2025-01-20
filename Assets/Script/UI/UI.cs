@@ -20,30 +20,6 @@ public class UI : MonoBehaviour
         swicthOptions(UI_InGame);
     }
 
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            switchOptionByKey(UI_Character);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            switchOptionByKey(UI_Atribute);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            switchOptionByKey(UI_SkillTree);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            switchOptionByKey(UI_Setting);
-        }
-    }
-
     public void swicthOptions(GameObject _entity)
     {
         for (int i = 0; i < transform.childCount; i++)

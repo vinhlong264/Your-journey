@@ -9,9 +9,14 @@ public class UI_CraftList : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject craftSlotObj;
     [SerializeField] private List<ItemEquipmentSO> craftEquipment = new List<ItemEquipmentSO>();
     [SerializeField] private List<itemDataSO> itemMaterial;
+
+
+    [SerializeField] private UI ui;
     void Start()
     {
         transform.parent.GetChild(0).GetComponent<UI_CraftList>().setUpCraftList();
+
+        //Debug.Log(craftEquipment[0]);
         setDefaultEquipmentCraft();
     }
 
@@ -42,7 +47,8 @@ public class UI_CraftList : MonoBehaviour, IPointerClickHandler
     {
         if (craftEquipment[0] != null)
         {
-            GetComponentInParent<UI>().uiCanCraftWindow.setUpCraftWindow(craftEquipment[0]);
+            Debug.Log(GetComponentInChildren<UI>());
+           ui.uiCanCraftWindow.setUpCraftWindow(craftEquipment[0]);
         }
     }
 }

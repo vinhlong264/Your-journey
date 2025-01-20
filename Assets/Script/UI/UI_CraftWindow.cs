@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,15 +16,15 @@ public class UI_CraftWindow : MonoBehaviour
     {
         caftButton.onClick.RemoveAllListeners();
 
-        for(int i = 0; i < materialImage.Length; i++)
+        for (int i = 0; i < materialImage.Length; i++)
         {
             materialImage[i].color = Color.clear;
             materialImage[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.clear;
         }
 
-        for(int i = 0; i < _data.craft.Count; i++)
+        for (int i = 0; i < _data.craft.Count; i++)
         {
-            if(_data.craft.Count > materialImage.Length)
+            if (_data.craft.Count > materialImage.Length)
             {
                 Debug.Log("You have more material amount than you have material slot is craft window");
             }
@@ -37,7 +35,7 @@ public class UI_CraftWindow : MonoBehaviour
 
             TextMeshProUGUI materialText = materialImage[i].GetComponentInChildren<TextMeshProUGUI>();
 
-            if(materialText != null)
+            if (materialText != null)
             {
                 materialText.text = _data.craft[i].currentQuantity.ToString();
                 materialText.color = Color.white;
@@ -48,6 +46,6 @@ public class UI_CraftWindow : MonoBehaviour
         itemName.text = _data.itemName;
         itemDescription.text = _data.GetDescription();
 
-        caftButton.onClick.AddListener(()=> Inventory.Instance.Craft(_data,_data.craft));
+        caftButton.onClick.AddListener(() => Inventory.Instance.Craft(_data, _data.craft));
     }
 }

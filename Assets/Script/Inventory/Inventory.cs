@@ -57,12 +57,6 @@ public class Inventory : Singleton<Inventory>, IInventory
         eqipmentItemList = new List<ItemInventory>();
         equipmentDictionary = new Dictionary<ItemEquipmentSO, ItemInventory>();
 
-        itemIventorySLot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
-        itemStashSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
-        equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EqipmentSlot>();
-        statsSlot = statsSlotParent.GetComponentsInChildren<UI_StatSlot>();
-
-
         for (int i = 0; i < itemStart.Length; i++)
         {
             addItem(itemStart[i]);
@@ -241,10 +235,20 @@ public class Inventory : Singleton<Inventory>, IInventory
     #region remove item
     public void removeItem(itemDataSO _item)
     {
-        removeItemInventory(_item);
+        _state = InventoryState.Start;
 
-        removeItemStash(_item);
-
+        if(itemInvetoryDictionary.TryGetValue(_item, out ItemInventory value))
+        {
+            if (_item.onlyItem)
+            {
+                listInventory.Remove(value);
+                itemInvetoryDictionary.Remove(_item);
+            }
+            else
+            {
+                value.removeQuantity();
+            }
+        }
         //updateSlotItemUI();
     }
 
@@ -350,7 +354,8 @@ public class Inventory : Singleton<Inventory>, IInventory
 
 
     public List<ItemInventory> GetListInventory() => listInventory;
-    public Dictionary<ItemEquipmentSO , ItemInventory> GetDictionanryEqiupment() => equipmentDictionary;
+    public Dictionary<itemDataSO, ItemInventory> GetDictionaryInventory() => itemInvetoryDictionary;
+    public Dictionary<ItemEquipmentSO , ItemInventory> GetDictionaryEqiupment() => equipmentDictionary;
 }
 
 

@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class UI_SkillInformation : MonoBehaviour
 {
@@ -15,7 +12,7 @@ public class UI_SkillInformation : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void showInformatioSkill(string _skillName , string _skillDescription)
+    public void showInformatioSkill(string _skillName, string _skillDescription)
     {
         skillName.text = _skillName;
         skillDescription.text = _skillDescription;
