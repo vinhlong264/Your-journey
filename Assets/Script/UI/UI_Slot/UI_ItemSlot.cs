@@ -7,12 +7,12 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 {
     [SerializeField] protected Image imageItem; // icon item
     [SerializeField] protected TextMeshProUGUI itemText; // text số lượng
-    protected UI ui;
+    [SerializeField] protected UI_EqipmentInfor equipmentInfor;
     [SerializeField] protected ItemInventory item; // Item
 
     protected virtual void Start()
     {
-        ui = GetComponentInParent<UI>();
+        
     }
 
 
@@ -48,6 +48,8 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     {
         if (item == null) return;
 
+        Debug.Log(item);
+
         if (Input.GetKeyDown(KeyCode.LeftControl)) // remove item in Iventory
         {
             Inventory.Instance.removeItem(item.itemData);
@@ -55,6 +57,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
         if (item.itemData.ItemType == ItemType.Equipment) // nếu cùng loại sẽ được thêm
         {
+            Debug.Log("Call");
             Inventory.Instance.equipmentItem(item.itemData);
         }
     }
@@ -63,14 +66,14 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     {
         if (item == null) return;
 
-        //ui.uiEquipmentInfo.showDescription(item.itemData as ItemEquipmentSO);
-        //ui.uiEquipmentInfo.transform.position = moveForMouse();
+        equipmentInfor.showDescription(item.itemData as ItemEquipmentSO);
+        equipmentInfor.transform.position = moveForMouse();
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
         if (item == null) return;
-        //ui.uiEquipmentInfo.hideDescription();
+        equipmentInfor.hideDescription();
     }
 
 

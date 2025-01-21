@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemType: 1
   itemName: Armor_KingFreezee
+  onlyItem: 1
   icon: {fileID: -1439676860, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   rateDrop: 0
   EqipmentType: 1
+  descriptionEquipment: 
   coolDownEffect: 5
   ItemEffect:
   - {fileID: 11400000, guid: 55ebefb505a391946b35a47415aa7a76, type: 2}

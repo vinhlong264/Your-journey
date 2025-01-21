@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemType: 1
   itemName: Sword_Wood
+  onlyItem: 1
   icon: {fileID: 682402774, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   rateDrop: 10
   EqipmentType: 0
+  descriptionEquipment: 
   coolDownEffect: 0
   ItemEffect: []
   strength: 0

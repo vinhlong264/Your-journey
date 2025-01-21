@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemType: 1
   itemName: SwordBroze
+  onlyItem: 1
   icon: {fileID: -1019236712, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   rateDrop: 10
   EqipmentType: 0
@@ -37,4 +38,4 @@ MonoBehaviour:
   lightingDame: 5
   craft:
   - itemData: {fileID: 11400000, guid: 3c859cc32382b0a4db893de128aeaae0, type: 2}
-    stackSize: 4
+    currentQuantity: 0

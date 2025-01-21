@@ -2,16 +2,26 @@ using UnityEngine;
 
 public class UiManager : MonoBehaviour
 {
-    public UI_EqipmentInfor equipmentInfor;
-    public UI_SkillInformation skillInfor;
-    public UI_StatsInfo statsInfo;
-    public UI_CraftWindow craftWidow;
-
-
     [Header("Active window")]
-    [SerializeField] private GameObject craft;
-    [SerializeField] private GameObject character;
+    [SerializeField] private GameObject ui_Character;
+    [SerializeField] private GameObject ui_Ingame;
 
+    private void Start()
+    {
+        ui_Ingame.SetActive(true);
+    }
 
-
+    public void SwitchCharacter()
+    {
+        if (ui_Ingame.activeSelf)
+        {
+            ui_Ingame.SetActive(false);
+            ui_Character.SetActive(true);
+        }
+        else
+        {
+            ui_Character.SetActive(false);
+            ui_Ingame.SetActive(true);
+        }
+    }
 }

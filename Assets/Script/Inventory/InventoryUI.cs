@@ -26,7 +26,7 @@ public class InventoryUI : MonoBehaviour
     private void Awake()
     {
         itemSlots = inventoryParent.GetComponentsInChildren<UI_ItemSlot>();
-        //equippableSlots = equippableParent.GetComponentsInChildren<UI_EqipmentSlot>();
+        equippableSlots = equippableParent.GetComponentsInChildren<UI_EqipmentSlot>();
     }
 
     private void updateUI(object value)
@@ -34,22 +34,22 @@ public class InventoryUI : MonoBehaviour
         inventoryItems = Inventory.Instance.GetListInventory();
         equipmentItems = Inventory.Instance.GetDictionaryEqiupment();
 
-        //for (int i = 0; i < equippableSlots.Length; i++)
-        //{
-        //    foreach (KeyValuePair<ItemEquipmentSO, ItemInventory> e in equipmentItems)
-        //    {
-        //        if (e.Key.EqipmentType == equippableSlots[i].slotType)
-        //        {
-        //            Debug.Log("Equipment: " + e.Key.EqipmentType);
-        //            equippableSlots[i].updateUISlotItem(e.Value);
-        //        }
-        //    }
-        //}
+        for (int i = 0; i < equippableSlots.Length; i++)
+        {
+            foreach (KeyValuePair<ItemEquipmentSO, ItemInventory> e in equipmentItems)
+            {
+                if (equippableSlots[i].slotType == e.Key.EqipmentType)
+                {
+                    Debug.Log("Equipment: " + e.Key.EqipmentType);
+                    equippableSlots[i].updateUISlotItem(e.Value);
+                }
+            }
+        }
 
-        //for (int i = 0; i < itemSlots.Length; i++)
-        //{
-        //    itemSlots[i].cleanItem();
-        //}
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            itemSlots[i].cleanItem();
+        }
 
 
 

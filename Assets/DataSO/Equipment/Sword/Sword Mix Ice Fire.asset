@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemType: 1
   itemName: SwordMixDame
+  onlyItem: 1
   icon: {fileID: 2078701519, guid: 37e19cd7a54e77e42a82990b84896021, type: 3}
   rateDrop: 0
   EqipmentType: 0
+  descriptionEquipment: 
   coolDownEffect: 0
   ItemEffect:
   - {fileID: 11400000, guid: 237350646aedcdc4eb7b92fae0ae9dd8, type: 2}

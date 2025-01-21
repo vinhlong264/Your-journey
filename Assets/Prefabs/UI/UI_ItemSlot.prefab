@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -1665373692, guid: 0f8d45987774793469b06aae2f95d88b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -91,9 +91,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageItem: {fileID: 1968766791007126206}
   itemText: {fileID: 7198584996394607136}
+  equipmentInfor: {fileID: 0}
   item:
-    data: {fileID: 0}
-    stackSize: 0
+    itemData: {fileID: 0}
+    currentQuantity: 0
 --- !u!1 &6594053314397496433
 GameObject:
   m_ObjectHideFlags: 0

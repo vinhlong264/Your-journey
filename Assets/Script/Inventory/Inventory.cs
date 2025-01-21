@@ -21,15 +21,6 @@ public class Inventory : Singleton<Inventory>, IInventory
     [SerializeField] private Dictionary<itemDataSO, ItemInventory> itemStashDictionary;
 
     [Header("Iventory UI")]
-    [SerializeField] private Transform inventorySlotParent; // Transform Parent dùng để quản lý các slot Item(Equipment)
-    [SerializeField] private UI_ItemSlot[] itemIventorySLot;
-
-    [SerializeField] private Transform stashSlotParent; // Transform Parent dùng để quản lý các slot Item(Material)
-    [SerializeField] private UI_ItemSlot[] itemStashSlot;
-
-    [SerializeField] private Transform equipmentSlotParent; // Transform Parent dùng để quản lý việc lưu vào slot Eqipment table
-    [SerializeField] private UI_EqipmentSlot[] equipmentSlot;
-
     [SerializeField] private Transform statsSlotParent; // Transform  Parent dùng để quản lý việc lưu và cập nhập UI
     [SerializeField] private UI_StatSlot[] statsSlot;
 
@@ -94,17 +85,21 @@ public class Inventory : Singleton<Inventory>, IInventory
         //updateSlotItemUI();
         _state = InventoryState.End;
 
-        StartCoroutine(UpdateUI());
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
     public void unEqipmentItem(ItemEquipmentSO eqipmentToRemove) // Quản lý việc gỡ trang bị
     {
+        _state = InventoryState.Start;
         if (equipmentDictionary.TryGetValue(eqipmentToRemove, out ItemInventory value))
         {
             eqipmentItemList.Remove(value);
             equipmentDictionary.Remove(eqipmentToRemove);
             eqipmentToRemove.removeModifier();
         }
+        _state = InventoryState.End;
+
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
     #region Craft
@@ -201,7 +196,7 @@ public class Inventory : Singleton<Inventory>, IInventory
 
         _state = InventoryState.End;
 
-        StartCoroutine(UpdateUI());
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
     private void addEquipment(itemDataSO _item)
@@ -222,11 +217,11 @@ public class Inventory : Singleton<Inventory>, IInventory
 
     public bool canAddItem()
     {
-        if (listInventory.Count >= itemIventorySLot.Length || itemStashList.Count >= itemStashSlot.Length)
-        {
-            Debug.Log("No more space");
-            return false;
-        }
+        //if (listInventory.Count >= itemIventorySLot.Length || itemStashList.Count >= itemStashSlot.Length)
+        //{
+        //    Debug.Log("No more space");
+        //    return false;
+        //}
         return true;
     }
 
@@ -249,6 +244,8 @@ public class Inventory : Singleton<Inventory>, IInventory
                 value.removeQuantity();
             }
         }
+        _state= InventoryState.End;
+        StartCoroutine(UpdateUI());
         //updateSlotItemUI();
     }
 
