@@ -13,6 +13,10 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private UI_EqipmentSlot[] equippableSlots;
     private Dictionary<ItemEquipmentSO, ItemInventory> equipmentItems;
 
+    [Header("UI Stats")]
+    [SerializeField] private Transform statsParent;
+    [SerializeField] private UI_StatSlot[] statsSlots;
+
     private void OnEnable()
     {
         Observer.Instance.subscribeListener(GameEvent.UpdateUI, updateUI);
@@ -27,6 +31,7 @@ public class InventoryUI : MonoBehaviour
     {
         itemSlots = inventoryParent.GetComponentsInChildren<UI_ItemSlot>();
         equippableSlots = equippableParent.GetComponentsInChildren<UI_EqipmentSlot>();
+        statsSlots = statsParent.GetComponentsInChildren<UI_StatSlot>();
     }
 
     private void updateUI(object value)
@@ -56,6 +61,11 @@ public class InventoryUI : MonoBehaviour
         for (int i = 0; i < inventoryItems.Count; i++)
         {
             itemSlots[i].updateUISlotItem(inventoryItems[i]);
+        }
+
+        for(int i = 0; i < statsSlots.Length; i++)
+        {
+            statsSlots[i].updateStatsUI();
         }
     }
 }

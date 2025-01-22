@@ -1,12 +1,12 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private UI ui;
+    
     public bool isUpdateStats;
+    [SerializeField] private UI_StatsInfo _statsInfo;
     [SerializeField] string statName;
     [SerializeField] StatType statType;
     [SerializeField] TextMeshProUGUI statNameText;
@@ -27,13 +27,12 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     protected void Start()
     {
-        ui = GetComponentInParent<UI>();
         updateStatsUI();
     }
 
     private void Update()
     {
-        
+
     }
 
     public void updateStatsUI()
@@ -54,7 +53,7 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             statValue.text = playerStatus.getMaxHealth().ToString();
         }
 
-        if(statType == StatType.Armor)
+        if (statType == StatType.Armor)
         {
             statValue.text = (playerStatus.armor.getValue() + playerStatus.vitality.getValue() + 3).ToString();
         }
@@ -83,11 +82,15 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ui.uiStatsInfo.showStatsDes(statDescription);
+        if (_statsInfo == null) return;
+
+        _statsInfo.showStatsDes(statDescription);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ui.uiStatsInfo.hideStatsDes();
+        if ( _statsInfo == null) return;
+
+        _statsInfo.hideStatsDes();
     }
 }

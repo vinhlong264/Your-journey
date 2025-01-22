@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Inventory : Singleton<Inventory>, IInventory
 {
-    private enum InventoryState
-    {
-        Start,
-        End
-    }
-    [SerializeField] private InventoryState _state = InventoryState.End;
-
     [Header("Equipment infor")]
     [SerializeField] private List<ItemInventory> eqipmentItemList; // Danh sách Eqipment để thêm vào Eqipment table
     [SerializeField] private Dictionary<ItemEquipmentSO, ItemInventory> equipmentDictionary;
@@ -56,7 +49,6 @@ public class Inventory : Singleton<Inventory>, IInventory
 
     public void equipmentItem(itemDataSO _item) // Quản lý eqipment table
     {
-        _state = InventoryState.Start;
         ItemEquipmentSO newEqipment = _item as ItemEquipmentSO;
         ItemInventory newItem = new ItemInventory(newEqipment);
 
@@ -83,21 +75,19 @@ public class Inventory : Singleton<Inventory>, IInventory
         removeItem(_item);// xóa item này khỏi list Iventory
 
         //updateSlotItemUI();
-        _state = InventoryState.End;
 
         Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
     public void unEqipmentItem(ItemEquipmentSO eqipmentToRemove) // Quản lý việc gỡ trang bị
     {
-        _state = InventoryState.Start;
+       
         if (equipmentDictionary.TryGetValue(eqipmentToRemove, out ItemInventory value))
         {
             eqipmentItemList.Remove(value);
             equipmentDictionary.Remove(eqipmentToRemove);
             eqipmentToRemove.removeModifier();
         }
-        _state = InventoryState.End;
 
         Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
@@ -174,8 +164,6 @@ public class Inventory : Singleton<Inventory>, IInventory
     #region add item
     public void addItem(itemDataSO _item)
     {
-        _state = InventoryState.Start;
-
         if(itemInvetoryDictionary.TryGetValue(_item , out ItemInventory value))
         {
             if (_item.onlyItem)
@@ -193,9 +181,6 @@ public class Inventory : Singleton<Inventory>, IInventory
             listInventory.Add(newItem);
             itemInvetoryDictionary.Add(_item , newItem);
         }
-
-        _state = InventoryState.End;
-
         Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
@@ -230,7 +215,6 @@ public class Inventory : Singleton<Inventory>, IInventory
     #region remove item
     public void removeItem(itemDataSO _item)
     {
-        _state = InventoryState.Start;
 
         if(itemInvetoryDictionary.TryGetValue(_item, out ItemInventory value))
         {
@@ -244,9 +228,7 @@ public class Inventory : Singleton<Inventory>, IInventory
                 value.removeQuantity();
             }
         }
-        _state= InventoryState.End;
-        StartCoroutine(UpdateUI());
-        //updateSlotItemUI();
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI , null);
     }
 
     private void removeItemInventory(itemDataSO _itemIventory)
@@ -339,16 +321,6 @@ public class Inventory : Singleton<Inventory>, IInventory
         return true;
     }
     #endregion
-
-    IEnumerator UpdateUI()
-    {
-        yield return new WaitUntil(() => _state == InventoryState.End);
-
-        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
-
-        _state = InventoryState.Start;
-    }
-
 
     public List<ItemInventory> GetListInventory() => listInventory;
     public Dictionary<itemDataSO, ItemInventory> GetDictionaryInventory() => itemInvetoryDictionary;
