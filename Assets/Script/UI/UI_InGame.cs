@@ -12,15 +12,20 @@ public class UI_InGame : MonoBehaviour
 
     private void OnEnable()
     {
-        Observer.Instance.subscribeListener(GameEvent.UpdateCurrentExp, updateCurrentExp);
+        Observer.Instance.subscribeListener(GameEvent.UpdateUI , updateCurrentExp);
+    }
+
+    private void OnDisable()
+    {
+        Observer.Instance.unsubscribeListener(GameEvent.UpdateUI , updateCurrentExp);
     }
 
     void Start()
     {
-        myStats = PlayerManager.Instance.playerStats;
+        myStats = GameManager.Instance.playerStats;
         myStats.onUiHealth += updateHealthBar;
         updateHealthBar();
-        levelTxt.text = $"Lv. {PlayerManager.Instance.CurrentLevel} + {PlayerManager.Instance.CurrentExp * 0.1}%";
+        levelTxt.text = $"Lv. {GameManager.Instance.playerLevel.Level} + {GameManager.Instance.playerLevel.ExpCurrent * 0.1}%";
     }
 
     private void updateHealthBar()
@@ -31,6 +36,6 @@ public class UI_InGame : MonoBehaviour
 
     public void updateCurrentExp(object value)
     {
-        levelTxt.text = $"Lv. {PlayerManager.Instance.CurrentLevel} + {(float)value * 0.1}%";
+        levelTxt.text = $"Lv. {GameManager.Instance.playerLevel.Level} + {GameManager.Instance.playerLevel.ExpCurrent * 0.1}%";
     }
 }

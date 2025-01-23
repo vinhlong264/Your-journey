@@ -13,8 +13,23 @@ public class Observer : Singleton<Observer>
 
     public void subscribeListener(GameEvent key, callBackEvent _callBack) // đăng kí sự kiện
     {
-        if (EventObserver.ContainsKey(key)) return;
+        if (EventObserver.ContainsKey(key))
+        {
+            Debug.Log("Tìm thấy key");
+            if (EventObserver[key].Count > 0)
+            {
+                Debug.Log("key event có sự kiện");
+                EventObserver[key].Add(_callBack);
+                return;
+            }
+            else
+            {
+                Debug.Log("Key hiện không có sự kiện nào cả");
+                return;
+            }
+        }
 
+        Debug.Log("Không có key, tạo key mới");
         EventObserver.Add(key, new HashSet<callBackEvent>());
         EventObserver[key].Add(_callBack);
     }
@@ -25,8 +40,16 @@ public class Observer : Singleton<Observer>
         {
             return;
         }
-        EventObserver[key].Remove(_callBack);
-        EventObserver.Remove(key);
+
+        if (EventObserver[key].Count == 0)
+        {
+            EventObserver.Remove(key);
+        }
+        else
+        {
+            EventObserver[key].Remove(_callBack);
+        }
+        
     }
 
     public void NotifyEvent(GameEvent key, object value)

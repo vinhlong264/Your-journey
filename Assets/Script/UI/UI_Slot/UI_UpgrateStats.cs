@@ -25,11 +25,11 @@ public class UI_UpgrateStats : MonoBehaviour
 
     private void upgrateStatsEvent()
     {
-        if (PlayerManager.Instance.levelupAtribute(stasType))
-        {
-            statsCount++;
-            statsUpgrateText.text = "+" + statsCount;
-            Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null); // Cập nhập lại stats
-        }
+        //if (GameManager.Instance.levelupAtribute(stasType))
+        //{
+        //    statsCount++;
+        //    statsUpgrateText.text = "+" + statsCount;
+        //    Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null); // Cập nhập lại stats
+        //}
     }
 }

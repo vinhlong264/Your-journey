@@ -14,7 +14,7 @@ public class SlimeBattleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        _player = PlayerManager.Instance.player;
+        _player = GameManager.Instance.player;
         countAtack++;
         if (countAtack > 7)
         {

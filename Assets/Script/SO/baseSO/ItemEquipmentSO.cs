@@ -49,7 +49,7 @@ public class ItemEquipmentSO : itemDataSO
 
     public void addModifier() // cộng thêm chỉ số
     {
-        PlayerStats playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStats>();
+        PlayerStats playerStatus = GameManager.Instance.player.GetComponent<PlayerStats>();
 
         //Major status
         playerStatus.strength.addModifiers(strength);
@@ -76,7 +76,7 @@ public class ItemEquipmentSO : itemDataSO
 
     public void removeModifier() // Xóa chỉ số
     {
-        PlayerStats playerStatus = PlayerManager.Instance.player.GetComponent<PlayerStats>();
+        PlayerStats playerStatus = GameManager.Instance.player.GetComponent<PlayerStats>();
 
         //Major status
         playerStatus.strength.removeModifiers(strength);

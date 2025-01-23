@@ -13,7 +13,7 @@ public class SkeletonBattleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        Player = PlayerManager.Instance.player.transform;
+        Player = GameManager.Instance.player.transform;
         //Debug.Log(Player);
     }
 

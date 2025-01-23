@@ -89,7 +89,7 @@ public class Slime : Enemy
     IEnumerator startSkill(WaterBullet w)
     {
         yield return new WaitForSeconds(1f);
-        w.setUp(3, true, PlayerManager.Instance.player.transform, GetComponent<EnemyStats>());
+        w.setUp(3, true, GameManager.Instance.player.transform, GetComponent<EnemyStats>());
     }
 
 

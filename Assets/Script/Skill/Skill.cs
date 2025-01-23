@@ -9,7 +9,7 @@ public class Skill : MonoBehaviour
     public float CoolDown { get => coolDown; }
     protected virtual void Start()
     {
-        player = PlayerManager.Instance.player;
+        player = GameManager.Instance.player;
         skillManager = GetComponent<SkillManager>();
     }
 

@@ -101,7 +101,7 @@ public class BlackHole_Skill_Controller : MonoBehaviour
         if (playerCanDispear)
         {
             playerCanDispear = false;
-            PlayerManager.Instance.player.makeTransprent(true);
+            GameManager.Instance.player.makeTransprent(true);
         }
     }
 

@@ -82,7 +82,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
             IDameHandleMagical dameMagical = hit.GetComponent<IDameHandleMagical>();
             if (dameMagical != null)
             {
-                dameMagical.DameDoMagical(PlayerManager.Instance.playerStats);
+                dameMagical.DameDoMagical(GameManager.Instance.playerStats);
             }
         }
     }

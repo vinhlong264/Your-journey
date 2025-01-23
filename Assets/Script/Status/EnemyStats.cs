@@ -81,7 +81,7 @@ public class EnemyStats : CharacterStats
         base.Die();
         enemy.Die();
 
-        //Observer.Instance.NotifyEvent(GameEvent.RewardExp, expReward);
+        Observer.Instance.NotifyEvent(GameEvent.RewardExp, expReward);
         dropSystem.generateDrop();
         return;
     }
