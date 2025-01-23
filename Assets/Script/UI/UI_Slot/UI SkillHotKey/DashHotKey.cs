@@ -2,10 +2,20 @@ using UnityEngine;
 
 public class DashHotKey : UI_SkillHotKeyAbstract
 {
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
-        
+        base.OnEnable();
+        if (skillImage != null)
+        {
+            if (skill.dash_skill.dashUnlock)
+            {
+                skillImage.enabled = true;
+            }
+            else
+            {
+                skillImage.enabled = false;
+            }
+        }
     }
     protected override void HandelInput()
     {

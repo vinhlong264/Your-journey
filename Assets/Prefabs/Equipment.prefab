@@ -205,10 +205,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageItem: {fileID: 0}
   itemText: {fileID: 0}
+  equipmentInfor: {fileID: 0}
   item:
-    data: {fileID: 0}
-    stackSize: 0
-  uiDes: {fileID: 0}
+    itemData: {fileID: 0}
+    currentQuantity: 0
   slotType: 2
 --- !u!1 &1325446640755654666
 GameObject:
@@ -375,10 +375,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageItem: {fileID: 0}
   itemText: {fileID: 0}
+  equipmentInfor: {fileID: 0}
   item:
-    data: {fileID: 0}
-    stackSize: 0
-  uiDes: {fileID: 0}
+    itemData: {fileID: 0}
+    currentQuantity: 0
   slotType: 4
 --- !u!1 &2615567132487511496
 GameObject:
@@ -620,10 +620,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageItem: {fileID: 0}
   itemText: {fileID: 0}
+  equipmentInfor: {fileID: 0}
   item:
-    data: {fileID: 0}
-    stackSize: 0
-  uiDes: {fileID: 0}
+    itemData: {fileID: 0}
+    currentQuantity: 0
   slotType: 0
 --- !u!1 &5189388464343056813
 GameObject:
@@ -715,10 +715,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageItem: {fileID: 0}
   itemText: {fileID: 0}
+  equipmentInfor: {fileID: 0}
   item:
-    data: {fileID: 0}
-    stackSize: 0
-  uiDes: {fileID: 0}
+    itemData: {fileID: 0}
+    currentQuantity: 0
   slotType: 1
 --- !u!1 &7095767110225458181
 GameObject:
@@ -1000,10 +1000,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageItem: {fileID: 0}
   itemText: {fileID: 0}
+  equipmentInfor: {fileID: 0}
   item:
-    data: {fileID: 0}
-    stackSize: 0
-  uiDes: {fileID: 0}
+    itemData: {fileID: 0}
+    currentQuantity: 0
   slotType: 3
 --- !u!1 &9016756270791470773
 GameObject:

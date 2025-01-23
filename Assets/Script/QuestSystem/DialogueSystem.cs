@@ -22,8 +22,8 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         string[] lines = textData.text.Split("\n");
         for (int i = 1; i < lines.Length; i++)
         {
-            if (string.IsNullOrWhiteSpace(lines[i]))
-                continue; // Bỏ qua dòng trống
+            if (string.IsNullOrWhiteSpace(lines[i])) // Bỏ qua khoảng trắng
+                continue; 
 
             string[] cols = lines[i].Split("\t");
 

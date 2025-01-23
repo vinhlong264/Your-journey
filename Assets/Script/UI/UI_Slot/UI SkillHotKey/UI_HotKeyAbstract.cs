@@ -6,10 +6,18 @@ public abstract class UI_SkillHotKeyAbstract : MonoBehaviour
     [SerializeField] protected Skilltype skillType; // Loại skill
     [SerializeField] protected KeyCode SkillHotKey;
     [SerializeField] protected Image skillImageCoolDown; // UI coolDown
+
+    [SerializeField] protected Image skillImage;
     protected SkillManager skill;
-    protected virtual void Start()
+
+    protected virtual void OnEnable()
     {
         skill = SkillManager.instance;
+    }
+
+    protected virtual void Start()
+    {
+        //skill = SkillManager.instance;
     }
 
     private void OnValidate()

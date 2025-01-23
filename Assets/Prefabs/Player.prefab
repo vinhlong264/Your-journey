@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 2283251248332776703}
   - component: {fileID: 8234494523094961719}
   - component: {fileID: 2004995831141995212}
+  - component: {fileID: 3680426474401417475}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -340,7 +341,7 @@ MonoBehaviour:
     baseValue: 1
     modifiers: 
   dame:
-    baseValue: 20
+    baseValue: 10
     modifiers: 
   critRate:
     baseValue: 0
@@ -375,6 +376,22 @@ MonoBehaviour:
   isShocked: 0
   thunerPrefabs: {fileID: 583608072295307890, guid: 94b7ae373881f8047a3787e60d933e03, type: 3}
   currentHealth: 0
+--- !u!114 &3680426474401417475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3295961764622525745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1fe9225fe123734a81812fbc86964e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 0
+  pointExp: 0
+  pointSkill: 0
+  playerStats: {fileID: 0}
 --- !u!1 &5784886100430625268
 GameObject:
   m_ObjectHideFlags: 0

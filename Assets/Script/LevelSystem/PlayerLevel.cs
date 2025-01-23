@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerLevel : LevelAbstract
 {
     [SerializeField] private int pointExp;
     [SerializeField] private int pointSkill;
+    [SerializeField] private PlayerStats playerStats;
 
+    public int PointExp { get => pointExp; }
+    public int PointSkill { get => pointSkill; }
     private void OnEnable()
     {
         Observer.Instance.subscribeListener(GameEvent.RewardExp, LevelUp);
@@ -19,9 +20,11 @@ public class PlayerLevel : LevelAbstract
 
     private void Start()
     {
+        playerStats = GetComponent<PlayerStats>();
+
         level = 1;
         expCurrent = 0;
-        pointExp = 0;
+        pointExp = 10;
         pointSkill = 0;
     }
 
@@ -29,7 +32,7 @@ public class PlayerLevel : LevelAbstract
     {
         expCurrent += (int)value;
 
-        if(expCurrent >= GetExpNextToLevel())
+        if (expCurrent >= GetExpNextToLevel())
         {
             expCurrent -= GetExpNextToLevel();
             level++;
@@ -37,11 +40,29 @@ public class PlayerLevel : LevelAbstract
             pointSkill += 1;
         }
 
-        Observer.Instance.NotifyEvent(GameEvent.UpdateUI , expCurrent);
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, expCurrent);
     }
 
     protected override void levelUpStats(CharacterStats stat)
     {
         // cập nhập các stats khi lên cấp
+    }
+
+    public bool canLevelUpStats(StatType type)
+    {
+        if (pointExp > 0)
+        {
+            levelUpStats(type);
+            return true;
+        }
+        return false;
+    }
+
+    private void levelUpStats(StatType type)
+    {
+        // Cập nhập stats bằng điểm PointExp
+        Debug.Log("Level up stat: " + type.ToString());
+        playerStats.increaseStats(type);
+        pointExp--;
     }
 }

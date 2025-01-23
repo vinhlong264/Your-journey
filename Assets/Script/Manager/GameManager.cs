@@ -12,10 +12,4 @@ public class GameManager : Singleton<GameManager>
     {
         MakeSingleton(false);
     }
-
-    public bool levelupAtribute(StatType statType)
-    {
-        
-        return false;
-    }
 }
