@@ -1,2 +1,2 @@
 brandStoryID	qip	name	description	xpReward	coinReward	requiment
-2	1	Thể hiện thực lực	Fox không yên tâm về thực lực của bạn, nó cho rằng với thực lực hiện tại đi vào rừng ABC là rất nguy hiểm. Để chứng minh thực lực, Fox yêu cầu bạn đánh 10 con XYZ thì mới chỉ đường	200	50	10
+0	1	Thể hiện thực lực	Fox không yên tâm về thực lực của bạn, nó cho rằng với thực lực hiện tại đi vào rừng ABC là rất nguy hiểm. Để chứng minh thực lực, Fox yêu cầu bạn đánh 10 con XYZ thì mới chỉ đường	200	50	10

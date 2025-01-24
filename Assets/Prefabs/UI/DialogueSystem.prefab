@@ -65,10 +65,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Test
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8923e277c7c20b940807c2d2a950e99b, type: 2}
-  m_sharedMaterial: {fileID: -8774602750307905173, guid: 8923e277c7c20b940807c2d2a950e99b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ba3f09c672b0bbe46988c7c603d9a1bd, type: 2}
+  m_sharedMaterial: {fileID: 1085374564371690721, guid: ba3f09c672b0bbe46988c7c603d9a1bd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -321,6 +321,8 @@ MonoBehaviour:
   listConverStation: []
   contentTxt: {fileID: 5359347634031781170}
   chatBoxObj: {fileID: 2477084221435994272}
+  branchStoryID: 0
+  storyDataTxt: 
 --- !u!1 &2477084221435994272
 GameObject:
   m_ObjectHideFlags: 0

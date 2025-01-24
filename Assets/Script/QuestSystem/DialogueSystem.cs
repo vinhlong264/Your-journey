@@ -11,9 +11,22 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
     private int currentIndex = 0;
 
 
+    [SerializeField] private int branchStoryID;
+    [SerializeField] private string storyDataTxt;
+
+
     void Start()
     {
 
+    }
+
+    public void setUpDialogue(int _branchStory , string _storyDataTXt)
+    {
+        branchStoryID = _branchStory;
+        storyDataTxt = _storyDataTXt;
+        LoadText(storyDataTxt);
+
+        Dialogue();
     }
 
     public void LoadText(string _path)
@@ -51,16 +64,17 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            QuestSystem.Instance.setQipStory(1);
-            var getQuest = QuestSystem.Instance.GetQuest(2);
-            if(getQuest != null)
-            {
-                Debug.Log("Quest tồn tại");
-            }
-            Debug.Log("Quest không tồn tại");
+            Quest getQ = QuestSystem.Instance.GetQuest(branchStoryID);
 
-            gameObject.SetActive(false);
-        }
+            if(getQ != null)
+            {
+                Debug.Log("Lấy ra quest thành công");
+                QuestSystem.Instance.ReceiveQuest(getQ);
+            }
+
+
+            chatBoxObj.SetActive(false);
+        }       
     }
 
 

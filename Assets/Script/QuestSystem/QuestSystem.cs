@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class QuestSystem : Singleton<QuestSystem>
 {
-    public List<BranchStory> branchStory = new List<BranchStory>(); // danh sách các nhánh truyện
+    public List<BranchStory> allBranchStory = new List<BranchStory>(); // danh sách các nhánh truyện
     public List<Quest> allQuest = new List<Quest>(); // danh sách tất cả các quest
     public List<Quest> questReceive = new List<Quest>(); // danh sách các Quest đã nhận
 
     protected override void Awake()
     {
-        MakeSingleton(true);
+        MakeSingleton(false);
     }
 
     private void Start()
     {
         LoadTextAsset("TextData/subQuest");
+        
+        allBranchStory.Add(new BranchStory() { branchID = 0, name = "mainStory", questProgress = 1 });
     }
 
     public void LoadTextAsset(string path)
@@ -43,13 +45,15 @@ public class QuestSystem : Singleton<QuestSystem>
     }
 
 
-    public Quest GetQuest(int _id)
+    public Quest GetQuest(int _id) // Lấy ra quest
     {
         var qip = GetQipStory(_id);
+        Debug.Log("qip take: "+qip);
         var getQuest = allQuest.FirstOrDefault(x=> x.branchStoryID == _id && x.qip == qip);
 
         if(getQuest != null)
         {
+            Debug.Log("Quest: "+getQuest.name);
             return getQuest;
         }
         else
@@ -58,9 +62,9 @@ public class QuestSystem : Singleton<QuestSystem>
         }
     }
 
-    public int GetQipStory(int _branchID)
+    private int GetQipStory(int _branchID) // Lấy ra Quest đang thực thi trong nhánh truyện
     {
-        var getBranch = branchStory.FirstOrDefault(x => x.branchID ==  _branchID);
+        var getBranch = allBranchStory.FirstOrDefault(x => x.branchID ==  _branchID);
         if(getBranch != null)
         {
             return getBranch.questProgress;
@@ -72,9 +76,17 @@ public class QuestSystem : Singleton<QuestSystem>
 
     }
 
+    public void ReceiveQuest(Quest q)
+    {
+        if(q != null)
+        {
+            questReceive.Add(q);
+        }
+    }
+
     public void setQipStory(int id)
     {
-        var getQip = branchStory.FirstOrDefault(x=>x.branchID == id);
+        var getQip = allBranchStory.FirstOrDefault(x=>x.branchID == id);
         if(getQip != null)
         {
             getQip.questProgress++;
@@ -83,7 +95,7 @@ public class QuestSystem : Singleton<QuestSystem>
 
     public void backQipStory(int id)
     {
-        var getBranch = branchStory.FirstOrDefault(y => y.branchID == id);
+        var getBranch = allBranchStory.FirstOrDefault(y => y.branchID == id);
         if (getBranch != null)
         {
             getBranch.questProgress--;
