@@ -6,13 +6,18 @@ using UnityEngine.EventSystems;
 public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private List<Conversation> listConverStation = new List<Conversation>();
+    [SerializeField] private QuestPanel questPanel;
+    [SerializeField] private int branchStoryID;
+    [SerializeField] private string storyDataTxt;
+
+    [Header("UI Dialogue")]
     [SerializeField] private TextMeshProUGUI contentTxt;
-    [SerializeField] private GameObject chatBoxObj;
+    [SerializeField] private GameObject chatBox;
+    [SerializeField] private GameObject playerAvatar;
+    [SerializeField] private GameObject npcAvatar;
     private int currentIndex = 0;
 
 
-    [SerializeField] private int branchStoryID;
-    [SerializeField] private string storyDataTxt;
 
 
     void Start()
@@ -57,23 +62,31 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     public void Dialogue()
     {
-        chatBoxObj.SetActive(true);
+        chatBox.SetActive(true);
         if(currentIndex < listConverStation.Count)
         {
+            if (listConverStation[currentIndex].character == "Player")
+            {
+                npcAvatar.SetActive(false);
+                playerAvatar.SetActive(true);
+            }
+            else if (listConverStation[currentIndex].character == "NPC")
+            {
+                playerAvatar.SetActive(false);
+                npcAvatar.SetActive(true);
+            }
             contentTxt.text = listConverStation[currentIndex].content;
         }
         else
         {
+            chatBox.SetActive(false);
             Quest getQ = QuestSystem.Instance.GetQuest(branchStoryID);
 
             if(getQ != null)
             {
                 Debug.Log("Lấy ra quest thành công");
-                QuestSystem.Instance.ReceiveQuest(getQ);
+                questPanel.ShowQuest(getQ);
             }
-
-
-            chatBoxObj.SetActive(false);
         }       
     }
 

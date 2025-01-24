@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class QuestSystem : Singleton<QuestSystem>
 {
-    public List<BranchStory> allBranchStory = new List<BranchStory>(); // danh sách các nhánh truyện
-    public List<Quest> allQuest = new List<Quest>(); // danh sách tất cả các quest
-    public List<Quest> questReceive = new List<Quest>(); // danh sách các Quest đã nhận
+    [SerializeField] private List<BranchStory> allBranchStory = new List<BranchStory>(); // danh sách các nhánh truyện
+    [SerializeField] private List<Quest> allQuest = new List<Quest>(); // danh sách tất cả các quest
+    [SerializeField] private List<Quest> questReceive = new List<Quest>(); // danh sách các Quest đã nhận
+
+    [SerializeField] private Quest currentQuest;
 
     protected override void Awake()
     {
@@ -81,8 +83,11 @@ public class QuestSystem : Singleton<QuestSystem>
         if(q != null)
         {
             questReceive.Add(q);
+            currentQuest = q;
         }
     }
+
+    public Quest getQuestCurrent() => currentQuest;
 
     public void setQipStory(int id)
     {

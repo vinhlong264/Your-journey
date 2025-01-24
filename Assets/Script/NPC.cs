@@ -6,6 +6,8 @@ public class NPC : MonoBehaviour
     private bool isFacingRigt;
     private Player player;
     [SerializeField] private DialogueSystem dialogueSystem;
+    [SerializeField] private int branchID;
+    [SerializeField] private string dataText;
 
     private void Start()
     {
@@ -26,6 +28,6 @@ public class NPC : MonoBehaviour
             sr.flipX = false;
             isFacingRigt = true;
         }
-        dialogueSystem.setUpDialogue(0, "TextData/Story 1");
+        dialogueSystem.setUpDialogue(branchID, dataText);
     }
 }

@@ -82,6 +82,7 @@ public class EnemyStats : CharacterStats
         enemy.Die();
 
         Observer.Instance.NotifyEvent(GameEvent.RewardExp, expReward);
+        QuestSystem.Instance.getQuestCurrent().setCurrentQuest();
         dropSystem.generateDrop();
         return;
     }
