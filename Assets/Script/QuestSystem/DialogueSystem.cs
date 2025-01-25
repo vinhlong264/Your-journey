@@ -17,9 +17,6 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject npcAvatar;
     private int currentIndex = 0;
 
-
-
-
     void Start()
     {
 

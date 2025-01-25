@@ -21,7 +21,7 @@ public class PlayerJumpWallState : PlayerState
 
         if (!_player.wallCheck())
         {
-            _stateMachine.changeState(_player._idleState);
+            _stateMachine.changeState(_player._airState);
         }
 
         if (stateTimer < 0)
