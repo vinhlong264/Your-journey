@@ -19,8 +19,11 @@ public class UI_EqipmentSlot : UI_ItemSlot
     {
         if (item == null || item.itemData == null) return;
 
-        Inventory.Instance.unEqipmentItem(item.itemData as ItemEquipmentSO);
-        Inventory.Instance.addItem(item.itemData as ItemEquipmentSO);
+        if(slotType != EqipmentType.Bottle)
+        {
+            Inventory.Instance.unEqipmentItem(item.itemData as ItemEquipmentSO);
+            Inventory.Instance.addItem(item.itemData as ItemEquipmentSO);
+        }
         cleanItem();
     }
 }

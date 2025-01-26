@@ -3,7 +3,7 @@
 public class SkeletonBattleState : EnemyState
 {
     private Skeleton enemy;
-    private Transform Player;
+    private Player Player;
     private float moveDir;
     public SkeletonBattleState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName, Skeleton enemy) : base(enemyBase, stateMachine, animationBoolName)
     {
@@ -13,8 +13,11 @@ public class SkeletonBattleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        Player = GameManager.Instance.player.transform;
-        //Debug.Log(Player);
+        Player = GameManager.Instance.player;
+        if (Player.isDeath)
+        {
+            stateMachine.changeState(enemy.runState);
+        }
     }
 
     public override void Exit()

@@ -10,6 +10,7 @@ public class itemDrop : MonoBehaviour
     [SerializeField] private itemDataSO item;
     public void generateDrop()
     {
+        if (possibleDrop.Length <= 0) return;
 
         for (int i = 0; i < possibleDrop.Length; i++)
         {

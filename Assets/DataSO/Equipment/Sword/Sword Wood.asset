@@ -21,11 +21,11 @@ MonoBehaviour:
   descriptionEquipment: 
   coolDownEffect: 0
   ItemEffect: []
-  strength: 0
+  strength: 3
   ability: 0
   inteligent: 0
   vitality: 0
-  dame: 4
+  dame: 6
   critChance: 0
   critPower: 0
   maxHealth: 0

@@ -1,0 +1,6 @@
+ID	Character	Content
+1	NPC	Về rồi sao, Ngươi làm nhanh hơn ta tưởng đó, đúng là không thể chỉ nhìn qua ma lực được
+2	Player	Đó, vậy ngài có thể chỉ đường cho tôi chưa
+3	NPC	Ngươi hãy đi xuôi theo cánh rừng này và leo lên vách núi sẽ thấy 1 dòng sông đi xuôi theo đó là tới
+4	Player	Cảm ơn, vậy tôi đi đây
+5	NPC	Đi mạnh giỏi và hãy tạo lên thời đại mới

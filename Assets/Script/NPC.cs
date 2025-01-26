@@ -6,14 +6,17 @@ public class NPC : MonoBehaviour
     private bool isFacingRigt;
     private Player player;
     [SerializeField] private DialogueSystem dialogueSystem;
-    [SerializeField] private int branchID;
-    [SerializeField] private string dataText;
+    private int count;
+    private int branchID;
+    private string dataText;
 
     private void Start()
     {
         sr = GetComponentInChildren<SpriteRenderer>();
         isFacingRigt = true;
         player = GameManager.Instance.player;
+        count = 0;
+        branchID = 0;
     }
 
     private void OnMouseDown()
@@ -27,6 +30,16 @@ public class NPC : MonoBehaviour
         {
             sr.flipX = false;
             isFacingRigt = true;
+        }
+        count++;
+        switch (count)
+        {
+            case 1:
+                dataText = "TextData/Story 1";
+                break;
+            case 2:
+                dataText = "TextData/Story 2";
+                break;
         }
         dialogueSystem.setUpDialogue(branchID, dataText);
     }

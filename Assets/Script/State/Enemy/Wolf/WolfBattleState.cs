@@ -14,6 +14,10 @@ public class WolfBattleState : EnemyState
     {
         base.Enter();
         _player = GameManager.Instance.player;
+        if (_player.isDeath)
+        {
+            stateMachine.changeState(_wolf._runState);
+        }
     }
 
     public override void Update()

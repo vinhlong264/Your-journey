@@ -1,10 +1,7 @@
 ID	Character	Content
-1	NPC	Chào bạn, bạn đang trên đường đi đâu vậy?
-2	Player	Tôi đang đi đến ngôi làng của mạo hiểm giả
-3	NPC	Wao, bạn đang đến đó sao? Lâu lắm tôi mới thấy 1 nữ chiến binh đó. Trước đến giờ thôi toàn thấy healer thôi
-4	Player	Thật vậy sao, tôi là nữ chiến binh đầu tiên đến đây
-5	NPC	Bạn là người thứ 2 mới đúng, tôi nghe mọi người nói cách đây 50 năm cũng có 1 nữ chiến binh vị ấy đã từng đả bại quỷ vương P White
-6	Player	[Mừng hụt] Vậy sao tôi cứ tưởng mình là người đầu tiên chứ
-7	NPC	Sao phải buồn bạn, nhỡ đâu bạn lại là người tạo ra kì tích thì sao
-8	Player	[Cảm thấy vui] Tôi sẽ cố gắng, chào bạn tôi đi đây
-9	NPC	Đi mạnh giỏi
+1	Player	Chào ngài, ngài có thể cho tôi biết đường đến thành phố của mạo hiểm giả không?
+2	NPC	Thành phố của mạo hiểm giả sao, nơi đó ta biết nhưng nhìn ngươi có vẻ không được mạnh cho lắm
+3	Player	Sao ngài có thể biết là tôi yếu?
+4	NPC	Ta nhìn vào lượng ma lực của ngươi là hiểu, với lượng ma lực đó ngươi chưa chắc thắng được mấy con sói trong rừng
+5	Player	Ngài đâu có thể nhìn vào lượng ma lực để đánh giá vậy được
+6	NPC	Hừm, vậy ngươi thử vào rừng tiêu diệt cho ta 5 con sói đi rồi về đây ta sẽ chỉ đường cho

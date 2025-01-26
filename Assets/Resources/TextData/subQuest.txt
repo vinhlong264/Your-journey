@@ -1,2 +1,2 @@
 branchId	QIP	Name	Description	expReward	coinReward	require
-0	1	Kiểm tra sức mạnh	Hãy đến khu rừng bên cạnh đánh bại 10 con sói	100	100	10
+0	1	Kiểm tra sức mạnh	Hãy đến khu rừng bên cạnh đánh bại 5 con sói	100	100	5

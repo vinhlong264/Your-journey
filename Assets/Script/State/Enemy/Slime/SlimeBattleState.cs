@@ -15,6 +15,12 @@ public class SlimeBattleState : EnemyState
     {
         base.Enter();
         _player = GameManager.Instance.player;
+        if (_player.isDeath)
+        {
+            stateMachine.changeState(_slime.runState);
+        }
+
+
         countAtack++;
         if (countAtack > 7)
         {

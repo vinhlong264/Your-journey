@@ -7,7 +7,7 @@ public abstract class EnemyState
     protected bool triggerCalled;
     protected float stateTimer;
 
-    private string animationBoolName;
+    protected string animationBoolName;
 
     public EnemyState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName)
     {

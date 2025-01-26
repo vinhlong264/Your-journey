@@ -24,7 +24,7 @@ public class PlayerLevel : LevelAbstract
 
         level = 1;
         expCurrent = 0;
-        pointExp = 10;
+        pointExp = 0;
         pointSkill = 0;
     }
 
@@ -39,7 +39,6 @@ public class PlayerLevel : LevelAbstract
             pointExp += 5;
             pointSkill += 1;
         }
-
         Observer.Instance.NotifyEvent(GameEvent.UpdateUI, expCurrent);
     }
 

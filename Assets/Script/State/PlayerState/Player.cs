@@ -30,6 +30,8 @@ public class Player : Entity
 
     public GameObject sword;
 
+    public bool isDeath;
+
     #endregion
 
     #region State
@@ -199,6 +201,7 @@ public class Player : Entity
     public override void Die()
     {
         _stateMachine.changeState(_deathState);
+        isDeath = true;
     }
 
 

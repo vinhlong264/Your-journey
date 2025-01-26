@@ -20,7 +20,7 @@ public abstract class Enemy : Entity
     [SerializeField] protected float stunDuration;
     [SerializeField] protected Vector2 stunDirection;
     public bool isCanStun { get; set; } = true;
-    [SerializeField] protected GameObject CounterImage;
+    [SerializeField] protected GameObject AttackImage;
     private float defaultSpeed;
 
 
@@ -40,7 +40,6 @@ public abstract class Enemy : Entity
     //Stun variable
     public float StunDuration { get => stunDuration; }
     public Vector2 StunDirection { get => stunDirection; }
-    public bool IsCanStun { get => isCanStun; }
 
     #endregion
 
@@ -82,12 +81,12 @@ public abstract class Enemy : Entity
 
     public void OpenAttackWindow()
     {
-        CounterImage.SetActive(true);
+        AttackImage.SetActive(true);
     }
 
     public void CloseAttackWindow()
     {
-        CounterImage.SetActive(false);
+        AttackImage.SetActive(false);
     }
 
     #endregion

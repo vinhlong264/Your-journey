@@ -13,9 +13,7 @@ public class Inventory : Singleton<Inventory>, IInventory
     [SerializeField] private List<ItemInventory> itemStashList;  //Danh sách item(Material) để thêm vào Stash
     [SerializeField] private Dictionary<itemDataSO, ItemInventory> itemStashDictionary;
 
-    [Header("Iventory UI")]
-    [SerializeField] private Transform statsSlotParent; // Transform  Parent dùng để quản lý việc lưu và cập nhập UI
-    [SerializeField] private UI_StatSlot[] statsSlot;
+
 
     private float lastTimeUseBollte = 0;
     private float lastTimeUseArmor = 0;
@@ -74,7 +72,6 @@ public class Inventory : Singleton<Inventory>, IInventory
         newEqipment.addModifier(); // Thay đổi thông số
         removeItem(_item);// xóa item này khỏi list Iventory
 
-        //updateSlotItemUI();
 
         Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
@@ -152,15 +149,6 @@ public class Inventory : Singleton<Inventory>, IInventory
 
     #endregion
 
-
-    public void updateStatsUI()
-    {
-        for (int i = 0; i < statsSlot.Length; i++)
-        {
-            statsSlot[i].updateStatsUI();
-        }
-    }
-
     #region add item
     public void addItem(itemDataSO _item)
     {
@@ -202,11 +190,6 @@ public class Inventory : Singleton<Inventory>, IInventory
 
     public bool canAddItem()
     {
-        //if (listInventory.Count >= itemIventorySLot.Length || itemStashList.Count >= itemStashSlot.Length)
-        //{
-        //    Debug.Log("No more space");
-        //    return false;
-        //}
         return true;
     }
 
@@ -225,7 +208,15 @@ public class Inventory : Singleton<Inventory>, IInventory
             }
             else
             {
-                value.removeQuantity();
+                if(value.currentQuantity > 1)
+                {
+                    value.removeQuantity();
+                }
+                else
+                {
+                    listInventory.Remove(value);
+                    itemInvetoryDictionary.Remove(_item);
+                }
             }
         }
         Observer.Instance.NotifyEvent(GameEvent.UpdateUI , null);
@@ -302,6 +293,7 @@ public class Inventory : Singleton<Inventory>, IInventory
         
         lastTimeUseBollte = Time.time;
         newCurrentEffect.excuteItemEffect(null);
+        removeItem(newCurrentEffect);
         Debug.Log("Bật hiệu ứng");
         return true;
     }

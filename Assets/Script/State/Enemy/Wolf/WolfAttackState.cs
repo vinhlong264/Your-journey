@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class WolfAttackState : EnemyState
 {
     private Wolf _wolf;
@@ -29,5 +31,6 @@ public class WolfAttackState : EnemyState
     public override void Exit()
     {
         base.Exit();
+        _wolf.lastTime = Time.time;
     }
 }

@@ -26,7 +26,7 @@ public class Dogde_Skill : Skill
         if (dogdeSkillUnlockBtn.isUnlocked)
         {
             player.status.evasion.addModifiers(10);
-            Inventory.Instance.updateStatsUI(); // Cập nhập lại stats
+            /*Inventory.Instance.updateStatsUI();*/ // Cập nhập lại stats
             dogdeSkillUnlocked = true;
         }
     }

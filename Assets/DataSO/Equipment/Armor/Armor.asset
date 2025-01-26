@@ -28,8 +28,8 @@ MonoBehaviour:
   dame: 0
   critChance: 0
   critPower: 0
-  maxHealth: 0
-  armor: 4
+  maxHealth: 10
+  armor: 10
   evasion: 0
   magicResistance: 0
   fireDame: 0
