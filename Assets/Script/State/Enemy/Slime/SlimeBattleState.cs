@@ -28,7 +28,7 @@ public class SlimeBattleState : EnemyState
         base.Update();
         if (_slime.isPlayerDetected())
         {
-            if (_slime.isPlayerDetected().distance < _slime.attackDistance)
+            if (_slime.isPlayerDetected().distance < _slime.AttackDis)
             {
                 stateTimer = _slime.BattleTime;
                 if (canAttack())
@@ -64,16 +64,5 @@ public class SlimeBattleState : EnemyState
     public override void Exit()
     {
         base.Exit();
-    }
-
-    private bool canAttack()
-    {
-        if (Time.time >= _slime.lastTime + _slime.attackCoolDown)
-        {
-            _slime.lastTime = Time.time;
-            return true;
-        }
-
-        return false;
     }
 }

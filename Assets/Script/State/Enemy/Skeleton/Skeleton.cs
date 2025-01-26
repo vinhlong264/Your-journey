@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class Skeleton : Enemy
 {
-    public float attackDistance;
-    public float attackCooldown;
-    public float lastTime;
-
-    [Header("Health infor")]
-    public float hpMax;
-    public float currentHp;
-
     #region State
     public SkeletonIdleState idleState {  get; private set; }
     public SkeletonRunState runState { get; private set; }
@@ -25,19 +17,18 @@ public class Skeleton : Enemy
     protected override void Awake()
     {
         base.Awake();
-        idleState = new SkeletonIdleState(this , StateMachine , "Idle" , this );
-        runState = new SkeletonRunState(this , StateMachine, "Run" , this );
-        battleState = new SkeletonBattleState(this , StateMachine , "Run" , this);
-        attackState = new SkeletonAttackState(this, StateMachine, "Attack", this);
-        stunState = new SkeletonStunState(this, StateMachine, "Stun", this);
-        deathState = new SkeletonDeathState(this, StateMachine, "Death", this);
+        idleState = new SkeletonIdleState(this , stateMachine , "Idle" , this );
+        runState = new SkeletonRunState(this , stateMachine, "Run" , this );
+        battleState = new SkeletonBattleState(this , stateMachine , "Run" , this);
+        attackState = new SkeletonAttackState(this, stateMachine, "Attack", this);
+        stunState = new SkeletonStunState(this, stateMachine, "Stun", this);
+        deathState = new SkeletonDeathState(this, stateMachine, "Death", this);
     }
 
     protected override void Start()
     {
         base.Start();
-        StateMachine.initialize(idleState);
-        currentHp = hpMax;
+        stateMachine.initialize(idleState);
         isFacingDir = 1f;
         isFacingRight = true;
     }
@@ -62,7 +53,7 @@ public class Skeleton : Enemy
     {
         if (base.checkStunned())
         {
-            StateMachine.changeState(stunState);
+            stateMachine.changeState(stunState);
             return true;
         }
         return false;
@@ -72,6 +63,6 @@ public class Skeleton : Enemy
     public override void Die()
     {
         base.Die();
-        StateMachine.changeState(deathState);
+        stateMachine.changeState(deathState);
     }
 }

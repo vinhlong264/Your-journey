@@ -5,7 +5,12 @@ public abstract class Enemy : Entity
 {
     [Header("Attack info")]
     [SerializeField] protected float battleTime;
+    [SerializeField] protected float attackCoolDown;
+    public float lastTime;
+
+    [Space]
     [SerializeField] protected Transform _attackCheck;
+    [SerializeField] private float _attackDis;
     [SerializeField] protected float _attackCheckDis;
     [SerializeField] protected float _attackRadius;
     [SerializeField] protected LayerMask isPlayer;
@@ -23,8 +28,11 @@ public abstract class Enemy : Entity
 
     //Attack Variable
     public float BattleTime { get => battleTime; }
+
+    public float AttackCoolDown { get => attackCoolDown; }
     public float AttackRadius { get => _attackRadius; }
     public float AttackCheckDis {  get => _attackCheckDis; }
+    public float AttackDis { get => _attackDis; }
 
     public Transform AttackChecks { get => _attackCheck; }
 
@@ -36,11 +44,11 @@ public abstract class Enemy : Entity
 
     #endregion
 
-    public EnemyStateMachine StateMachine {  get; private set; }
+    public EnemyStateMachine stateMachine {  get; private set; }
     protected override void Awake()
     {
         base.Awake();
-        StateMachine = new EnemyStateMachine();
+        stateMachine = new EnemyStateMachine();
     }
 
     protected override void Start()
@@ -51,13 +59,13 @@ public abstract class Enemy : Entity
     protected override void Update()
     {
         base.Update();
-        StateMachine.currentState.Update();
+        stateMachine.currentState.Update();
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        StateMachine.currentState.FixUpdate();
+        stateMachine.currentState.FixUpdate();
     }
 
     #region Conuter attack
@@ -130,7 +138,7 @@ public abstract class Enemy : Entity
         base.Die();
     }
 
-    public void animationTriggerFinish() => StateMachine.currentState.AnimationTriggerCalled();
+    public void animationTriggerFinish() => stateMachine.currentState.AnimationTriggerCalled();
 
     public RaycastHit2D isPlayerDetected() => Physics2D.Raycast(transform.position, Vector2.right * isFacingDir, _attackCheckDis, isPlayer);
 

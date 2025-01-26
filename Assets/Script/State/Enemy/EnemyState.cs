@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class EnemyState
 {
@@ -43,5 +43,17 @@ public abstract class EnemyState
     {
         triggerCalled = true;
     }
-    
+
+    protected bool canAttack()
+    {
+        if (Time.time >= enemyBase.lastTime + enemyBase.AttackCoolDown)
+            //Kiểm tra nếu Time.time >= lastTime + attackCooldown sẽ gán lastTime = Time.time và trả hàm này về true, và ngược lại
+        {
+            enemyBase.lastTime = Time.time;
+            return true;
+        }
+        Debug.Log("Attack is a cooldown");
+        return false;
+    }
+
 }

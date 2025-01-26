@@ -5,10 +5,6 @@ public class Slime : Enemy
 {
     [SerializeField] private SlimeType type;
     [SerializeField] private GameObject slimeSmall;
-
-    public float lastTime;
-    public float attackCoolDown;
-    public float attackDistance;
     [SerializeField] private GameObject waterBulletPrefabs;
 
     #region State
@@ -22,19 +18,19 @@ public class Slime : Enemy
     protected override void Awake()
     {
         base.Awake();
-        idleState = new SlimeIdleState(this, StateMachine, "IDLE", this);
-        runState = new SlimeRunState(this, StateMachine, "RUN", this);
-        battleState = new SlimeBattleState(this, StateMachine, "RUN", this);
-        attackState = new SlimeAttackState(this, StateMachine, "ATTACK", this);
-        stunState = new SlimeStunState(this, StateMachine, "STUN", this);
-        deathState = new SlimeDeathState(this, StateMachine, "DEATH", this);
+        idleState = new SlimeIdleState(this, stateMachine, "IDLE", this);
+        runState = new SlimeRunState(this, stateMachine, "RUN", this);
+        battleState = new SlimeBattleState(this, stateMachine, "RUN", this);
+        attackState = new SlimeAttackState(this, stateMachine, "ATTACK", this);
+        stunState = new SlimeStunState(this, stateMachine, "STUN", this);
+        deathState = new SlimeDeathState(this, stateMachine, "DEATH", this);
 
     }
 
     protected override void Start()
     {
         base.Start();
-        StateMachine.initialize(idleState);
+        stateMachine.initialize(idleState);
     }
 
     protected override void Update()
@@ -44,14 +40,14 @@ public class Slime : Enemy
 
     protected override void FixedUpdate()
     {
-        StateMachine.currentState.FixUpdate();
+        stateMachine.currentState.FixUpdate();
     }
 
     public override bool checkStunned()
     {
         if (base.checkStunned())
         {
-            StateMachine.changeState(stunState);
+            stateMachine.changeState(stunState);
             return true;
         }
         return false;
@@ -61,7 +57,7 @@ public class Slime : Enemy
     {
         base.Die();
         CloseAttackWindow();
-        StateMachine.changeState(deathState);
+        stateMachine.changeState(deathState);
         if (type == SlimeType.SMALL) return;
 
         if (slimeSmall == null) return;

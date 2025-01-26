@@ -1,32 +1,15 @@
 using UnityEngine;
 
-public class SkeletonAnimationTrigger : MonoBehaviour
+public class SkeletonAnimationTrigger : AnimationEventBase
 {
-    private Skeleton skeleton;
-    [SerializeField] private LayerMask whatIsMask;
-    private void Start()
+    protected override void Start()
     {
-        skeleton = GetComponentInParent<Skeleton>();
-    }
-    public void AnimationTrigger()
-    {
-        skeleton.animationTriggerFinish();
+        base.Start();
     }
 
-    public void AttackTrigger()
+
+    protected override void AttackEventTrigger()
     {
-        Collider2D[] attack = Physics2D.OverlapCircleAll(skeleton.AttackChecks.position, skeleton.AttackRadius, whatIsMask);
-        foreach (Collider2D hit in attack)
-        {
-            IDameHandlePhysical targetReceive = hit.GetComponent<IDameHandlePhysical>();
-            if (targetReceive != null)
-            {
-                targetReceive.DoDamePhysical(skeleton.GetComponent<EnemyStats>());
-            }
-        }
+        base.AttackEventTrigger();
     }
-
-    public void OpenCounterAttack() => skeleton.OpenAttackWindow();
-
-    public void CloseCounterAttack() => skeleton.CloseAttackWindow();
 }

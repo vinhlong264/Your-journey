@@ -27,7 +27,7 @@ public class SkeletonBattleState : EnemyState
         base.Update();
         if (enemy.isPlayerDetected())
         {
-            if (enemy.isPlayerDetected().distance < enemy.attackDistance)
+            if (enemy.isPlayerDetected().distance < enemy.AttackDis)
             {
                 stateTimer = enemy.BattleTime;
                 if (canAttack())
@@ -59,17 +59,5 @@ public class SkeletonBattleState : EnemyState
     {
         base.FixUpdate();
         enemy.setVelocity(moveDir, enemy.rb.velocity.y);
-    }
-
-    private bool canAttack()
-    {
-        if (Time.time >= enemy.lastTime + enemy.attackCooldown)
-        //Kiểm tra nếu Time.time >= lastTime + attackCooldown sẽ gán lastTime = Time.time và trả hàm này về true, và ngược lại
-        {
-            enemy.lastTime = Time.time;
-            return true;
-        }
-        //Debug.Log("Attack is a cooldown");
-        return false;
     }
 }
