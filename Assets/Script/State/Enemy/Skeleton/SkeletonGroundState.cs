@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonGroundState : EnemyState
+public class SkeletonGroundState : EnemyGroundStateBase
 {
-    protected Skeleton enemy;
-    public SkeletonGroundState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName , Skeleton enemy) : base(enemyBase, stateMachine, animationBoolName)
+    //protected Skeleton _skeleton;
+    public SkeletonGroundState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName) : base(enemyBase, stateMachine, animationBoolName)
     {
-        this.enemy = enemy;
+        //this._skeleton = skeleton;
     }
 
     public override void Enter()
@@ -23,9 +23,9 @@ public class SkeletonGroundState : EnemyState
     public override void Update()
     {
         base.Update();
-        if (enemy.isPlayerDetected())
-        {
-            stateMachine.changeState(enemy.battleState);
-        }
+        //if (_skeleton.isPlayerDetected())
+        //{
+        //    stateMachine.changeState(_skeleton.battleState);
+        //}
     }
 }

@@ -64,7 +64,7 @@ public class QuestSystem : Singleton<QuestSystem>
         }
     }
 
-    private int GetQipStory(int _branchID) // Lấy ra Quest đang thực thi trong nhánh truyện
+    public int GetQipStory(int _branchID) // Lấy ra Quest đang thực thi trong nhánh truyện
     {
         var getBranch = allBranchStory.FirstOrDefault(x => x.branchID ==  _branchID);
         if(getBranch != null)

@@ -98,5 +98,6 @@ public class Slime : Enemy
 public enum SlimeType
 {
     BIG,
-    SMALL
+    SMALL,
+    BOSS
 }

@@ -32,6 +32,12 @@ public class SlimeBattleState : EnemyState
     public override void Update()
     {
         base.Update();
+
+        BattleAttack();
+    }
+
+    private void BattleAttack()
+    {
         if (_slime.isPlayerDetected())
         {
             if (_slime.isPlayerDetected().distance < _slime.AttackDis)
@@ -45,17 +51,17 @@ public class SlimeBattleState : EnemyState
         }
         else
         {
-            if (stateTimer < 0 || Vector2.Distance(_player.transform.position , _slime.transform.position) < 7)
+            if (stateTimer < 0 || Vector2.Distance(_player.transform.position, _slime.transform.position) < 7)
             {
                 stateMachine.changeState(_slime.idleState);
             }
         }
 
-        if(_player.transform.position.x > _slime.transform.position.x)
+        if (_player.transform.position.x > _slime.transform.position.x)
         {
             moveDir = 1f;
         }
-        else if(_player.transform.position.x < _slime.transform.position.x)
+        else if (_player.transform.position.x < _slime.transform.position.x)
         {
             moveDir = -1f;
         }

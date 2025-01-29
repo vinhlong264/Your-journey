@@ -9,8 +9,8 @@ public abstract class Enemy : Entity
     public float lastTime;
 
     [Space]
-    [SerializeField] protected Transform _attackCheck;
-    [SerializeField] private float _attackDis;
+    [SerializeField] protected Transform _attackArea;
+    [SerializeField] protected float _attackDis;
     [SerializeField] protected float _attackCheckDis;
     [SerializeField] protected float _attackRadius;
     [SerializeField] protected LayerMask isPlayer;
@@ -23,6 +23,16 @@ public abstract class Enemy : Entity
     [SerializeField] protected GameObject AttackImage;
     private float defaultSpeed;
 
+    #region State Base
+    public EnemyStateMachine stateMachine {  get; private set; }
+    public EnemyIdleStateBase _idleStateBase { get; private set; }
+    public EnemyRunStateBase _runStateBase { get; private set; }
+    public EnemyBattleStateBase _battleAttackBase { get; private set; }
+    public EnemyAttackStateBase _attackStateBase { get; private set; }
+    public EnemyStunStateBase _stunStateBase { get; private set; }
+    public EnemyDeathStateBase _deathStateBase { get; private set; }
+    #endregion
+
 
     #region Get Set
 
@@ -34,7 +44,7 @@ public abstract class Enemy : Entity
     public float AttackCheckDis {  get => _attackCheckDis; }
     public float AttackDis { get => _attackDis; }
 
-    public Transform AttackChecks { get => _attackCheck; }
+    public Transform AttackArea { get => _attackArea; }
 
 
     //Stun variable
@@ -43,16 +53,22 @@ public abstract class Enemy : Entity
 
     #endregion
 
-    public EnemyStateMachine stateMachine {  get; private set; }
     protected override void Awake()
     {
-        base.Awake();
         stateMachine = new EnemyStateMachine();
+        _idleStateBase = new EnemyIdleStateBase(this, stateMachine , Constant.Animation_IDLE);
+        _runStateBase = new EnemyRunStateBase(this , stateMachine , Constant.Animation_RUN);
+        _battleAttackBase = new EnemyBattleStateBase(this , stateMachine, Constant.Animation_RUN);
+        _attackStateBase = new EnemyAttackStateBase(this , stateMachine , Constant.Animation_ATTACK);
+        _stunStateBase = new EnemyStunStateBase(this , stateMachine , Constant.Animation_STUN);
+        _deathStateBase = new EnemyDeathStateBase(this , stateMachine , Constant.Animation_DEATH);
+
     }
 
     protected override void Start()
     {
         base.Start();
+        stateMachine.initialize(_idleStateBase);
         defaultSpeed = moveSpeed;
     }
     protected override void Update()
@@ -105,6 +121,17 @@ public abstract class Enemy : Entity
         }
     }
 
+    public void DeactiveMe()
+    {
+        StartCoroutine(DeactiveMeCrountine());
+    }
+
+    IEnumerator DeactiveMeCrountine()
+    {
+        yield return new WaitForSeconds(3f);
+        gameObject.SetActive(false);
+    }
+
 
     public virtual void FreezeBy(float _time) => StartCoroutine(FreezeForTimer(_time));
 
@@ -134,18 +161,20 @@ public abstract class Enemy : Entity
 
     public override void Die()
     {
-        base.Die();
+        stateMachine.changeState(_deathStateBase);
     }
 
     public void animationTriggerFinish() => stateMachine.currentState.AnimationTriggerCalled();
 
-    public RaycastHit2D isPlayerDetected() => Physics2D.Raycast(transform.position, Vector2.right * isFacingDir, _attackCheckDis, isPlayer);
+    public virtual RaycastHit2D isPlayerDetected() => Physics2D.Raycast(transform.position, Vector2.right * isFacingDir, _attackCheckDis, isPlayer);
 
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + _attackCheckDis * isFacingDir, transform.position.y));
-        Gizmos.DrawWireSphere(_attackCheck.position, _attackRadius);
+
+        if (_attackArea == null) return;
+        Gizmos.DrawWireSphere(_attackArea.position, _attackRadius);
     }
 }

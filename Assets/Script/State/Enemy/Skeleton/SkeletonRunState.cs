@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonRunState : SkeletonGroundState
+public class SkeletonRunState : EnemyRunStateBase
 {
-    public SkeletonRunState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName, Skeleton enemy) : base(enemyBase, stateMachine, animationBoolName, enemy)
+    public SkeletonRunState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName) : base(enemyBase, stateMachine, animationBoolName)
     {
     }
 
@@ -21,17 +21,17 @@ public class SkeletonRunState : SkeletonGroundState
     public override void Update()
     {
         base.Update();
-        if(enemy.wallCheck() || !enemy.groundCheck())
-        {
-            //Kiểm tra nếu thỏa mãm 1 trong 2 điểu kiện chuyển qua state và reset biến stateTimer về giá trị của nó được đặt ở state idle
-            enemy.Flip();
-            stateMachine.changeState(enemy.idleState);
-        }
+        //if(_skeleton.wallCheck() || !_skeleton.groundCheck())
+        //{
+        //    //Kiểm tra nếu thỏa mãm 1 trong 2 điểu kiện chuyển qua state và reset biến stateTimer về giá trị của nó được đặt ở state idle
+        //    _skeleton.Flip();
+        //    stateMachine.changeState(_skeleton.idleState);
+        //}
     }
 
     public override void FixUpdate()
     {
         base.FixUpdate();
-        enemy.rb.velocity = new Vector2(enemy.isFacingDir * enemy.moveSpeed, enemy.rb.velocity.y);
+        //_skeleton.rb.velocity = new Vector2(_skeleton.isFacingDir * _skeleton.moveSpeed, _skeleton.rb.velocity.y);
     }
 }

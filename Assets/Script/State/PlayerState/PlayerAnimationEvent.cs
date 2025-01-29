@@ -33,7 +33,7 @@ public class PlayerAnimationEvent : MonoBehaviour
                 if (EnemyReceivePhysic != null && EnemyReceiveMagic != null)
                 {
                     EnemyReceivePhysic.DoDamePhysical(player.GetComponent<PlayerStats>());
-                    //EnemyReceiveMagic.DameDoMagical(player.GetComponent<PlayerStats>());
+                    EnemyReceiveMagic.DameDoMagical(player.GetComponent<PlayerStats>());
 
                     ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
                     if (equipment != null)

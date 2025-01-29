@@ -257,7 +257,7 @@ MonoBehaviour:
   battleTime: 1.5
   attackCoolDown: 0.4
   lastTime: 0
-  _attackCheck: {fileID: 3699137954388262823}
+  _attackArea: {fileID: 3699137954388262823}
   _attackDis: 1
   _attackCheckDis: 5.5
   _attackRadius: 0.47

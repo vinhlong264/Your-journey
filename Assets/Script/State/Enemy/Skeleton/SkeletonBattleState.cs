@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
 
-public class SkeletonBattleState : EnemyState
+public class SkeletonBattleState : EnemyBattleStateBase
 {
     private Skeleton enemy;
     private Player Player;
     private float moveDir;
-    public SkeletonBattleState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName, Skeleton enemy) : base(enemyBase, stateMachine, animationBoolName)
+    public SkeletonBattleState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName) : base(enemyBase, stateMachine, animationBoolName)
     {
-        this.enemy = enemy;
+
     }
 
     public override void Enter()
     {
         base.Enter();
-        Player = GameManager.Instance.player;
-        if (Player.isDeath)
-        {
-            stateMachine.changeState(enemy.runState);
-        }
+        //Player = GameManager.Instance.player;
+        //if (Player.isDeath)
+        //{
+        //    stateMachine.changeState(enemy.runState);
+        //}
     }
 
     public override void Exit()
@@ -28,39 +28,11 @@ public class SkeletonBattleState : EnemyState
     public override void Update()
     {
         base.Update();
-        if (enemy.isPlayerDetected())
-        {
-            if (enemy.isPlayerDetected().distance < enemy.AttackDis)
-            {
-                stateTimer = enemy.BattleTime;
-                if (canAttack())
-                {
-                    stateMachine.changeState(enemy.attackState);
-                }
-            }
-        }
-        else
-        {
-            if (stateTimer < 0 || Vector2.Distance(Player.transform.position, enemy.transform.position) < 7)
-            {
-                stateMachine.changeState(enemy.idleState);
-            }
-        }
-
-
-        if (Player.transform.position.x > enemy.transform.position.x)
-        {
-            moveDir = 1f;
-        }
-        else if (Player.transform.position.x < enemy.transform.position.x)
-        {
-            moveDir = -1f;
-        }
+      
     }
 
     public override void FixUpdate()
     {
         base.FixUpdate();
-        enemy.setVelocity(moveDir, enemy.rb.velocity.y);
     }
 }

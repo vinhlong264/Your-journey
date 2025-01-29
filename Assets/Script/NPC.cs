@@ -6,6 +6,7 @@ public class NPC : MonoBehaviour
     private bool isFacingRigt;
     private Player player;
     [SerializeField] private DialogueSystem dialogueSystem;
+    [SerializeField] private GameObject chatBox;
     private int count;
     private int branchID;
     private string dataText;
@@ -13,6 +14,7 @@ public class NPC : MonoBehaviour
     private void Start()
     {
         sr = GetComponentInChildren<SpriteRenderer>();
+        chatBox.SetActive(false);
         isFacingRigt = true;
         player = GameManager.Instance.player;
         count = 0;
@@ -21,26 +23,22 @@ public class NPC : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(player.transform.position.x < transform.position.x && isFacingRigt)
+        if(Vector2.Distance(transform.position, player.transform.position) < 2f)
         {
-            sr.flipX = true;
-            isFacingRigt = false;
+            chatBox.SetActive(true);
+            if (player.transform.position.x < transform.position.x && isFacingRigt)
+            {
+                sr.flipX = true;
+                isFacingRigt = false;
+            }
+            else
+            {
+                sr.flipX = false;
+                isFacingRigt = true;
+            }
+
+            int qip = QuestSystem.Instance.GetQipStory(branchID);
+            Debug.Log(transform.name + ", Qip: " + qip);
         }
-        else
-        {
-            sr.flipX = false;
-            isFacingRigt = true;
-        }
-        count++;
-        switch (count)
-        {
-            case 1:
-                dataText = "TextData/Story 1";
-                break;
-            case 2:
-                dataText = "TextData/Story 2";
-                break;
-        }
-        dialogueSystem.setUpDialogue(branchID, dataText);
     }
 }

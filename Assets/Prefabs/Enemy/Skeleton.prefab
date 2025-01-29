@@ -132,7 +132,7 @@ MonoBehaviour:
   battleTime: 4
   attackCoolDown: 0
   lastTime: 0
-  _attackCheck: {fileID: 8123689437758682145}
+  _attackArea: {fileID: 0}
   _attackDis: 1.5
   _attackCheckDis: 5.5
   _attackRadius: 0.8
@@ -141,9 +141,7 @@ MonoBehaviour:
     m_Bits: 64
   stunDuration: 5
   stunDirection: {x: 5, y: 7}
-  CounterImage: {fileID: 8333344512768393663}
-  hpMax: 100
-  currentHp: 0
+  AttackImage: {fileID: 8333344512768393663}
 --- !u!114 &6763336354199127769
 MonoBehaviour:
   m_ObjectHideFlags: 0

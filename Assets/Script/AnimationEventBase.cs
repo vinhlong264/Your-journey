@@ -17,7 +17,7 @@ public abstract class AnimationEventBase : MonoBehaviour
     {
         if(enemyBase == null) return;
 
-        Collider2D[] attack = Physics2D.OverlapCircleAll(enemyBase.AttackChecks.position, enemyBase.AttackRadius, whatIsMask);
+        Collider2D[] attack = Physics2D.OverlapCircleAll(enemyBase.AttackArea.position, enemyBase.AttackRadius, whatIsMask);
         foreach (Collider2D hit in attack)
         {
             IDameHandlePhysical targetReceive = hit.GetComponent<IDameHandlePhysical>();

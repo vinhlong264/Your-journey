@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
     [Header("Move info")]
     public float moveSpeed;
