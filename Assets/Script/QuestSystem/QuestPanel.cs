@@ -11,6 +11,7 @@ public class QuestPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentQuestTxt;
 
     [SerializeField] private Button receiveQuestBtn;
+    [SerializeField] private Button completeQuest;
     private Quest q;
 
 
@@ -36,5 +37,15 @@ public class QuestPanel : MonoBehaviour
         if (q == null) return;
         QuestManager.Instance.ReceiveQuest(q);
         gameObject.SetActive(false);
+    }
+
+    private void CompeleteQuest()
+    {
+        Debug.Log("Hoàn thành Quest");
+        if (q == null) return;
+
+        QuestManager.Instance.CompeleteQuest(q);
+        gameObject.SetActive(false);
+
     }
 }

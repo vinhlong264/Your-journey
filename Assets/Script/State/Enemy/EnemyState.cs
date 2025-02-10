@@ -52,7 +52,6 @@ public abstract class EnemyState
             enemyBase.lastTime = Time.time;
             return true;
         }
-        Debug.Log("Attack is a cooldown");
         return false;
     }
 

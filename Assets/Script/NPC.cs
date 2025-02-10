@@ -38,7 +38,7 @@ public class NPC : MonoBehaviour
                 isFacingRigt = true;
             }
 
-            int process = QuestManager.Instance.GetBranchStory(branchID).Process;
+            int process = QuestManager.Instance.GetBranchStory(branchID).Qip;
             Debug.Log(process);
             switch (process)
             {

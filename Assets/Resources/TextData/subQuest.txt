@@ -1,3 +1,3 @@
 branchID	nameQuest	DesQuest	expReward	goldReward	requireQuest	EnemyType	qip
-0	Tiêu diệt quái vật	Hãy tới khu rừng bên cạnh tiêu diệt 10 con sói	100	200	10	WOLF	0
+0	Tiêu diệt quái vật	Hãy tới khu rừng bên cạnh tiêu diệt 10 con sói	100	200	1	WOLF	0
 0	Tiêu diệt quái vật	Hãy tới khu rừng bên cạnh tiêu diệt 10 slime	100	200	10	SLIME	1

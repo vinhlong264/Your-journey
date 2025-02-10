@@ -19,7 +19,6 @@ public class EnemyStats : CharacterStats
     [SerializeField] private float percentBleeding;
     [SerializeField] private float bleedingTimer;
     [SerializeField] private float bleedingCoolDown; //Thời gian làm mới bleeding
-    private int test;
 
     protected override void Start()
     {
@@ -82,8 +81,6 @@ public class EnemyStats : CharacterStats
     protected override void Die()
     {
         enemy.Die();
-        test++;
-        Debug.Log("call:" + test);
         Observer.Instance.NotifyEvent(GameEvent.RewardExp, expReward);
         QuestManager.Instance.excuteQuestEvent?.Invoke(_enemyType);
         dropSystem.generateDrop();

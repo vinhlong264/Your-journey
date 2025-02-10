@@ -27,8 +27,8 @@ namespace newQuestSystem
         {
             stories = new List<BranchStory>()
             {
-                new BranchStory(0, "MainStory" , 0 , 0),
-                new BranchStory(1 , "ExtraStory" , 0 , 0)
+                new BranchStory(0, "MainStory"  , 0),
+                new BranchStory(1 , "ExtraStory", 0)
             };
             LoadData();
         }
@@ -63,9 +63,9 @@ namespace newQuestSystem
         {
             int qip = GetQipStory(branchID);
             Quest getQuest = allQuest.FirstOrDefault(x => x.qip == qip);
-            if(getQuest != null)
+            if (getQuest != null)
             {
-                Debug.Log("Lấy ra quest: "+getQuest.nameQuest);
+                Debug.Log("Lấy ra quest: " + getQuest.nameQuest);
                 return getQuest;
             }
 
@@ -76,7 +76,7 @@ namespace newQuestSystem
         public BranchStory GetBranchStory(int branchID)
         {
             BranchStory getStory = stories.FirstOrDefault(x => x.BranchID == branchID);
-            if(getStory != null)
+            if (getStory != null)
             {
                 return getStory;
             }
@@ -87,7 +87,7 @@ namespace newQuestSystem
         private int GetQipStory(int branchID)
         {
             BranchStory getStory = stories.FirstOrDefault(x => x.BranchID == branchID);
-            if(getStory != null)
+            if (getStory != null)
             {
                 return getStory.Qip;
             }
@@ -98,7 +98,7 @@ namespace newQuestSystem
 
         public void setQuest(Quest q)
         {
-            if(q != null) currentQuest = q;
+            if (q != null) currentQuest = q;
         }
 
 
@@ -107,7 +107,7 @@ namespace newQuestSystem
             prevCurrentQuest = currentQuest;
 
             currentQuest = newQuest;
-            if(currentQuest != null && prevCurrentQuest != null)
+            if (currentQuest != null && prevCurrentQuest != null)
             {
                 currentQuest.isExcute = true;
                 prevCurrentQuest.isExcute = false;
@@ -120,13 +120,13 @@ namespace newQuestSystem
         {
             if (q == null) return;
 
-            if(q.qip == 0)
+            if (q.qip == 0)
             {
                 allQuestMain.Add(q);
                 currentQuest = q;
                 ExcuteQuest();
             }
-            else if(q.qip == 1)
+            else if (q.qip == 1)
             {
                 allQuestExtra.Add(q);
             }
@@ -134,7 +134,7 @@ namespace newQuestSystem
 
         public void ExcuteQuest()
         {
-            if(currentQuest != null) currentQuest.isExcute = true;
+            if (currentQuest != null) currentQuest.isExcute = true;
         }
 
         private void ExcuteRequireQuest(EnemyType typeID)
@@ -158,9 +158,13 @@ namespace newQuestSystem
             {
                 Observer.Instance.NotifyEvent(GameEvent.RewardExp, q.expReward);
                 BranchStory getStory = stories.FirstOrDefault(x => x.Qip == q.qip);
-                if (getStory != null) getStory.SetProcess();
 
-                allQuestMain.Remove(q);
+                if (getStory != null)
+                {
+                    getStory.SetQuestInProcess();
+                    allQuestMain.Remove(q);
+                }
+
             }
         }
     }

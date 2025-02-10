@@ -22,7 +22,6 @@ namespace newQuestSystem
         public void SetQuest()
         {
             currentQuest++;
-            Debug.Log(currentQuest);
             if(currentQuest >= requireQuest)
             {
                 compelete = true;
@@ -30,28 +29,24 @@ namespace newQuestSystem
         }
     }
 
+    [System.Serializable]
     public class BranchStory
     {
-        private int branchID;
-        private string branchName;
-        private int process;
-        private int qip;
-
-        public int Process { get => process; }
+        [SerializeField] private int branchID;
+        [SerializeField] private string branchName;
+        [SerializeField] private int qip;
         public int BranchID { get => branchID; }
         public int Qip { get => qip; }
 
-        public BranchStory(int branchID, string branchName , int process, int qip)
+        public BranchStory(int branchID, string branchName, int qip)
         {
             this.branchID = branchID;
             this.branchName = branchName;
-            this.process = process;
             this.qip = qip;
         }
 
-        public void SetProcess()
+        public void SetQuestInProcess()
         {
-            process++;
             qip++;
         }
     }

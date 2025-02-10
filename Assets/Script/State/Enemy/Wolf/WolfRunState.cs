@@ -15,7 +15,6 @@ public class WolfRunState : WolfGroundState
         base.Update();
         if (!_wolf.groundCheck() || _wolf.wallCheck())
         {
-            Debug.Log("ChangState");
             _wolf.Flip();
             stateMachine.changeState(_wolf._idleState);
         }
