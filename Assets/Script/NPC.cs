@@ -1,3 +1,4 @@
+using newQuestSystem;
 using UnityEngine;
 
 public class NPC : MonoBehaviour
@@ -21,11 +22,11 @@ public class NPC : MonoBehaviour
         branchID = 0;
     }
 
+
     private void OnMouseDown()
     {
         if(Vector2.Distance(transform.position, player.transform.position) < 2f)
         {
-            chatBox.SetActive(true);
             if (player.transform.position.x < transform.position.x && isFacingRigt)
             {
                 sr.flipX = true;
@@ -37,8 +38,19 @@ public class NPC : MonoBehaviour
                 isFacingRigt = true;
             }
 
-            int qip = QuestSystem.Instance.GetQipStory(branchID);
-            Debug.Log(transform.name + ", Qip: " + qip);
+            int process = QuestManager.Instance.GetBranchStory(branchID).Process;
+            Debug.Log(process);
+            switch (process)
+            {
+                case 0:
+                    dataText = "TextData/Story 1";
+                    break;
+                case 1:
+                    dataText = "TextData/Story 2";
+                    break;
+            }
+
+            dialogueSystem.setUpDialogue(branchID , dataText);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using newQuestSystem;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +14,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
     [Header("UI Dialogue")]
     [SerializeField] private TextMeshProUGUI contentTxt;
     [SerializeField] private GameObject chatBox;
+    [SerializeField] private GameObject questBox;
     [SerializeField] private GameObject playerAvatar;
     [SerializeField] private GameObject npcAvatar;
     private int currentIndex = 0;
@@ -77,14 +79,13 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         else
         {
             chatBox.SetActive(false);
-            Quest getQ = QuestSystem.Instance.GetQuest(branchStoryID);
-
-            if(getQ != null)
+            Quest q = QuestManager.Instance.GetQuest(branchStoryID);
+            if (q != null)
             {
-                Debug.Log("Lấy ra quest thành công");
-                questPanel.ShowQuest(getQ);
+                questPanel.ShowQuest(q);
+                questBox.SetActive(true);
             }
-        }       
+        }      
     }
 
 

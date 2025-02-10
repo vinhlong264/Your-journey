@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using newQuestSystem;
+using UnityEngine;
 
 public class EnemyStats : CharacterStats
 {
+    [SerializeField] private EnemyType _enemyType;
     private Enemy enemy;
     private itemDrop dropSystem;
 
@@ -17,6 +19,7 @@ public class EnemyStats : CharacterStats
     [SerializeField] private float percentBleeding;
     [SerializeField] private float bleedingTimer;
     [SerializeField] private float bleedingCoolDown; //Thời gian làm mới bleeding
+    private int test;
 
     protected override void Start()
     {
@@ -70,19 +73,19 @@ public class EnemyStats : CharacterStats
         }
     }
 
-    public override void takeDame(int _dame)
+    protected override void decreaseHealthBy(int _dame)
     {
-        base.takeDame(_dame);
+        base.decreaseHealthBy(_dame);
         enemy.dameEffect();
     }
 
     protected override void Die()
     {
-        base.Die();
         enemy.Die();
-
+        test++;
+        Debug.Log("call:" + test);
         Observer.Instance.NotifyEvent(GameEvent.RewardExp, expReward);
-        QuestSystem.Instance.getQuestCurrent().setCurrentQuest();
+        QuestManager.Instance.excuteQuestEvent?.Invoke(_enemyType);
         dropSystem.generateDrop();
         return;
     }

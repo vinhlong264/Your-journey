@@ -47,3 +47,11 @@ public enum Skilltype
     Ultimate,
     Bottle
 }
+
+
+public enum EnemyType
+{
+    SLIME,
+    WOLF,
+    SEKELETON
+}

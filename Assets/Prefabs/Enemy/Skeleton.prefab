@@ -127,13 +127,13 @@ MonoBehaviour:
   whatIsLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  isFacingRight: 0
+  isFacingRight: 1
   isFacingDir: 1
   battleTime: 4
   attackCoolDown: 0
   lastTime: 0
-  _attackArea: {fileID: 0}
-  _attackDis: 1.5
+  _attackArea: {fileID: 8123689437758682145}
+  _attackDis: 1
   _attackCheckDis: 5.5
   _attackRadius: 0.8
   isPlayer:
