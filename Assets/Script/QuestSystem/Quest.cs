@@ -24,6 +24,7 @@ namespace newQuestSystem
             currentQuest++;
             if(currentQuest >= requireQuest)
             {
+                isExcute = false;
                 compelete = true;
             }
         }
@@ -35,14 +36,22 @@ namespace newQuestSystem
         [SerializeField] private int branchID;
         [SerializeField] private string branchName;
         [SerializeField] private int qip;
+        [SerializeField] private int process;
         public int BranchID { get => branchID; }
         public int Qip { get => qip; }
+        public int Process { get => process; }
 
-        public BranchStory(int branchID, string branchName, int qip)
+        public BranchStory(int branchID, string branchName, int process , int qip)
         {
             this.branchID = branchID;
             this.branchName = branchName;
+            this.process = process;
             this.qip = qip;
+        }
+
+        public void SetProcess()
+        {
+            process++;
         }
 
         public void SetQuestInProcess()

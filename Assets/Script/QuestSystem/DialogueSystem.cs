@@ -24,7 +24,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     }
 
-    public void setUpDialogue(int _branchStory , string _storyDataTXt)
+    public void setUpDialogue(int _branchStory, string _storyDataTXt)
     {
         branchStoryID = _branchStory;
         storyDataTxt = _storyDataTXt;
@@ -40,7 +40,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         for (int i = 1; i < lines.Length; i++)
         {
             if (string.IsNullOrWhiteSpace(lines[i])) // Bỏ qua khoảng trắng
-                continue; 
+                continue;
 
             string[] cols = lines[i].Split("\t");
 
@@ -61,8 +61,8 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
     public void Dialogue()
     {
-        chatBox.SetActive(true);
-        if(currentIndex < listConverStation.Count)
+         chatBox.SetActive(true);
+        if (currentIndex < listConverStation.Count)
         {
             if (listConverStation[currentIndex].character == "Player")
             {
@@ -80,15 +80,12 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         {
             chatBox.SetActive(false);
             Quest q = QuestManager.Instance.GetQuest(branchStoryID);
-            if (q != null)
-            {
-                questPanel.ShowQuest(q);
-                questBox.SetActive(true);
-            }
-        }      
+
+            if (q == null) return;
+            questPanel.ShowQuest(q);
+            questBox.SetActive(true);
+        }
     }
-
-
 }
 
 [System.Serializable]

@@ -18,6 +18,7 @@ public class QuestPanel : MonoBehaviour
     private void Start()
     {
         receiveQuestBtn.onClick.AddListener(() => ReceiveQuest());
+        completeQuest.onClick.AddListener(() => CompeleteQuest());
     }
     public void ShowQuest(Quest q)
     {

@@ -27,8 +27,8 @@ namespace newQuestSystem
         {
             stories = new List<BranchStory>()
             {
-                new BranchStory(0, "MainStory"  , 0),
-                new BranchStory(1 , "ExtraStory", 0)
+                new BranchStory(0, "MainStory" ,0  , 0),
+                new BranchStory(1 , "ExtraStory", 0 , 0)
             };
             LoadData();
         }
@@ -124,6 +124,13 @@ namespace newQuestSystem
             {
                 allQuestMain.Add(q);
                 currentQuest = q;
+                BranchStory story = stories.FirstOrDefault(x => x.Qip == q.qip);
+                if (story != null)
+                {
+                    story.SetProcess();
+                }
+
+
                 ExcuteQuest();
             }
             else if (q.qip == 1)
@@ -146,6 +153,7 @@ namespace newQuestSystem
                     if (currentQuest.compelete) return;
 
                     currentQuest.SetQuest();
+
                     Debug.Log("CallBack: " + currentQuest.currentQuest);
                 }
             }
@@ -158,10 +166,9 @@ namespace newQuestSystem
             {
                 Observer.Instance.NotifyEvent(GameEvent.RewardExp, q.expReward);
                 BranchStory getStory = stories.FirstOrDefault(x => x.Qip == q.qip);
-
+                getStory.SetQuestInProcess();
                 if (getStory != null)
                 {
-                    getStory.SetQuestInProcess();
                     allQuestMain.Remove(q);
                 }
 
