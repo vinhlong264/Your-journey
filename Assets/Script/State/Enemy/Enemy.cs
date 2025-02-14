@@ -10,8 +10,8 @@ public abstract class Enemy : Entity
 
     [Space]
     [SerializeField] protected Transform _attackArea;
-    [SerializeField] protected float _attackDis;
-    [SerializeField] protected float _attackCheckDis;
+    [SerializeField] protected float _attackDis; // khoảng cách để vào state attack
+    [SerializeField] protected float _attackCheckDis; // khoảng kiểm tra của Raycast
     [SerializeField] protected float _attackRadius;
     [SerializeField] protected LayerMask isPlayer;
 
@@ -25,12 +25,6 @@ public abstract class Enemy : Entity
 
     #region State Base
     public EnemyStateMachine stateMachine {  get; private set; }
-    public EnemyIdleStateBase _idleStateBase { get; private set; }
-    public EnemyRunStateBase _runStateBase { get; private set; }
-    public EnemyBattleStateBase _battleAttackBase { get; private set; }
-    public EnemyAttackStateBase _attackStateBase { get; private set; }
-    public EnemyStunStateBase _stunStateBase { get; private set; }
-    public EnemyDeathStateBase _deathStateBase { get; private set; }
     #endregion
 
 
@@ -56,31 +50,23 @@ public abstract class Enemy : Entity
     protected override void Awake()
     {
         stateMachine = new EnemyStateMachine();
-        _idleStateBase = new EnemyIdleStateBase(this, stateMachine , Constant.Animation_IDLE);
-        _runStateBase = new EnemyRunStateBase(this , stateMachine , Constant.Animation_RUN);
-        _battleAttackBase = new EnemyBattleStateBase(this , stateMachine, Constant.Animation_RUN);
-        _attackStateBase = new EnemyAttackStateBase(this , stateMachine , Constant.Animation_ATTACK);
-        _stunStateBase = new EnemyStunStateBase(this , stateMachine , Constant.Animation_STUN);
-        _deathStateBase = new EnemyDeathStateBase(this , stateMachine , Constant.Animation_DEATH);
-
     }
 
     protected override void Start()
     {
         base.Start();
-        stateMachine.initialize(_idleStateBase);
         defaultSpeed = moveSpeed;
     }
     protected override void Update()
     {
         base.Update();
-        stateMachine.currentState.Update();
+        
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        stateMachine.currentState.FixUpdate();
+        
     }
 
     #region Conuter attack
@@ -161,7 +147,7 @@ public abstract class Enemy : Entity
 
     public override void Die()
     {
-        stateMachine.changeState(_deathStateBase);
+       
     }
 
     public void animationTriggerFinish() => stateMachine.currentState.AnimationTriggerCalled();

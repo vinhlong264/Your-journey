@@ -29,6 +29,7 @@ public class WolfBattleState : EnemyState
             if (canAttack())
             {
                 stateMachine.changeState(_wolf._attackState);
+                return;
             }
         }
 

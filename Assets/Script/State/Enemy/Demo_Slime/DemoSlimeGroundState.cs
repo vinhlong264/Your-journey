@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class DemoSlimeGroundState : EnemyState
 {
-    protected DemoSlime _demoSlime;
-    public DemoSlimeGroundState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName , DemoSlime demoSlime) : base(enemyBase, stateMachine, animationBoolName)
+    protected DemoSlime demoSlime;
+    public DemoSlimeGroundState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName, DemoSlime demoSlime) : base(enemyBase, stateMachine, animationBoolName)
     {
-        this._demoSlime = demoSlime;
+        this.demoSlime = demoSlime;
     }
 
     public override void Enter()
@@ -16,7 +16,14 @@ public class DemoSlimeGroundState : EnemyState
     public override void Update()
     {
         base.Update();
+        if (demoSlime.isPlayerDetected())
+        {
+            Debug.Log("Change state battle");
+            stateMachine.changeState(demoSlime._battleState);
+        }
     }
+
+    
 
     public override void Exit()
     {

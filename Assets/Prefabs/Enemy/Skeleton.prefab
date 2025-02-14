@@ -129,8 +129,8 @@ MonoBehaviour:
     m_Bits: 8
   isFacingRight: 1
   isFacingDir: 1
-  battleTime: 4
-  attackCoolDown: 0
+  battleTime: 1.5
+  attackCoolDown: 0.4
   lastTime: 0
   _attackArea: {fileID: 8123689437758682145}
   _attackDis: 1
@@ -224,6 +224,7 @@ MonoBehaviour:
   isShocked: 0
   thunerPrefabs: {fileID: 583608072295307890, guid: 94b7ae373881f8047a3787e60d933e03, type: 3}
   currentHealth: 0
+  _enemyType: 0
   level: 0
   perCanStage: 0
   expReward: 20

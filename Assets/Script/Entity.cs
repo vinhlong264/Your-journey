@@ -26,6 +26,8 @@ public abstract class Entity : MonoBehaviour
 
     public Action onFliped;
 
+    public bool IsKnock { get => isKnock; }
+
     #region Component
     public Animator animator { get; private set; }
     public Rigidbody2D rb { get; private set; }

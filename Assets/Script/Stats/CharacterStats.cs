@@ -286,7 +286,7 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
 
     #region calculate dame physics
 
-    public void DoDamePhysical(CharacterStats _statSender) // Dame handle
+    public void DameHandlerPhysical(CharacterStats _statSender) // Dame handle
     {
         if (AvoidAttack())
         {

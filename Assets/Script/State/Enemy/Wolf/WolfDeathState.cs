@@ -11,10 +11,10 @@ public class WolfDeathState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemyBase.rb.bodyType = RigidbodyType2D.Static;
-        enemyBase.setZeroVelocity();
-        enemyBase.cd.enabled = false;
-        enemyBase.DeactiveMe();
+        _wolf.rb.bodyType = RigidbodyType2D.Static;
+        _wolf.setZeroVelocity();
+        _wolf.cd.enabled = false;
+        _wolf.DeactiveMe();
     }
 
     public override void Update()

@@ -27,12 +27,12 @@ public class Wolf : Enemy
 
     protected override void Update()
     {
-        base.Update();
+        stateMachine.currentState.Update();
     }
 
     protected override void FixedUpdate()
     {
-        base.FixedUpdate();
+        stateMachine.currentState.FixUpdate();
     }
 
     public override bool checkStunned()

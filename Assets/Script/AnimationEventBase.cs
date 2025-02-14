@@ -23,7 +23,7 @@ public abstract class AnimationEventBase : MonoBehaviour
             IDameHandlePhysical targetReceive = hit.GetComponent<IDameHandlePhysical>();
             if (targetReceive != null)
             {
-                targetReceive.DoDamePhysical(enemyBase.GetComponent<EnemyStats>());
+                targetReceive.DameHandlerPhysical(enemyBase.GetComponent<EnemyStats>());
             }
         }
     }

@@ -17,30 +17,30 @@ public class Skeleton : Enemy
     protected override void Awake()
     {
         base.Awake();
-        //idleState = new SkeletonIdleState(this , stateMachine , "Idle" , this );
-        //runState = new SkeletonRunState(this , stateMachine, "Run" , this );
-        //battleState = new SkeletonBattleState(this , stateMachine , "Run" , this);
-        //attackState = new SkeletonAttackState(this, stateMachine, "Attack", this);
-        //stunState = new SkeletonStunState(this, stateMachine, "Stun", this);
-        //deathState = new SkeletonDeathState(this, stateMachine, "Death", this);
+        idleState = new SkeletonIdleState(this, stateMachine, "Idle", this);
+        runState = new SkeletonRunState(this, stateMachine, "Run", this);
+        battleState = new SkeletonBattleState(this, stateMachine, "Run", this);
+        attackState = new SkeletonAttackState(this, stateMachine, "Attack", this);
+        stunState = new SkeletonStunState(this, stateMachine, "Stun", this);
+        deathState = new SkeletonDeathState(this, stateMachine, "Death", this);
     }
 
     protected override void Start()
     {
         base.Start();
-        //stateMachine.initialize(idleState);
+        stateMachine.initialize(idleState);
         isFacingDir = 1f;
         isFacingRight = true;
     }
 
     protected override void Update()
     {
-        base.Update();
+        stateMachine.currentState.Update();
     }
 
     protected override void FixedUpdate()
     {
-        base.FixedUpdate();
+        stateMachine.currentState.FixUpdate();
     }
 
     public override void dameEffect()

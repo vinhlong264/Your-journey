@@ -1,16 +1,20 @@
 using UnityEngine;
 
-public class SkeletonDeathState : EnemyDeathStateBase
+public class SkeletonDeathState : EnemyState
 {
-   
-    public SkeletonDeathState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName) : base(enemyBase, stateMachine, animationBoolName)
+    private Skeleton skeleton;
+    public SkeletonDeathState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName, Skeleton skeleton) : base(enemyBase, stateMachine, animationBoolName)
     {
-        //this.skeleton = skeleton;
+        this.skeleton = skeleton;
     }
 
     public override void Enter()
     {
         base.Enter();
+        skeleton.rb.bodyType = RigidbodyType2D.Kinematic;
+        skeleton.setZeroVelocity();
+        skeleton.cd.enabled = false;
+        skeleton.DeactiveMe();
     }
 
     public override void Exit()

@@ -349,6 +349,7 @@ MonoBehaviour:
   isShocked: 0
   thunerPrefabs: {fileID: 0}
   currentHealth: 0
+  _enemyType: 1
   level: 0
   perCanStage: 0
   expReward: 20
