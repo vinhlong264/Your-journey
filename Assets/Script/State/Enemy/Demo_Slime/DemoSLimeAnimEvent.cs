@@ -6,11 +6,12 @@ public class DemoSLimeAnimEvent : AnimationEventBase
 {
     [SerializeField] private Transform firePos;
     [SerializeField] private ShockWaveController shockWaveController;
+    [SerializeField] private float timeDelay;
     private void AttackBullet()
     {
         if (shockWaveController == null) return;
 
         Instantiate<ShockWaveController>(shockWaveController , firePos.position, Quaternion.identity)
-            .setUp(enemyBase.isFacingDir , enemyBase.status , 15f);
+            .setUp(enemyBase.isFacingDir , enemyBase.status , 15f , timeDelay);
     }
 }

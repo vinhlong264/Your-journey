@@ -18,6 +18,7 @@ public class DemoSlimeAttackBulletState : EnemyState
     public override void Exit()
     {
         base.Exit();
+        demoSlime.lastTime = Time.time;
     }
 
     public override void Update()

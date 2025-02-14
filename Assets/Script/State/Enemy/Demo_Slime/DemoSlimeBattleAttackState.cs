@@ -7,6 +7,7 @@ public class DemoSlimeBattleAttackState : EnemyState
     private DemoSlime demoSlime;
     private float moveDir;
     private Player player;
+    private List<EnemyState> attackStates;
     public DemoSlimeBattleAttackState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName, DemoSlime demoSlime) : base(enemyBase, stateMachine, animationBoolName)
     {
         this.demoSlime = demoSlime;
@@ -16,7 +17,15 @@ public class DemoSlimeBattleAttackState : EnemyState
     {
         base.Enter();
         player = GameManager.Instance.player;
+        if (player.isDeath)
+        {
+            stateMachine.changeState(demoSlime._idleState);
+            return;
+        }
+
+
         moveDir = 1;
+        attackStates = new List<EnemyState>(demoSlime.GetLisAttackState());
     }
 
     public override void Update()
@@ -34,14 +43,14 @@ public class DemoSlimeBattleAttackState : EnemyState
                 }
             }
 
-            if (demoSlime.isPlayerDetected().distance < demoSlime.AttackDis)
+            if(demoSlime.isPlayerDetected().distance < demoSlime.AttackDis)
             {
                 if (canAttack())
                 {
-                    Debug.Log("Change state: Attack State");
-                    stateMachine.changeState(demoSlime._attackBulletState);
+                    stateMachine.changeState(demoSlime._spellState);
                 }
             }
+            
         }
 
         if(player.transform.position.x > demoSlime.transform.position.x)
@@ -61,10 +70,8 @@ public class DemoSlimeBattleAttackState : EnemyState
         base.Exit();
     }
 
-
     private bool CanJump()
     {
-        Debug.Log($"Time: {Time.time} - CoolDown: {demoSlime.lastTimeJump + demoSlime.JumpTimeCoolDown}");
         if(Time.time > demoSlime.lastTimeJump + demoSlime.JumpTimeCoolDown)
         {
             demoSlime.lastTimeJump = Time.time;

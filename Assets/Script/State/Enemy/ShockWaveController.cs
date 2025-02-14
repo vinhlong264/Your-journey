@@ -8,16 +8,18 @@ public class ShockWaveController : MonoBehaviour
     private float dirX;
     private CharacterStats stats;
     private float speed;
+    private float timeDelay;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void setUp(float _dirX , CharacterStats _stats , float _speed)
+    public void setUp(float _dirX , CharacterStats _stats , float _speed , float _timeDelay)
     {
         this.dirX = _dirX;
         this.stats = _stats;
         this.speed = _speed;
+        this.timeDelay = _timeDelay;
     }
 
     // Update is called once per frame
@@ -28,7 +30,7 @@ public class ShockWaveController : MonoBehaviour
 
     IEnumerator DelayMovement()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(timeDelay);
         rb.velocity = new Vector2(dirX * speed, rb.velocity.y);
     }
 
