@@ -18,7 +18,8 @@ public class DemoSlimeSpellState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        amoutSpell = 7;
+        demoSlime.rb.bodyType = RigidbodyType2D.Kinematic;
+        amoutSpell = 10;
         stateTimer = demoSlime.SpellTime;
         countSpell = 0;
         coolDown = 1.5f;
@@ -44,6 +45,8 @@ public class DemoSlimeSpellState : EnemyState
     public override void Exit()
     {
         base.Exit();
+        demoSlime.rb.bodyType = RigidbodyType2D.Dynamic;
+        demoSlime.lastTime = Time.time;
     }
     
 }

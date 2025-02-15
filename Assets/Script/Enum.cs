@@ -53,5 +53,6 @@ public enum EnemyType
 {
     SLIME,
     WOLF,
-    SEKELETON
+    SEKELETON,
+    BOSS
 }

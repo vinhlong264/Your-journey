@@ -37,6 +37,8 @@ public class DemoSlime : Enemy
     public DemoSlimeAttackState _attackState { get; private set; }
     public DemoSlimeAttackBulletState _attackBulletState { get; private set; }
     public DemoSlimeSpellState _spellState { get ; private set; }
+    public DemoSlimeDeathState _deathState { get; private set; }
+    public DemoSlimeStunState _stunState { get; private set; }
 
     #endregion
     protected override void Awake()
@@ -49,6 +51,8 @@ public class DemoSlime : Enemy
         _attackState = new DemoSlimeAttackState(this, stateMachine, "ATTACK", this);
         _attackBulletState = new DemoSlimeAttackBulletState(this, stateMachine, "AttackBullet", this);
         _spellState = new DemoSlimeSpellState(this, stateMachine, "SPELL", this);
+        _deathState = new DemoSlimeDeathState(this, stateMachine, "DEATH", this);
+        _stunState = new DemoSlimeStunState(this , stateMachine , "STUN" , this);
     }
 
     protected override void Start()
@@ -58,7 +62,8 @@ public class DemoSlime : Enemy
         listAttackState = new List<EnemyState>()
         {
             _attackState,
-            _attackBulletState
+            _attackBulletState,
+            _spellState
         };
     }
 
@@ -73,11 +78,28 @@ public class DemoSlime : Enemy
         base.dameEffect();
     }
 
+    public override void Die()
+    {
+        base.Die();
+        stateMachine.changeState(_deathState);
+    }
+
     public List<EnemyState> GetLisAttackState()
     {
         if(listAttackState.Count == 0) return null;
 
         return listAttackState;
+    }
+
+    public override bool checkStunned()
+    {
+        if (checkStunned())
+        {
+            stateMachine.changeState(_stunState);
+            return true;
+        }
+
+        return false;
     }
 
     public void initializeFireFall()
@@ -86,6 +108,7 @@ public class DemoSlime : Enemy
         GameObject dump = GameManager.Instance.GetObjFromPool(fireFall);
         dump.transform.position = Pos;
         dump.transform.rotation = Quaternion.Euler(0, 0, -90);
+        dump.GetComponent<SpellDemoSlime>().setUpSpell(status as EnemyStats);
     }
 
     public override RaycastHit2D isPlayerDetected()

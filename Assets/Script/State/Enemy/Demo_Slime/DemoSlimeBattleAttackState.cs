@@ -47,7 +47,7 @@ public class DemoSlimeBattleAttackState : EnemyState
             {
                 if (canAttack())
                 {
-                    stateMachine.changeState(demoSlime._spellState);
+                    stateMachine.changeState(attackStates[Random.Range(0, attackStates.Count)]);
                 }
             }
             

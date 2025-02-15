@@ -42,6 +42,12 @@ public class EntityFx : MonoBehaviour
         }
     }
 
+    public void StunColorFor(float _second)
+    {
+
+    }
+
+
     private void canCelRedBlink()
     {
         //CancelInvoke(); 
@@ -75,36 +81,9 @@ public class EntityFx : MonoBehaviour
             sr.color = _color[1];
         }
     }
-
-    private void chillColor()
-    {
-        if (sr.color != chill[0])
-        {
-            sr.color = chill[0];
-        }
-        else
-        {
-            sr.color = chill[1];
-        }
-    }
-
-
     public void shockColorFor(float _second)
     {
         StartCoroutine(effectAiliment(_second, shock));
-    }
-
-
-    private void shockColorFx()
-    {
-        if (sr.color != shock[0])
-        {
-            sr.color = shock[0];
-        }
-        else
-        {
-            sr.color = shock[1];
-        }
     }
 
     public void ingniteColorFor(float _second)
