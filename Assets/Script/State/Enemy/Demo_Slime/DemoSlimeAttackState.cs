@@ -15,6 +15,7 @@ public class DemoSlimeAttackState : EnemyState
     {
         base.Enter();
         demoSlime.setZeroVelocity();
+        demoSlime.animator.SetTrigger("Attack_Ready");
     }
 
     public override void Update()

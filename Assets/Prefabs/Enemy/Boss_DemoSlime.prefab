@@ -171,8 +171,8 @@ MonoBehaviour:
   isPlayer:
     serializedVersion: 2
     m_Bits: 64
-  stunDuration: 0
-  stunDirection: {x: 0, y: 0}
+  stunDuration: 5
+  stunDirection: {x: 5, y: 7}
   AttackImage: {fileID: 0}
   attackCheck: {fileID: 6517901832086980109}
   jumpForce: {x: 5, y: 7}

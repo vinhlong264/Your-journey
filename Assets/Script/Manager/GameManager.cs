@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -9,25 +9,57 @@ public class GameManager : Singleton<GameManager>
     public PlayerStats playerStats;
     public PlayerLevel playerLevel;
 
-    private Dictionary<GameObject,GameObject> poolDic = new Dictionary<GameObject,GameObject>();
-    private GameObject tmp;
+    private Dictionary<GameObject,List<GameObject>> poolDic = new Dictionary<GameObject,List<GameObject>>();
 
     protected override void Awake()
     {
         MakeSingleton(false);
     }
 
-    public GameObject GetObjFromPool(GameObject baseObj)
+    public GameObject GetObjFromPool(GameObject keyObj)
     {
-        if (poolDic.ContainsKey(baseObj))
+        List<GameObject> dumpListObj = new List<GameObject>();
+
+        if (poolDic.ContainsKey(keyObj))
         {
-            tmp = poolDic[baseObj];
-            tmp.SetActive(true);
-            return tmp;
+            Debug.LogWarning("Pool tồn tại key");
+            dumpListObj = poolDic[keyObj];
+        }
+        else
+        {
+            Debug.LogWarning("Pool không tồn tại key");
+            poolDic.Add(keyObj, dumpListObj);
         }
 
-        tmp = Instantiate(baseObj);
-        poolDic.Add(baseObj, tmp);
-        return tmp;
+        foreach (GameObject g in dumpListObj)
+        {
+            if (g.activeSelf)
+            {
+                continue;
+            }
+            g.SetActive(true);
+            return g;
+        }
+
+        GameObject newObj = Instantiate(keyObj);
+        dumpListObj.Add(newObj);
+        newObj.SetActive(true);
+
+        return newObj;
+
+    }
+
+
+    public void ReturnPool(GameObject objReturn)
+    {
+        if (poolDic.ContainsKey(objReturn))
+        {
+            poolDic[objReturn].Add(objReturn);
+        }
+        else
+        {
+            poolDic.Add(objReturn, new List<GameObject>());
+            poolDic[objReturn].Add(objReturn);
+        }
     }
 }

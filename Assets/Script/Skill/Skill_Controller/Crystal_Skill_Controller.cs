@@ -24,6 +24,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
         cd = GetComponent<CircleCollider2D>();
     }
 
+
     public void setUpCrystal(float _crystalDuration, float _moveSpeed, bool _canExplore, bool _canMoveEnemies , Transform _closestTarget , Player _player)
     {
         CrystalExitTime = _crystalDuration;
@@ -32,6 +33,16 @@ public class Crystal_Skill_Controller : MonoBehaviour
         canMoveEnemies = _canMoveEnemies;
         closestTarget = _closestTarget;
         player = _player;
+    }
+
+    private void OnDisable()
+    {
+        CrystalExitTime = 0;
+        moveSpeed = 0;
+        canExplore = false;
+        canMoveEnemies = false;
+        closestTarget = null;
+        player = null;
     }
 
     // Update is called once per frame
@@ -89,7 +100,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
 
     private void selfDestroy()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
 

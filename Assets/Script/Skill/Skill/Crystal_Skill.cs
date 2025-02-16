@@ -51,6 +51,7 @@ public class Crystal_Skill : Skill
 
         if (CanUseMutilCystal()) // sử dụng skill multil-Cystal
         {
+            Debug.Log("Can use MutilCystal");
             return;
         }
 
@@ -79,9 +80,9 @@ public class Crystal_Skill : Skill
             {
                 currenrCrystal.GetComponent<Crystal_Skill_Controller>().FinishCrystal();
             }
+            coolDownTimer = coolDown;
+            currenrCrystal = null;
         }
-
-        coolDownTimer = coolDown;
 
         //StartCoroutine(delayCoolDown());
     }
@@ -95,7 +96,9 @@ public class Crystal_Skill : Skill
 
     public void createCrystal()
     {
-        currenrCrystal = Instantiate(newCrystal, player.transform.position, Quaternion.identity);
+        currenrCrystal = GameManager.Instance.GetObjFromPool(newCrystal);
+        currenrCrystal.transform.position = player.transform.position;
+        currenrCrystal.transform.rotation = Quaternion.identity;
         Crystal_Skill_Controller curentCrystalScript = currenrCrystal.GetComponent<Crystal_Skill_Controller>();
         curentCrystalScript.setUpCrystal(crystalDuration, moveSpeed, crystalExploreUnlock, crystalMovingTargetUnlock, findToClosestEnemy(currenrCrystal.transform), player);
     }

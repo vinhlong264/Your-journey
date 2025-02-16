@@ -18,6 +18,8 @@ public class SpellDemoSlime : MonoBehaviour
             collision.gameObject.CompareTag("Player")
             || collision.gameObject.CompareTag("Enemy"))
         {
+
+            Debug.Log("Collision Ground");
             PlayerStats playerStats = collision.gameObject.GetComponent<PlayerStats>();
             if (playerStats != null)
             {

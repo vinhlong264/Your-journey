@@ -19,10 +19,11 @@ public class DemoSlimeSpellState : EnemyState
     {
         base.Enter();
         demoSlime.rb.bodyType = RigidbodyType2D.Kinematic;
-        amoutSpell = 10;
+        demoSlime.setZeroVelocity();
+        amoutSpell = 15;
         stateTimer = demoSlime.SpellTime;
         countSpell = 0;
-        coolDown = 1.5f;
+        coolDown = 0.75f;
     }
 
     public override void Update()

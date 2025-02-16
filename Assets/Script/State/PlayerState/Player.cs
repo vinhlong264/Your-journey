@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 public class Player : Entity
@@ -138,11 +137,13 @@ public class Player : Entity
     }
 
 
-    public void CatchTheSword() // chuyển về State Catch sword
+    public void CatchTheSword() // chuyển về State Catch sword khi kiếm quay về với Player
     {
+        Debug.Log("Catch the sword");
         _stateMachine.changeState(_catchSwordState);
         skill.sword_Skill.endSkill();
-        Destroy(sword);
+        sword.SetActive(false);
+        sword = null;
     }
 
 

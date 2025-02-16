@@ -1,12 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityFx : MonoBehaviour
 {
     private SpriteRenderer sr;
-    [SerializeField]private Material hitMat;
+    [SerializeField] private Material hitMat;
     private Material originalMat;
+    private float timeEffect;
 
 
     [Header("Apply Ailment info")]
@@ -20,7 +20,17 @@ public class EntityFx : MonoBehaviour
         originalMat = sr.material;
     }
 
-    public IEnumerator FlashFx()
+    private void Update()
+    {
+        timeEffect -= Time.deltaTime;
+    }
+
+    public void setTimeDuration(float _time)
+    {
+        timeEffect = _time;
+    }
+
+    IEnumerator FlashFx()
     {
         sr.material = hitMat;
         Color currentColor = sr.color;
@@ -30,9 +40,37 @@ public class EntityFx : MonoBehaviour
         sr.material = originalMat;
     }
 
+
+    public void StunColorFor()
+    {
+        StartCoroutine(StopStunCrountine());
+    }
+
+    IEnumerator StunCrountine()
+    {
+        while (true)
+        {
+            if (timeEffect < 0)
+            {
+                Debug.Log("Stop StunCrountine");
+                break;
+            }
+
+            RedColorBlink();
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    IEnumerator StopStunCrountine()
+    {
+        yield return StartCoroutine(StunCrountine());
+        Debug.Log("Call StopStunCrountine");
+        canCelRedBlink();
+    }
+
     private void RedColorBlink()
     {
-        if(sr.color != Color.white)
+        if (sr.color != Color.white)
         {
             sr.color = Color.white;
         }
@@ -42,16 +80,8 @@ public class EntityFx : MonoBehaviour
         }
     }
 
-    public void StunColorFor(float _second)
-    {
-
-    }
-
-
     private void canCelRedBlink()
     {
-        //CancelInvoke(); 
-        // hàm hủy tất cả các Invoke được gọi
         sr.color = Color.white;
     }
 
@@ -62,7 +92,7 @@ public class EntityFx : MonoBehaviour
         StartCoroutine(effectAiliment(_second, chill));
     }
 
-    IEnumerator effectAiliment(float _second , Color[] _color)
+    IEnumerator effectAiliment(float _second, Color[] _color)
     {
         yield return StartCoroutine(colorEffect(_color));
         yield return new WaitForSeconds(_second);

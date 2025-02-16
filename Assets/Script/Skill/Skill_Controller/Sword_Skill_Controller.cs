@@ -47,6 +47,16 @@ public class Sword_Skill_Controller : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
+    private void OnDisable()
+    {
+        isReturning = false;
+        canRotation = true;
+        wasStop = false;
+        cd.enabled = true;
+        rb.isKinematic = false;
+        rb.constraints = RigidbodyConstraints2D.None;
+    }
+
     public void setupSword(Vector2 _dir, float _gravityScale, float _speedReturning, 
         float _FrezeeTimer, bool _isFrezeeTime , bool _isBleeding , Player _player) // hàm quản lý chuyển động của sword
     {
@@ -197,7 +207,7 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isReturning) return; // khi isReturning == true sẽ thoát luôn khỏi hàm này để đảm bảo k thực hiện logic bên dưới
+        if (isReturning) return;
 
         if (collision.GetComponent<Enemy>() != null)
         {
@@ -221,7 +231,6 @@ public class Sword_Skill_Controller : MonoBehaviour
 
             }
         }
-
         StuckInto(collision);
     }
 

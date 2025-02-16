@@ -86,7 +86,10 @@ public class Sword_Skill : Skill
 
     public void createSword() // khởi tạo sword
     {
-        GameObject newSword = Instantiate(swordPrefabs, player.transform.position, transform.rotation);
+        GameObject newSword = GameManager.Instance.GetObjFromPool(swordPrefabs);
+        newSword.transform.position = player.transform.position;
+        newSword.transform.rotation = Quaternion.identity;
+
         Sword_Skill_Controller sw = newSword.GetComponent<Sword_Skill_Controller>();
         if (sw != null)
         {

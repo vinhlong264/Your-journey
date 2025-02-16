@@ -93,7 +93,7 @@ public class DemoSlime : Enemy
 
     public override bool checkStunned()
     {
-        if (checkStunned())
+        if (base.checkStunned())
         {
             stateMachine.changeState(_stunState);
             return true;
