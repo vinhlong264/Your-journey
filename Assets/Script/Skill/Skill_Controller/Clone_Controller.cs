@@ -29,6 +29,11 @@ public class Clone_Controller : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    private void OnDisable()
+    {
+         sr.color = new Color(1,1,1,1);
+    }
+
     private void Update()
     {
         CoolDown -= Time.deltaTime;
@@ -43,7 +48,7 @@ public class Clone_Controller : MonoBehaviour
 
             if (sr.color.a < 0f)
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
         
@@ -89,7 +94,7 @@ public class Clone_Controller : MonoBehaviour
                 PlayerStats playerStats = player.GetComponent<PlayerStats>(); 
                 EnemyStats enemyStats = hit.GetComponent<EnemyStats>();
 
-                //playerStats.DoDameWithSkill(enemyStats, percentDameExtra);
+                enemyStats.DameHandlerPhysical(playerStats);
 
                 ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
 

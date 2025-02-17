@@ -30,6 +30,12 @@ public class Crystal_Skill : Skill
     [Header("Crystal with Mirage")]
     [SerializeField] private UI_SkillTreeSlot crystalSkillWithMirageBtn;
     public bool crystalCreateMirage; // có thể sinh ra clone tại vị trí Pos
+
+    public System.Action CompeleteSkill;
+    public System.Action eventCallBack;
+
+   
+
     protected override void Start()
     {
         base.Start();
@@ -43,15 +49,15 @@ public class Crystal_Skill : Skill
 
         crystalSkillWithMirageBtn.eventUnlockSKill += onCrystalWithMirageUnlock;
 
+        eventCallBack += EventCallBackHandler;
+        refillCrystal();
     }
 
     public override void UseSkill()
     {
         base.UseSkill();
-
         if (CanUseMutilCystal()) // sử dụng skill multil-Cystal
         {
-            Debug.Log("Can use MutilCystal");
             return;
         }
 
@@ -74,18 +80,27 @@ public class Crystal_Skill : Skill
             if (crystalCreateMirage) // cho phép sinh ra clone tại vị trí của Crystal ngay khi đổi chỗ
             {
                 SkillManager.instance.clone_skill.CreateClone(currenrCrystal.transform, Vector3.zero);
-                Destroy(currenrCrystal);
+                currenrCrystal = null;
             }
             else
             {
                 currenrCrystal.GetComponent<Crystal_Skill_Controller>().FinishCrystal();
             }
+            CompeleteSkill?.Invoke();
             coolDownTimer = coolDown;
             currenrCrystal = null;
         }
 
         //StartCoroutine(delayCoolDown());
     }
+
+    private void EventCallBackHandler()
+    {
+        CompeleteSkill?.Invoke();
+        currenrCrystal = null;
+    }
+
+    
 
     IEnumerator delayCoolDown()
     {
@@ -148,23 +163,27 @@ public class Crystal_Skill : Skill
 
     private bool CanUseMutilCystal()
     {
+        int i = 0;
+
         if (crystalMultiUnlock)
         {
             if (listCrystal.Count > 0)
             {
                 coolDown = 0;
-
                 GameObject CrystalSpawn = listCrystal[listCrystal.Count - 1];
-                GameObject newCrystal = Instantiate(CrystalSpawn, player.transform.position, Quaternion.identity);
+                GameObject _newCrystal = GameManager.Instance.GetObjFromPool(CrystalSpawn);
+                _newCrystal.transform.position = player.transform.position;
+                _newCrystal.transform.rotation = Quaternion.identity;
                 listCrystal.Remove(CrystalSpawn); // xóa khỏi list khi nó đc lấy ra
 
-                newCrystal.GetComponent<Crystal_Skill_Controller>()
-                    .setUpCrystal(crystalDuration, moveSpeed, crystalExploreUnlock, crystalMovingTargetUnlock, findToClosestEnemy(newCrystal.transform), player);
+                _newCrystal.GetComponent<Crystal_Skill_Controller>()
+                    .setUpCrystal(crystalDuration, moveSpeed, crystalExploreUnlock, crystalMovingTargetUnlock, findToClosestEnemy(_newCrystal.transform), player);
 
                 if (listCrystal.Count <= 0f) // khi list rỗng sẽ tự động thêm và phải chờ một thời gian ms đc sử dụng
                 {
                     Debug.Log("Dừng sử dụng Skill");
                     coolDown = multiCooldown;
+                    coolDownTimer = multiCooldown;
                     refillCrystal();
                     return false;
                 }
@@ -176,7 +195,7 @@ public class Crystal_Skill : Skill
         return false;
     }
 
-    private void refillCrystal() // Thêm 3 Crystal vào listCrystal
+    private void refillCrystal()
     {
         for (int i = 0; i < amountOfMulti; i++)
         {

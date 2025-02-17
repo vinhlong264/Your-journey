@@ -18,10 +18,12 @@ public class Crystal_Skill_Controller : MonoBehaviour
     private Animator animator;
     private CircleCollider2D cd;
     private Player player;
+    private Vector3 defaultScacle; // scale gốc
     private void Start()
     {
         animator = GetComponent<Animator>();
         cd = GetComponent<CircleCollider2D>();
+        defaultScacle = transform.localScale;
     }
 
 
@@ -40,7 +42,9 @@ public class Crystal_Skill_Controller : MonoBehaviour
         CrystalExitTime = 0;
         moveSpeed = 0;
         canExplore = false;
+        canGrow = false;
         canMoveEnemies = false;
+        transform.localScale = defaultScacle;
         closestTarget = null;
         player = null;
     }
@@ -54,7 +58,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
             FinishCrystal(); // Điều khiển trạng thái của Crystal
         }
 
-        if (canGrow) // Phát triển độ lớn của Crystal
+        if (canGrow) // tăng độ lớn của Crystal
         {
             transform.localScale = Vector2.Lerp(transform.localScale , new Vector2(3,3) , growSpeed * Time.deltaTime);  
         }
@@ -101,6 +105,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
     private void selfDestroy()
     {
         gameObject.SetActive(false);
+        SkillManager.instance.crystal_skill.eventCallBack?.Invoke();
     }
 
 

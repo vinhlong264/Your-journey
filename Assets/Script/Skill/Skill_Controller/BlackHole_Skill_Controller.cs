@@ -28,6 +28,7 @@ public class BlackHole_Skill_Controller : MonoBehaviour
     public float cloneAttackCooldown = 0.3f;
 
 
+    private Vector3 defaultLocalScale;
     private bool playerCanDispear = true;
 
     public bool playerCanExitState { get; private set; }    // biến kết nối để kiểm soát việc thoát khỏi trạng thái này
@@ -43,8 +44,19 @@ public class BlackHole_Skill_Controller : MonoBehaviour
         blackHoleTimer = _blackHoleDuration;
     }
 
+    private void Start()
+    {
+        defaultLocalScale = transform.localScale;
+    }
 
-    
+    private void OnDisable()
+    {
+        canGrow = false;
+        canShrink = true;
+    }
+
+
+
     void Update()
     {
         cloneAttackTimer -= Time.deltaTime;

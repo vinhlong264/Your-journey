@@ -41,7 +41,7 @@ public abstract class UI_SkillHotKeyAbstract : MonoBehaviour
         }
     }
 
-    protected void checkOfCoolDownOf(Image _image , float _coolDown)
+    protected virtual void checkOfCoolDownOf(Image _image , float _coolDown)
     {
         if(_image == null) return;
 

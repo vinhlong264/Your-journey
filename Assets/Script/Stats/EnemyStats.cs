@@ -75,6 +75,9 @@ public class EnemyStats : CharacterStats
     protected override void decreaseHealthBy(int _dame)
     {
         base.decreaseHealthBy(_dame);
+
+        if (isBleeding) return;
+
         enemy.dameEffect();
     }
 

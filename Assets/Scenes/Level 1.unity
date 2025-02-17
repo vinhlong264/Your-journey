@@ -1649,7 +1649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 2
-  SkillHotKey: 102
+  SkillHotKey: 101
   skillImageCoolDown: {fileID: 228697861}
   skillImage: {fileID: 145813319}
 --- !u!114 &145813319
@@ -7510,15 +7510,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 78320650594048041, guid: 878898815ed646d4f805eb1944781201, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 760301383743270748, guid: 878898815ed646d4f805eb1944781201, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 760301383743270748, guid: 878898815ed646d4f805eb1944781201, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3429174633463905471, guid: 878898815ed646d4f805eb1944781201, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16774,7 +16774,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: F
+  m_text: E
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bcd714020b1f76b44b4c15be707cc317, type: 2}
   m_sharedMaterial: {fileID: -8840888613494185457, guid: bcd714020b1f76b44b4c15be707cc317, type: 2}
@@ -46700,6 +46700,10 @@ PrefabInstance:
       propertyPath: blackHoleUnlockBtn
       value: 
       objectReference: {fileID: 316396480}
+    - target: {fileID: 7534639786028887682, guid: b57c11ab24c03304888006e1547bf66f, type: 3}
+      propertyPath: multiCooldown
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7534639786028887682, guid: b57c11ab24c03304888006e1547bf66f, type: 3}
       propertyPath: crystalSkillUnlockBtn
       value: 

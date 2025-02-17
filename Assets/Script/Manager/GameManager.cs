@@ -44,7 +44,6 @@ public class GameManager : Singleton<GameManager>
         GameObject newObj = Instantiate(keyObj);
         dumpListObj.Add(newObj);
         newObj.SetActive(true);
-
         return newObj;
 
     }
