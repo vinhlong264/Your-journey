@@ -1,4 +1,4 @@
-﻿
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerAnimationEvent : MonoBehaviour
@@ -12,7 +12,7 @@ public class PlayerAnimationEvent : MonoBehaviour
 
     public void AnimationTrigger() // hàm dùng để kết thúc animation của 1 state thông qua triggercall
     {
-        if(player != null)
+        if (player != null)
         {
             player.AnimationEventTrigger();
         }
@@ -21,16 +21,13 @@ public class PlayerAnimationEvent : MonoBehaviour
 
     public void attackTrigger() // Hàm tấn công
     {
-        Collider2D[] col = Physics2D.OverlapCircleAll(player.AttackCheck.position, player.attackRadius , whatIsMask);
-        foreach(Collider2D hit in col)
+        Collider2D[] col = Physics2D.OverlapCircleAll(player.AttackCheck.position, player.attackRadius, whatIsMask);
+        foreach (Collider2D hit in col)
         {
             if (hit.GetComponent<Enemy>() != null)
             {
                 IDameHandlePhysical EnemyReceivePhysic = hit.GetComponent<IDameHandlePhysical>();
-                IDameHandleMagical EnemyReceiveMagic = hit.GetComponent<IDameHandleMagical>();
-
-
-                if (EnemyReceivePhysic != null && EnemyReceiveMagic != null)
+                if (EnemyReceivePhysic != null)
                 {
                     EnemyReceivePhysic.DameHandlerPhysical(player.GetComponent<PlayerStats>());
                     ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
@@ -44,9 +41,15 @@ public class PlayerAnimationEvent : MonoBehaviour
         }
     }
 
+    IEnumerator DeactiveCrountine(GameObject obj)
+    {
+        yield return new WaitForSeconds(0.3f);
+        obj.SetActive(false);
+    }
+
     private void ThrowSword() // skill ném kiếm
     {
         SkillManager.instance.sword_Skill.createSword();
     }
-    
+
 }

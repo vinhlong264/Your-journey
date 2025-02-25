@@ -1,26 +1,30 @@
-﻿using UnityEngine.EventSystems;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class UI_CraftSlot : UI_ItemSlot
+public class UI_CraftSlot : MonoBehaviour, IPointerDownHandler
 {
-    protected override void Start()
+    private ItemEquipmentSO _equipment;
+    [SerializeField] private Image _icon;
+    [SerializeField] private TextMeshProUGUI _nameEquipment;
+    [SerializeField] private UI_CraftWindow craftWindow;
+
+    public void setUp(ItemEquipmentSO _newEquipment)
     {
-        base.Start();
+        this._equipment = _newEquipment;
+
+        if (this._equipment == null) return;
+
+        _icon.sprite = _equipment.icon;
+        _nameEquipment.text = _equipment.name;
+    }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if(_equipment == null ) return;
+        if (craftWindow == null) return;
+
+        craftWindow.setUpCraftWindow(_equipment);
     }
 
-    public void setUpCraftSlot(ItemEquipmentSO _data) // Cài đặt những thứ cần thiết
-    {
-        if (_data == null) return; 
-
-
-        item.itemData = _data;
-
-        imageItem.sprite = _data.icon;
-        itemText.text = _data.name;
-    }
-
-
-    public override void OnPointerDown(PointerEventData eventData)
-    {
-        //ui.uiCanCraftWindow.setUpCraftWindow(item.itemData as ItemEquipmentSO);
-    }
 }

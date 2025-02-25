@@ -1,54 +1,35 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_CraftList : MonoBehaviour, IPointerClickHandler
+public class UI_CraftList : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private Transform craftSlotParent;
-    [SerializeField] private List<UI_CraftSlot> craftsSlot;
-    [SerializeField] private GameObject craftSlotObj;
-    [SerializeField] private List<ItemEquipmentSO> craftEquipment = new List<ItemEquipmentSO>();
-    [SerializeField] private List<itemDataSO> itemMaterial;
+    [SerializeField] private List<ItemEquipmentSO> equipmentList = new List<ItemEquipmentSO>(); // List chứa các equipment
+    [Space]
+    [SerializeField] private Transform ui_SlotCratfParent;
+    [SerializeField] private UI_CraftSlot[] ui_CraftSlot;
 
-
-    [SerializeField] private UI ui;
     void Start()
     {
-        transform.parent.GetChild(0).GetComponent<UI_CraftList>().setUpCraftList();
+        ui_CraftSlot = ui_SlotCratfParent.GetComponentsInChildren<UI_CraftSlot>();
 
-        //Debug.Log(craftEquipment[0]);
-        setDefaultEquipmentCraft();
+
+        SetUpListCraft();
     }
 
-
-    public void setUpCraftList()
+    private void SetUpListCraft()
     {
-        for (int i = 0; i < craftSlotParent.childCount; i++)
+        if (ui_CraftSlot.Length <= 0 || equipmentList.Count == 0) return;
+
+        for(int i = 0; i < equipmentList.Count; i++)
         {
-            Destroy(craftSlotParent.GetChild(i).gameObject);
-        }
-
-        craftsSlot = new List<UI_CraftSlot>();
-
-        for (int i = 0; i < craftEquipment.Count; i++)
-        {
-            GameObject newGameObject = Instantiate(craftSlotObj, craftSlotParent);
-            newGameObject.GetComponent<UI_CraftSlot>().setUpCraftSlot(craftEquipment[i]);
-
+            ui_CraftSlot[i].setUp(equipmentList[i]);
         }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        setUpCraftList();
-    }
-
-    private void setDefaultEquipmentCraft()
-    {
-        if (craftEquipment[0] != null)
-        {
-            Debug.Log(GetComponentInChildren<UI>());
-           ui.uiCanCraftWindow.setUpCraftWindow(craftEquipment[0]);
-        }
+        Debug.Log("Click");
+        SetUpListCraft();
     }
 }

@@ -58,8 +58,7 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
 
         isUnlocked = true;
-
-        eventUnlockSKill();
+        eventUnlockSKill?.Invoke();
         skillImage.color = Color.white;
     }
 

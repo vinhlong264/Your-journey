@@ -293,7 +293,6 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
             Debug.Log("Né dame");
             return;
         }
-        //Debug.Log("Không thể né dame");
 
         int damage = _statSender.dame.getValue() + _statSender.strength.getValue();
 
@@ -304,7 +303,7 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
         }
 
         damage = CheckArmor(damage);
-        //Debug.Log($"{_statSender.name} Sender : {damage} - {this.name} Receive: {damage}");
+        fx.CreatHitImpact(this.transform , CanCrit(_statSender));
         takeDame(damage);
     }
 

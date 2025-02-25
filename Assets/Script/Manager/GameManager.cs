@@ -22,12 +22,10 @@ public class GameManager : Singleton<GameManager>
 
         if (poolDic.ContainsKey(keyObj))
         {
-            Debug.LogWarning("Pool tồn tại key");
             dumpListObj = poolDic[keyObj];
         }
         else
         {
-            Debug.LogWarning("Pool không tồn tại key");
             poolDic.Add(keyObj, dumpListObj);
         }
 

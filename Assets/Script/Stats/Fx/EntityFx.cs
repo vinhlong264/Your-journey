@@ -7,6 +7,7 @@ public class EntityFx : MonoBehaviour
     [SerializeField] private Material hitMat;
     private Material originalMat;
     private float timeEffect;
+    private Entity entity;
 
 
     [Header("Apply Ailment info")]
@@ -14,9 +15,14 @@ public class EntityFx : MonoBehaviour
     [SerializeField] private Color[] ingnite;
     [SerializeField] private Color[] shock;
 
+    [Header("Effect hit impact infor")]
+    [SerializeField] private GameObject hitImpact;
+    [SerializeField] private GameObject hitCrital;
+
     private void Start()
     {
         sr = GetComponentInChildren<SpriteRenderer>();
+        entity = GetComponent<Entity>();
         originalMat = sr.material;
     }
 
@@ -29,7 +35,7 @@ public class EntityFx : MonoBehaviour
     {
         timeEffect = _time;
     }
-
+    #region Fx HitImpact
     IEnumerator FlashFx()
     {
         sr.material = hitMat;
@@ -40,7 +46,36 @@ public class EntityFx : MonoBehaviour
         sr.material = originalMat;
     }
 
+    public void CreatHitImpact(Transform posTarget, bool canCital)
+    {
+        float randomX = Random.Range(-.5f, .5f);
+        float randomY = Random.Range(-.5f, .5f);
+        GameObject _hitImpact = hitImpact;
 
+        if (canCital)
+        {
+            _hitImpact = hitCrital;
+        }
+
+        GameObject hitEffect = GameManager.Instance.GetObjFromPool(_hitImpact);
+        if (hitEffect != null)
+        {
+            hitEffect.transform.position = posTarget.position + new Vector3(randomX , randomY);
+            hitEffect.transform.rotation = Quaternion.identity;
+            hitEffect.transform.rotation = posTarget.rotation;
+            StartCoroutine(DeactiveMe(hitEffect));
+        }
+    }
+
+    IEnumerator DeactiveMe(GameObject objMe)
+    {
+        yield return new WaitForSeconds(0.3f);
+        objMe.SetActive(false);
+    }
+
+    #endregion
+
+    #region Fx Stun
     public void StunColorFor()
     {
         StartCoroutine(StopStunCrountine());
@@ -64,7 +99,6 @@ public class EntityFx : MonoBehaviour
     IEnumerator StopStunCrountine()
     {
         yield return StartCoroutine(StunCrountine());
-        Debug.Log("Call StopStunCrountine");
         canCelRedBlink();
     }
 
@@ -84,11 +118,11 @@ public class EntityFx : MonoBehaviour
     {
         sr.color = Color.white;
     }
+    #endregion
 
+    #region Fx Aliment
     public void chillColorFor(float _second)
     {
-        //InvokeRepeating("chillColor", 0, 0.3f);
-        //Invoke("canCelRedBlink", _second);
         StartCoroutine(effectAiliment(_second, chill));
     }
 
@@ -120,4 +154,5 @@ public class EntityFx : MonoBehaviour
     {
         StartCoroutine(effectAiliment(_second, ingnite));
     }
+    #endregion
 }

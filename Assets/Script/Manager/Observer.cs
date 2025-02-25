@@ -15,16 +15,16 @@ public class Observer : Singleton<Observer>
     {
         if (EventObserver.ContainsKey(key))
         {
-            Debug.Log("Tìm thấy key");
+            //Debug.Log("Tìm thấy key");
             if (EventObserver[key].Count > 0)
             {
-                Debug.Log($"key {key} event có sự kiện: {EventObserver[key].Count} ");
+                //Debug.Log($"key {key} event có sự kiện: {EventObserver[key].Count} ");
                 EventObserver[key].Add(_callBack);
                 return;
             }
             else
             {
-                Debug.Log($"{key} hiện không có sự kiện nào cả");
+                //Debug.Log($"{key} hiện không có sự kiện nào cả");
                 return;
             }
         }

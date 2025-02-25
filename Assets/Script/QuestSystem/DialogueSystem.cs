@@ -80,10 +80,10 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         {
             chatBox.SetActive(false);
             Quest q = QuestManager.Instance.GetQuest(branchStoryID);
-
-            if (q == null) return;
-            questPanel.ShowQuest(q);
-            questBox.SetActive(true);
+            if (q != null)
+            {
+                questPanel.ShowQuest(q);
+            }
         }
     }
 }

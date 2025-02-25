@@ -5,7 +5,7 @@ namespace newQuestSystem
     [System.Serializable]
     public class Quest
     {
-        public int branchStory;
+        public int branchStory; // Nhánh truyện
         public string nameQuest; // tên quest
         public string desQuest; // thông tin quest
         public int expReward; // phần thưởng exp

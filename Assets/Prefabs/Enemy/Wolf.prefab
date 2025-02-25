@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1644683663
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.6528301, g: 0.20077601, b: 0.20077601, a: 1}
   m_FlipX: 0
@@ -289,6 +289,8 @@ MonoBehaviour:
   shock:
   - {r: 1, g: 0.99607843, b: 0, a: 1}
   - {r: 1, g: 1, b: 0.5529412, a: 1}
+  hitImpact: {fileID: 595397729109963533, guid: e49460473088a3f42813e43ef6068069, type: 3}
+  hitCrital: {fileID: 2185381571243350236, guid: 83ae025d8b2665e439319ec9e8d7f1a0, type: 3}
 --- !u!114 &8208232993048701129
 MonoBehaviour:
   m_ObjectHideFlags: 0

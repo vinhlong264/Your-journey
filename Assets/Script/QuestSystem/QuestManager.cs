@@ -19,8 +19,11 @@ namespace newQuestSystem
         protected override void Awake()
         {
             MakeSingleton(true);
+        }
 
-            excuteQuestEvent += ExcuteRequireQuest;
+        private void OnEnable()
+        {
+            excuteQuestEvent += ExcuteQuest;
         }
 
         private void Start()
@@ -59,119 +62,63 @@ namespace newQuestSystem
             }
         }
 
-        public Quest GetQuest(int branchID)
+        public int GetProcessStory(int _branchID) // Lấy ra Process ở cốt truyện hiện tại
         {
-            int qip = GetQipStory(branchID);
-            Quest getQuest = allQuest.FirstOrDefault(x => x.qip == qip);
-            if (getQuest != null)
-            {
-                Debug.Log("Lấy ra quest: " + getQuest.nameQuest);
-                return getQuest;
-            }
+            return stories.FirstOrDefault(x => x.BranchID == _branchID).Process;
+        }
 
+        public Quest GetQuest(int _branchID) // Lấy ra quest cần thực hiện ở nhánh truyện hiện tại
+        {
+            int qip = stories.FirstOrDefault(x => x.BranchID == _branchID).Qip;
+            Quest getQ = allQuest.FirstOrDefault(x => x.branchStory == _branchID && x.qip == qip);
+            if (getQ != null)
+            {
+                return getQ;
+            }
             return null;
         }
-
-
-        public BranchStory GetBranchStory(int branchID)
-        {
-            BranchStory getStory = stories.FirstOrDefault(x => x.BranchID == branchID);
-            if (getStory != null)
-            {
-                return getStory;
-            }
-
-            return null;
-        }
-
-        private int GetQipStory(int branchID)
-        {
-            BranchStory getStory = stories.FirstOrDefault(x => x.BranchID == branchID);
-            if (getStory != null)
-            {
-                return getStory.Qip;
-            }
-
-            return 0;
-        }
-
-
-        public void setQuest(Quest q)
-        {
-            if (q != null) currentQuest = q;
-        }
-
-
-        public void changeQuest(Quest newQuest)
-        {
-            prevCurrentQuest = currentQuest;
-
-            currentQuest = newQuest;
-            if (currentQuest != null && prevCurrentQuest != null)
-            {
-                currentQuest.isExcute = true;
-                prevCurrentQuest.isExcute = false;
-            }
-        }
-
-
 
         public void ReceiveQuest(Quest q)
         {
             if (q == null) return;
 
-            if (q.qip == 0)
+            if(q.branchStory == 0)
             {
                 allQuestMain.Add(q);
-                currentQuest = q;
-                BranchStory story = stories.FirstOrDefault(x => x.Qip == q.qip);
-                if (story != null)
-                {
-                    story.SetProcess();
-                }
-
-
-                ExcuteQuest();
             }
-            else if (q.qip == 1)
+            else if(q.branchStory == 1)
             {
                 allQuestExtra.Add(q);
             }
-        }
-
-        public void ExcuteQuest()
-        {
-            if (currentQuest != null) currentQuest.isExcute = true;
-        }
-
-        private void ExcuteRequireQuest(EnemyType typeID)
-        {
-            if (currentQuest != null)
+            BranchStory getStory = stories.FirstOrDefault(x => x.Qip == q.qip);
+            if(getStory != null)
             {
-                if (currentQuest.enemyType == typeID.ToString() && currentQuest.isExcute)
-                {
-                    if (currentQuest.compelete) return;
+                getStory.SetProcess();
+            }
 
-                    currentQuest.SetQuest();
+        }
 
-                    Debug.Log("CallBack: " + currentQuest.currentQuest);
-                }
+        public void ExcuteQuest(EnemyType _type)
+        {
+            if (currentQuest == null) return;
+
+            if (currentQuest.enemyType == _type.ToString())
+            {
+                currentQuest.SetQuest();
             }
         }
 
-
         public void CompeleteQuest(Quest q)
         {
+            if(q == null) return;
+
             if (q.compelete)
             {
-                Observer.Instance.NotifyEvent(GameEvent.RewardExp, q.expReward);
                 BranchStory getStory = stories.FirstOrDefault(x => x.Qip == q.qip);
-                getStory.SetQuestInProcess();
                 if (getStory != null)
                 {
-                    allQuestMain.Remove(q);
+                    getStory.SetQuestInProcess();
                 }
-
             }
         }
     }

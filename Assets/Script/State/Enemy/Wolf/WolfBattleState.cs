@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WolfBattleState : EnemyState
 {
@@ -23,6 +23,16 @@ public class WolfBattleState : EnemyState
     public override void Update()
     {
         base.Update();
+        if (!_wolf.isPlayerDetected())
+        {
+            if (stateTimer < 0 || Vector2.Distance(_player.transform.position, _wolf.transform.position) > 7)
+            {
+                Debug.Log("ChangeState Idle");
+                stateMachine.changeState(_wolf._idleState);
+                return;
+            }
+        }
+
         if (_wolf.isPlayerDetected().distance < _wolf.AttackDis)
         {
             stateTimer = _wolf.BattleTime;
@@ -34,13 +44,6 @@ public class WolfBattleState : EnemyState
         }
 
 
-        if (!_wolf.isPlayerDetected())
-        {
-            if (stateTimer < 0 || Vector2.Distance(_player.transform.position, _wolf.transform.position) < 7)
-            {
-                stateMachine.changeState(_wolf._idleState);
-            }
-        }
 
         if (_player.transform.position.x > _wolf.transform.position.x)
         {

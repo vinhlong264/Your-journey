@@ -29,6 +29,7 @@ public class QuestPanel : MonoBehaviour
             questDescriptionTxt.text = q.desQuest;
             expRewardTxt.text = q.expReward.ToString();
             currentQuestTxt.text = $"{q.currentQuest}/{q.requireQuest}";
+            gameObject.SetActive(true);
         }
     }
 

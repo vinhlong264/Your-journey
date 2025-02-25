@@ -5,7 +5,6 @@ public class UltimateHotKey : UI_SkillHotKeyAbstract
     {
         base.OnEnable();
 
-        Debug.Log("Call");
         if(skillImage != null)
         {
             if (skill.blackHole_skill.blackHoleUnlocked)
