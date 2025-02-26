@@ -31,6 +31,7 @@ public class Player : Entity
 
     public bool isDeath;
 
+
     #endregion
 
     #region State
@@ -165,7 +166,6 @@ public class Player : Entity
     {
         _stateMachine.currentState.animationTriggerEvent();
     }
-
 
     private void checkForDashInput()
     {
