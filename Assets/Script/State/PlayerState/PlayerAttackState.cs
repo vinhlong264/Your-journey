@@ -20,7 +20,7 @@ public class PlayerAttackState : PlayerState
             comboCounter = 0;
         }
         _player.animator.SetInteger("comboCounter" , comboCounter);
-        _player.setVelocity(_player.attackMovement[comboCounter] * _player.isFacingDir, rb.velocity.y); // khi tấn công sẽ tiến lên 1 chút
+        _player.setVelocity(_player.attackMovement[comboCounter] * _player.isFacingDir * 0.7f, rb.velocity.y); // khi tấn công sẽ tiến lên 1 chút
         stateTimer = 0.1f;
     }
 

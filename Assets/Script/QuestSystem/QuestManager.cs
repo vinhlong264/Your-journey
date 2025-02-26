@@ -13,7 +13,6 @@ namespace newQuestSystem
         [SerializeField] private List<Quest> allQuestExtra = new List<Quest>();
 
         [SerializeField] private Quest currentQuest; // Quest hiện tại đang thực thi
-        [SerializeField] private Quest prevCurrentQuest;
         public System.Action<EnemyType> excuteQuestEvent;
 
         protected override void Awake()
@@ -24,6 +23,11 @@ namespace newQuestSystem
         private void OnEnable()
         {
             excuteQuestEvent += ExcuteQuest;
+        }
+
+        private void OnDisable()
+        {
+            excuteQuestEvent -= ExcuteQuest;
         }
 
         private void Start()
@@ -62,6 +66,14 @@ namespace newQuestSystem
             }
         }
 
+        public void setQuestExcute(Quest q)
+        {
+            if (q == null) return;
+
+            Debug.Log("Quest current: " + q.desQuest);
+            currentQuest = q;
+        }
+
         public int GetProcessStory(int _branchID) // Lấy ra Process ở cốt truyện hiện tại
         {
             return stories.FirstOrDefault(x => x.BranchID == _branchID).Process;
@@ -95,7 +107,6 @@ namespace newQuestSystem
             {
                 getStory.SetProcess();
             }
-
         }
 
         public void ExcuteQuest(EnemyType _type)
@@ -121,6 +132,9 @@ namespace newQuestSystem
                 }
             }
         }
+
+        public List<Quest> GetAllQuestMain() => allQuestMain;
+        public List<Quest> GetAllQuestExtra() => allQuestExtra;
     }
 }
 

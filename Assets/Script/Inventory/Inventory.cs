@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 public class Inventory : Singleton<Inventory>, IInventory
 {
@@ -9,11 +8,6 @@ public class Inventory : Singleton<Inventory>, IInventory
 
     [SerializeField] private List<ItemInventory> listInventory; // Danh sách item(Equipment) để thêm vào Inventory
     [SerializeField] private Dictionary<itemDataSO, ItemInventory> itemInvetoryDictionary;
-
-    [SerializeField] private List<ItemInventory> itemStashList;  //Danh sách item(Material) để thêm vào Stash
-    [SerializeField] private Dictionary<itemDataSO, ItemInventory> itemStashDictionary;
-
-
 
     private float lastTimeUseBollte = 0;
     private float lastTimeUseArmor = 0;
@@ -32,9 +26,6 @@ public class Inventory : Singleton<Inventory>, IInventory
     {
         listInventory = new List<ItemInventory>();
         itemInvetoryDictionary = new Dictionary<itemDataSO, ItemInventory>();
-
-        itemStashList = new List<ItemInventory>();
-        itemStashDictionary = new Dictionary<itemDataSO, ItemInventory>();
 
         eqipmentItemList = new List<ItemInventory>();
         equipmentDictionary = new Dictionary<ItemEquipmentSO, ItemInventory>();
@@ -78,7 +69,7 @@ public class Inventory : Singleton<Inventory>, IInventory
 
     public void unEqipmentItem(ItemEquipmentSO eqipmentToRemove) // Quản lý việc gỡ trang bị
     {
-       
+
         if (equipmentDictionary.TryGetValue(eqipmentToRemove, out ItemInventory value))
         {
             eqipmentItemList.Remove(value);
@@ -88,71 +79,10 @@ public class Inventory : Singleton<Inventory>, IInventory
 
         Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
-
-    #region Craft
-
-    public void Craft(ItemEquipmentSO _eqipmentCratf , List<ItemInventory> _materialRequirement)
-    {
-        if(canCraft(_eqipmentCratf , _materialRequirement))
-        {
-            addEquipment(_eqipmentCratf);
-            Debug.Log("Here is your item: " + _eqipmentCratf.name);
-        }
-    }
-
-    private bool canCraft(ItemEquipmentSO _itemToCraft, List<ItemInventory> _requirmentMaterial) // Quản lý việc ghép nguyên liệu
-    {
-        if(_requirmentMaterial.Count <= 0) // kiểm tra xem Equipment này có yêu cầu material không
-        {
-            Debug.Log("Equipment not exits material");
-            return false;
-        }
-
-
-        List<ItemInventory> materialToRemove = new List<ItemInventory>(); // List để chứa các material để rèn
-
-        for (int i = 0; i < _requirmentMaterial.Count; i++)
-        {
-            //Tìm xem itemStashDictionary có material yêu cầu không, nếu không thì trả về false luôn và ngược lại
-            if (itemStashDictionary.TryGetValue(_requirmentMaterial[i].itemData, out ItemInventory stashValue))
-            {
-                Debug.Log("Find material");
-
-                // Nếu có, kiểm tra xem số lượng trong kho có đủ để rèn không
-                if (stashValue.currentQuantity < _requirmentMaterial[i].currentQuantity)
-                {
-                    Debug.Log("Not enough material");
-                    return false; // nếu không đủ thì trả về false luôn
-                }
-                else
-                {
-                    Debug.Log("Enough material");
-                    materialToRemove.Add(stashValue);
-                }
-            }
-            else
-            {
-                Debug.Log("Not Find material");
-                return false;
-            }
-        }
-
-        for (int i = 0; i < materialToRemove.Count; i++)
-        {
-            removeItem(materialToRemove[i].itemData); // xóa các material đã dùng để rèn đi
-        }
-
-        addItem(_itemToCraft);
-        //Debug.Log("Here is your item: " + _itemToCraft.name);
-        return true;
-    }
-
-    #endregion
-
     #region add item
     public void addItem(itemDataSO _item)
     {
-        if(itemInvetoryDictionary.TryGetValue(_item , out ItemInventory value))
+        if (itemInvetoryDictionary.TryGetValue(_item, out ItemInventory value))
         {
             if (_item.onlyItem)
             {
@@ -167,7 +97,7 @@ public class Inventory : Singleton<Inventory>, IInventory
         {
             ItemInventory newItem = new ItemInventory(_item);
             listInventory.Add(newItem);
-            itemInvetoryDictionary.Add(_item , newItem);
+            itemInvetoryDictionary.Add(_item, newItem);
         }
         Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
@@ -199,7 +129,7 @@ public class Inventory : Singleton<Inventory>, IInventory
     public void removeItem(itemDataSO _item)
     {
 
-        if(itemInvetoryDictionary.TryGetValue(_item, out ItemInventory value))
+        if (itemInvetoryDictionary.TryGetValue(_item, out ItemInventory value))
         {
             if (_item.onlyItem)
             {
@@ -208,7 +138,7 @@ public class Inventory : Singleton<Inventory>, IInventory
             }
             else
             {
-                if(value.currentQuantity > 1)
+                if (value.currentQuantity > 1)
                 {
                     value.removeQuantity();
                 }
@@ -219,7 +149,7 @@ public class Inventory : Singleton<Inventory>, IInventory
                 }
             }
         }
-        Observer.Instance.NotifyEvent(GameEvent.UpdateUI , null);
+        Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
     }
 
     private void removeItemInventory(itemDataSO _itemIventory)
@@ -234,22 +164,6 @@ public class Inventory : Singleton<Inventory>, IInventory
             else // ngược lại nếu nhiều hơn 1 thì sẽ giảm số lượng item loại key đó sở hữu
             {
                 valueInventory.removeQuantity(); // xóa 1 item cùng key khỏi Inventory
-            }
-        }
-    }
-
-    private void removeItemStash(itemDataSO _itemStash)
-    {
-        if (itemStashDictionary.TryGetValue(_itemStash, out ItemInventory valueStash))
-        {
-            if (valueStash.currentQuantity <= 1)
-            {
-                itemStashList.Remove(valueStash);
-                itemStashDictionary.Remove(_itemStash);
-            }
-            else
-            {
-                valueStash.removeQuantity();
             }
         }
     }
@@ -270,7 +184,7 @@ public class Inventory : Singleton<Inventory>, IInventory
             }
         }
 
-        if(_type == EqipmentType.Bottle)
+        if (_type == EqipmentType.Bottle)
         {
             equipmentDictionary.Remove(newEquipment);
             eqipmentItemList.Remove(equipmentInven);
@@ -290,7 +204,7 @@ public class Inventory : Singleton<Inventory>, IInventory
             return false;
         }
 
-        
+
         lastTimeUseBollte = Time.time;
         newCurrentEffect.excuteItemEffect(null);
         removeItem(newCurrentEffect);
@@ -316,7 +230,7 @@ public class Inventory : Singleton<Inventory>, IInventory
 
     public List<ItemInventory> GetListInventory() => listInventory;
     public Dictionary<itemDataSO, ItemInventory> GetDictionaryInventory() => itemInvetoryDictionary;
-    public Dictionary<ItemEquipmentSO , ItemInventory> GetDictionaryEqiupment() => equipmentDictionary;
+    public Dictionary<ItemEquipmentSO, ItemInventory> GetDictionaryEqiupment() => equipmentDictionary;
 }
 
 

@@ -10,6 +10,7 @@ public class UI_CraftWindow : MonoBehaviour
 
     [SerializeField] private Image[] materialImage;
     [SerializeField] private Button caftButton;
+    [SerializeField] private CraftSystem craftSystem;
 
 
     public void setUpCraftWindow(ItemEquipmentSO _data)
@@ -46,6 +47,6 @@ public class UI_CraftWindow : MonoBehaviour
         itemName.text = _data.itemName;
         itemDescription.text = _data.GetDescription();
 
-        caftButton.onClick.AddListener(() => Inventory.Instance.Craft(_data, _data.craft));
+        caftButton.onClick.AddListener(() => craftSystem.Craft(_data));
     }
 }

@@ -5,6 +5,7 @@ public class UiManager : MonoBehaviour
     [Header("Active window")]
     [SerializeField] private GameObject ui_Character;
     [SerializeField] private GameObject ui_Ingame;
+    [SerializeField] private GameObject ui_QuestLog;
 
     private void Start()
     {

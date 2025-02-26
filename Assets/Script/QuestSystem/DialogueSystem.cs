@@ -18,12 +18,6 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject playerAvatar;
     [SerializeField] private GameObject npcAvatar;
     private int currentIndex = 0;
-
-    void Start()
-    {
-
-    }
-
     public void setUpDialogue(int _branchStory, string _storyDataTXt)
     {
         branchStoryID = _branchStory;
@@ -78,6 +72,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         }
         else
         {
+            currentIndex = 0;
             chatBox.SetActive(false);
             Quest q = QuestManager.Instance.GetQuest(branchStoryID);
             if (q != null)

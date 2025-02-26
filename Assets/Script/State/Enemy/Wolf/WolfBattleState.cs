@@ -23,6 +23,21 @@ public class WolfBattleState : EnemyState
     public override void Update()
     {
         base.Update();
+
+        BattleAttackHandler();
+    }
+
+    public override void FixUpdate()
+    {
+        _wolf.setVelocity(moveDir, _wolf.rb.velocity.y);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+    private void BattleAttackHandler()
+    {
         if (!_wolf.isPlayerDetected())
         {
             if (stateTimer < 0 || Vector2.Distance(_player.transform.position, _wolf.transform.position) > 7)
@@ -43,8 +58,6 @@ public class WolfBattleState : EnemyState
             }
         }
 
-
-
         if (_player.transform.position.x > _wolf.transform.position.x)
         {
             moveDir = 1f;
@@ -53,15 +66,5 @@ public class WolfBattleState : EnemyState
         {
             moveDir = -1f;
         }
-    }
-
-    public override void FixUpdate()
-    {
-        _wolf.setVelocity(moveDir, _wolf.rb.velocity.y);
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
     }
 }
