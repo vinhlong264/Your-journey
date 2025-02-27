@@ -163,8 +163,6 @@ public class Crystal_Skill : Skill
 
     private bool CanUseMutilCystal()
     {
-        int i = 0;
-
         if (crystalMultiUnlock)
         {
             if (listCrystal.Count > 0)

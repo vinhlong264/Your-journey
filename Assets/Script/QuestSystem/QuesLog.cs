@@ -13,10 +13,12 @@ public class QuesLog : MonoBehaviour
     [Header("Button")]
     [SerializeField] private Button mainQuestBtn;
     [SerializeField] private Button extraQuestBtn;
+    [SerializeField] private Button excuteQuestBtn;
 
     [Header("Quest Select")]
     [SerializeField] private Transform questSelectParent;
     private List<QuestSelect> questSelects = new List<QuestSelect>();
+    private Quest questSelected;
 
     private void Start()
     {
@@ -30,8 +32,22 @@ public class QuesLog : MonoBehaviour
 
 
         MainQuestHandler();
+        excuteQuestBtn.onClick.AddListener(() => ExcuteQuestHandler());
     }
 
+    public void setQuestSelect(Quest newQuestSelect)
+    {
+        if(newQuestSelect == null)
+        {
+            Debug.Log("No quest");
+            return;
+        }
+
+        questSelected = newQuestSelect;
+    }
+
+
+    #region Button handler
     private void MainQuestHandler()
     {
         if (questSelects.Count == 0) return;
@@ -51,6 +67,10 @@ public class QuesLog : MonoBehaviour
     }
 
 
-
-
+    private void ExcuteQuestHandler()
+    {
+        if (questSelected == null) return;
+        QuestManager.Instance.setQuestExcute(questSelected);
+    }
+    #endregion
 }

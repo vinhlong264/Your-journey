@@ -1583,8 +1583,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameQuest: {fileID: 453316215}
   descriptionQuest: {fileID: 1413989543}
+  questLog: {fileID: 461750750}
   selectQuestBtn: {fileID: 75093953}
-  excuteQuestBtn: {fileID: 1118550276}
 --- !u!114 &75093953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7396,6 +7396,7 @@ MonoBehaviour:
   extraQuest: []
   mainQuestBtn: {fileID: 214872410}
   extraQuestBtn: {fileID: 314917638}
+  excuteQuestBtn: {fileID: 1118550276}
   questSelectParent: {fileID: 1852918137}
 --- !u!1001 &462251615
 PrefabInstance:
@@ -45242,8 +45243,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameQuest: {fileID: 5874726}
   descriptionQuest: {fileID: 1413989543}
+  questLog: {fileID: 461750750}
   selectQuestBtn: {fileID: 1983343863}
-  excuteQuestBtn: {fileID: 1118550276}
 --- !u!114 &1983343863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46519,18 +46520,6 @@ PrefabInstance:
     - target: {fileID: 3415580689895861291, guid: e3f8e20aee7a48845bd0570b657651e1, type: 3}
       propertyPath: m_Name
       value: Wolf
-      objectReference: {fileID: 0}
-    - target: {fileID: 6798569048825750476, guid: e3f8e20aee7a48845bd0570b657651e1, type: 3}
-      propertyPath: attackCoolDown
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 6798569048825750476, guid: e3f8e20aee7a48845bd0570b657651e1, type: 3}
-      propertyPath: knockBackDir.x
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6798569048825750476, guid: e3f8e20aee7a48845bd0570b657651e1, type: 3}
-      propertyPath: knockBackDir.y
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7663853596335187314, guid: e3f8e20aee7a48845bd0570b657651e1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -47855,6 +47844,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8234494523094961719, guid: 396559e9d0c871d4b980a6abbe887560, type: 3}
+      propertyPath: popUpFx
+      value: 
+      objectReference: {fileID: 7069446311830082409, guid: ddabb9b6c518a7c4db86a4091bfe850e, type: 3}
+    - target: {fileID: 8234494523094961719, guid: 396559e9d0c871d4b980a6abbe887560, type: 3}
       propertyPath: hitCrital
       value: 
       objectReference: {fileID: 2185381571243350236, guid: 83ae025d8b2665e439319ec9e8d7f1a0, type: 3}
@@ -47918,7 +47911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui_Character: {fileID: 277193468}
   ui_Ingame: {fileID: 2033893250}
-  ui_QuestLog: {fileID: 0}
+  ui_QuestLog: {fileID: 461750747}
 --- !u!114 &8490461294325930216 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2004995831141995212, guid: 396559e9d0c871d4b980a6abbe887560, type: 3}
@@ -47953,13 +47946,9 @@ SceneRoots:
   - {fileID: 1998975705}
   - {fileID: 1778850471}
   - {fileID: 6707514678625632513}
-  - {fileID: 1661355097}
-  - {fileID: 4468310695901103332}
-  - {fileID: 1399706452}
   - {fileID: 1612400003}
   - {fileID: 1692245721}
   - {fileID: 1395256066}
-  - {fileID: 339840840}
   - {fileID: 907374208}
   - {fileID: 99971734}
   - {fileID: 1384609880}
@@ -47968,3 +47957,7 @@ SceneRoots:
   - {fileID: 2032307543}
   - {fileID: 126716463434668681}
   - {fileID: 1931579195}
+  - {fileID: 1661355097}
+  - {fileID: 4468310695901103332}
+  - {fileID: 339840840}
+  - {fileID: 1399706452}

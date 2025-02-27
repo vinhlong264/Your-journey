@@ -19,6 +19,9 @@ public class EntityFx : MonoBehaviour
     [SerializeField] private GameObject hitImpact;
     [SerializeField] private GameObject hitCrital;
 
+    [Header("Popup fx infor")]
+    [SerializeField] private GameObject popUpFx;
+
     private void Start()
     {
         sr = GetComponentInChildren<SpriteRenderer>();
@@ -35,6 +38,20 @@ public class EntityFx : MonoBehaviour
     {
         timeEffect = _time;
     }
+
+    public void CreatPopUp(Transform target , int dame , DameColor color)
+    {
+        GameObject _popupFx = GameManager.Instance.GetObjFromPool(popUpFx);
+        if(_popupFx != null)
+        {
+            _popupFx.transform.position = target.position;
+            _popupFx.transform.rotation = Quaternion.identity;
+            _popupFx.GetComponent<PopUpFx>().setDame(dame , color);
+             StartCoroutine(DeactiveMe(_popupFx));
+        }
+    }
+
+
     #region Fx HitImpact
     IEnumerator FlashFx()
     {
