@@ -24,7 +24,7 @@ public class PlayerAnimationEvent : MonoBehaviour
         Collider2D[] col = Physics2D.OverlapCircleAll(player.AttackCheck.position, player.attackRadius, whatIsMask);
         foreach (Collider2D hit in col)
         {
-            if (hit.GetComponent<Enemy>() != null)
+            if (hit.GetComponent<EnemyStats>() != null)
             {
                 IDameHandlePhysical EnemyReceivePhysic = hit.GetComponent<IDameHandlePhysical>();
                 if (EnemyReceivePhysic != null)

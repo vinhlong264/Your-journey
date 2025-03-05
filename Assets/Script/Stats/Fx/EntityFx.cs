@@ -47,7 +47,6 @@ public class EntityFx : MonoBehaviour
             _popupFx.transform.position = target.position;
             _popupFx.transform.rotation = Quaternion.identity;
             _popupFx.GetComponent<PopUpFx>().setDame(dame , color);
-             StartCoroutine(DeactiveMe(_popupFx));
         }
     }
 

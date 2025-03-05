@@ -16,21 +16,14 @@ public class QuesLog : MonoBehaviour
     [SerializeField] private Button excuteQuestBtn;
 
     [Header("Quest Select")]
+    [SerializeField] private GameObject questSelectPrefabs;
     [SerializeField] private Transform questSelectParent;
-    private List<QuestSelect> questSelects = new List<QuestSelect>();
     private Quest questSelected;
 
     private void Start()
     {
         mainQuest = QuestManager.Instance.GetAllQuestMain();
         extraQuest = QuestManager.Instance.GetAllQuestExtra();
-        for(int i = 0; i < questSelectParent.childCount; i++)
-        {
-            questSelects.Add(questSelectParent.GetChild(i).GetComponent<QuestSelect>());
-        }
-        
-
-
         MainQuestHandler();
         excuteQuestBtn.onClick.AddListener(() => ExcuteQuestHandler());
     }
@@ -50,26 +43,15 @@ public class QuesLog : MonoBehaviour
     #region Button handler
     private void MainQuestHandler()
     {
-        if (questSelects.Count == 0) return;
-        if(mainQuest.Count == 0) return;
-
-        if(questSelects.Count == 1 && mainQuest.Count == 1)
-        {
-            questSelects[0].setUpQuest(mainQuest[0]);
-            return;
-        }
-
-        for(int i = 0; i < mainQuest.Count; i++)
-        {
-            Debug.Log(i+": "+mainQuest[i].desQuest);
-            questSelects[i].setUpQuest(mainQuest[i]);
-        }
+        GameObject questDump = Instantiate(questSelectPrefabs, questSelectParent.position, Quaternion.identity, questSelectParent);
+        questDump.GetComponent<QuestSelect>().setUpQuest(mainQuest[0]);
     }
 
 
     private void ExcuteQuestHandler()
     {
         if (questSelected == null) return;
+        Debug.Log("Excute Quest: " +questSelected);
         QuestManager.Instance.setQuestExcute(questSelected);
     }
     #endregion

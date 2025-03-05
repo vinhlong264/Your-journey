@@ -1,6 +1,4 @@
 using newQuestSystem;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +8,7 @@ public class Interact : MonoBehaviour
     [SerializeField] private Button interactBtn;
     private int branchID;
     private string storyDataTxt;
+    [SerializeField] private int process;
 
     private void Start()
     {
@@ -20,7 +19,7 @@ public class Interact : MonoBehaviour
     private void InteractHandler()
     {
         int process = QuestManager.Instance.GetProcessStory(branchID);
-       storyDataTxt = GetStoryTxt(process);
+        storyDataTxt = GetStoryTxt(process);
 
 
         _dialogueSystem.setUpDialogue(branchID, storyDataTxt);
@@ -30,25 +29,21 @@ public class Interact : MonoBehaviour
     private string GetStoryTxt(int Process)
     {
         string result = "";
-        int process = QuestManager.Instance.GetProcessStory(branchID);
+        process = QuestManager.Instance.GetProcessStory(branchID);
+        Debug.Log(process);
         Quest questCurrent = QuestManager.Instance.GetQuest(branchID);
-
-        if(questCurrent != null && !questCurrent.compelete)
-        {
-            result =  "TextData/Story 3";
-        }
 
         switch (process)
         {
             case 0:
                 result = "TextData/Story 1";
                 break;
-            case 2:
+            case 1:
                 result = "TextData/Story 2";
                 break;
         }
 
-       return result;
+        return result;
 
     }
 }

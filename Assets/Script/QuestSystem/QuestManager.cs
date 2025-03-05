@@ -66,10 +66,9 @@ namespace newQuestSystem
             }
         }
 
-        public void setQuestExcute(Quest q)
+        public void setQuestExcute(Quest q) // set quest muốn làm hiện tại
         {
             if (q == null) return;
-
             Debug.Log("Quest current: " + q.desQuest);
             currentQuest = q;
         }
@@ -90,48 +89,50 @@ namespace newQuestSystem
             return null;
         }
 
-        public void ReceiveQuest(Quest q)
+        public void ReceiveQuest(Quest q) // Nhận Quest
         {
             if (q == null) return;
 
-            if(q.branchStory == 0)
+            if (q.branchStory == 0 && !allQuestMain.Contains(q))
             {
                 allQuestMain.Add(q);
             }
-            else if(q.branchStory == 1)
+            else if (q.branchStory == 1 && !allQuestExtra.Contains(q))
             {
                 allQuestExtra.Add(q);
             }
-            BranchStory getStory = stories.FirstOrDefault(x => x.Qip == q.qip);
-            if(getStory != null)
+            currentQuest = q;
+            if (currentQuest != null)
             {
-                getStory.SetProcess();
+                currentQuest.isExcute = true;
             }
         }
 
-        public void ExcuteQuest(EnemyType _type)
+        public void ExcuteQuest(EnemyType _type) // Thực thi quest hiện tại
         {
             if (currentQuest == null) return;
 
             if (currentQuest.enemyType == _type.ToString())
             {
-                currentQuest.SetQuest();
+                currentQuest.SetQuest();    
+                CompeleteQuest(currentQuest);
             }
         }
+
 
         public void CompeleteQuest(Quest q)
         {
             if(q == null) return;
 
-            if (q.compelete)
-            {
-                BranchStory getStory = stories.FirstOrDefault(x => x.Qip == q.qip);
-                if (getStory != null)
-                {
-                    getStory.SetQuestInProcess();
-                }
-            }
+            if (!q.compelete) return;
+            Debug.Log("Nhiệm vụ hoàn thành");
+
+            BranchStory getStory = stories.FirstOrDefault(x => x.Qip == q.qip);
+            getStory.SetProcess();
+
+            Observer.Instance.NotifyEvent(GameEvent.RewardExp, q.expReward);
         }
+
 
         public List<Quest> GetAllQuestMain() => allQuestMain;
         public List<Quest> GetAllQuestExtra() => allQuestExtra;

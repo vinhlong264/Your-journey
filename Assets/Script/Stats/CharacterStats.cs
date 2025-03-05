@@ -303,8 +303,9 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
         }
 
         damage = CheckArmor(damage);
-        fx.CreatPopUp(transform , damage , DameColor.CRITICAL);
+
         fx.CreatHitImpact(this.transform , CanCrit(_statSender));
+        fx.CreatPopUp(transform , damage , DameColor.DEFAULT);
         takeDame(damage);
     }
 

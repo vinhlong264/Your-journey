@@ -317,7 +317,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   dame:
-    baseValue: 10
+    baseValue: 5
     modifiers: 
   critRate:
     baseValue: 0

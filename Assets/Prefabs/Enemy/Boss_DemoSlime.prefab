@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  knockBackDir: {x: 0, y: 0}
+  knockBackDir: {x: 5, y: 0}
   knockBackDuration: 0.07
   isKnock: 0
   groundCheckDis: 0.2
@@ -162,7 +162,7 @@ MonoBehaviour:
   isFacingRight: 0
   isFacingDir: -1
   battleTime: 0
-  attackCoolDown: 5
+  attackCoolDown: 4
   lastTime: 0
   _attackArea: {fileID: 6202021633143717105}
   _attackDis: 2.5
@@ -215,7 +215,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   maxHealth:
-    baseValue: 100
+    baseValue: 1000
     modifiers: 
   armor:
     baseValue: 0
@@ -271,6 +271,9 @@ MonoBehaviour:
   shock:
   - {r: 1, g: 0.99607843, b: 0, a: 1}
   - {r: 1, g: 1, b: 0.5529412, a: 1}
+  hitImpact: {fileID: 595397729109963533, guid: e49460473088a3f42813e43ef6068069, type: 3}
+  hitCrital: {fileID: 2185381571243350236, guid: 83ae025d8b2665e439319ec9e8d7f1a0, type: 3}
+  popUpFx: {fileID: 7069446311830082409, guid: ddabb9b6c518a7c4db86a4091bfe850e, type: 3}
 --- !u!114 &3228960886596790304
 MonoBehaviour:
   m_ObjectHideFlags: 0

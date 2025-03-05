@@ -24,7 +24,6 @@ namespace newQuestSystem
             currentQuest++;
             if(currentQuest >= requireQuest)
             {
-                isExcute = false;
                 compelete = true;
             }
         }

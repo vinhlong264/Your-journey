@@ -72,14 +72,24 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            currentIndex = 0;
             chatBox.SetActive(false);
+
+            ResetDialogue();
             Quest q = QuestManager.Instance.GetQuest(branchStoryID);
-            if (q != null)
-            {
-                questPanel.ShowQuest(q);
-            }
+
+            if (q == null) return;
+
+            if (q.compelete) return;
+
+            questPanel.ShowQuest(q);
         }
+    }
+
+    private void ResetDialogue()
+    {
+        currentIndex = 0;
+        storyDataTxt = "";
+        listConverStation.Clear();
     }
 }
 

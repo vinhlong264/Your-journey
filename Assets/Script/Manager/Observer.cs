@@ -50,6 +50,7 @@ public class Observer : Singleton<Observer>
         
     }
 
+
     public void NotifyEvent(GameEvent key, object value)
     {
         foreach (KeyValuePair<GameEvent, HashSet<callBackEvent>> _event in EventObserver)
@@ -69,5 +70,6 @@ public enum GameEvent
 {
     RewardExp,
     UpdateCurrentExp,
-    UpdateUI
+    UpdateUI,
+    SetUpQuest
 }

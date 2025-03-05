@@ -25,4 +25,18 @@ public class UiManager : MonoBehaviour
             ui_Ingame.SetActive(true);
         }
     }
+
+    public void SwitchQuestLog()
+    {
+        if (ui_Ingame.activeSelf)
+        {
+            ui_Ingame.SetActive(false);
+            ui_QuestLog.SetActive(true);
+        }
+        else
+        {
+            ui_QuestLog.SetActive(false);
+            ui_Ingame.SetActive(true);
+        }
+    }
 }
