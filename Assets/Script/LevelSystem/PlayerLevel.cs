@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerLevel : LevelAbstract
+public class PlayerLevel : LevelAbstract, ISave
 {
     [SerializeField] private int pointExp;
     [SerializeField] private int pointSkill;
@@ -8,6 +8,7 @@ public class PlayerLevel : LevelAbstract
 
     public int PointExp { get => pointExp; }
     public int PointSkill { get => pointSkill; }
+
     private void OnEnable()
     {
         Observer.Instance.subscribeListener(GameEvent.RewardExp, LevelUp);
@@ -20,6 +21,7 @@ public class PlayerLevel : LevelAbstract
 
     private void Start()
     {
+        SaveManager.Instance.addSave(this);
         playerStats = GetComponent<PlayerStats>();
 
         level = 1;
@@ -63,5 +65,16 @@ public class PlayerLevel : LevelAbstract
         Debug.Log("Level up stat: " + type.ToString());
         playerStats.increaseStats(type);
         pointExp--;
+    }
+
+    public void LoadGame(GameData data)
+    {
+        
+    }
+
+    public void SaveGame(ref GameData data)
+    {
+        LevelSystem levelSystem = new LevelSystem();
+        data.level = levelSystem;
     }
 }

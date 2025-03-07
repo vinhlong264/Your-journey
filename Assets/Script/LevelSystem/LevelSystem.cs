@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
+
+[System.Serializable]
 public class LevelSystem
 {
-    private int level;
-    private float experience;
-    private float experienceToNextLevel;
+    public int level;
+    public float experience;
+    public float experienceToNextLevel;
 
     public LevelSystem()
     {
