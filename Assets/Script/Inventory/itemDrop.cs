@@ -24,10 +24,8 @@ public class itemDrop : MonoBehaviour
         {
             if (Random.Range(0, 100) <= possibleDrop[i].rateDrop)
             {
-                Debug.Log("Enough Lucky");
                 dropItem(possibleDrop[i]);
             }
-            Debug.Log("Not Enough Lucky");
         }
     }
 

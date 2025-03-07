@@ -350,7 +350,7 @@ MonoBehaviour:
   isIngnite: 0
   isChill: 0
   isShocked: 0
-  thunerPrefabs: {fileID: 0}
+  thunerPrefabs: {fileID: 583608072295307890, guid: 94b7ae373881f8047a3787e60d933e03, type: 3}
   currentHealth: 0
   _enemyType: 1
   level: 0

@@ -683,7 +683,10 @@ MonoBehaviour:
   isFacingRight: 0
   isFacingDir: -1
   battleTime: 4
-  _attackCheck: {fileID: 7599822626253927706}
+  attackCoolDown: 0.75
+  lastTime: 0
+  _attackArea: {fileID: 7599822626253927706}
+  _attackDis: 1
   _attackCheckDis: 5.5
   _attackRadius: 0.61
   isPlayer:
@@ -691,12 +694,9 @@ MonoBehaviour:
     m_Bits: 64
   stunDuration: 1
   stunDirection: {x: 5, y: 10}
-  CounterImage: {fileID: 3399342643924857612}
+  AttackImage: {fileID: 3399342643924857612}
   type: 0
   slimeSmall: {fileID: 2068029083237070858, guid: 1bb8d6b3aea57cc4ebcd12507d179394, type: 3}
-  lastTime: 0
-  attackCoolDown: 0.75
-  attackDistance: 1
   waterBulletPrefabs: {fileID: 1608990398020560343, guid: 33050dee964cc3f479eb5d85ac0578eb, type: 3}
 --- !u!114 &1472759150251683234
 MonoBehaviour:
@@ -723,7 +723,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   dame:
-    baseValue: 20
+    baseValue: 5
     modifiers: 
   critRate:
     baseValue: 0
@@ -747,7 +747,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   iceDame:
-    baseValue: 20
+    baseValue: 2
     modifiers: 
   lightingDame:
     baseValue: 0
@@ -758,6 +758,7 @@ MonoBehaviour:
   isShocked: 0
   thunerPrefabs: {fileID: 0}
   currentHealth: 0
+  _enemyType: 0
   level: 0
   perCanStage: 0
   expReward: 0
@@ -787,6 +788,9 @@ MonoBehaviour:
   shock:
   - {r: 1, g: 0.99607843, b: 0, a: 1}
   - {r: 1, g: 1, b: 0.5529412, a: 1}
+  hitImpact: {fileID: 2185381571243350236, guid: 83ae025d8b2665e439319ec9e8d7f1a0, type: 3}
+  hitCrital: {fileID: 595397729109963533, guid: e49460473088a3f42813e43ef6068069, type: 3}
+  popUpFx: {fileID: 7069446311830082409, guid: ddabb9b6c518a7c4db86a4091bfe850e, type: 3}
 --- !u!114 &7821561163776060542
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,11 +23,11 @@ public class UI_UpgrateStats : MonoBehaviour
 
     private void upgrateStatsEvent()
     {
-        if (playerLevel.canLevelUpStats(stasType))
-        {
-            statsCount++;
-            statsUpgrateText.text = "+" + statsCount;
-            Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
-        }
+        //if (playerLevel.canLevelUpStats(stasType))
+        //{
+        //    statsCount++;
+        //    statsUpgrateText.text = "+" + statsCount;
+        //    Observer.Instance.NotifyEvent(GameEvent.UpdateUI, null);
+        //}
     }
 }

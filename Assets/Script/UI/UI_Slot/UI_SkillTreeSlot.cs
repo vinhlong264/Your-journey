@@ -38,7 +38,6 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private void unlockedSkill()
     {
-        Debug.Log("Unlock Skill");
         for (int i = 0; i < shouldBeUnlocked.Length; i++)
         {
             if (shouldBeUnlocked[i].isUnlocked == false) // Kiểm tra xem các skill tiền đề có được mở khóa chưa, nếu chưa thì thoát luôn
@@ -65,14 +64,12 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("OnPointerEnter");
         skillInfor.showInformatioSkill(skillName, skillDescription);
     }
         
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("OnPointerExit");
        skillInfor.hideInformationWindow();
     }
 }

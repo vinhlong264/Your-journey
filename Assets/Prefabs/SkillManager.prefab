@@ -178,7 +178,7 @@ MonoBehaviour:
   crystalDuration: 3
   crystalSkillMultiUnlockBtn: {fileID: 0}
   crystalMultiUnlock: 0
-  multiCooldown: 5
+  multiCooldown: 10
   amountOfMulti: 3
   listCrystal:
   - {fileID: 1885430222551567074, guid: 89a9f39e1927dd04e9082616d5d1b3e9, type: 3}

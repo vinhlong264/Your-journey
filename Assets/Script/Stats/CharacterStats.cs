@@ -290,15 +290,13 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
     {
         if (AvoidAttack())
         {
-            Debug.Log("Né dame");
             return;
         }
 
         int damage = _statSender.dame.getValue() + _statSender.strength.getValue();
 
-        if (CanCrit(_statSender))
+        if (CanCrit(_statSender)) // Crit
         {
-            Debug.Log("Crit");
             damage = CalculateCritDame(damage, _statSender);
         }
 

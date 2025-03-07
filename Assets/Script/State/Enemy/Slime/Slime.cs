@@ -36,6 +36,7 @@ public class Slime : Enemy
     protected override void Update()
     {
         base.Update();
+        stateMachine.currentState.Update();
     }
 
     protected override void FixedUpdate()
@@ -58,16 +59,16 @@ public class Slime : Enemy
         base.Die();
         CloseAttackWindow();
         stateMachine.changeState(deathState);
-        if (type == SlimeType.SMALL) return;
+        //if (type == SlimeType.SMALL) return;
 
-        if (slimeSmall == null) return;
+        //if (slimeSmall == null) return;
 
-        for(int i = 0; i < 3 ; i++)
-        {
-            Vector3 temPos = new Vector3(Random.Range(10f,-10f), transform.position.y + Random.Range(12, 15), 0);
-            GameObject newSlime = Instantiate(slimeSmall , transform.position , Quaternion.identity);
-            newSlime.GetComponent<Rigidbody2D>().velocity = temPos;
-        }
+        //for(int i = 0; i < 3 ; i++)
+        //{
+        //    Vector3 temPos = new Vector3(Random.Range(10f,-10f), transform.position.y + Random.Range(12, 15), 0);
+        //    GameObject newSlime = Instantiate(slimeSmall , transform.position , Quaternion.identity);
+        //    newSlime.GetComponent<Rigidbody2D>().velocity = temPos;
+        //}
     }
 
     

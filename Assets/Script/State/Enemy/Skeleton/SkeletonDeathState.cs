@@ -11,7 +11,7 @@ public class SkeletonDeathState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        skeleton.rb.bodyType = RigidbodyType2D.Kinematic;
+        skeleton.rb.bodyType = RigidbodyType2D.Static;
         skeleton.setZeroVelocity();
         skeleton.cd.enabled = false;
         skeleton.DeactiveMe();

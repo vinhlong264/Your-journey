@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class UI_InGame : MonoBehaviour
 {
+    [SerializeField] private LevelSO levelData;
     [SerializeField] private Slider healthBarSlider;
     [SerializeField] private TextMeshProUGUI levelTxt;
 
@@ -12,12 +13,7 @@ public class UI_InGame : MonoBehaviour
 
     private void OnEnable()
     {
-        Observer.Instance.subscribeListener(GameEvent.UpdateUI , updateCurrentExp);
-    }
-
-    private void OnDisable()
-    {
-        Observer.Instance.unsubscribeListener(GameEvent.UpdateUI , updateCurrentExp);
+        Observer.Instance.subscribeListener(GameEvent.UpdateCurrentExp , updateCurrentExp);
     }
 
     void Start()
@@ -25,7 +21,9 @@ public class UI_InGame : MonoBehaviour
         myStats = GameManager.Instance.playerStats;
         myStats.onUiHealth += updateHealthBar;
         updateHealthBar();
-        levelTxt.text = $"Lv. {GameManager.Instance.playerLevel.Level} + {GameManager.Instance.playerLevel.ExpCurrent * 0.1}%";
+
+        float percentExp = (float)levelData.levelSystem.currentExp / levelData.levelSystem.expToNextLevel * 100f;
+        levelTxt.text = $"Lv. {levelData.levelSystem.level} + {percentExp:F1}%";
     }
 
     private void updateHealthBar()
@@ -36,6 +34,7 @@ public class UI_InGame : MonoBehaviour
 
     public void updateCurrentExp(object value)
     {
-        levelTxt.text = $"Lv. {GameManager.Instance.playerLevel.Level} + {GameManager.Instance.playerLevel.ExpCurrent * 0.1}%";
+        float percentExp = (float)levelData.levelSystem.currentExp / levelData.levelSystem.expToNextLevel * 100f;
+        levelTxt.text = $"Lv. {levelData.levelSystem.level} + {percentExp:F1}%";
     }
 }

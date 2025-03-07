@@ -14,6 +14,11 @@ public class SaveManager : Singleton<SaveManager>
         MakeSingleton(false);
     }
 
+    private void OnEnable()
+    {
+
+    }
+
     private void Start()
     {
         fileName = "GameData.json"; // tên file
@@ -34,14 +39,16 @@ public class SaveManager : Singleton<SaveManager>
         }
         else
         {
-            Debug.Log("Have data");
+            foreach(ISave save in saves)
+            {
+                save.LoadGame(gameData);
+            }
         }
     }
 
     public void addSave(ISave save)
     {
         saves.Add(save);
-        Debug.Log(saves.Count);
     }
 
     private void NewGame()
@@ -51,9 +58,7 @@ public class SaveManager : Singleton<SaveManager>
 
     public void SaveGame()
     {
-        if (saves.Count == 0) return;
-
-        foreach(ISave save in saves)
+        foreach (ISave save in saves)
         {
             save.SaveGame(ref gameData);
         }
