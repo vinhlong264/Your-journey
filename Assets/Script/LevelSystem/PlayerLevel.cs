@@ -5,9 +5,8 @@ public class PlayerLevel : LevelAbstract, ISave
 
     private void OnEnable()
     {
-        SaveManager.Instance.addSave(this);
-
         Observer.Instance.subscribeListener(GameEvent.RewardExp, LevelUp);
+        SaveManager.Instance.addSubISave(this);
     }
 
 
@@ -44,6 +43,7 @@ public class PlayerLevel : LevelAbstract, ISave
     public void SaveGame(ref GameData data)
     {
         Debug.Log("Save data: " + this.gameObject.name);
+        data.level = level.levelSystem;
     }
 
 }

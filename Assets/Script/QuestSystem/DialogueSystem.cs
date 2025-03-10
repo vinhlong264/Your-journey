@@ -24,7 +24,7 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
         storyDataTxt = _storyDataTXt;
         LoadText(storyDataTxt);
 
-        Dialogue();
+        DialogueStory();
     }
 
     public void LoadText(string _path)
@@ -50,10 +50,10 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         currentIndex++;
-        Dialogue();
+        DialogueStory();
     }
 
-    public void Dialogue()
+    public void DialogueStory()
     {
          chatBox.SetActive(true);
         if (currentIndex < listConverStation.Count)
@@ -83,6 +83,12 @@ public class DialogueSystem : MonoBehaviour, IPointerClickHandler
 
             questPanel.ShowQuest(q);
         }
+    }
+
+
+    public void DialogueExtention(string text)
+    {
+
     }
 
     private void ResetDialogue()

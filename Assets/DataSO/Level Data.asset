@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd5575f0765c6094f94e4f0d504943f9, type: 3}
   m_Name: Level Data
   m_EditorClassIdentifier: 
-  level:
-    level: 1
-    pointAtributte: 0
-    pointSkill: 0
+  levelSystem:
+    level: 3
+    pointAtributte: 15
+    pointSkill: 5
     currentExp: 0
-    expToNextLevel: 100
+    expToNextLevel: 1000

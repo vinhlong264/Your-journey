@@ -46,14 +46,23 @@ TagManager:
   - name: BackGround
     uniqueID: 611930601
     locked: 0
+  - name: Sky
+    uniqueID: 2291536735
+    locked: 0
   - name: Decor
     uniqueID: 2513556769
     locked: 0
   - name: Ground
     uniqueID: 326754577
     locked: 0
+  - name: Water
+    uniqueID: 116171793
+    locked: 0
   - name: Enemy
     uniqueID: 2650283633
+    locked: 0
+  - name: NPC
+    uniqueID: 453531441
     locked: 0
   - name: Player
     uniqueID: 3331508655

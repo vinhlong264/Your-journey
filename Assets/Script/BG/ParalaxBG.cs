@@ -2,38 +2,39 @@ using UnityEngine;
 
 public class ParalaxBG : MonoBehaviour
 {
-    private Transform cam;
+    private Transform camPos;
+    private float startingPos;
+    private float lengthOfSprite;
     private SpriteRenderer sr;
-    private float length;
-    private float xPostion;
 
-    private Vector3 targetPos;
-    [SerializeField] private float paralaxEffect;
-    [SerializeField] private float lerpSpeed;
-    void Start()
+    [SerializeField] private float amountOfParalax;
+
+    private void Start()
     {
-        cam = Camera.main.transform;
         sr = GetComponent<SpriteRenderer>();
+        startingPos = transform.position.x;
+        lengthOfSprite = sr.bounds.size.x;
 
-        length = sr.bounds.size.x;
-        xPostion = transform.position.x;
+        camPos = Camera.main.transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        float distanceMoved = cam.position.x * (1 - paralaxEffect);
-        float distanceToMoved = cam.position.x * paralaxEffect;
+        float temp = camPos.position.x * (1 - amountOfParalax);
+        float distance = camPos.position.x * amountOfParalax;
 
-        targetPos = new Vector3(xPostion + distanceMoved, transform.position.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, targetPos, lerpSpeed);
-        if (distanceMoved > xPostion + length)
+        Vector3 newPos = new Vector3(startingPos + distance , transform.position.y, transform.position.z);
+
+        transform.position = newPos;
+
+        if(temp > startingPos + (lengthOfSprite / 2))
         {
-            xPostion = xPostion + length;
+            startingPos += lengthOfSprite;
         }
-        else if (distanceMoved < xPostion - length)
-            xPostion = xPostion - length;
-
-
+        else if(temp < startingPos - (lengthOfSprite / 2))
+        {
+            startingPos -= lengthOfSprite;
+        }
     }
+
 }

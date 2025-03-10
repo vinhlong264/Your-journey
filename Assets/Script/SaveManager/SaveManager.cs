@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.IO;
+using System.Reflection;
 using UnityEngine;
 
 public class SaveManager : Singleton<SaveManager>
@@ -14,17 +14,20 @@ public class SaveManager : Singleton<SaveManager>
         MakeSingleton(false);
     }
 
-    private void OnEnable()
-    {
-
-    }
-
     private void Start()
     {
         fileName = "GameData.json"; // tên file
         pathDirName = Application.persistentDataPath; // đường dẫn lưu trữ
         fileHandler = new FileDataHandler(pathDirName, fileName);
+
+        Debug.Log(saves.Count);
+
         LoadGame();
+    }
+
+    public void addSubISave(ISave s)
+    {
+        saves.Add(s);
     }
 
 
@@ -39,16 +42,12 @@ public class SaveManager : Singleton<SaveManager>
         }
         else
         {
-            foreach(ISave save in saves)
+            foreach (ISave save in saves)
             {
+                Debug.Log(save.ToString());
                 save.LoadGame(gameData);
             }
         }
-    }
-
-    public void addSave(ISave save)
-    {
-        saves.Add(save);
     }
 
     private void NewGame()
