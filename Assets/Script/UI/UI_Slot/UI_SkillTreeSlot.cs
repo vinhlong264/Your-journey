@@ -18,6 +18,7 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public System.Action eventUnlockSKill; // Event
     [SerializeField] private UI_SkillInformation skillInfor;
+    [SerializeField] private LevelSO skillData;
 
     private UI ui;
 
@@ -72,4 +73,5 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
        skillInfor.hideInformationWindow();
     }
+
 }

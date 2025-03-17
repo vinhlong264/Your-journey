@@ -30,11 +30,6 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         updateStatsUI();
     }
 
-    private void Update()
-    {
-
-    }
-
     public void updateStatsUI()
     {
         PlayerStats playerStatus = GameManager.Instance.player.GetComponent<PlayerStats>();

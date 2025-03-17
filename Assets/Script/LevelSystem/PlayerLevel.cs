@@ -2,11 +2,17 @@
 
 public class PlayerLevel : LevelAbstract, ISave
 {
+    private CharacterStats stats;
 
     private void OnEnable()
     {
         Observer.Instance.subscribeListener(GameEvent.RewardExp, LevelUp);
         SaveManager.Instance.addSubISave(this);
+    }
+
+    void Start()
+    {
+        stats = GetComponent<CharacterStats>();
     }
 
 
@@ -21,11 +27,53 @@ public class PlayerLevel : LevelAbstract, ISave
         Observer.Instance.NotifyEvent(GameEvent.UpdateCurrentExp, null);
     }
 
-    protected override void levelUpStats(CharacterStats stat)
+    public override bool levelUpStats(StatType type)
     {
-        
+        if(level.levelSystem.pointAtributte > 0)
+        {
+            Debug.Log("Enough point Atributte");
+            GetCharacterStats(type).addModifiers(1);
+            level.levelSystem.pointAtributte--;
+            return true;
+        }
+
+        Debug.Log("No Enough point Atributte");
+        return false;
     }
 
+    private Stats GetCharacterStats(StatType t)
+    {
+        if(stats == null) return null;
+
+        if(t == StatType.Strength)
+        {
+            return stats.strength;
+        }
+        else if(t == StatType.Ability)
+        {
+            return stats.ability;
+        }
+        else if(t == StatType.inteligent)
+        {
+            return stats.inteligent;
+        }
+        else if(t == StatType.vitality)
+        {
+            return stats.vitality;
+        }
+
+        return null;
+    }
+
+    public override bool unlockSkill(Skilltype skill)
+    {
+        if(level.levelSystem.pointSkill > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     public void LoadGame(GameData data)
     {

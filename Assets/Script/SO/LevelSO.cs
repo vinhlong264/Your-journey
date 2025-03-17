@@ -4,4 +4,5 @@ using UnityEngine;
 public class LevelSO : ScriptableObject
 {
     public LevelSystem levelSystem;
+    public SerializableDictionary<StatType, int> stats;
 }
