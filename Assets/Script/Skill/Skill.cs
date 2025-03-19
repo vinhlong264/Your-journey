@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public class Skill : MonoBehaviour
+public abstract class Skill : MonoBehaviour
 {
     [SerializeField] protected float coolDownTimer;
     [SerializeField] protected float coolDown;

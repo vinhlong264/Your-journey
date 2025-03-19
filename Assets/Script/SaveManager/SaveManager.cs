@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -20,7 +22,6 @@ public class SaveManager : Singleton<SaveManager>
         pathDirName = Application.persistentDataPath; // đường dẫn lưu trữ
         fileHandler = new FileDataHandler(pathDirName, fileName);
 
-        Debug.Log(saves.Count);
 
         LoadGame();
     }
@@ -28,6 +29,7 @@ public class SaveManager : Singleton<SaveManager>
     public void addSubISave(ISave s)
     {
         saves.Add(s);
+        Debug.Log(saves.Count);
     }
 
 
@@ -42,10 +44,14 @@ public class SaveManager : Singleton<SaveManager>
         }
         else
         {
-            foreach (ISave save in saves)
+            if (saves.Count == 0) return;
+
+            Debug.Log(gameData != null);
+
+            Debug.Log("Load Data");
+            foreach (ISave s in saves)
             {
-                Debug.Log(save.ToString());
-                save.LoadGame(gameData);
+                s.LoadGame(gameData);
             }
         }
     }
@@ -57,9 +63,12 @@ public class SaveManager : Singleton<SaveManager>
 
     public void SaveGame()
     {
-        foreach (ISave save in saves)
+        Debug.Log("Save Game");
+        if (saves.Count == 0) return;
+
+        foreach (ISave s in saves)
         {
-            save.SaveGame(ref gameData);
+            s.SaveGame(ref gameData);
         }
 
         fileHandler.SaveData(gameData);

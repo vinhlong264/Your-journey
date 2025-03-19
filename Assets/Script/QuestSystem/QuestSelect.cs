@@ -27,6 +27,5 @@ public class QuestSelect : MonoBehaviour
     private void SelectQuestHandler() // chọn quest ở quest log
     {
         if (q == null) return;
-
     }
 }

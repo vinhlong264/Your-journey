@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UI_CharacterBtn : MonoBehaviour
 {
-    [SerializeField] private LevelSO levelData;
+    //[SerializeField] private LevelData levelData;
     [SerializeField] private GameObject[] uiBtn;
 
     [Header("UI Text")]
@@ -12,8 +12,8 @@ public class UI_CharacterBtn : MonoBehaviour
 
     private void Start()
     {
-        pointExpText.text = "Điểm kinh nghiệm: " + levelData.levelSystem.pointAtributte;
-        pointSkillText.text = "Điềm kĩ năng: " + levelData.levelSystem.pointSkill;
+        //pointExpText.text = "Điểm kinh nghiệm: " + levelData.levelSystem.pointAtributte;
+        //pointSkillText.text = "Điềm kĩ năng: " + levelData.levelSystem.pointSkill;
 
         for (int i = 0; i < uiBtn.Length; i++)
         {
@@ -25,8 +25,8 @@ public class UI_CharacterBtn : MonoBehaviour
 
     private void Update()
     {
-        pointExpText.text = "Điểm kinh nghiệm: " + levelData.levelSystem.pointAtributte;
-        pointSkillText.text = "Điềm kĩ năng: " + levelData.levelSystem.pointSkill;
+        //pointExpText.text = "Điểm kinh nghiệm: " + levelData.levelSystem.pointAtributte;
+        //pointSkillText.text = "Điềm kĩ năng: " + levelData.levelSystem.pointSkill;
     }
 
     public void switchUI(GameObject active)

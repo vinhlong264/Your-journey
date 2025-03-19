@@ -3,10 +3,11 @@
 public class PlayerLevel : LevelAbstract, ISave
 {
     private CharacterStats stats;
+    [SerializeField] private LevelData levelData;
 
     private void OnEnable()
     {
-        Observer.Instance.subscribeListener(GameEvent.RewardExp, LevelUp);
+        Observer.Instance.subscribeListener(GameEvent.RewardExp, LevelUp);   
         SaveManager.Instance.addSubISave(this);
     }
 
@@ -19,7 +20,7 @@ public class PlayerLevel : LevelAbstract, ISave
     protected override void LevelUp(object value)
     {
         int expReceive = (int)value;
-        if (level.levelSystem.gainExp(expReceive))
+        if (levelData.level.gainExp(expReceive))
         {
             Debug.Log("Level up");
         }
@@ -29,11 +30,11 @@ public class PlayerLevel : LevelAbstract, ISave
 
     public override bool levelUpStats(StatType type)
     {
-        if(level.levelSystem.pointAtributte > 0)
+        if (levelData.level.pointAtributte > 0)
         {
             Debug.Log("Enough point Atributte");
             GetCharacterStats(type).addModifiers(1);
-            level.levelSystem.pointAtributte--;
+            levelData.level.pointAtributte--;
             return true;
         }
 
@@ -67,8 +68,9 @@ public class PlayerLevel : LevelAbstract, ISave
 
     public override bool unlockSkill(Skilltype skill)
     {
-        if(level.levelSystem.pointSkill > 0)
+        if (levelData.level.pointSkill > 0)
         {
+            levelData.level.pointSkill--;
             return true;
         }
 
@@ -79,19 +81,19 @@ public class PlayerLevel : LevelAbstract, ISave
     {
         if(data == null)
         {
-            level.levelSystem = new LevelSystem();
+            Debug.Log("No Data");
+            return;
         }
         else
         {
-            Debug.Log("Load data: " + this.gameObject.name);
-            level.levelSystem = data.level;
+            levelData.level = data.level;
         }
     }
 
     public void SaveGame(ref GameData data)
     {
         Debug.Log("Save data: " + this.gameObject.name);
-        data.level = level.levelSystem;
+        data.level = levelData.level;
     }
 
 }

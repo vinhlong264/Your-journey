@@ -64,6 +64,11 @@ public class Observer : Singleton<Observer>
             }
         }
     }
+
+    private void OnDisable()
+    {
+        EventObserver.Clear();
+    }
 }
 
 public enum GameEvent

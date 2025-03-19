@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public interface ISave
 {
@@ -32,34 +33,32 @@ public class SerializableDictionary<Tkey, Tvalue> : Dictionary<Tkey, Tvalue>, IS
     [SerializeField] private List<Tkey> keys = new List<Tkey>();
     [SerializeField] private List<Tvalue> values = new List<Tvalue>();
 
-    public void OnAfterDeserialize()
-    {
-        // xóa đi những phần tử đã có
-        keys.Clear(); 
-        values.Clear();
-
-        foreach(KeyValuePair<Tkey,Tvalue> pair in this)
-        {
-            keys.Add(pair.Key);
-            values.Add(pair.Value);
-        }
-
-
-    }
-
-    public void OnBeforeSerialize()
+    public void OnAfterDeserialize() // sau khi chuyển đổi dữ liệu
     {
         this.Clear();
 
-        if(keys.Count != values.Count)
+        if (keys.Count != values.Count)
         {
-            Debug.Log("Số lượng key không bằng số lượng values");
+            Debug.Log("Keys count is not equal to values count");
+            return;
         }
 
-
-        for(int i = 0; i < keys.Count; i++)
+        for (int i = 0; i < keys.Count; i++)
         {
-            this.Add(keys[i] , values[i]);
+            this.Add(keys[i], values[i]);
+        }
+
+    }
+
+    public void OnBeforeSerialize() // trước khi chuyển đổi dữ liệu
+    {
+        keys.Clear();
+        values.Clear();
+
+        foreach (KeyValuePair<Tkey, Tvalue> pair in this)
+        {
+            keys.Add(pair.Key);
+            values.Add(pair.Value);
         }
     }
 }

@@ -1,6 +1,5 @@
 using newQuestSystem;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,13 +23,13 @@ public class QuesLog : MonoBehaviour
     {
         mainQuest = QuestManager.Instance.GetAllQuestMain();
         extraQuest = QuestManager.Instance.GetAllQuestExtra();
-        MainQuestHandler();
         excuteQuestBtn.onClick.AddListener(() => ExcuteQuestHandler());
+        MainQuestHandler();
     }
 
     public void setQuestSelect(Quest newQuestSelect)
     {
-        if(newQuestSelect == null)
+        if (newQuestSelect == null)
         {
             Debug.Log("No quest");
             return;
@@ -43,6 +42,8 @@ public class QuesLog : MonoBehaviour
     #region Button handler
     private void MainQuestHandler()
     {
+        if (mainQuest.Count == 0) return;
+
         GameObject questDump = Instantiate(questSelectPrefabs, questSelectParent.position, Quaternion.identity, questSelectParent);
         questDump.GetComponent<QuestSelect>().setUpQuest(mainQuest[0]);
     }
@@ -51,7 +52,7 @@ public class QuesLog : MonoBehaviour
     private void ExcuteQuestHandler()
     {
         if (questSelected == null) return;
-        Debug.Log("Excute Quest: " +questSelected);
+        Debug.Log("Excute Quest: " + questSelected);
         QuestManager.Instance.setQuestExcute(questSelected);
     }
     #endregion

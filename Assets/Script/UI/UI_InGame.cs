@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class UI_InGame : MonoBehaviour
 {
-    [SerializeField] private LevelSO levelData;
+    [SerializeField] private LevelData levelData;
     [SerializeField] private Slider healthBarSlider;
     [SerializeField] private TextMeshProUGUI levelTxt;
 
@@ -22,8 +22,8 @@ public class UI_InGame : MonoBehaviour
         myStats.onUiHealth += updateHealthBar;
         updateHealthBar();
 
-        float percentExp = (float)levelData.levelSystem.currentExp / levelData.levelSystem.expToNextLevel * 100f;
-        levelTxt.text = $"Lv. {levelData.levelSystem.level} + {percentExp:F1}%";
+        float percentExp = (float)levelData.level.currentExp / levelData.level.expToNextLevel * 100f;
+        levelTxt.text = $"Lv. {levelData.level.level} + {percentExp:F1}%";
     }
 
     private void updateHealthBar()
@@ -34,7 +34,7 @@ public class UI_InGame : MonoBehaviour
 
     public void updateCurrentExp(object value)
     {
-        float percentExp = (float)levelData.levelSystem.currentExp / levelData.levelSystem.expToNextLevel * 100f;
-        levelTxt.text = $"Lv. {levelData.levelSystem.level} + {percentExp:F1}%";
+        float percentExp = (float)levelData.level.currentExp / levelData.level.expToNextLevel * 100f;
+        levelTxt.text = $"Lv. {levelData.level.level} + {percentExp:F1}%";
     }
 }

@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd5575f0765c6094f94e4f0d504943f9, type: 3}
-  m_Name: Level Data
+  m_Script: {fileID: 11500000, guid: c743b778323e8714c8ea2a1295b3a537, type: 3}
+  m_Name: StatsData
   m_EditorClassIdentifier: 
-  levelSystem:
-    level: 3
-    pointAtributte: 15
-    pointSkill: 5
-    currentExp: 0
-    expToNextLevel: 1000
+  stats:
+    keys: 
+    values: 
