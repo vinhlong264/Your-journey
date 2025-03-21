@@ -6,14 +6,17 @@ using UnityEngine;
 
 public class SaveManager : Singleton<SaveManager>
 {
-    private GameData gameData;
+    [SerializeField] private GameData gameData;
     private FileDataHandler fileHandler;
     private string fileName;
     private string pathDirName;
     private List<ISave> saves = new List<ISave>();
+    private HashSet<ISave> loaded = new HashSet<ISave>();
     protected override void Awake()
     {
         MakeSingleton(false);
+        saves = FindAllSave();
+        
     }
 
     private void Start()
@@ -22,16 +25,8 @@ public class SaveManager : Singleton<SaveManager>
         pathDirName = Application.persistentDataPath; // đường dẫn lưu trữ
         fileHandler = new FileDataHandler(pathDirName, fileName);
 
-
         LoadGame();
     }
-
-    public void addSubISave(ISave s)
-    {
-        saves.Add(s);
-        Debug.Log(saves.Count);
-    }
-
 
     private void LoadGame()
     {
@@ -61,16 +56,27 @@ public class SaveManager : Singleton<SaveManager>
         gameData = new GameData();
     }
 
+
+    private List<ISave> FindAllSave()
+    {
+        IEnumerable<ISave> isaves = Resources.FindObjectsOfTypeAll<MonoBehaviour>().OfType<ISave>().ToList();
+        List<ISave> tmp = new List<ISave>(isaves);
+
+        return tmp;
+    }
+
     public void SaveGame()
     {
-        Debug.Log("Save Game");
         if (saves.Count == 0) return;
+        Debug.Log("Save Game");
 
         foreach (ISave s in saves)
         {
             s.SaveGame(ref gameData);
         }
 
+        string jsonData = JsonUtility.ToJson(gameData, true);
+        Debug.Log("GameData before saving: " + jsonData);
         fileHandler.SaveData(gameData);
     }
 

@@ -3,12 +3,13 @@
 public class PlayerLevel : LevelAbstract, ISave
 {
     private CharacterStats stats;
-    [SerializeField] private LevelData levelData;
+    private LevelSystem level;
+
+    public LevelSystem Level { get => level; set => level = value; }
 
     private void OnEnable()
     {
-        Observer.Instance.subscribeListener(GameEvent.RewardExp, LevelUp);   
-        SaveManager.Instance.addSubISave(this);
+        Observer.Instance.subscribeListener(GameEvent.RewardExp, LevelUp);
     }
 
     void Start()
@@ -20,7 +21,7 @@ public class PlayerLevel : LevelAbstract, ISave
     protected override void LevelUp(object value)
     {
         int expReceive = (int)value;
-        if (levelData.level.gainExp(expReceive))
+        if (level.gainExp(expReceive))
         {
             Debug.Log("Level up");
         }
@@ -30,11 +31,11 @@ public class PlayerLevel : LevelAbstract, ISave
 
     public override bool levelUpStats(StatType type)
     {
-        if (levelData.level.pointAtributte > 0)
+        if (level.pointAtributte > 0)
         {
             Debug.Log("Enough point Atributte");
             GetCharacterStats(type).addModifiers(1);
-            levelData.level.pointAtributte--;
+            level.pointAtributte--;
             return true;
         }
 
@@ -68,9 +69,9 @@ public class PlayerLevel : LevelAbstract, ISave
 
     public override bool unlockSkill(Skilltype skill)
     {
-        if (levelData.level.pointSkill > 0)
+        if (level.pointSkill > 0)
         {
-            levelData.level.pointSkill--;
+            level.pointSkill--;
             return true;
         }
 
@@ -78,22 +79,22 @@ public class PlayerLevel : LevelAbstract, ISave
     }
 
     public void LoadGame(GameData data)
-    {
+    {     
         if(data == null)
         {
             Debug.Log("No Data");
             return;
         }
         else
-        {
-            levelData.level = data.level;
+        { 
+            level = data.level;
         }
     }
 
     public void SaveGame(ref GameData data)
     {
         Debug.Log("Save data: " + this.gameObject.name);
-        data.level = levelData.level;
+        data.level = level;
     }
 
 }

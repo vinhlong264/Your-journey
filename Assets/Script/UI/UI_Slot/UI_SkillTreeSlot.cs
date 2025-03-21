@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISave
 {
     [Header("Skill information")]
     [SerializeField] private string skillName; // tên skill
@@ -30,6 +30,11 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {   
         skillImage = GetComponent<Image>();
         skillImage.color = skillLockColor;
+
+        if (isUnlocked)
+        {
+            skillImage.color = Color.white;
+        } 
     }
 
     private void OnValidate()
@@ -74,4 +79,26 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
        skillInfor.hideInformationWindow();
     }
 
+    public void LoadGame(GameData data)
+    {
+        if (data == null) return;
+
+        if(data.skills.TryGetValue(skillName, out var value))
+        {
+            isUnlocked = value;
+        }
+    }
+
+    public void SaveGame(ref GameData data)
+    {
+        if(data.skills.TryGetValue(skillName , out var value))
+        {
+            data.skills.Remove(skillName);
+            data.skills.Add(skillName, isUnlocked);
+        }
+        else
+        {
+            data.skills.Add(skillName, isUnlocked);
+        }
+    }
 }

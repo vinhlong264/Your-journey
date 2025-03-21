@@ -16,7 +16,7 @@ public class DemoSlimeBattleAttackState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        player = GameManager.Instance.player;
+        player = GameManager.Instance.Player;
         if (player.isDeath)
         {
             stateMachine.changeState(demoSlime._idleState);

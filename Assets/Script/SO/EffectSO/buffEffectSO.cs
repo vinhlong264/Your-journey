@@ -11,7 +11,7 @@ public class buffEffectSO : itemEffectSO
 
     public override void excuteEffect(Transform _enemyPos)
     {
-        status = GameManager.Instance.player.GetComponent<PlayerStats>();
+        status = GameManager.Instance.Player.GetComponent<PlayerStats>();
         status.increaseModfierStatus(amountBuff, buffDurartion, status.getStat(buffType));
     }
 }

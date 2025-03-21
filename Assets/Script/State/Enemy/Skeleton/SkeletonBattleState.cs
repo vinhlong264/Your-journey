@@ -3,7 +3,7 @@
 public class SkeletonBattleState : EnemyState
 {
     private Skeleton enemy;
-    private Player Player;
+    private Player player;
     private float moveDir;
     public SkeletonBattleState(Enemy enemyBase, EnemyStateMachine stateMachine, string animationBoolName , Skeleton skeleton) : base(enemyBase, stateMachine, animationBoolName)
     {
@@ -13,8 +13,8 @@ public class SkeletonBattleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        Player = GameManager.Instance.player;
-        if (Player.isDeath)
+        player = GameManager.Instance.Player;
+        if (player.isDeath)
         {
             stateMachine.changeState(enemy.runState);
         }
@@ -30,7 +30,7 @@ public class SkeletonBattleState : EnemyState
         base.Update();
         if (!enemy.isPlayerDetected())
         {
-            if (stateTimer < 0 || Vector2.Distance(Player.transform.position, enemy.transform.position) > 7)
+            if (stateTimer < 0 || Vector2.Distance(player.transform.position, enemy.transform.position) > 7)
             {
                 stateMachine.changeState(enemy.idleState);
                 return;
@@ -48,11 +48,11 @@ public class SkeletonBattleState : EnemyState
         }
 
 
-        if (Player.transform.position.x > enemy.transform.position.x)
+        if (player.transform.position.x > enemy.transform.position.x)
         {
             moveDir = 1f;
         } 
-        else if (Player.transform.position.x < enemy.transform.position.x)
+        else if (player.transform.position.x < enemy.transform.position.x)
         {
             moveDir = -1f;
         }

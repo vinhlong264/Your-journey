@@ -14,7 +14,7 @@ public class SlimeBattleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        _player = GameManager.Instance.player;
+        _player = GameManager.Instance.Player;
         if (_player.isDeath)
         {
             stateMachine.changeState(_slime.runState);

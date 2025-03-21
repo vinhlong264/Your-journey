@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public interface ISave
 {
@@ -12,7 +11,7 @@ public interface ISave
 public class GameData
 {
     public LevelSystem level;
-    public SerializableDictionary<string,int> inventorys;
+    public SerializableDictionary<string, int> inventorys;
     public List<string> equipmentID;
     public SerializableDictionary<string, bool> skills;
     public SerializableDictionary<StatType, int> stats;

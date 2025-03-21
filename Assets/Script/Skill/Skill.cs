@@ -9,7 +9,7 @@ public abstract class Skill : MonoBehaviour
     public float CoolDown { get => coolDown; }
     protected virtual void Start()
     {
-        player = GameManager.Instance.player;
+        player = GameManager.Instance.Player;
         skillManager = GetComponent<SkillManager>();
     }
 
@@ -23,8 +23,6 @@ public abstract class Skill : MonoBehaviour
         if (coolDownTimer <= 0f)
         {
             //Sử dụng skill
-            //UseSkill();
-            //coolDownTimer = coolDown;
             isUsing = true;
             return true;
         }
@@ -63,8 +61,6 @@ public abstract class Skill : MonoBehaviour
                 {
                     closesDistance = distaceToEnenmy; // gán lại giá trị closesDistance
                     closestEnemy = hit.transform; // lấy ra vị trí của Enemy
-                    //Debug.Log("closestEnemy: " + closestEnemy);
-
                 }
             }
         }
