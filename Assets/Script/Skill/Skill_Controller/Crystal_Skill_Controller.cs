@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 
-public class Crystal_Skill_Controller : MonoBehaviour
+public class Crystal_Skill_Controller : SkillControllerBase
 {
-    private float CrystalExitTime; // Kiểm soát thời gian tồn tại của Crystal
-
     [SerializeField] private bool canExplore; // kiểm tra có thể nổ không
     private bool canGrow;
     [SerializeField] private float growSpeed; // Kiểm tra có thể phát triển không 
@@ -15,13 +13,11 @@ public class Crystal_Skill_Controller : MonoBehaviour
 
 
     [SerializeField] private LayerMask whatIsMask;
-    private Animator animator;
     private CircleCollider2D cd;
-    private Player player;
     private Vector3 defaultScacle; // scale gốc
-    private void Start()
+    protected override void Start()
     {
-        animator = GetComponent<Animator>();
+        base.Start();
         cd = GetComponent<CircleCollider2D>();
         defaultScacle = transform.localScale;
     }
@@ -29,7 +25,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
 
     public void setUpCrystal(float _crystalDuration, float _moveSpeed, bool _canExplore, bool _canMoveEnemies , Transform _closestTarget , Player _player)
     {
-        CrystalExitTime = _crystalDuration;
+        coolDownTimer = _crystalDuration;
         moveSpeed = _moveSpeed;
         canExplore = _canExplore;
         canMoveEnemies = _canMoveEnemies;
@@ -37,9 +33,9 @@ public class Crystal_Skill_Controller : MonoBehaviour
         player = _player;
     }
 
-    private void OnDisable()
+    private void OnDisable() // Reset lại các chỉ số khi Deactive
     {
-        CrystalExitTime = 0;
+        coolDownTimer = 0f;
         moveSpeed = 0;
         canExplore = false;
         canGrow = false;
@@ -50,10 +46,10 @@ public class Crystal_Skill_Controller : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        CrystalExitTime -= Time.deltaTime;
-        if (CrystalExitTime < 0)
+        base.Update();
+        if (coolDownTimer < 0)
         {
             FinishCrystal(); // Điều khiển trạng thái của Crystal
         }
@@ -80,7 +76,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
         if (canExplore)
         {
             canGrow = true;
-            animator.SetTrigger("Explore");
+            anim.SetTrigger("Explore");
         }
         else
         {
@@ -88,11 +84,17 @@ public class Crystal_Skill_Controller : MonoBehaviour
         }
     }
 
-    private void AnimationAttackExplore() // Take dame
+    private void selfDestroy()
     {
-        Collider2D[] attackCheck = Physics2D.OverlapCircleAll(transform.position, cd.radius , whatIsMask);
+        gameObject.SetActive(false);
+        skill.crystal_skill.eventCallBack?.Invoke();
+    }
 
-        foreach(var hit in attackCheck)
+    protected override void SkillAttack()
+    {
+        Collider2D[] attackCheck = Physics2D.OverlapCircleAll(transform.position, cd.radius, whatIsMask);
+
+        foreach (var hit in attackCheck)
         {
             IDameHandleMagical dameMagical = hit.GetComponent<IDameHandleMagical>();
             if (dameMagical != null)
@@ -102,12 +104,12 @@ public class Crystal_Skill_Controller : MonoBehaviour
         }
     }
 
-    private void selfDestroy()
+    protected override void AttackHandler(Collider2D hitTarget)
     {
-        gameObject.SetActive(false);
-        SkillManager.instance.crystal_skill.eventCallBack?.Invoke();
+        IDameHandleMagical dameMagical = hitTarget.GetComponent<IDameHandleMagical>();
+        if (dameMagical != null)
+        {
+            dameMagical.DameDoMagical(player.status);
+        }
     }
-
-
-
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BottleHotKey : UI_SkillHotKeyAbstract
@@ -11,6 +9,6 @@ public class BottleHotKey : UI_SkillHotKeyAbstract
             setCoolDownOf(skillImageCoolDown);
         }
 
-        checkOfCoolDownOf(skillImageCoolDown, Inventory.Instance.LastTimeUseBollte);
+        checkOfCoolDownOf(skillImageCoolDown, inventory.LastTimeUseBollte);
     }
 }

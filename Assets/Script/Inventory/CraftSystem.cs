@@ -3,13 +3,20 @@ using UnityEngine;
 
 public class CraftSystem : MonoBehaviour
 {
+    private Inventory inventory;
+
+    private void Start()
+    {
+        inventory = GameManager.Instance.Inventory;
+    }
+
     public void Craft(ItemEquipmentSO newEquipemt)
     {
         if (newEquipemt == null) return;
 
         if (CanCraft(newEquipemt.craft))
         {
-            Inventory.Instance.addItem(newEquipemt);
+            inventory.addItem(newEquipemt);
         }
     }
 
@@ -18,7 +25,7 @@ public class CraftSystem : MonoBehaviour
         if (necessaryMaterials.Count == 0) return false;
 
         List<ItemInventory> listTakeMaterial = new List<ItemInventory>();
-        Dictionary<itemDataSO, ItemInventory> inventoryDump = new Dictionary<itemDataSO, ItemInventory>(Inventory.Instance.GetDictionaryInventory());
+        Dictionary<itemDataSO, ItemInventory> inventoryDump = new Dictionary<itemDataSO, ItemInventory>(inventory.GetDictionaryInventory());
 
         for (int i = 0; i < necessaryMaterials.Count; i++)
         {
@@ -41,7 +48,7 @@ public class CraftSystem : MonoBehaviour
 
         foreach (var item in listTakeMaterial) // xóa các item material bên trong inventory khi đã lấy ra để craft
         {
-            Inventory.Instance.removeItem(item.itemData);
+            inventory.removeItem(item.itemData);
         }
 
 

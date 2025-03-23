@@ -1,17 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword_Skill_Controller : MonoBehaviour
+public class Sword_Skill_Controller : SkillControllerBase
 {
     private Rigidbody2D rb;
-    private Animator anim;
     private Collider2D cd;
     [SerializeField] private bool canRotation = true;
-
-    private Player player;
     [SerializeField] private bool isReturning; // biến kiểm tra có thể quay lại không
     private float speedReturning; // biến kiểm soát tốc độ quay về
-
     [Header("Bounce info")]
     private float speedBouce = 15f;
     private bool isBouncing; // biến kiểm tra nảy
@@ -40,11 +36,11 @@ public class Sword_Skill_Controller : MonoBehaviour
     private bool isBleeding;
 
 
-    void Awake()
+    protected override void Awake()
     {
+        anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         cd = GetComponent<Collider2D>();
-        anim = GetComponentInChildren<Animator>();
     }
 
     private void OnDisable()
@@ -96,7 +92,7 @@ public class Sword_Skill_Controller : MonoBehaviour
         hitCoolDown = _hitCoolDown;
     }
 
-    private void Update()
+    protected override void Update()
     {
         if (canRotation)
             transform.right = rb.velocity;
@@ -276,5 +272,15 @@ public class Sword_Skill_Controller : MonoBehaviour
 
         anim.SetBool("Rotation", false);
         transform.parent = collision.transform;
+    }
+
+    protected override void SkillAttack()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void AttackHandler(Collider2D hitTarget)
+    {
+        throw new System.NotImplementedException();
     }
 }

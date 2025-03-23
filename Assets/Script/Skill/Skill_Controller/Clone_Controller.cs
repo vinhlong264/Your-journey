@@ -1,14 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Clone_Controller : MonoBehaviour
+public class Clone_Controller : SkillControllerBase
 {
-    private Animator anim;
     private SpriteRenderer sr;
-    private Player player;
     private float percentDameExtra;
 
     private Transform closestEnemy; // vị trí của Enemy 
-    [SerializeField] private float CoolDown; // kiểm soát thời gian hồi chiêu
     [SerializeField] private float colorLosingSpeed; // Tốc độ giảm alpha
 
     [Header("Attack Infor")]
@@ -23,38 +21,21 @@ public class Clone_Controller : MonoBehaviour
     private bool canDuplicateClone; // kiểm tra xem có thể ra nhiều clone không
     private int isFacing = 1;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         sr = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
     }
 
     private void OnDisable()
     {
          sr.color = new Color(1,1,1,1);
     }
-
-    private void Update()
-    {
-        CoolDown -= Time.deltaTime;
-        if (CoolDown < 0)
-        {
-            sr.color = new Color(1f, 1f, 1f, sr.color.a - (colorLosingSpeed * Time.deltaTime));
-            //New Color là 1 constructor tạo ra từ thư viện của Unity
-            //Các tham số đầu vào: r là chỉ số màu đỏ từ 0-1
-            //                     g là chỉ số màu xanh lá từ 0-1
-            //                     b là chỉ số màu xanh nước biển 0 - 1
-            //                     a là độ trong suốt 0 - 1
-
-            if (sr.color.a < 0f)
-            {
-                gameObject.SetActive(false);
-            }
-        }
-        
-    }
-
-    //Hàm setup thuộc tính của Clone
     public void setUpClone(Transform _cloneTrasform , float _coolDown , bool _canAttack , Vector3 _offset 
         ,Transform _closestEnemy , bool _canAttackWithEffect , bool _canDuplicateClone,Player _player , float _percentDameExtra)
     {
@@ -65,55 +46,37 @@ public class Clone_Controller : MonoBehaviour
 
 
         transform.position = _cloneTrasform.position + _offset; // vị trí được khởi tạo
-        CoolDown = _coolDown;
+        coolDownTimer = _coolDown; // setup thời gian tồn tại của clone
 
-        closestEnemy = _closestEnemy;
-
+        if(_closestEnemy != null)
+        {
+            closestEnemy = _closestEnemy;
+        }
         canAttackWithEffect = _canAttackWithEffect;
         canDuplicateClone = _canDuplicateClone;
         player = _player;
         percentDameExtra = _percentDameExtra;
 
         FacingClone();
+        StartCoroutine(CloneExitsDuration());
     }
+
+    IEnumerator CloneExitsDuration()
+    {
+        float time = 0;
+        while(time < coolDownTimer)
+        {
+            sr.color = new Color(1,1,1, Mathf.Lerp(1, 0, time / coolDownTimer));
+            time += Time.deltaTime * colorLosingSpeed;
+            yield return null;
+        }
+        gameObject.SetActive(false);
+    }
+
+    //Hàm setup thuộc tính của Clone
     public void AnimationTrigger()
     {
-        CoolDown = -.1f;
-    }
-
-
-    public void attackTrigger() 
-    {
-        Collider2D[] col = Physics2D.OverlapCircleAll(AttackCheck.position, AttackRadius);
-        
-        foreach (Collider2D hit in col)
-        {
-            if (hit.GetComponent<Enemy>() != null)
-            {
-                //player.status.DoDameWithSkill(hit.GetComponent<CharacterStats>() , percentDameExtra);
-                PlayerStats playerStats = player.GetComponent<PlayerStats>(); 
-                EnemyStats enemyStats = hit.GetComponent<EnemyStats>();
-
-                enemyStats.DameHandlerPhysical(playerStats);
-
-                ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
-
-                if (canAttackWithEffect && equipment != null)
-                {
-                    Debug.Log("Effect");
-                    equipment.excuteItemEffect(hit.transform);
-                }
-
-
-                if (canDuplicateClone)
-                {
-                    if (Random.Range(0, 100) >= 50)
-                    {
-                        SkillManager.instance.clone_skill.CreateClone(hit.transform, new Vector3(0.5f * isFacing, 0, 0));
-                    }
-                }
-            }
-        }
+        coolDownTimer = -.1f;
     }
 
     private void FacingClone() // Hàm thay đổi hướng nhìn của Clone
@@ -124,6 +87,46 @@ public class Clone_Controller : MonoBehaviour
             {
                 isFacing = -1;
                 transform.Rotate(0, 180, 0);
+            }
+        }
+    }
+
+    protected override void SkillAttack()
+    {
+        Collider2D[] col = Physics2D.OverlapCircleAll(AttackCheck.position, AttackRadius);
+
+        foreach (Collider2D hit in col)
+        {
+            if (hit.GetComponent<Enemy>() != null)
+            {
+                AttackHandler(hit);
+            }
+        }
+    }
+
+    protected override void AttackHandler(Collider2D hitTarget)
+    {
+        IDameHandlePhysical damePhysical = hitTarget.GetComponent<IDameHandlePhysical>();
+
+        if (damePhysical == null) return;
+
+        damePhysical.DameHandlerPhysical(player.status);
+
+        ItemEquipmentSO equipement = inventory.getEquipmentBy(EqipmentType.Sword);
+
+        if(equipement == null) return;
+
+        if (canAttackWithEffect)
+        {
+            Debug.Log("Handler Effect");
+            equipement.excuteItemEffect(hitTarget.transform);
+        }
+
+        if (canDuplicateClone)
+        {
+            if (Random.Range(0, 100) >= 50)
+            {
+                skill.clone_skill.CreateClone(hitTarget.transform, new Vector3(0.5f * isFacing, 0, 0));
             }
         }
     }

@@ -9,10 +9,11 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     [SerializeField] protected TextMeshProUGUI itemText; // text số lượng
     [SerializeField] protected UI_EqipmentInfor equipmentInfor;
     [SerializeField] protected ItemInventory item; // Item
+    protected Inventory inventory;
 
     protected virtual void Start()
     {
-        
+        inventory = GameManager.Instance.Inventory;
     }
 
 
@@ -52,13 +53,13 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
         if (Input.GetKeyDown(KeyCode.LeftControl)) // remove item in Iventory
         {
-            Inventory.Instance.removeItem(item.itemData);
+            inventory.removeItem(item.itemData);
         }
 
         if (item.itemData.ItemType == ItemType.Equipment) // nếu cùng loại sẽ được thêm
         {
             Debug.Log("Call");
-            Inventory.Instance.equipmentItem(item.itemData);
+            inventory.equipmentItem(item.itemData);
         }
     }
 

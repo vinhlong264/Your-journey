@@ -5,9 +5,11 @@ public class PlayerAnimationEvent : MonoBehaviour
 {
     private Player player;
     [SerializeField] private LayerMask whatIsMask;
+    private Inventory inventory;
     void Start()
     {
         player = GetComponentInParent<Player>();
+        inventory = GameManager.Instance.Inventory;
     }
 
     public void AnimationTrigger() // hàm dùng để kết thúc animation của 1 state thông qua triggercall
@@ -30,7 +32,7 @@ public class PlayerAnimationEvent : MonoBehaviour
                 if (EnemyReceivePhysic != null)
                 {
                     EnemyReceivePhysic.DameHandlerPhysical(player.GetComponent<PlayerStats>());
-                    ItemEquipmentSO equipment = Inventory.Instance.getEquipmentBy(EqipmentType.Sword);
+                    ItemEquipmentSO equipment = inventory.getEquipmentBy(EqipmentType.Sword);
                     if (equipment != null)
                     {
                         equipment.excuteItemEffect(hit.transform);
@@ -49,7 +51,7 @@ public class PlayerAnimationEvent : MonoBehaviour
 
     private void ThrowSword() // skill ném kiếm
     {
-        SkillManager.instance.sword_Skill.createSword();
+        player.skill.sword_Skill.createSword();
     }
 
 }

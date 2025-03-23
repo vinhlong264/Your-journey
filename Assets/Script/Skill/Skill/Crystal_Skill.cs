@@ -79,7 +79,7 @@ public class Crystal_Skill : Skill
 
             if (crystalCreateMirage) // cho phép sinh ra clone tại vị trí của Crystal ngay khi đổi chỗ
             {
-                SkillManager.instance.clone_skill.CreateClone(currenrCrystal.transform, Vector3.zero);
+                skillManager.clone_skill.CreateClone(currenrCrystal.transform, Vector3.zero);
                 currenrCrystal = null;
             }
             else

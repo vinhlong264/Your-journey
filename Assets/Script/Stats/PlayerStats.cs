@@ -53,7 +53,7 @@ public class PlayerStats : CharacterStats
     {
         base.decreaseHealthBy(_dame);
 
-        ItemEquipmentSO currentArmor = Inventory.Instance.getEquipmentBy(EqipmentType.Armor);
+        ItemEquipmentSO currentArmor = inventory.getEquipmentBy(EqipmentType.Armor);
 
         if (currentArmor != null)
         {
@@ -63,7 +63,7 @@ public class PlayerStats : CharacterStats
 
     public override void onEvasion()
     {
-        SkillManager.instance.dogde_Skill.createMirageOnDogde(transform);
+        skill.dogde_Skill.createMirageOnDogde(transform);
     }
 
     public Stats getStat(StatType type) // hàm để lấy ra Status theo type

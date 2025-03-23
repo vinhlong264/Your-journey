@@ -5,10 +5,16 @@ public class itemObj : MonoBehaviour
     [SerializeField] private itemDataSO item;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    Inventory inventory;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        inventory = GameManager.Instance.Inventory;
     }
 
     private void OnValidate()
@@ -34,10 +40,10 @@ public class itemObj : MonoBehaviour
 
     public void itemPickUp()
     {
-        if (!Inventory.Instance.canAddItem() && item.ItemType == ItemType.Equipment) return; // điều kiện để giới hạn số lượng có thể thỏa mãn số lượng trong Inventory
+        if (!inventory.canAddItem() && item.ItemType == ItemType.Equipment) return; // điều kiện để giới hạn số lượng có thể thỏa mãn số lượng trong Inventory
 
 
-        Inventory.Instance.addItem(item);
+        inventory.addItem(item);
         Destroy(gameObject);
     }
 }

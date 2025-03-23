@@ -6,6 +6,8 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
 {
     #region Variable
     private EntityFx fx;
+    protected Inventory inventory;
+    protected SkillManager skill;
 
     [Header("Major status info")]
     public Stats strength; // với mỗi điểm nâng cấp thì dame cơ bản sẽ tăng lên 1 và 1% sát thương chí mạng
@@ -61,6 +63,8 @@ public abstract class CharacterStats : MonoBehaviour, IDameHandlePhysical, IDame
         critPower.setDfaultValue(150);
         currentHealth = getMaxHealth();
         fx = GetComponent<EntityFx>();
+        inventory = GameManager.Instance.Inventory;
+        skill = GameManager.Instance.Skill;
     }
 
 

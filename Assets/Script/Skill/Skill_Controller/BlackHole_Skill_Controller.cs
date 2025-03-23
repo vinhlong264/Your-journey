@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class BlackHole_Skill_Controller : MonoBehaviour
+public class BlackHole_Skill_Controller : SkillControllerBase
 {
     [Header("HotKey info")]
     [SerializeField] private GameObject hotKeyPrefabs;
@@ -44,7 +44,7 @@ public class BlackHole_Skill_Controller : MonoBehaviour
         blackHoleTimer = _blackHoleDuration;
     }
 
-    private void Start()
+    protected override void Start()
     {
         defaultLocalScale = transform.localScale;
     }
@@ -57,7 +57,7 @@ public class BlackHole_Skill_Controller : MonoBehaviour
 
 
 
-    void Update()
+    protected override void Update()
     {
         cloneAttackTimer -= Time.deltaTime;
         blackHoleTimer -= Time.deltaTime;
@@ -137,7 +137,7 @@ public class BlackHole_Skill_Controller : MonoBehaviour
                 xOffSet = -2;
             }
             //sinh ra mỗi clone tại các vị trí Index của target
-            SkillManager.instance.clone_skill.CreateClone(target[indexTarget], new Vector3(xOffSet, 0, 0));
+            skill.clone_skill.CreateClone(target[indexTarget], new Vector3(xOffSet, 0, 0));
             amountOfCloneAttack--;
             if (amountOfCloneAttack <= 0)
             {
@@ -211,4 +211,14 @@ public class BlackHole_Skill_Controller : MonoBehaviour
 
 
     public void addEnemy(Transform _enemyTransform) => target.Add(_enemyTransform); // Lưu vị trí của các Enemy vào trong target
+
+    protected override void SkillAttack()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void AttackHandler(Collider2D hitTarget)
+    {
+        throw new System.NotImplementedException();
+    }
 }

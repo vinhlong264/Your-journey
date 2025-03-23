@@ -40,7 +40,7 @@ public class PlayerBlackHoleState : PlayerState
 
         }
 
-        if (SkillManager.instance.blackHole_skill.skillCompelete())
+        if (skill.blackHole_skill.skillCompelete())
         {
             _stateMachine.changeState(_player._airState);
         }

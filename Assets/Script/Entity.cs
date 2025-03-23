@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
+    protected Inventory inventory;
     [Header("Move info")]
     public float moveSpeed;
 
@@ -51,6 +52,7 @@ public abstract class Entity : MonoBehaviour
         cd = GetComponent<Collider2D>();
         fx = GetComponent<EntityFx>();
         status = GetComponent<CharacterStats>();
+        inventory = GameManager.Instance.Inventory;
 
     }
 

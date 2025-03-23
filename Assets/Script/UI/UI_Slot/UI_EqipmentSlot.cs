@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UI_EqipmentSlot : UI_ItemSlot
@@ -19,10 +18,10 @@ public class UI_EqipmentSlot : UI_ItemSlot
     {
         if (item == null || item.itemData == null) return;
 
-        if(slotType != EqipmentType.Bottle)
+        if (slotType != EqipmentType.Bottle)
         {
-            Inventory.Instance.unEqipmentItem(item.itemData as ItemEquipmentSO);
-            Inventory.Instance.addItem(item.itemData as ItemEquipmentSO);
+            inventory.unEqipmentItem(item.itemData as ItemEquipmentSO);
+            inventory.addItem(item.itemData as ItemEquipmentSO);
         }
         cleanItem();
     }

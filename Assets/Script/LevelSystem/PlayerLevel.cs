@@ -93,7 +93,6 @@ public class PlayerLevel : LevelAbstract, ISave
 
     public void SaveGame(ref GameData data)
     {
-        Debug.Log("Save data: " + this.gameObject.name);
         data.level = level;
     }
 

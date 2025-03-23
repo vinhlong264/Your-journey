@@ -9,15 +9,16 @@ public abstract class UI_SkillHotKeyAbstract : MonoBehaviour
 
     [SerializeField] protected Image skillImage;
     protected SkillManager skill;
+    protected Inventory inventory;
 
     protected virtual void OnEnable()
     {
-        skill = SkillManager.instance;
+        skill = GameManager.Instance.Skill;
     }
 
     protected virtual void Start()
     {
-        //skill = SkillManager.instance;
+        inventory = GameManager.Instance.Inventory;
     }
 
     private void OnValidate()

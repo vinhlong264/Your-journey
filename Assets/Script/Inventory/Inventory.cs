@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-public class Inventory : Singleton<Inventory>, IInventory
+public class Inventory : MonoBehaviour, IInventory
 {
     [Header("Equipment infor")]
     [SerializeField] private List<ItemInventory> eqipmentItemList; // Danh sách Eqipment để thêm vào Eqipment table
@@ -16,11 +16,6 @@ public class Inventory : Singleton<Inventory>, IInventory
 
     public float LastTimeUseBollte { get => lastTimeUseBollte; }
     public float LastTimeUseArmor { get => lastTimeUseArmor; }
-
-    protected override void Awake()
-    {
-        MakeSingleton(true);
-    }
 
     private void Start()
     {

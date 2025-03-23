@@ -81,7 +81,7 @@ public class Player : Entity
         base.Start();
         _stateMachine.initialize(_idleState);
 
-        skill = SkillManager.instance;
+        skill = GameManager.Instance.Skill;
 
         isFacingRight = true;
         isFacingDir = 1f;
@@ -108,7 +108,7 @@ public class Player : Entity
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Inventory.Instance.useCanBottle();
+            inventory.useCanBottle();
         }
     }
 

@@ -6,16 +6,21 @@ public class GameManager : Singleton<GameManager>
     private static GameManager instance;
 
     [Header("References Infor")]
+    //Player
     [SerializeField] private Player player;
     [SerializeField] private PlayerStats playerStats;
     [SerializeField] private PlayerLevel playerLevel;
-
+    [SerializeField] private Inventory inventory;
+    [SerializeField] private SkillManager skill; 
+   
     private Dictionary<GameObject,List<GameObject>> poolDic = new Dictionary<GameObject,List<GameObject>>();
 
     #region Get
     public Player Player { get => player; }
     public PlayerStats PlayerStats { get => playerStats; }
     public PlayerLevel PlayerLevel { get => playerLevel; }
+    public Inventory Inventory { get => inventory; }
+    public SkillManager Skill { get => skill; }
     #endregion
 
     protected override void Awake()

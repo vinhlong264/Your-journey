@@ -13,6 +13,7 @@ public class PlayerState
     protected bool triggerCalled;
     protected float stateTimer; //Biến quản lý thời gian chuyển state Dash về Idle
     protected string _animationBoolName; // biến tên của animation được chuyển tiếp
+    protected SkillManager skill;
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, string animationBoolName) 
     {
@@ -28,6 +29,7 @@ public class PlayerState
         _player.animator.SetBool(_animationBoolName, true);
         rb = _player.rb;
         triggerCalled = false;
+        skill = GameManager.Instance.Skill;
     }
 
     public virtual void Execute()

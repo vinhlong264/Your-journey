@@ -39,7 +39,7 @@ public class Clone_Skill : Skill
 
 
         GameObject newClone = GameManager.Instance.GetObjFromPool(Clone_Pre);
-        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos, coolDown, cloneAttackUnlocked , _ofSet, 
+        newClone.GetComponent<Clone_Controller>().setUpClone(_clonePos, cloneDuration, cloneAttackUnlocked , _ofSet, 
             findToClosestEnemy(newClone.transform), agrresiveCloneUnlocked, multipleCloneUnlocked, player, percentDameExtra);
     }
 
