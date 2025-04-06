@@ -1,12 +1,21 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 public abstract class Skill : MonoBehaviour
 {
     [SerializeField] protected float coolDownTimer;
     [SerializeField] protected float coolDown;
     protected Player player;
     protected SkillManager skillManager;
+    [SerializeField] protected LayerMask mask;
     public bool isUsing { get; set; }
     public float CoolDown { get => coolDown; }
+
+    protected virtual void OnEnable()
+    {
+
+    }
+
+
     protected virtual void Start()
     {
         player = GameManager.Instance.Player;
@@ -15,7 +24,7 @@ public abstract class Skill : MonoBehaviour
 
     protected virtual void Update()
     {
-        coolDownTimer -= Time.deltaTime;
+        
     }
 
     public virtual bool CanUseSkill()
@@ -41,12 +50,23 @@ public abstract class Skill : MonoBehaviour
         Debug.Log("Call");
         coolDownTimer = coolDown;
         isUsing = false;
+        StartCoroutine(CoolDownSkill());
+    }
+
+    protected IEnumerator CoolDownSkill()
+    {
+        while (coolDownTimer > 0f)
+        {
+            Debug.Log("Thực hiện coolDown Skill");
+            coolDownTimer -= Time.deltaTime;
+            yield return null;
+        }
     }
 
     // Hàm dùng để tìm ra vị trí gần nhất của Enemy vs các Skill cần lấy vị trí
     protected virtual Transform findToClosestEnemy(Transform _checkTransform)
     {
-        Collider2D[] col = Physics2D.OverlapCircleAll(_checkTransform.position, 25);
+        Collider2D[] col = Physics2D.OverlapCircleAll(_checkTransform.position, 25 , mask);
         float closesDistance = Mathf.Infinity; // đại diện 1 giá trị dương vô cùng
 
         Transform closestEnemy = null;

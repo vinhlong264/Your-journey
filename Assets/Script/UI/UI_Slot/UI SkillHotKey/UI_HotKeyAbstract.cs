@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public abstract class UI_SkillHotKeyAbstract : MonoBehaviour
 {
-    [SerializeField] protected Skilltype skillType; // Loại skill
+    [SerializeField] protected Skill_HotKey skillType; // Loại skill
     [SerializeField] protected KeyCode SkillHotKey;
     [SerializeField] protected Image skillImageCoolDown; // UI coolDown
 

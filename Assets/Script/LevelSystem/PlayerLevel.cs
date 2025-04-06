@@ -67,7 +67,7 @@ public class PlayerLevel : LevelAbstract, ISave
         return null;
     }
 
-    public override bool unlockSkill(Skilltype skill)
+    public override bool unlockSkill(Skill_HotKey skill)
     {
         if (level.pointSkill > 0)
         {

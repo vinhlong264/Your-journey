@@ -43,6 +43,11 @@ public class Sword_Skill_Controller : SkillControllerBase
         cd = GetComponent<Collider2D>();
     }
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     private void OnDisable()
     {
         isReturning = false;
@@ -274,7 +279,7 @@ public class Sword_Skill_Controller : SkillControllerBase
         transform.parent = collision.transform;
     }
 
-    protected override void SkillAttack()
+    protected override void SkillExcute()
     {
         throw new System.NotImplementedException();
     }

@@ -50,6 +50,33 @@ public class Sword_Skill : Skill
     [SerializeField] private Transform dotsParent; // vị trí chứa các dots khi được khởi tạo
 
     [SerializeField] private GameObject[] dots;
+
+    protected override void OnEnable()
+    {
+        if (throwSwordUnlockBtn.isUnlocked)
+        {
+            swordSkillUnlocked = true;
+        }
+
+        if (bounceSwordUnlockBtn.isUnlocked)
+        {
+            swordType = SwordType.BOUNCE;
+            return;
+        }
+
+        if (pierceSwordUnlockbtn.isUnlocked)
+        {
+            swordType = SwordType.PIERCE;
+            return;
+        }
+
+        if (spinSwordUnlockBtn.isUnlocked)
+        {
+            swordType = SwordType.SPIN;
+            return;
+        }
+    }
+
     protected override void Start()
     {
         base.Start();

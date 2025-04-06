@@ -90,7 +90,7 @@ public class Crystal_Skill_Controller : SkillControllerBase
         skill.crystal_skill.eventCallBack?.Invoke();
     }
 
-    protected override void SkillAttack()
+    protected override void SkillExcute()
     {
         Collider2D[] attackCheck = Physics2D.OverlapCircleAll(transform.position, cd.radius, whatIsMask);
 

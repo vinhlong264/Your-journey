@@ -26,6 +26,7 @@ public class Dash_Skill : Skill
         base.UseSkill();
         //Debug.Log("đã sử dụng skill");
         coolDownTimer = coolDown;
+        StartCoroutine(CoolDownSkill());
     }
     #region Unlock Skill
     private void onDashUnlock() // Mở khóa skill Dash

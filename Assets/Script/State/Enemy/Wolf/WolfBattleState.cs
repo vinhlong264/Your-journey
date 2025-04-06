@@ -42,7 +42,7 @@ public class WolfBattleState : EnemyState
         {
             if (stateTimer < 0 || Vector2.Distance(_player.transform.position, _wolf.transform.position) > 7)
             {
-                Debug.Log("ChangeState Idle");
+                //Debug.Log("ChangeState Idle");
                 stateMachine.changeState(_wolf._idleState);
                 return;
             }

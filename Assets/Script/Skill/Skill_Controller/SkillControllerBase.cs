@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class SkillControllerBase : MonoBehaviour
 {
@@ -8,7 +8,7 @@ public abstract class SkillControllerBase : MonoBehaviour
     protected Animator anim;
 
     [Header("Skill Infor")]
-    [SerializeField] protected float coolDownTimer;
+    [SerializeField] protected float coolDownTimer; // thời gian hồi lại của các skill
     [SerializeField] protected LayerMask WhatIsMask;
 
     protected virtual void Awake()
@@ -27,6 +27,6 @@ public abstract class SkillControllerBase : MonoBehaviour
         coolDownTimer -= Time.deltaTime;
     }
 
-    protected abstract void SkillAttack();
+    protected abstract void SkillExcute();
     protected abstract void AttackHandler(Collider2D hitTarget);
 }

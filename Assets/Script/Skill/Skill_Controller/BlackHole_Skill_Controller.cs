@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BlackHole_Skill_Controller : SkillControllerBase
@@ -12,7 +13,6 @@ public class BlackHole_Skill_Controller : SkillControllerBase
     private float maxSize; // kích thước
     private float growSpeed; // tốc độ phát triển
     private float shrinkSpeed; // tốc độ thu lại
-    private float blackHoleTimer; // Thời gian kích hoạt của Skill này
 
     private bool canGrow = true; // kiểm tra xem có thể phát triển không
     public bool canShrink; // Kiểm tra xem có thể thu lại không
@@ -41,11 +41,12 @@ public class BlackHole_Skill_Controller : SkillControllerBase
         shrinkSpeed = _shrinkSpeed;
         amountOfCloneAttack = _amountOfCloneAttack;
         cloneAttackCooldown = _cloneAttackCoolDown;
-        blackHoleTimer = _blackHoleDuration;
+        coolDownTimer = _blackHoleDuration;
     }
 
     protected override void Start()
     {
+        base.Start();
         defaultLocalScale = transform.localScale;
     }
 
@@ -59,31 +60,24 @@ public class BlackHole_Skill_Controller : SkillControllerBase
 
     protected override void Update()
     {
+        base.Update();
         cloneAttackTimer -= Time.deltaTime;
-        blackHoleTimer -= Time.deltaTime;
 
-        if (blackHoleTimer < 0)
+        if (coolDownTimer < 0)
         {
-            blackHoleTimer = Mathf.Infinity;
+            coolDownTimer = Mathf.Infinity;
             if (target.Count > 0)
             {
                 CloneAttackLogic();
             }
             else
             {
-                blackHoleFinish();
+                BlackHoleFinish();
             }
         }
 
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ReleaseCloneAttack();
-        }
-
-        CloneAttackLogic();
-
-        growAndShrinkLogic();
+        SkillExcute();
     }
 
     private void growAndShrinkLogic() // Logic tăng và giảm phạm vi của black hole
@@ -141,12 +135,18 @@ public class BlackHole_Skill_Controller : SkillControllerBase
             amountOfCloneAttack--;
             if (amountOfCloneAttack <= 0)
             {
-                Invoke("blackHoleFinish", 1f); // Delay khoảng 1s
+                StartCoroutine(BlackHoleFinishDelay());
             }
         }
     }
 
-    private void blackHoleFinish()
+    IEnumerator BlackHoleFinishDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        BlackHoleFinish();
+    }
+
+    private void BlackHoleFinish()
     {
         DestroyHotKey();
         playerCanExitState = true; // Thoát khỏi trạng thái Black Hole state
@@ -160,7 +160,7 @@ public class BlackHole_Skill_Controller : SkillControllerBase
 
         foreach(GameObject i  in createHotKey)
         {
-            Destroy(i);
+            i.gameObject.SetActive(false);
         }
     }
 
@@ -195,7 +195,12 @@ public class BlackHole_Skill_Controller : SkillControllerBase
             return;
         }
 
-        GameObject newHotKey = Instantiate(hotKeyPrefabs, collision.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+        GameObject newHotKey = GameManager.Instance.GetObjFromPool(hotKeyPrefabs);
+        if (newHotKey == null) return;
+
+        newHotKey.transform.position = collision.transform.position + new Vector3(0, 2, 0);
+        newHotKey.transform.rotation = Quaternion.identity;
+
         createHotKey.Add(newHotKey);
 
         KeyCode chooseKey = ListHotKey[Random.Range(0, ListHotKey.Count)]; //Lấy ra ngẫu nhiên HotKey
@@ -212,13 +217,20 @@ public class BlackHole_Skill_Controller : SkillControllerBase
 
     public void addEnemy(Transform _enemyTransform) => target.Add(_enemyTransform); // Lưu vị trí của các Enemy vào trong target
 
-    protected override void SkillAttack()
+    protected override void SkillExcute()
     {
-        throw new System.NotImplementedException();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ReleaseCloneAttack();
+        }
+
+        CloneAttackLogic();
+
+        growAndShrinkLogic();
     }
 
     protected override void AttackHandler(Collider2D hitTarget)
     {
-        throw new System.NotImplementedException();
+        
     }
 }

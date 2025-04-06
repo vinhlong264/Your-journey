@@ -34,10 +34,10 @@ public class Clone_Controller : SkillControllerBase
 
     private void OnDisable()
     {
-         sr.color = new Color(1,1,1,1);
+        sr.color = new Color(1, 1, 1, 1);
     }
-    public void setUpClone(Transform _cloneTrasform , float _coolDown , bool _canAttack , Vector3 _offset 
-        ,Transform _closestEnemy , bool _canAttackWithEffect , bool _canDuplicateClone,Player _player , float _percentDameExtra)
+    public void setUpClone(Transform _cloneTrasform, float _coolDown, bool _canAttack, Vector3 _offset
+        , Transform _closestEnemy, bool _canAttackWithEffect, bool _canDuplicateClone, Player _player, float _percentDameExtra)
     {
         if (_canAttack)
         {
@@ -48,7 +48,7 @@ public class Clone_Controller : SkillControllerBase
         transform.position = _cloneTrasform.position + _offset; // vị trí được khởi tạo
         coolDownTimer = _coolDown; // setup thời gian tồn tại của clone
 
-        if(_closestEnemy != null)
+        if (_closestEnemy != null)
         {
             closestEnemy = _closestEnemy;
         }
@@ -64,9 +64,9 @@ public class Clone_Controller : SkillControllerBase
     IEnumerator CloneExitsDuration()
     {
         float time = 0;
-        while(time < coolDownTimer)
+        while (time < coolDownTimer)
         {
-            sr.color = new Color(1,1,1, Mathf.Lerp(1, 0, time / coolDownTimer));
+            sr.color = new Color(1, 1, 1, Mathf.Lerp(1, 0, time / coolDownTimer));
             time += Time.deltaTime * colorLosingSpeed;
             yield return null;
         }
@@ -91,7 +91,7 @@ public class Clone_Controller : SkillControllerBase
         }
     }
 
-    protected override void SkillAttack()
+    protected override void SkillExcute()
     {
         Collider2D[] col = Physics2D.OverlapCircleAll(AttackCheck.position, AttackRadius);
 
@@ -114,13 +114,15 @@ public class Clone_Controller : SkillControllerBase
 
         ItemEquipmentSO equipement = inventory.getEquipmentBy(EqipmentType.Sword);
 
-        if(equipement == null) return;
-
-        if (canAttackWithEffect)
+        if (equipement != null)
         {
-            Debug.Log("Handler Effect");
-            equipement.excuteItemEffect(hitTarget.transform);
+            if (canAttackWithEffect)
+            {
+                Debug.Log("Handler Effect");
+                equipement.excuteItemEffect(hitTarget.transform);
+            }
         }
+
 
         if (canDuplicateClone)
         {
